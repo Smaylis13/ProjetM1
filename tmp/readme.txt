@@ -1,0 +1,1 @@
+Ici les fichiers temporaires relatifs à chaque developpeur du projet
