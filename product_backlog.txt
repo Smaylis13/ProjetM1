@@ -1,0 +1,15 @@
+Un organisateur doit pouvoir créer un vote
+Mettre en place le serveur et l'api Rest
+Un organisateur doit pouvoir ajouter des participants
+Un utilisateur doit pouvoir participer à un vote
+Un organisateur veut pouvoir gérer son vote
+Intégrer les algorithmes de vote
+Un utilisateur doit pouvoir voir le résultat
+Un utilisateur doit pouvoir s'inscrire(se désinscrire)
+Un utilisateur doit pouvoir se connecter (déconnecter)
+Un utilisateur doit pouvoir gérer son compte
+Un utilisateur veut pouvoir modifier son vote
+Un utilisateur veut pouvoir gérer ses contacts
+Un utilisateur veut pouvoir parcourir son historique
+Sécuriser la connexion
+Faire une seconde version sans serveur basée sur WebRTC
