@@ -1,4 +1,5 @@
 Un organisateur doit pouvoir créer un vote
+Se renseigner sur Google Cloud Messaging pour les notifications push http://developer.android.com/google/gcm/index.html
 Mettre en place le serveur et l'api Rest
 Un organisateur doit pouvoir ajouter des participants
 Un utilisateur doit pouvoir participer à un vote
