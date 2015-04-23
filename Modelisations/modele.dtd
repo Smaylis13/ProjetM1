@@ -1,0 +1,19 @@
+<?xml encoding="UTF-8"?>
+
+<!ELEMENT Utilisateur (Pseudo, mail, mdp)>
+<!ATTLIST id ID #REQUIRED>
+<!ELEMENT Pseudo (#PCDATA)>
+<!ELEMENT mail (#PCDATA)>
+<!ELEMENT mdp (#PCDATA)>
+
+
+<!ELEMENT Vote (Titre, Organisateur, Participant+, Regle, Choix+, DateFin, Resultat)>
+<!ELEMENT Organisateur (IDREF)>
+<!ELEMENT Choix (#PCDATA)>
+<!ELEMENT Participant (IDREF)>
+<!ELEMENT Titre (#PCDATA)>
+<!ELEMENT Regle (#PCDATA)+>
+<!ELEMENT DateFin (#PCDATA)>
+<!ATTLIST DateFin 
+	fini CDATA? #REQUIRED>
+<!ELEMENT Resultat (Choix+)>
