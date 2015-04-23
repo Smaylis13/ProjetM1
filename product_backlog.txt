@@ -1,42 +1,48 @@
-Un organisateur doit pouvoir crÈer un vote
-	implémenter interface de création de vote 
-	implementer la gestion des votes niveau serveur
-	implementer la communication client/serveur pour la gestion des votes 
-	implementer la notification des clients lorsque le vote est créer effectivement
-
-Se renseigner sur Google Cloud Messaging pour les notifications push http://developer.android.com/google/gcm/index.html
-
-//Mettre en place le serveur et l'api Rest
-
-Un organisateur doit pouvoir ajouter des participants
-	implementer l’ajout de participant coté serveur
-	implementer la communication client serveur pour les participants 
-
-
-Un utilisateur doit pouvoir participer ‡ un vote
-	implementer la notification dans l’interface 
-	implementer l’interface (onglet) MesVotes
-
-Un organisateur veut pouvoir gÈrer son vote
-	implementer l’interface (onglet) MesVotesCreer dans 
-
-IntÈgrer les algorithmes de vote
-	une implementation par algo de vote ( vote a choisir + ceux obligatoires)
-
-
-Un utilisateur doit pouvoir voir le rÈsultat
-	implanter bouton details dans la page des détails du vote ( accès direct via notification)
-
-Un utilisateur doit pouvoir s'inscrire(se dÈsinscrire)
+Un utilisateur doit pouvoir s'inscrire(se dÈsinscrire) priorité haute risque haut ticket 
 	implementer interface d’inscription 
 	implementer interface de desinscription
 	implementer la gestion des log/password dans la BDD 
 	implementer communication log/pass entre serveur et client 
+
 	 
 Un utilisateur doit pouvoir se connecter (déconnecter)
 	implementer interface de connection 
 	implementer la gestion des log/password dans la BDD 
 	implementer communication log/pass entre serveur et client
+
+IntÈgrer les algorithmes de vote
+	une implementation par algo de vote ( vote a choisir + ceux obligatoires)
+
+Un organisateur doit pouvoir créer un vote
+	implémenter interface de création de vote 
+	implementer la gestion des votes niveau serveur
+	implementer la communication client/serveur pour la gestion des votes 
+	implementer la notification des clients lorsque le vote est créer effectivement
+	implementer la participation de personne non inscrites ( le serveur leur envoi un mail pour les inviter a télécharger
+		l’application et s’inscrire )
+
+		Un organisateur doit pouvoir ajouter des participants
+			implementer l’ajout de participant coté serveur
+			implementer la communication client serveur pour les participants
+
+Un utilisateur doit pouvoir participer a un vote
+	implementer la notification dans l’interface 
+	implementer l’interface (onglet) MesVote
+
+Se renseigner sur Google Cloud Messaging pour les notifications push http://developer.android.com/google/gcm/index.html
+
+//Mettre en place le serveur et l'api Rest
+
+ 
+Un organisateur veut pouvoir gÈrer son vote
+	implementer l’interface (onglet) MesVotesCreer dans 
+
+
+Un utilisateur doit pouvoir voir le rÈsultat
+	implanter bouton details dans la page des détails du vote ( accès direct via notification)
+
+
+
 
 Un utilisateur doit pouvoir gÈrer son compte
 	implementer interface paramètre / gestion compte 
