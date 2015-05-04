@@ -1,0 +1,57 @@
+# Modèle créé le : Mon May 04 15:42:46 CEST 2015 
+
+USER (<u>ID_USER</u>,
+ MAIL,
+ PASSWORD) 
+
+VOTE (<u>ID_VOTE</u>,
+ NOM_VOTE,
+ DESCRIPTION_VOTE,
+ DATE_START_VOTE,
+ DATE_VOTE_END,
+ RESULT_VOTE,
+ STATUT_VOTE,
+ #ID_USER) 
+
+RULE (<u>ID_RULE</u>,
+ DESCRIPTION_RULE) 
+
+CANDIDATE (<u>ID_CANDIDATE</u>,
+ NOM_CANDIDATE,
+ DESCRIPTION_CANDIDATE,
+ #ID_VOTE) 
+
+GROUP (<u>ID-GROUP</u>,
+ NOM_GROUP,
+ DESCRIPTION_GROUP) 
+
+TYPE (<u>ID_TYPE</u>,
+ NOM_TYPE,
+ DESCRIPTION_TYPE) 
+
+PROCURATION (<u>ID_USER1</u>,
+ ID_USER2,
+ #ID_VOTE) 
+
+PARTICIPATE (<u>ID_VOTE</u>,
+ <u>ID_USER</u>,
+ CHOIX) 
+
+SETUP (<u>ID_VOTE</u>,
+ <u>ID_RULE</u>) 
+
+HAS (<u>ID_USER</u>,
+ ID_USER_HAS) 
+
+BELONGS (<u>ID_USER</u>,
+ <u>ID-GROUP</u>) 
+
+CERTIFIE (<u>ID_VOTE</u>,
+ <u>ID_TYPE</u>) 
+
+AUTORISER (<u>ID_RULE</u>,
+ <u>ID_TYPE</u>) 
+
+Association_26 (<u>ID_USER</u>,
+ <u>ID_USER1</u>) 
+
