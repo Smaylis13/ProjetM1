@@ -5,20 +5,14 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:name=".Interface.CLoginActivity"
+            android:label="@string/title_activity_clogin" >
         </activity>
         <activity
-            android:name=".Interface.CSuscribeActivity"
-            android:label="@string/title_activity_csuscribe" >
+            android:name=".Interface.CInscriptionActivity"
+            android:label="@string/title_activity_cinscription" >
         </activity>
     </application>
 

@@ -3,5 +3,9 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_csuscribe">CSuscribeActivity</string>
+    <string name="title_activity_csuscribe">Inscription</string>
+    <string name="MailInput">Mail</string>
+    <string name="PasswordInput" >Mot de passe</string>
+    <string name="title_activity_clogin">CLoginActivity</string>
+    <string name="title_activity_cinscription">CInscriptionActivity</string>
 </resources>

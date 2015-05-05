@@ -7,18 +7,18 @@ import android.view.MenuItem;
 
 import fr.univtln.m1dapm.g3.g3vote.R;
 
-public class CSuscribeActivity extends ActionBarActivity {
+public class CInscriptionActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_csuscribe);
+        setContentView(R.layout.activity_cinscription);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_csuscribe, menu);
+        getMenuInflater().inflate(R.menu.menu_cinscription, menu);
         return true;
     }
 
