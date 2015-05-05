@@ -1,0 +1,76 @@
+Données
+	votes : tableau de listes
+	nb_Candidats, nb_Elus : entier
+	candidats : liste de strings
+
+Variables
+	MapNbVotes<String, int>
+	MapChoices<Listes, int>
+	NewElus, ListElus,ListElim, NewElim: Liste string
+   nb_elus
+	i,quota : entier
+	elim:booleen
+
+Début
+	MapChoices<-InitChoices(votes)
+	MapNbVotes<-InitVotes(MapChoices)
+	quota<-InitQuota
+	elim<-1
+	nb_elus<-0
+
+	while nb_elus<nb_Elus
+		for i=0,i<MapNbVotes.size-1,i+1
+			if MapNbVotes.getKey(i) not in ListElim or ListElus
+				if MapNbVotes.get(i)>quota
+					NewElus.add(MapNbVotes.getKey(i))
+					nb_elus<-+1
+					elim<-0
+				endif
+				if nb_elus>=nb_Elus
+					elim<-0	
+					break
+				end if
+			endif
+		endfor
+		if elim
+			MapNbVotes.sort()
+			NewElim.add(MapNbVotes.getLastKey())
+		endif
+		elim<-1
+		i<-0
+
+		for each el in MapChoices
+			cand=el.getKey().iterator
+			while cand.hasnext()
+				if cand in NewElus or in NewElim
+					for j=i,j<el.getKey().size,j+1
+						if el.getKey().get(j) not in ListElim && not in ListElus && not in NewElus && not in NewElim
+							MapNbVotes.put(el.getKey.get(j), MapNbVotes.get(el.getKey.get(j)+((el.getValue()/MapNbVotes.get(cand))*MapNbVotes.get(cand)-quota)
+							break
+						endif
+					endfor
+				elseif cand not in ListElus or ListElims
+					break
+				endif
+				cand.next()
+				i++
+			end while
+		end for
+
+		ListElus.add(NewElus)				
+		NewElus.clear()
+		ListElim.add(NewElim)
+		NewElim.clear()
+
+	end while
+Fin
+
+
+
+
+InitVotes:
+	for i=0;i<MapChoices.size-1;i+1
+		MapNbVotes.put(MapChoices.getKey().get(0), MapNbVotes.get(MapChoices.getKey().get(0))+1)
+
+	return MapNbVotes
+		
