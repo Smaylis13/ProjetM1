@@ -1,0 +1,5 @@
+Nombre de tours
+Nombre de gagnants
+Public / Privé
+Limite min/max de votant 
+Type d’élimination
