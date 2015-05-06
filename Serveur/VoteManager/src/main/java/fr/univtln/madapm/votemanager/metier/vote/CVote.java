@@ -3,7 +3,6 @@ package fr.univtln.madapm.votemanager.metier.vote;
 import fr.univtln.madapm.votemanager.metier.CMap;
 import fr.univtln.madapm.votemanager.metier.user.COrganisateur;
 import fr.univtln.madapm.votemanager.metier.user.CParticipant;
-import fr.univtln.madapm.votemanager.metier.user.CUser;
 
 /**
  * Created by civars169 on 05/05/15.

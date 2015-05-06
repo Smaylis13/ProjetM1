@@ -6,7 +6,6 @@ package fr.univtln.madapm.votemanager.metier.user;
  */
 
 import fr.univtln.madapm.votemanager.metier.CMap;
-import fr.univtln.madapm.votemanager.metier.user.CUser;
 
 /**
  * Un groupe correspond à une liste de contacts pour un utilisateur.
