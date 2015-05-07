@@ -1,10 +1,14 @@
 package fr.univtln.m1dapm.g3.g3vote.Algorithme.STV;
 
+import android.support.annotation.IntegerRes;
 import android.support.v4.app.INotificationSideChannel;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -61,18 +65,18 @@ public class CAlgoSTV extends AAlgorithme {
         boolean lNewElu = false;
         List<CCandidat> lElus = new ArrayList<CCandidat>();
         List<CCandidat> lElim = new ArrayList<CCandidat>();
+        CResultat<List<CCandidat>> lResultat = new CResultat<>();
         Map<CCandidat,Integer> lCandNbVote;
 
         lCandNbVote = calcNbVote();
 
-        CResultat lResult =  new CResultat();
 
         while(lElus.size() < mNbElu)
         {
            Map ltmpCandVote = new HashMap<CCandidat, Integer>(lCandNbVote);
            for(Map.Entry cand : lCandNbVote.entrySet())
            {
-               if((int)cand.getValue()>= mQuota)
+               if((int)cand.getValue() >= mQuota)
                {
                    lNewElu = true;
                    lElus.add((CCandidat)cand.getKey());
@@ -82,15 +86,14 @@ public class CAlgoSTV extends AAlgorithme {
 
            if (!lNewElu)
            {
-               Collections.min(lCandNbVote.values());
-
+               ltmpCandVote.remove(getCandidatElim(ltmpCandVote));
            }
 
            lCandNbVote = ltmpCandVote;
 
         }
-
-        return  lResult;
+        lResultat.setmValeur(lElus);
+        return  lResultat;
     }
 
     /// Methode de reattribution des voix en surplus
@@ -106,19 +109,34 @@ public class CAlgoSTV extends AAlgorithme {
             List<CCandidat> cands = new ArrayList<CCandidat>(choix.getChoix());
             cands.retainAll(pCandVote.keySet());
 
-            for(int i=0; i<cands.size(); i++)
+            if(cands.get(0) == pCAndElu && cands.size()>1)
             {
-                if(cands.get(i)==pCAndElu && i<(cands.size()-1) )
-                {
-                    lRatio = mChoice.get(choix) / pCandVote.get(pCAndElu);
-                    lCandVote.put(cands.get(i+1), (pCandVote.get(pCAndElu) + (lRatio*lSurplus)) );
-                }
+                lRatio = mChoice.get(choix) / pCandVote.get(pCAndElu);
+                lCandVote.put(cands.get(1), (pCandVote.get(pCAndElu) + (lRatio*lSurplus)) );
             }
         }
 
         lCandVote.remove(pCAndElu);
 
         return lCandVote;
+    }
+
+    /// Methode de trie de la Map
+    private CCandidat getCandidatElim(Map<CCandidat, Integer> pMap)
+    {
+        CCandidat lCandElim = new CCandidat();
+        int lMin=0;
+
+        for(Map.Entry cand : pMap.entrySet()) {
+            if ((int)cand.getValue() < lMin && lMin>0)
+            {
+                lMin = (int)cand.getValue();
+                lCandElim = (CCandidat)cand.getKey();
+            }
+        }
+
+
+        return lCandElim;
     }
 
     /// Methode de calcul du nombre de vote pour chaque candidat
