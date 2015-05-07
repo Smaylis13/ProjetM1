@@ -5,7 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Test {
+/**
+ * Created by lyamsi on 06/05/15.
+ */
+public class Test02 {
     public static List<String> classement1 = new ArrayList<String>();
     public static List<String> classement2 = new ArrayList<String>();
     public static List<String> classement3 = new ArrayList<String>();
