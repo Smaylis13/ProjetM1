@@ -39,3 +39,6 @@ proguard/
 *.jar
 *.war
 *.ear
+
+# fichie ~
+*~

@@ -11,5 +11,9 @@ public class CAlgoVoteMaj extends AAlgorithme {
         super();
     }
 
+    @Override
+    protected void initVote() {
+
+    }
 
 }
