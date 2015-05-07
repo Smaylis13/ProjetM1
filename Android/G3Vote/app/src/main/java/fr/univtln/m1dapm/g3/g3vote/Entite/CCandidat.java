@@ -9,5 +9,27 @@ public class CCandidat {
     private String mNom;
     private String mDescription;
 
+    public int getmId() {
+        return mId;
+    }
 
+    public void setmId(int mId) {
+        this.mId = mId;
+    }
+
+    public String getmNom() {
+        return mNom;
+    }
+
+    public void setmNom(String mNom) {
+        this.mNom = mNom;
+    }
+
+    public String getmDescription() {
+        return mDescription;
+    }
+
+    public void setmDescription(String mDescription) {
+        this.mDescription = mDescription;
+    }
 }
