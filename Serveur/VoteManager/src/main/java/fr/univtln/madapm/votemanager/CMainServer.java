@@ -1,9 +1,10 @@
 package fr.univtln.madapm.votemanager;
 
-import com.sun.jersey.api.container.grizzly2.GrizzlyServerFactory;
-import com.sun.jersey.api.core.PackagesResourceConfig;
-import com.sun.jersey.api.core.ResourceConfig;
+
 import org.glassfish.grizzly.http.server.HttpServer;
+import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
+import org.glassfish.jersey.jackson.JacksonFeature;
+import org.glassfish.jersey.server.ResourceConfig;
 
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.UriBuilder;
@@ -29,16 +30,19 @@ public class CMainServer extends Application {
     }
 
     private static URI getBaseURI() {
-        return UriBuilder.fromUri("http://localhost/VoteManger/").port(getPort(9999)).build();
+        return UriBuilder.fromUri("http://localhost/").port(getPort(9999)).build();
     }
 
     public static final URI BASE_URI = getBaseURI();
 
     protected static HttpServer startServer() throws IOException {
-        ResourceConfig resourceConfig = new PackagesResourceConfig("fr.univtln.madapm.votemanager");
 
-        System.out.println("Starting grizzly2...");
-        return GrizzlyServerFactory.createHttpServer(BASE_URI, resourceConfig);
+        final ResourceConfig lrc = new ResourceConfig().packages("fr.univtln.madapm.votemanager");
+        lrc.register(JacksonFeature.class);
+
+        // create and start a new instance of grizzly http server
+        // exposing the Jersey application at BASE_URI
+        return GrizzlyHttpServerFactory.createHttpServer(BASE_URI, lrc);
     }
 
     public static void main(String[] args) throws IOException {
@@ -54,8 +58,15 @@ public class CMainServer extends Application {
         System.out.println(String.format("Jersey app started with WADL available at "
                         + "%sapplication.wadl\nHit enter to stop it...",
                 BASE_URI));
+
+        /*Replace with
+        while(true){
+        }
+        for the vps
+        */
         System.in.read();
-        httpServer.stop();
+        //httpServer.stop();
+        httpServer.shutdownNow();
 
         System.out.println("Fin de VoteManager");
     }

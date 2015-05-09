@@ -3,18 +3,18 @@ package fr.univtln.m1dapm.g3.g3vote.Entite;
 /**
  * Created by ludo on 05/05/15.
  */
-public class CChoix {
+public class CChoix<T> {
 
-    private int mNbVote; ///Variable de comptage du nombre de vote
+    protected T mChoix;
 
-    public CChoix() {
+    public CChoix(T pChoix) {
+        mChoix = pChoix;
     }
 
-    public int getmNbVote() {
-        return mNbVote;
-    }
+    public T getChoix() { return mChoix; }
 
-    public void updatemNbVote(int mNbVote) {
-        this.mNbVote += mNbVote;
+    public void setChoix(T pChoix) {
+        this.mChoix = pChoix;
     }
 }
+

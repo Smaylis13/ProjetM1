@@ -2,15 +2,15 @@ package fr.univtln.m1dapm.g3.g3vote.Algorithme.VoteMajoritaire;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
-
-import fr.univtln.m1dapm.g3.g3vote.Entite.CChoix;
+import java.util.Map;
 
 /**
  * Majority Judjement
- * @author G3
+ * @author lyamsi
  */
-public class CChoixVM extends CChoix{
+public class CChoixVM {
     /**
      * Nom du candidat
      */
@@ -23,6 +23,11 @@ public class CChoixVM extends CChoix{
      * Liste des notes qui vont être donner par les élécteurs
      */
     private List<Integer> mNote = new ArrayList<Integer>();
+    /**
+     * key : la note
+     * value : nombre de personne ayant donné cette note
+     */
+    private Map<Integer,Integer> mNbNote = new HashMap<Integer,Integer>();
 
     /**
      * Création d'un candidat
@@ -80,6 +85,14 @@ public class CChoixVM extends CChoix{
      */
     public String getDescription() {
         return mDescription;
+    }
+
+    /**
+     *
+     * @return map note/nb de note
+     */
+    public Map<Integer, Integer> getNbNote() {
+        return mNbNote;
     }
 
     /**
