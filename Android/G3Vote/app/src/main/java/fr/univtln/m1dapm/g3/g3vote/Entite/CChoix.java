@@ -1,32 +1,20 @@
 package fr.univtln.m1dapm.g3.g3vote.Entite;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by ludo on 05/05/15.
  */
-public class CChoix {
+public class CChoix<T> {
 
-    private int mNbVote; ///Variable de comptage du nombre de vote
-    private List<CCandidat> mOrdre;
+    protected T mChoix;
 
-    public CChoix(List<CCandidat> pChoix) {
-        mOrdre = new ArrayList<CCandidat>(pChoix);
+    public CChoix(T pChoix) {
+        mChoix = pChoix;
     }
 
-    public int getNbVote() {
-        return mNbVote;
-    }
+    public T getChoix() { return mChoix; }
 
-    public void updateNbVote(int mNbVote) {
-        this.mNbVote += mNbVote;
+    public void setChoix(T pChoix) {
+        this.mChoix = pChoix;
     }
-
-    public CCandidat getIndexValue(int pIndice)
-    {
-        return mOrdre.get(pIndice);
-    }
-
-    public List<CCandidat> getChoix() { return mOrdre; }
 }
+
