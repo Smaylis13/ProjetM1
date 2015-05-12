@@ -22,12 +22,24 @@ public class CChoixVM {
     /**
      * Liste des notes qui vont être donner par les élécteurs
      */
-    private List<Integer> mNote = new ArrayList<Integer>();
+    private List<Integer> mNotes = new ArrayList<Integer>();
     /**
      * key : la note
      * value : nombre de personne ayant donné cette note
      */
     private Map<Integer,Integer> mNbNote = new HashMap<Integer,Integer>();
+    /**
+     * Cette variable sera calculer au moment de l'appel de la fonction moyenneNote
+     */
+    private double mMoyenne = 0.0;
+    /**
+     * Le total des notes
+     */
+    private double mSomme = 0.0;
+
+    public double getmSomme() {
+        return mSomme;
+    }
 
     /**
      * Création d'un candidat
@@ -50,25 +62,62 @@ public class CChoixVM {
 
     /**
      * Ajoute à la liste d'un candidat une note donné par un élécteur
-     * @param note
+     * @param pNote
      */
-    public void addNote(int note){
-        mNote.add(note);
+    public void addNote(int pNote){
+        mNotes.add(pNote);
     }
-
+    /**
+     * Supprime un note ( index en paramètre
+     * @param pIndex
+     */
+    public void subNote(int pIndex){
+        mNotes.remove(pIndex);
+    }
     /**
      * Trie la liste de note par ordre croissant (Pour avoir la médiane)
      */
     public void trieNote() {
-        Collections.sort(this.mNote);
+        Collections.sort(this.mNotes);
     }
+
+    /**
+     *
+     * @return la moyenne des notes
+     */
+    public double moyenneNote(){
+        double moy = 0.0;
+        if(!mNotes.isEmpty()) {
+
+            mMoyenne = sommeNote() / mNotes.size();
+            return mMoyenne;
+        }
+        return moy;
+    }
+
+    /**
+     *
+     * @return la somme
+     */
+    public double sommeNote(){
+        double sum = 0.0;
+        if(!mNotes.isEmpty()) {
+            for (Integer n : mNotes) {
+                sum += n;
+            }
+            mSomme = sum;
+            return sum;
+        }
+        return sum;
+    }
+
 
     /**
      *
      * @return Liste de note
      */
-    public List<Integer> getNote() {
-        return mNote;
+    public List<Integer> getNotes() {
+        return mNotes;
     }
 
     /**
@@ -85,6 +134,14 @@ public class CChoixVM {
      */
     public String getDescription() {
         return mDescription;
+    }
+
+    /**
+     *
+     * @return la moyenne s'elle a été déja calculer par cette méthode "moyenneNote"
+     */
+    public double getmMoyenne() {
+        return mMoyenne;
     }
 
     /**
@@ -115,7 +172,7 @@ public class CChoixVM {
     public String toString() {
         return "Candidate{" +
                 "mNom='" + mNom + '\'' +
-                ", mNote=" + mNote +
+                ", mNotes=" + mNotes +", mSomme= " + mSomme +", mMoyenne= "+mMoyenne+
                 '}';
     }
 }
