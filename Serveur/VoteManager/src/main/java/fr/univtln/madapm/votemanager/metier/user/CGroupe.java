@@ -17,43 +17,43 @@ public class CGroupe {
     private String mDescriptiongroupe;
     private CMap<CParticipant, String> mMapgroupe;
 
-    public CGroupe(int mIdgroupe, String mNomgroupe, String mDescriptiongroupe, CMap<CParticipant, String> mMapgroupe) {
-        this.mIdgroupe = mIdgroupe;
-        this.mNomgroupe = mNomgroupe;
-        this.mDescriptiongroupe = mDescriptiongroupe;
-        this.mMapgroupe = mMapgroupe;
+    public CGroupe(int pIdgroupe, String pNomgroupe, String pDescriptiongroupe, CMap<CParticipant, String> pMapgroupe) {
+        this.mIdgroupe = pIdgroupe;
+        this.mNomgroupe = pNomgroupe;
+        this.mDescriptiongroupe = pDescriptiongroupe;
+        this.mMapgroupe = pMapgroupe;
     }
 
-    public int getmIdgroupe() {
+    public int getIdgroupe() {
         return mIdgroupe;
     }
 
-    public void setmIdgroupe(int mIdgroupe) {
-        this.mIdgroupe = mIdgroupe;
+    public void setIdgroupe(int pIdgroupe) {
+        this.mIdgroupe = pIdgroupe;
     }
 
-    public String getmNomgroupe() {
+    public String getNomgroupe() {
         return mNomgroupe;
     }
 
-    public void setmNomgroupe(String mNomgroupe) {
-        this.mNomgroupe = mNomgroupe;
+    public void setNomgroupe(String pNomgroupe) {
+        this.mNomgroupe = pNomgroupe;
     }
 
-    public String getmDescriptiongroupe() {
+    public String getDescriptiongroupe() {
         return mDescriptiongroupe;
     }
 
-    public void setmDescriptiongroupe(String mDescriptiongroupe) {
-        this.mDescriptiongroupe = mDescriptiongroupe;
+    public void setDescriptiongroupe(String pDescriptiongroupe) {
+        this.mDescriptiongroupe = pDescriptiongroupe;
     }
 
-    public CMap getmMapgroupe() {
+    public CMap getMapgroupe() {
         return mMapgroupe;
     }
 
-    public void setmMapgroupe(CMap<CParticipant, String> mMapgroupe) {
-        this.mMapgroupe = mMapgroupe;
+    public void setMapgroupe(CMap<CParticipant, String> pMapgroupe) {
+        this.mMapgroupe = pMapgroupe;
     }
 
     @Override

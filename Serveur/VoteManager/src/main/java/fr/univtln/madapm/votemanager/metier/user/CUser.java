@@ -14,34 +14,34 @@ public class CUser {
     private String mEmail;
     private String mPassword;
 
-    protected CUser(int mId, String mEmail, String mPassword) {
-        this.mId = mId;
-        this.mEmail = mEmail;
-        this.mPassword = mPassword;
+    protected CUser(int pId, String pEmail, String pPassword) {
+        this.mId = pId;
+        this.mEmail = pEmail;
+        this.mPassword = pPassword;
     }
 
-    public int getmId() {
+    public int getId() {
         return mId;
     }
 
-    public void setmId(int mId) {
-        this.mId = mId;
+    public void setId(int pId) {
+        this.mId = pId;
     }
 
-    public String getmEmail() {
+    public String getEmail() {
         return mEmail;
     }
 
-    public void setmEmail(String mEmail) {
-        this.mEmail = mEmail;
+    public void setEmail(String pEmail) {
+        this.mEmail = pEmail;
     }
 
-    public String getmPassword() {
+    public String getPassword() {
         return mPassword;
     }
 
-    public void setmPassword(String mPassword) {
-        this.mPassword = mPassword;
+    public void setPassword(String pPassword) {
+        this.mPassword = pPassword;
     }
 
     @Override

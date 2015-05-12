@@ -8,21 +8,21 @@ public class CParticipant extends CUser {
 
     private String mVote = "Abstention";
 
-    public CParticipant(int mId, String mEmail, String mPassword) {
-        super(mId, mEmail, mPassword);
+    public CParticipant(int pId, String pEmail, String pPassword) {
+        super(pId, pEmail, pPassword);
     }
 
-    public CParticipant(int mId, String mEmail, String mPassword, String mVote) {
-        super(mId, mEmail, mPassword);
-        this.mVote = mVote;
+    public CParticipant(int pId, String pEmail, String pPassword, String pVote) {
+        super(pId, pEmail, pPassword);
+        this.mVote = pVote;
     }
 
-    public String getmVote() {
+    public String getVote() {
         return mVote;
     }
 
-    public void setmVote(String mVote) {
-        this.mVote = mVote;
+    public void setVote(String pVote) {
+        this.mVote = pVote;
     }
 
     @Override

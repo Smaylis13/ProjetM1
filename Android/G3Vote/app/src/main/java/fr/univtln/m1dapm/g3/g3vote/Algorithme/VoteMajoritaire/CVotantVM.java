@@ -8,12 +8,12 @@ import java.util.Map;
  *@author G3
  *
  */
-public class CRegleVM{
+public class CVotantVM {///extends CUtilisateur{
     /**
      * MAP clé/valeur avec comme clé un candidat et comme valeur la noté attribué
      */
     private Map<CChoixVM,Integer> mListCandidateNote = new HashMap<CChoixVM, Integer>();
-    public CRegleVM(){}
+    public CVotantVM(){}
 
     /**
      *

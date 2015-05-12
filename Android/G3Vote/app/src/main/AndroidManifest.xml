@@ -9,10 +9,15 @@
         <activity
             android:name=".Interface.CLoginActivity"
             android:label="@string/title_activity_clogin" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
-            android:name=".Interface.CInscriptionActivity"
-            android:label="@string/title_activity_cinscription" >
+            android:name=".Interface.CSubActivity"
+            android:label="@string/title_activity_csub" >
         </activity>
     </application>
 

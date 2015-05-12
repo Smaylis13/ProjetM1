@@ -13,22 +13,28 @@ public class TestVM {
     public static void main(String[] args) {
         // entrée
         List<CChoixVM> candidates = new ArrayList<CChoixVM>();
-        List<CRegleVM> votants = new ArrayList<CRegleVM>();
+        List<CVotantVM> votants = new ArrayList<CVotantVM>();
         // init Entrée
         for( int i = 0 ; i < NB_CANDIDATE ; i++) {
             candidates.add(new CChoixVM("Cand0" + i));
         }
         for(int i = 0; i < NB_VOTANT ; i++){
-            CRegleVM v = new CRegleVM();// on crée un votant
+            CVotantVM v = new CVotantVM();// on crée un votant
             for ( CChoixVM c : candidates) {//on rempli sa liste (candidate <==> note)
                 Random rand = new Random();
                 int note = rand.nextInt(5);// une note aléatoire pour le test
-                v.addCN(c,note);
+                v.addCN(c,note);// add map c,note
+                c.addNote(note);//add note dans candidat
             }
             votants.add(v); // en fin on l'ajoute à la liste
         }
 
         CAlgoVoteMaj cAlgoVoteMaj = new CAlgoVoteMaj(candidates,votants);
-        System.out.println(cAlgoVoteMaj.calculer());
+        System.out.println(cAlgoVoteMaj.calculerSomme());
+        /*System.out.println(cAlgoVoteMaj.calculerMoyenne());
+
+        System.out.println(cAlgoVoteMaj.calculerMediane());*/
+
+
     }
 }

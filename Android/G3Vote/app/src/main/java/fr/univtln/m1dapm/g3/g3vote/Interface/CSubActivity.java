@@ -7,12 +7,12 @@ import android.view.MenuItem;
 
 import fr.univtln.m1dapm.g3.g3vote.R;
 
-public class CInscriptionActivity extends ActionBarActivity {
+public class CSubActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cinscription);
+        setContentView(R.layout.activity_csub);
     }
 
     @Override
