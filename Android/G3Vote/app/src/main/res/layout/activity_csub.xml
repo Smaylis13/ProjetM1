@@ -4,10 +4,10 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="fr.univtln.m1dapm.g3.g3vote.Interface.CLoginActivity">
+    tools:context="fr.univtln.m1dapm.g3.g3vote.Interface.CSubActivity">
 
     <EditText
-        android:id="@+id/MailInput"
+        android:id="@+id/MailSubInput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
@@ -20,40 +20,25 @@
         android:layout_alignParentStart="true" />
 
     <EditText
-        android:id="@+id/PassInput"
+        android:id="@+id/PassSubInput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:ems="10"
         android:hint="@string/PassHint"
-        android:layout_below="@+id/MailInput"
-        android:layout_alignRight="@+id/MailInput"
-        android:layout_alignEnd="@+id/MailInput"
+        android:layout_below="@+id/MailSubInput"
+        android:layout_alignRight="@+id/MailSubInput"
+        android:layout_alignEnd="@+id/MailSubInput"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
     <Button
-        android:id="@+id/BLogin"
+        android:id="@+id/BSubValidation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/BLogText"
+        android:text="@string/BSubValidationText"
 
-        android:layout_below="@+id/PassInput"
-        android:layout_alignRight="@+id/PassInput"
-        android:layout_alignEnd="@+id/PassInput"
-        android:layout_marginRight="40dp"
-        android:layout_marginEnd="40dp" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/BSubText"
-        android:id="@+id/BSub"
-        android:onClick="Sub"
-        android:layout_below="@+id/PassInput"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="40dp"
-        android:layout_marginStart="40dp" />
-
+        android:layout_below="@+id/PassSubInput"
+        android:layout_alignRight="@+id/PassSubInput"
+        android:layout_alignEnd="@+id/PassSubInput" />
 </RelativeLayout>

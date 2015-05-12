@@ -6,6 +6,11 @@
     <string name="title_activity_csuscribe">Inscription</string>
     <string name="MailInput">Mail</string>
     <string name="PasswordInput" >Mot de passe</string>
-    <string name="title_activity_clogin">CLoginActivity</string>
-    <string name="title_activity_cinscription">CInscriptionActivity</string>
+    <string name="title_activity_clogin">Login</string>
+    <string name="title_activity_csub">CInscriptionActivity</string>
+    <string name="MailHint">Mail</string>
+    <string name="PassHint">Mot de passe</string>
+    <string name="BLogText">Se connecter</string>
+    <string name="BSubText">S\'inscrire</string>
+    <string name="BSubValidationText">Valider</string>
 </resources>
