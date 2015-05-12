@@ -15,7 +15,9 @@ public class CVote {
     private String mDescriptionvote;
     private String mDatedebut;
     private String mDatefin;
-    private String mResultvote;
+    private CResultat mResultvote;
+    private CType mType;
+    private CRegle mRegle;
     private String mStatusvote;
 
     private COrganisateur mOrganisateur;
@@ -23,14 +25,16 @@ public class CVote {
     private CMap<CCandidat, String> mMapcandidat = new CMap<CCandidat, String>();
 
     public CVote(int pIdvote, String pNomvote, String pDescriptionvote, String pDatedebut, String pDatefin,
-                 String pResultvote, String pStatusvote, COrganisateur pOrganisateur, CMap<CParticipant, String> pMapvote,
-                 CMap<CCandidat, String> pMapcandidat) {
+                 CResultat pResultvote, CType pType, CRegle pRegle, String pStatusvote, COrganisateur pOrganisateur,
+                 CMap<CParticipant, String> pMapvote, CMap<CCandidat, String> pMapcandidat) {
         this.mIdvote = pIdvote;
         this.mNomvote = pNomvote;
         this.mDescriptionvote = pDescriptionvote;
         this.mDatedebut = pDatedebut;
         this.mDatefin = pDatefin;
         this.mResultvote = pResultvote;
+        this.mType = pType;
+        this.mRegle = pRegle;
         this.mStatusvote = pStatusvote;
         this.mOrganisateur = pOrganisateur;
         this.mMapvote = pMapvote;
@@ -77,12 +81,28 @@ public class CVote {
         this.mDatefin = pDatefin;
     }
 
-    public String getResultvote() {
+    public CResultat getResultvote() {
         return mResultvote;
     }
 
-    public void setResultvote(String pResultvote) {
+    public void setResultvote(CResultat pResultvote) {
         this.mResultvote = pResultvote;
+    }
+
+    public CType getType() {
+        return mType;
+    }
+
+    public void setType(CType pType) {
+        this.mType = pType;
+    }
+
+    public CRegle getmRegle() {
+        return mRegle;
+    }
+
+    public void setmRegle(CRegle mRegle) {
+        this.mRegle = mRegle;
     }
 
     public String getStatusvote() {
@@ -163,6 +183,8 @@ public class CVote {
                 ", mDatedebut='" + mDatedebut + '\'' +
                 ", mDatefin='" + mDatefin + '\'' +
                 ", mResultvote='" + mResultvote + '\'' +
+                ", mType='" + mType + '\'' +
+                ", mRegle='" + mRegle + '\'' +
                 ", mStatusvote='" + mStatusvote + '\'' +
                 ", mOrganisateur=" + mOrganisateur +
                 ", mMapvote=" + mMapvote +

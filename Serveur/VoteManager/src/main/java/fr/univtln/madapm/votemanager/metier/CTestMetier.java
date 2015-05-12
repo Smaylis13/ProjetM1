@@ -10,6 +10,7 @@ import fr.univtln.madapm.votemanager.metier.user.CGroupe;
 import fr.univtln.madapm.votemanager.metier.user.COrganisateur;
 import fr.univtln.madapm.votemanager.metier.user.CParticipant;
 import fr.univtln.madapm.votemanager.metier.vote.CCandidat;
+import fr.univtln.madapm.votemanager.metier.vote.CType;
 import fr.univtln.madapm.votemanager.metier.vote.CVote;
 
 /**
@@ -50,7 +51,9 @@ public class CTestMetier {
          * Création d'un vote
          */
 
-        CVote vote1 = new CVote(1, "Vote", "Vote test", "aujourd'hui", "aujourd'hui", null, "en cours",
+        CType type = new CType(1, "type1", "type");
+
+        CVote vote1 = new CVote(1, "Vote", "Vote test", "aujourd'hui", "aujourd'hui", null, type, null, null,
                 organisateur, organisateur.getGroupe().getMapgroupe(), mapCandidat);
 
         System.out.println("\nCréation du vote\n"+vote1);
