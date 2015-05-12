@@ -1,4 +1,4 @@
-package fr.univtln.madapm.votemanager.metier.rest;
+package fr.univtln.madapm.votemanager.rest;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

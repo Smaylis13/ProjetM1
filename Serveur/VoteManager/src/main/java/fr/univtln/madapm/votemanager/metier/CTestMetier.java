@@ -5,6 +5,7 @@ package fr.univtln.madapm.votemanager.metier;
  * copyright Christian
  */
 
+import fr.univtln.madapm.votemanager.metier.json.CJson;
 import fr.univtln.madapm.votemanager.metier.user.CGroupe;
 import fr.univtln.madapm.votemanager.metier.user.COrganisateur;
 import fr.univtln.madapm.votemanager.metier.user.CParticipant;
@@ -70,6 +71,11 @@ public class CTestMetier {
         vote1.voteOrReplaceVote(participant1, "<Vote>cerise</Vote>");
 
         System.out.println("Le participant 1 change son vote pour ce vote"+vote1);
+
+        CJson json = new CJson();
+        json.objectToJson(candidat1);
+
+        json.jsonToObject("CCandidat", "Candidat");
 
 
         System.out.println("Fin du programme test métier");
