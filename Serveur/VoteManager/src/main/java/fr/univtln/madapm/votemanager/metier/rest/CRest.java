@@ -9,7 +9,7 @@ import javax.ws.rs.Produces;
  * copyright Christian
  */
 
-@Path("test")
+@Path("/test")
 public class CRest {
 
     // TODO: update the class to suit your needs
