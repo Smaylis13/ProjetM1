@@ -15,34 +15,34 @@ public class CCandidat {
     private String mNomcandidat;
     private String mDescriptioncandidat;
 
-    public CCandidat(int mIdcandidat, String mNomcandidat, String mDescriptioncandidat) {
-        this.mIdcandidat = mIdcandidat;
-        this.mNomcandidat = mNomcandidat;
-        this.mDescriptioncandidat = mDescriptioncandidat;
+    public CCandidat(int pIdcandidat, String pNomcandidat, String pDescriptioncandidat) {
+        this.mIdcandidat = pIdcandidat;
+        this.mNomcandidat = pNomcandidat;
+        this.mDescriptioncandidat = pDescriptioncandidat;
     }
 
-    public int getmIdcandidat() {
+    public int getIdcandidat() {
         return mIdcandidat;
     }
 
-    public void setmIdcandidat(int mIdcandidat) {
-        this.mIdcandidat = mIdcandidat;
+    public void setIdcandidat(int pIdcandidat) {
+        this.mIdcandidat = pIdcandidat;
     }
 
-    public String getmNomcandidat() {
+    public String getNomcandidat() {
         return mNomcandidat;
     }
 
-    public void setmNomcandidat(String mNomcandidat) {
-        this.mNomcandidat = mNomcandidat;
+    public void setNomcandidat(String pNomcandidat) {
+        this.mNomcandidat = pNomcandidat;
     }
 
-    public String getmDescriptioncandidat() {
+    public String getDescriptioncandidat() {
         return mDescriptioncandidat;
     }
 
-    public void setmDescriptioncandidat(String mDescriptioncandidat) {
-        this.mDescriptioncandidat = mDescriptioncandidat;
+    public void setDescriptioncandidat(String pDescriptioncandidat) {
+        this.mDescriptioncandidat = pDescriptioncandidat;
     }
 
     @Override

@@ -22,99 +22,99 @@ public class CVote {
     private CMap<CParticipant, String> mMapvote = new CMap<CParticipant,String>();
     private CMap<CCandidat, String> mMapcandidat = new CMap<CCandidat, String>();
 
-    public CVote(int mIdvote, String mNomvote, String mDescriptionvote, String mDatedebut, String mDatefin,
-                 String mResultvote, String mStatusvote, COrganisateur mOrganisateur, CMap<CParticipant, String> mMapvote,
-                 CMap<CCandidat, String> mMapcandidat) {
-        this.mIdvote = mIdvote;
-        this.mNomvote = mNomvote;
-        this.mDescriptionvote = mDescriptionvote;
-        this.mDatedebut = mDatedebut;
-        this.mDatefin = mDatefin;
-        this.mResultvote = mResultvote;
-        this.mStatusvote = mStatusvote;
-        this.mOrganisateur = mOrganisateur;
-        this.mMapvote = mMapvote;
-        this.mMapcandidat = mMapcandidat;
+    public CVote(int pIdvote, String pNomvote, String pDescriptionvote, String pDatedebut, String pDatefin,
+                 String pResultvote, String pStatusvote, COrganisateur pOrganisateur, CMap<CParticipant, String> pMapvote,
+                 CMap<CCandidat, String> pMapcandidat) {
+        this.mIdvote = pIdvote;
+        this.mNomvote = pNomvote;
+        this.mDescriptionvote = pDescriptionvote;
+        this.mDatedebut = pDatedebut;
+        this.mDatefin = pDatefin;
+        this.mResultvote = pResultvote;
+        this.mStatusvote = pStatusvote;
+        this.mOrganisateur = pOrganisateur;
+        this.mMapvote = pMapvote;
+        this.mMapcandidat = pMapcandidat;
     }
 
-    public int getmIdvote() {
+    public int getIdvote() {
         return mIdvote;
     }
 
-    public void setmIdvote(int mIdvote) {
-        this.mIdvote = mIdvote;
+    public void setIdvote(int pIdvote) {
+        this.mIdvote = pIdvote;
     }
 
-    public String getmNomvote() {
+    public String getNomvote() {
         return mNomvote;
     }
 
-    public void setmNomvote(String mNomvote) {
-        this.mNomvote = mNomvote;
+    public void setNomvote(String pNomvote) {
+        this.mNomvote = pNomvote;
     }
 
-    public String getmDescriptionvote() {
+    public String getDescriptionvote() {
         return mDescriptionvote;
     }
 
-    public void setmDescriptionvote(String mDescriptionvote) {
-        this.mDescriptionvote = mDescriptionvote;
+    public void setDescriptionvote(String pDescriptionvote) {
+        this.mDescriptionvote = pDescriptionvote;
     }
 
-    public String getmDatedebut() {
+    public String getDatedebut() {
         return mDatedebut;
     }
 
-    public void setmDatedebut(String mDatedebut) {
-        this.mDatedebut = mDatedebut;
+    public void setDatedebut(String pDatedebut) {
+        this.mDatedebut = pDatedebut;
     }
 
-    public String getmDatefin() {
+    public String getDatefin() {
         return mDatefin;
     }
 
-    public void setmDatefin(String mDatefin) {
-        this.mDatefin = mDatefin;
+    public void setDatefin(String pDatefin) {
+        this.mDatefin = pDatefin;
     }
 
-    public String getmResultvote() {
+    public String getResultvote() {
         return mResultvote;
     }
 
-    public void setmResultvote(String mResultvote) {
-        this.mResultvote = mResultvote;
+    public void setResultvote(String pResultvote) {
+        this.mResultvote = pResultvote;
     }
 
-    public String getmStatusvote() {
+    public String getStatusvote() {
         return mStatusvote;
     }
 
-    public void setmStatusvote(String mStatusvote) {
-        this.mStatusvote = mStatusvote;
+    public void setStatusvote(String pStatusvote) {
+        this.mStatusvote = pStatusvote;
     }
 
-    public COrganisateur getmOrganisateur() {
+    public COrganisateur getOrganisateur() {
         return mOrganisateur;
     }
 
-    public void setmOrganisateur(COrganisateur mOrganisateur) {
-        this.mOrganisateur = mOrganisateur;
+    public void setOrganisateur(COrganisateur pOrganisateur) {
+        this.mOrganisateur = pOrganisateur;
     }
 
-    public CMap<CParticipant, String> getmMapvote() {
+    public CMap<CParticipant, String> getMapvote() {
         return mMapvote;
     }
 
-    public void setmMapvote(CMap<CParticipant, String> mMapvote) {
-        this.mMapvote = mMapvote;
+    public void setMapvote(CMap<CParticipant, String> pMapvote) {
+        this.mMapvote = pMapvote;
     }
 
-    public CMap<CCandidat, String> getmMapcandidat() {
+    public CMap<CCandidat, String> getMapcandidat() {
         return mMapcandidat;
     }
 
-    public void setmMapcandidat(CMap<CCandidat, String> mMapcandidat) {
-        this.mMapcandidat = mMapcandidat;
+    public void setMapcandidat(CMap<CCandidat, String> pMapcandidat) {
+        this.mMapcandidat = pMapcandidat;
     }
 
     /**
@@ -131,7 +131,7 @@ public class CVote {
      * @param puser
      */
     public void deleteParticipant(CParticipant puser){
-        puser.setmVote("Abstention");
+        puser.setVote("Abstention");
         this.mMapvote.remove(puser);
     }
 
@@ -140,7 +140,7 @@ public class CVote {
      * @param puser
      */
     public void deleteVote(CParticipant puser){
-        puser.setmVote("Abstention");
+        puser.setVote("Abstention");
         this.mMapvote.replace(puser, this.mMapvote.get(puser), "Abstention");
     }
 
@@ -150,7 +150,7 @@ public class CVote {
      * @param pstring
      */
     public void voteOrReplaceVote(CParticipant puser, String pstring){
-        puser.setmVote(pstring);
+        puser.setVote(pstring);
         this.mMapvote.replace(puser, this.mMapvote.get(puser), pstring);
     }
 

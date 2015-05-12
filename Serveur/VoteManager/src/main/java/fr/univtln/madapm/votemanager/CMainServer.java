@@ -10,6 +10,9 @@ import javax.ws.rs.core.Application;
 import javax.ws.rs.core.UriBuilder;
 import java.io.IOException;
 import java.net.URI;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 /**
  * Created by civars169 on 04/05/15.
@@ -53,6 +56,18 @@ public class CMainServer extends Application {
 
         System.out.println("Connection à la base de donnée");
 
+        String url = "jdbc:mysql://localhost/VoteManager";
+        String login = "server";
+        String password = "root";
+        Connection connection = null;
+
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = DriverManager.getConnection(url, login, password);
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+
         // Grizzly 2 initialization
         HttpServer httpServer = startServer();
         System.out.println(String.format("Jersey app started with WADL available at "
@@ -67,6 +82,16 @@ public class CMainServer extends Application {
         System.in.read();
         //httpServer.stop();
         httpServer.shutdownNow();
+        System.out.println("Serveur off");
+
+        System.out.println("Fermeture connection BDD");
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
 
         System.out.println("Fin de VoteManager");
     }

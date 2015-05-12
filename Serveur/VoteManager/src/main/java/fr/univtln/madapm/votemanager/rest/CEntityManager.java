@@ -12,7 +12,7 @@ import javax.persistence.Persistence;
 public class CEntityManager {
 
     EntityManagerFactory emf = Persistence
-            .createEntityManagerFactory("testpostgresqllocal");
+            .createEntityManagerFactory("votemanager");
     EntityManager em = emf.createEntityManager();
 
     EntityTransaction transac = em.getTransaction();

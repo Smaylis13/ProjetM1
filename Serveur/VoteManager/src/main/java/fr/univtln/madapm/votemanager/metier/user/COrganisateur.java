@@ -8,17 +8,17 @@ public class COrganisateur extends CUser {
 
     private CGroupe mGroupe; //défini les contacts d'un organisateur en vue d'un vote.
 
-    public COrganisateur(int mId, String mEmail, String mPassword, CGroupe mGroupe) {
-        super(mId, mEmail, mPassword);
-        this.mGroupe = mGroupe;
+    public COrganisateur(int pId, String pEmail, String pPassword, CGroupe pGroupe) {
+        super(pId, pEmail, pPassword);
+        this.mGroupe = pGroupe;
     }
 
-    public CGroupe getmGroupe() {
+    public CGroupe getGroupe() {
         return mGroupe;
     }
 
-    public void setmGroupe(CGroupe mGroupe) {
-        this.mGroupe = mGroupe;
+    public void setGroupe(CGroupe pGroupe) {
+        this.mGroupe = pGroupe;
     }
 
     @Override
