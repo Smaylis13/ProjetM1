@@ -21,6 +21,13 @@ public class CCandidate {
         this.mDescriptioncandidat = pDescriptioncandidat;
     }
 
+    public CCandidate(String pNomcandidat) {
+        this.mNomcandidat = pNomcandidat;
+    }
+
+    public CCandidate() {
+    }
+
     public int getIdcandidat() {
         return mIdcandidat;
     }
@@ -43,6 +50,30 @@ public class CCandidate {
 
     public void setDescriptioncandidat(String pDescriptioncandidat) {
         this.mDescriptioncandidat = pDescriptioncandidat;
+    }
+
+    @Override
+    public boolean equals(Object pobject) {
+        if (this == pobject) return true;
+        if (pobject == null || getClass() != pobject.getClass()) return false;
+
+        CCandidate cCandidat = (CCandidate) pobject;
+
+        if (mIdcandidat != cCandidat.mIdcandidat) return false;
+        if (mDescriptioncandidat != null ? !mDescriptioncandidat.equals(cCandidat.mDescriptioncandidat)
+                : cCandidat.mDescriptioncandidat != null)
+            return false;
+        if (!mNomcandidat.equals(cCandidat.mNomcandidat)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = mIdcandidat;
+        result = 31 * result + mNomcandidat.hashCode();
+        result = 31 * result + (mDescriptioncandidat != null ? mDescriptioncandidat.hashCode() : 0);
+        return result;
     }
 
     @Override

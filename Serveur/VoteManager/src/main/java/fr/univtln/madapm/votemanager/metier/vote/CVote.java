@@ -21,13 +21,13 @@ public class CVote {
     private String mStatusvote;
 
     private COrganizer mOrganisateur;
-    private CMap<CParticipant, String> mMapvote = new CMap<>();
+    private CMap<CParticipant, CChoix> mMapvote = new CMap<>();
     private CMap<CCandidate, String> mMapcandidat = new CMap<>();
 
     public CVote(int pIdvote, String pNomvote, String pDescriptionvote, String pDatedebut, String pDatefin,
                  CResult pResultvote, CType pType, CMap<CRule, String> pRegle, String pStatusvote,
                  COrganizer pOrganisateur,
-                 CMap<CParticipant, String> pMapvote, CMap<CCandidate, String> pMapcandidat) {
+                 CMap<CParticipant, CChoix> pMapvote, CMap<CCandidate, String> pMapcandidat) {
         this.mIdvote = pIdvote;
         this.mNomvote = pNomvote;
         this.mDescriptionvote = pDescriptionvote;
@@ -122,11 +122,11 @@ public class CVote {
         this.mOrganisateur = pOrganisateur;
     }
 
-    public CMap<CParticipant, String> getMapvote() {
+    public CMap<CParticipant, CChoix> getMapvote() {
         return mMapvote;
     }
 
-    public void setMapvote(CMap<CParticipant, String> pMapvote) {
+    public void setMapvote(CMap<CParticipant, CChoix> pMapvote) {
         this.mMapvote = pMapvote;
     }
 
@@ -141,10 +141,10 @@ public class CVote {
     /**
      * Ajoute un participant supplémentaire pour le vote
      * @param puser Participant concerné
-     * @param pstring Vote de l'partivipant
+     * @param pchoix Vote de l'partivipant
      */
-    public void addParticipant(CParticipant puser, String pstring){
-        this.mMapvote.put(puser, pstring);
+    public void addParticipant(CParticipant puser, CChoix pchoix){
+        this.mMapvote.put(puser, pchoix);
     }
 
     /**
@@ -162,7 +162,7 @@ public class CVote {
      */
     public void deleteVote(CParticipant puser){
         puser.setMonVote("Abstention");
-        this.mMapvote.replace(puser, this.mMapvote.get(puser), "Abstention");
+        //this.mMapvote.replace(puser, this.mMapvote.get(puser), "Abstention"); TODO mettre à jour
     }
 
     /**
@@ -172,7 +172,7 @@ public class CVote {
      */
     public void voteOrReplaceVote(CParticipant puser, String pstring){
         puser.setMonVote(pstring);
-        this.mMapvote.replace(puser, this.mMapvote.get(puser), pstring);
+        //this.mMapvote.replace(puser, this.mMapvote.get(puser), pstring); TODO mettre à jour
     }
 
     @Override
