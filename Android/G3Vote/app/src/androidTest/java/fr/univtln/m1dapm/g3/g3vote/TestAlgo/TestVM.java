@@ -1,8 +1,12 @@
-package fr.univtln.m1dapm.g3.g3vote.Algorithme.VoteMajoritaire;
+package fr.univtln.m1dapm.g3.g3vote.TestAlgo;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import fr.univtln.m1dapm.g3.g3vote.Algorithme.VoteMajoritaire.CAlgoVoteMaj;
+import fr.univtln.m1dapm.g3.g3vote.Algorithme.VoteMajoritaire.CChoixVM;
+import fr.univtln.m1dapm.g3.g3vote.Algorithme.VoteMajoritaire.CVotantVM;
 
 /**
  * Created by lyamsi on 09/05/15.

@@ -1,7 +1,10 @@
-package fr.univtln.m1dapm.g3.g3vote.Algorithme.Borda;
+package fr.univtln.m1dapm.g3.g3vote.TestAlgo;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import fr.univtln.m1dapm.g3.g3vote.Algorithme.Borda.CAlgoBorda;
+import fr.univtln.m1dapm.g3.g3vote.Algorithme.Borda.CCandidatBorda;
 
 /**
  * Created by lyamsi on 12/05/15.
