@@ -47,6 +47,7 @@ public class CAlgoBorda {
     public CCandidatBorda borda(){
         Map<CCandidatBorda,Integer> result = new HashMap<CCandidatBorda,Integer>();
         List<CCandidatBorda> candidates = mClassementNb.keySet().iterator().next();
+        int max = 0;CCandidatBorda vainqueur = null;
         for (CCandidatBorda c : candidates) {
             int value=0;
             for (Map.Entry<List<CCandidatBorda>, Integer> element : mClassementNb.entrySet()){
@@ -55,16 +56,21 @@ public class CAlgoBorda {
             }
             c.setmTotal(value);
             result.put(c,value);
+            // chercher le max
+            if (value > max){
+                max = value;
+                vainqueur = c;
+            }
 
         }
         // chercher le max
-        int max = 0;CCandidatBorda vainqueur = null;
+       /* int max = 0;CCandidatBorda vainqueur = null;
         for (Map.Entry<CCandidatBorda, Integer> element : result.entrySet()) {
             if ( element.getValue() > max){
                 max = element.getValue();
                 vainqueur = element.getKey();
             }
-        }
+        }*/
         return vainqueur;
     }
 

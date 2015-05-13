@@ -188,7 +188,7 @@ public class CAlgoVoteMaj { //extends AAlgorithme {
                 vainqueurs.add(c);
             }
         }
-        if (vainqueurs.size() <= 1 ){//s'il exite qu'un seul vainqueur on sort
+        if (vainqueurs.size() <  2 ){//s'il exite qu'un seul vainqueur on sort
             return vainqueur;
         }
 
