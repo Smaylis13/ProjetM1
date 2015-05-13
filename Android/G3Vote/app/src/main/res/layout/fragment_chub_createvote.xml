@@ -1,0 +1,101 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="fr.univtln.chemon682.testuig3.CHubActivity$CreateVotesFragment">
+
+    <EditText
+        android:id="@+id/voteNameInput"
+        android:hint="@string/voteNameHint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/voteDateBeginText"
+        android:text="@string/voteDateBegin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_below="@+id/voteNameInput"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="27dp"
+        android:textSize="18sp" />
+
+    <!--TODO:add an icon to this button that looks like a calendar-->
+    <Button
+        android:id="@+id/bVoteDateBegin"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Choix date "
+        android:onClick="showDateBeginPickerDialog"
+        android:layout_below="@+id/voteDateBeginText" />
+
+    <TextView
+        android:id="@+id/voteDateEndText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/voteDateEnd"
+        android:layout_alignTop="@+id/voteDateBeginText"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:textSize="18sp" />
+
+    <!--TODO:add an icon to this button that looks like a calendar-->
+    <Button
+        android:id="@+id/bVoteDateEnd"
+        android:text="Choix date "
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/voteDateEndText"
+        android:layout_alignRight="@+id/voteNameInput"
+        android:layout_alignEnd="@+id/voteNameInput"
+        android:onClick="showDateEndPickerDialog"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/bVoteDateBegin">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/validationText"
+            android:id="@+id/bVoteTypeValidate"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Large Text"
+            android:id="@+id/describeVoteType"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+
+        <Spinner
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/voteTypeList"
+            android:clickable="true"
+            android:minHeight="20dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+    </RelativeLayout>
+
+
+</RelativeLayout>

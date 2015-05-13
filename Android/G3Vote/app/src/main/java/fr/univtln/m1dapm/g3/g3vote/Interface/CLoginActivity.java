@@ -44,4 +44,10 @@ public class CLoginActivity extends AppCompatActivity {
         Intent intent = new Intent(this,CSubActivity.class);
         startActivity(intent);
     }
+
+    //gere le clic sur le bouton se connecter
+    public void Log(View view) {
+        Intent intent = new Intent(this,CHubActivity.class);
+        startActivity(intent);
+    }
 }

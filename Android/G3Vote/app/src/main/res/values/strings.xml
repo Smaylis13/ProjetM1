@@ -1,15 +1,36 @@
 <resources>
-    <string name="app_name">G3Vote</string>
+    <string name="app_name">EVS</string>
+    <string name="title_activity_csub">EVS Inscription</string>
+    <string name="title_activity_chub">EVS Acceuil</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="mailInput">Mail</string>
-    <string name="passwordInput" >Mot de passe</string>
-    <string name="title_activity_clogin">Login</string>
-    <string name="title_activity_csub">Inscription</string>
+
     <string name="mailHint">Mail</string>
-    <string name="passHint">Mot de passe</string>
+    <string name="passHint">Mot de Passe</string>
     <string name="bLogText">Se connecter</string>
     <string name="bSubText">S\'inscrire</string>
     <string name="bSubValidationText">Valider</string>
+
+    <!--nom des tab de la barre de tab -->
+    <string name="title_section1">Mes Votes</string>
+    <string name="title_section2">Creer Vote</string>
+    <string name="title_section3">Contacts</string>
+    <string name="hubText">Bienvenue</string>
+    <string name="hubText2">Mes Votes</string>
+    <string name="hubText3">Contacts</string>
+    <string name="hubText4">Create VOTES</string>
+    <string name="title_activity_ckyvote">Vote KemenyYoung</string>
+    <string name="title_activity_stvvote">Vote STV</string>
+    <string name="title_activity_majority_vote">Vote Majoritaire</string>
+    <string name="voteNameHint">Nom du vote</string>
+    <string name="voteDateBegin">Date de début</string>
+    <string name="voteDateEnd">Date de fin</string>
+    <string name="title_activity_gg">gg</string>
+    <string name="validationText">Valider</string>
+
+    <!-- description des votes -->
+    <string name="sTV">le vote STV sert a blablabla</string>
+    <string name="kemenyYoung">le vote KY sert a blablabla</string>
+    <string name="jugementMajority">le vote JM sert a blablabla</string>
 </resources>
