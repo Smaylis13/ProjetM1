@@ -21,8 +21,8 @@ public class CVote {
     private String mStatusvote;
 
     private COrganisateur mOrganisateur;
-    private CMap<CParticipant, String> mMapvote = new CMap<CParticipant,String>();
-    private CMap<CCandidat, String> mMapcandidat = new CMap<CCandidat, String>();
+    private CMap<CParticipant, String> mMapvote = new CMap<>();
+    private CMap<CCandidat, String> mMapcandidat = new CMap<>();
 
     public CVote(int pIdvote, String pNomvote, String pDescriptionvote, String pDatedebut, String pDatefin,
                  CResultat pResultvote, CType pType, CMap<CRegle, String> pRegle, String pStatusvote,
@@ -140,8 +140,8 @@ public class CVote {
 
     /**
      * Ajoute un participant supplémentaire pour le vote
-     * @param puser
-     * @param pstring
+     * @param puser Participant concerné
+     * @param pstring Vote de l'partivipant
      */
     public void addParticipant(CParticipant puser, String pstring){
         this.mMapvote.put(puser, pstring);
@@ -149,7 +149,7 @@ public class CVote {
 
     /**
      * Supprime un participant à un vote
-     * @param puser
+     * @param puser Participant concerné
      */
     public void deleteParticipant(CParticipant puser){
         puser.setMonVote("Abstention");
@@ -158,7 +158,7 @@ public class CVote {
 
     /**
      * Suprime le vote d'un utilisateur
-     * @param puser
+     * @param puser Participant concerné
      */
     public void deleteVote(CParticipant puser){
         puser.setMonVote("Abstention");
@@ -167,8 +167,8 @@ public class CVote {
 
     /**
      * Vote ou modification d'un vote d'un utilisateur
-     * @param puser
-     * @param pstring
+     * @param puser Participant concerné
+     * @param pstring Vote du participant
      */
     public void voteOrReplaceVote(CParticipant puser, String pstring){
         puser.setMonVote(pstring);
