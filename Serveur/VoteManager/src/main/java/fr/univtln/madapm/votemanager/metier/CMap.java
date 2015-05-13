@@ -8,7 +8,7 @@ import java.util.*;
  */
 public class CMap<I, O> implements Map<I, O> {
 
-    protected Map<I, O> map = new HashMap<I, O>();
+    private Map<I, O> map = new HashMap<>();
 
     public CMap() {}
 
@@ -81,12 +81,12 @@ public class CMap<I, O> implements Map<I, O> {
 
     /**
      * Surcharge de toString pour affichage
-     * @return
+     * @return Affichache en texte de la Map
      */
     public String toString(){
         //Lambda expression
         String str = "\n";
-        this.map.forEach( (I x, O y) -> {System.out.println(x + " : " + y);});
+        this.map.forEach( (I x, O y) -> System.out.println(x + " : " + y));
         return str;
     }
 

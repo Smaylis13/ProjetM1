@@ -1,4 +1,4 @@
-package fr.univtln.m1dapm.g3.g3vote.Algorithme.kemeny_young;
+package fr.univtln.m1dapm.g3.g3vote.Algorithme.KemenyYoung;
 
 import java.util.ArrayList;
 import java.util.List;

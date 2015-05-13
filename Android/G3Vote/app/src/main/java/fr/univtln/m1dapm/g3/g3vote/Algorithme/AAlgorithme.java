@@ -25,7 +25,7 @@ public abstract class AAlgorithme {
     }
 
     public AAlgorithme(CVote pVote) {
-        this.mVote = mVote;
+        this.mVote = pVote;
     }
 
     /// Methode de mise en place des regles

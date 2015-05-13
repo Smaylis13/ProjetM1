@@ -17,16 +17,17 @@ import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
  */
 public class CAlgoSTV extends AAlgorithme {
 
-    int mQuota, mNbElu, mNbVote;
+    protected int mQuota, mNbElu, mNbVote;
 
-    Map<CChoix<List>, Integer> mChoice;
+    protected Map<CChoix<List>, Integer> mChoice;
 
     public CAlgoSTV() {
         super();
     }
 
-    public CAlgoSTV(CVote pVote) {
+    public CAlgoSTV(CVote pVote, int pNbElu) {
         super(pVote);
+        mNbElu = pNbElu;
     }
 
 
@@ -96,29 +97,29 @@ public class CAlgoSTV extends AAlgorithme {
     }
 
     /// Methode de reattribution des voix en plus d'un candidat elu
-    private Map<CCandidat, Integer> distribSurplus(Map<CCandidat, Integer> pCandVote, CCandidat pCAndElu)
+    private Map<CCandidat, Integer> distribSurplus(Map<CCandidat, Integer> pCandVote, CCandidat pCandElu)
     {
         Map<CCandidat, Integer> lCandVote = new HashMap<CCandidat, Integer>(pCandVote);
         int lSurplus, lRatio;
 
-        lSurplus = (int)pCandVote.get(pCAndElu) - mQuota;
+        lSurplus = pCandVote.get(pCandElu) - mQuota;
 
         /// Parcours de la liste des choix
         for (CChoix<List> choix : mChoice.keySet())
         {
-            List<CCandidat> cands = new ArrayList<CCandidat>((List)choix.getChoix());
+            List<CCandidat> cands = new ArrayList<CCandidat>(choix.getChoix());
             cands.retainAll(pCandVote.keySet());
 
             /// Le candidat elu est le premier candidat dans ce choix
-            if(cands.get(0) == pCAndElu && cands.size()>1)
+            if(cands.get(0) == pCandElu && cands.size()>1)
             {
                 /// incrementation proportionnelle du nombre de vote du second candidat
-                lRatio = mChoice.get(choix) / pCandVote.get(pCAndElu);
+                lRatio = mChoice.get(choix) / pCandVote.get(pCandElu);
                 lCandVote.put(cands.get(1), (lRatio*lSurplus) );
             }
         }
 
-        lCandVote.remove(pCAndElu);
+        lCandVote.remove(pCandElu);
 
         return lCandVote;
     }
@@ -131,7 +132,7 @@ public class CAlgoSTV extends AAlgorithme {
         /// Parcours de la liste des choix
         for (CChoix<List> choix : mChoice.keySet())
         {
-            List<CCandidat> cands = new ArrayList<CCandidat>((List)choix.getChoix());
+            List<CCandidat> cands = new ArrayList<CCandidat>(choix.getChoix());
             cands.retainAll(pCandVote.keySet());
 
             /// Le candidat elimine est le premier dans ce choix
@@ -153,7 +154,9 @@ public class CAlgoSTV extends AAlgorithme {
 
         /// Parcours de la liste du nombre de vote par candidat
         for(Map.Entry cand : pMap.entrySet()) {
-            if ((int)cand.getValue() < lMin && lMin>0)
+            if(lMin > 0)
+                lMin = (int)cand.getValue();
+            if ((int)cand.getValue() < lMin)
             {
                 lMin = (int)cand.getValue();
                 lCandElim = (CCandidat)cand.getKey();
