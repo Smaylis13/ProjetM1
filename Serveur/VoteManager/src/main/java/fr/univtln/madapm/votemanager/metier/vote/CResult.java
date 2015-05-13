@@ -8,39 +8,39 @@ import fr.univtln.madapm.votemanager.metier.CMap;
  */
 public class CResult {
 
-    private int mIdresultat;
+    private int mIdResultat;
     private String mResultat; //Résultat du vote
     private CVote mVote;
-    private CMap<CCandidate, String> mScore; //Contien les scores individuelles des candidats
+    private CMap<CCandidate, String> mScore; //Contient les scores individuels des candidats
 
-    public CResult(int pIdresultat, String pResultat, CVote pVote, CMap<CCandidate, String> pScore) {
-        this.mIdresultat = pIdresultat;
+    public CResult(int pIdResultat, String pResultat, CVote pVote, CMap<CCandidate, String> pScore) {
+        this.mIdResultat = pIdResultat;
         this.mResultat = pResultat;
         this.mVote = pVote;
         this.mScore = pScore;
     }
 
-    public int getMidresultat() {
-        return mIdresultat;
+    public int getIdResultat() {
+        return mIdResultat;
     }
 
-    public void setMidresultat(int pIdresultat) {
-        this.mIdresultat = pIdresultat;
+    public void setIdResultat(int pIdResultat) {
+        this.mIdResultat = pIdResultat;
     }
 
-    public String getMresultat() {
+    public String getResultat() {
         return mResultat;
     }
 
-    public void setMresultat(String pResultat) {
+    public void setResultat(String pResultat) {
         this.mResultat = pResultat;
     }
 
-    public CVote getMvote() {
+    public CVote getVote() {
         return mVote;
     }
 
-    public void setMvote(CVote pVote) {
+    public void setVote(CVote pVote) {
         this.mVote = pVote;
     }
 
@@ -55,7 +55,7 @@ public class CResult {
     @Override
     public String toString() {
         return "CResultat{" +
-                "midresultat=" + mIdresultat +
+                "mIdResultat=" + mIdResultat +
                 ", mresultat='" + mResultat + '\'' +
                 ", mvote=" + mVote + '\'' +
                 ", mscore=" + mScore +
