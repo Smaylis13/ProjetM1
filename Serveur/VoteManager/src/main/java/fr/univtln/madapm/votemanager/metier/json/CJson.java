@@ -17,26 +17,26 @@ import java.io.*;
  */
 public class CJson {
 
-    String slach = "\\";
+    private String mslach = "\\";
 
-    String pathFile=new File("").getAbsolutePath();
-    String pathFileLinux=pathFile.replace(slach, "/");
+    private String mpathFile=new File("").getAbsolutePath();
+    private String mpathFileLinux=mpathFile.replace(mslach, "/");
 
-    ObjectMapper mapper = new ObjectMapper();
+    ObjectMapper mmapper = new ObjectMapper();
 
     /**
      * Méthode qui converti un objet en Json et le place dans
      * le fichier correspondant au nom de sa classe
-     * @param po
+     * @param po Objet à passer en JSON
      */
     public void objectToJson(Object po){
 
-        String pathFileEnd="/src/json/"+po.getClass().getSimpleName();
+        String lpathFileEnd="/src/json/"+po.getClass().getSimpleName();
 
         Gson lgson = new Gson();
         String ljson = lgson.toJson(po);
 
-        File lfile = new File(pathFileLinux+pathFileEnd+".json");
+        File lfile = new File(mpathFileLinux+lpathFileEnd+".json");
         try {
             boolean newFile = lfile.createNewFile();
         } catch (IOException e) {
@@ -44,7 +44,7 @@ public class CJson {
         }
 
         try {
-            FileWriter writer = new FileWriter(pathFileLinux+pathFileEnd+".json");
+            FileWriter writer = new FileWriter(mpathFileLinux+lpathFileEnd+".json");
             writer.write(ljson);
             writer.close();
         } catch (IOException e) {
@@ -56,20 +56,20 @@ public class CJson {
 
     /**
      * Méthode qui reconstruit un objet via un fichier .json
-     * @param ppath
-     * @param pclass
-     * @return
+     * @param ppath Chemin du fichier .JSON
+     * @param pclass Classe de l'objet du JSON
+     * @return Objet du fichier JSON
      */
     public Object jsonToObject(String ppath, String pclass){
 
-        String pathFileEnd="/src/json/"+ppath;
+        String lpathFileEnd="/src/json/"+ppath;
 
         Gson lgson = new Gson();
 
         try {
 
             BufferedReader lbr = new BufferedReader(
-                    new FileReader(pathFileLinux+pathFileEnd+".json"));
+                    new FileReader(mpathFileLinux+lpathFileEnd+".json"));
 
             switch(pclass){
                 case "User":
