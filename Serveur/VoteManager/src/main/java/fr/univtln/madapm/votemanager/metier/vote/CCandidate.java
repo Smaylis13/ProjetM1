@@ -7,81 +7,81 @@ package fr.univtln.madapm.votemanager.metier.vote;
 
 /**
  * Un candidat est un choix lors d'un vote.
- * Example, banane et cerrise pour voter pour son fruit préféré.
+ * Exemple, banane et cerise pour voter pour son fruit préféré.
  */
 public class CCandidate {
 
-    private int mIdcandidat;
-    private String mNomcandidat;
-    private String mDescriptioncandidat;
+    private int mIdCandidat;
+    private String mNomCandidat;
+    private String mDescriptionCandidat;
 
-    public CCandidate(int pIdcandidat, String pNomcandidat, String pDescriptioncandidat) {
-        this.mIdcandidat = pIdcandidat;
-        this.mNomcandidat = pNomcandidat;
-        this.mDescriptioncandidat = pDescriptioncandidat;
+    public CCandidate(int pIdCandidat, String pNomCandidat, String pDescriptionCandidat) {
+        this.mIdCandidat = pIdCandidat;
+        this.mNomCandidat = pNomCandidat;
+        this.mDescriptionCandidat = pDescriptionCandidat;
     }
 
-    public CCandidate(String pNomcandidat) {
-        this.mNomcandidat = pNomcandidat;
+    public CCandidate(String pNomCandidat) {
+        this.mNomCandidat = pNomCandidat;
     }
 
     public CCandidate() {
     }
 
-    public int getIdcandidat() {
-        return mIdcandidat;
+    public int getIdCandidat() {
+        return mIdCandidat;
     }
 
-    public void setIdcandidat(int pIdcandidat) {
-        this.mIdcandidat = pIdcandidat;
+    public void setIdCandidat(int pIdCandidat) {
+        this.mIdCandidat = pIdCandidat;
     }
 
-    public String getNomcandidat() {
-        return mNomcandidat;
+    public String getNomCandidat() {
+        return mNomCandidat;
     }
 
-    public void setNomcandidat(String pNomcandidat) {
-        this.mNomcandidat = pNomcandidat;
+    public void setNomCandidat(String pNomCandidat) {
+        this.mNomCandidat = pNomCandidat;
     }
 
-    public String getDescriptioncandidat() {
-        return mDescriptioncandidat;
+    public String getDescriptionCandidat() {
+        return mDescriptionCandidat;
     }
 
-    public void setDescriptioncandidat(String pDescriptioncandidat) {
-        this.mDescriptioncandidat = pDescriptioncandidat;
+    public void setDescriptionCandidat(String pDescriptionCandidat) {
+        this.mDescriptionCandidat = pDescriptionCandidat;
     }
 
     @Override
-    public boolean equals(Object pobject) {
-        if (this == pobject) return true;
-        if (pobject == null || getClass() != pobject.getClass()) return false;
+    public boolean equals(Object pObject) {
+        if (this == pObject) return true;
+        if (pObject == null || getClass() != pObject.getClass()) return false;
 
-        CCandidate cCandidat = (CCandidate) pobject;
+        CCandidate cCandidat = (CCandidate) pObject;
 
-        if (mIdcandidat != cCandidat.mIdcandidat) return false;
-        if (mDescriptioncandidat != null ? !mDescriptioncandidat.equals(cCandidat.mDescriptioncandidat)
-                : cCandidat.mDescriptioncandidat != null)
+        if (mIdCandidat != cCandidat.mIdCandidat) return false;
+        if (mDescriptionCandidat != null ? !mDescriptionCandidat.equals(cCandidat.mDescriptionCandidat)
+                : cCandidat.mDescriptionCandidat != null)
             return false;
-        if (!mNomcandidat.equals(cCandidat.mNomcandidat)) return false;
+        if (!mNomCandidat.equals(cCandidat.mNomCandidat)) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = mIdcandidat;
-        result = 31 * result + mNomcandidat.hashCode();
-        result = 31 * result + (mDescriptioncandidat != null ? mDescriptioncandidat.hashCode() : 0);
+        int result = mIdCandidat;
+        result = 31 * result + mNomCandidat.hashCode();
+        result = 31 * result + (mDescriptionCandidat != null ? mDescriptionCandidat.hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString() {
         return "CCandidat{" +
-                "mIdcandidat=" + mIdcandidat +
-                ", mNomcandidat='" + mNomcandidat + '\'' +
-                ", mDescriptioncandidat='" + mDescriptioncandidat + '\'' +
+                "mIdCandidat=" + mIdCandidat +
+                ", mNomCandidat='" + mNomCandidat + '\'' +
+                ", mDescriptionCandidat='" + mDescriptionCandidat + '\'' +
                 '}';
     }
 }

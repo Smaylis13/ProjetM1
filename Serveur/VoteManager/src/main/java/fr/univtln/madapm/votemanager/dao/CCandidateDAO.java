@@ -8,4 +8,8 @@ import fr.univtln.madapm.votemanager.metier.vote.CCandidate;
  */
 public class CCandidateDAO extends CCRUDServiceBean<CCandidate> implements ICandidateDAO {
 
+    @Override
+    public CCandidate findById(int pId) {
+        return find(CCandidate.class, pId);
+    }
 }
