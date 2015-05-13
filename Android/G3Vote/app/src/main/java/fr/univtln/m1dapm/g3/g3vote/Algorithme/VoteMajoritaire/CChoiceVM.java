@@ -14,7 +14,7 @@ public class CChoiceVM {
     /**
      * Nom du candidat
      */
-    private String mNom;
+    private String mName;
     /**
      * Description du candidat
      */
@@ -23,22 +23,22 @@ public class CChoiceVM {
      * Liste des notes qui vont être donner par les élécteurs
      */
     private List<Integer> mNotes = new ArrayList<Integer>();
-    /**
-     * key : la note
-     * value : nombre de personne ayant donné cette note
-     */
-    private Map<Integer,Integer> mNbNote = new HashMap<Integer,Integer>();
+                /**
+                 * key : la note
+                 * value : nombre de personne ayant donné cette note
+                 */
+               /* private Map<Integer,Integer> mNbNote = new HashMap<Integer,Integer>();*/
     /**
      * Cette variable sera calculer au moment de l'appel de la fonction moyenneNote
      */
-    private double mMoyenne = 0.0;
+    private double mAvg = 0.0;
     /**
      * Le total des notes
      */
-    private double mSomme = 0.0;
+    private double mSum = 0.0;
 
-    public double getmSomme() {
-        return mSomme;
+    public double getmSum() {
+        return mSum;
     }
 
     /**
@@ -46,7 +46,7 @@ public class CChoiceVM {
      * @param pNom
      */
     public CChoiceVM(String pNom){
-        mNom = pNom;
+        mName = pNom;
         mDescription = "";
     }
 
@@ -56,7 +56,7 @@ public class CChoiceVM {
      * @param pDescription
      */
     public CChoiceVM(String pNom, String pDescription){
-        mNom = pNom;
+        mName = pNom;
         mDescription = pDescription;
     }
 
@@ -77,20 +77,20 @@ public class CChoiceVM {
     /**
      * Trie la liste de note par ordre croissant (Pour avoir la médiane)
      */
-    public void trieNote() {
+    public void sortNote() {
         Collections.sort(this.mNotes);
     }
 
     /**
      *
-     * @return la moyenne des notes
+     * @return la moyenne des notes obtenue
      */
     public double moyenneNote(){
         double moy = 0.0;
         if(!mNotes.isEmpty()) {
 
-            mMoyenne = sommeNote() / mNotes.size();
-            return mMoyenne;
+            mAvg = sommeNote() / mNotes.size();
+            return mAvg;
         }
         return moy;
     }
@@ -105,7 +105,7 @@ public class CChoiceVM {
             for (Integer n : mNotes) {
                 sum += n;
             }
-            mSomme = sum;
+            mSum = sum;
             return sum;
         }
         return sum;
@@ -124,8 +124,8 @@ public class CChoiceVM {
      *
      * @return Nom d'un candidat
      */
-    public String getNom() {
-        return mNom;
+    public String getName() {
+        return mName;
     }
 
     /**
@@ -140,23 +140,23 @@ public class CChoiceVM {
      *
      * @return la moyenne s'elle a été déja calculer par cette méthode "moyenneNote"
      */
-    public double getmMoyenne() {
-        return mMoyenne;
+    public double getmAvg() {
+        return mAvg;
     }
 
-    /**
-     *
-     * @return map note/nb de note
-     */
-    public Map<Integer, Integer> getNbNote() {
-        return mNbNote;
-    }
+                /**
+                 *
+                 * @return map note/nb de note
+                 */
+               /* public Map<Integer, Integer> getNbNote() {
+                    return mNbNote;
+                }*/
 
     /**
      *
      * @param pDescription
      */
-    public void setDescription(String pDescription) {
+    public void setmDescription(String pDescription) {
         this.mDescription = pDescription;
     }
 
@@ -164,15 +164,15 @@ public class CChoiceVM {
      *
      * @param pNom
      */
-    public void setNom(String pNom) {
-        this.mNom = pNom;
+    public void setmName(String pNom) {
+        this.mName = pNom;
     }
 
     @Override
     public String toString() {
         return "Candidate{" +
-                "mNom='" + mNom + '\'' +
-                ", mNotes=" + mNotes +", mSomme= " + mSomme +", mMoyenne= "+mMoyenne+
+                "mNom='" + mName + '\'' +
+                ", mNotes=" + mNotes +", mSum= " + mSum +", mAvg= "+mAvg+
                 '}';
     }
 }
