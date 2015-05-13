@@ -1,7 +1,7 @@
 package fr.univtln.madapm.votemanager.metier.vote;
 
 import fr.univtln.madapm.votemanager.metier.CMap;
-import fr.univtln.madapm.votemanager.metier.user.COrganisateur;
+import fr.univtln.madapm.votemanager.metier.user.COrganizer;
 import fr.univtln.madapm.votemanager.metier.user.CParticipant;
 
 /**
@@ -15,19 +15,19 @@ public class CVote {
     private String mDescriptionvote;
     private String mDatedebut;
     private String mDatefin;
-    private CResultat mResultvote;
+    private CResult mResultvote;
     private CType mType;
-    private CMap<CRegle, String> mRegle;
+    private CMap<CRule, String> mRegle;
     private String mStatusvote;
 
-    private COrganisateur mOrganisateur;
+    private COrganizer mOrganisateur;
     private CMap<CParticipant, String> mMapvote = new CMap<>();
-    private CMap<CCandidat, String> mMapcandidat = new CMap<>();
+    private CMap<CCandidate, String> mMapcandidat = new CMap<>();
 
     public CVote(int pIdvote, String pNomvote, String pDescriptionvote, String pDatedebut, String pDatefin,
-                 CResultat pResultvote, CType pType, CMap<CRegle, String> pRegle, String pStatusvote,
-                 COrganisateur pOrganisateur,
-                 CMap<CParticipant, String> pMapvote, CMap<CCandidat, String> pMapcandidat) {
+                 CResult pResultvote, CType pType, CMap<CRule, String> pRegle, String pStatusvote,
+                 COrganizer pOrganisateur,
+                 CMap<CParticipant, String> pMapvote, CMap<CCandidate, String> pMapcandidat) {
         this.mIdvote = pIdvote;
         this.mNomvote = pNomvote;
         this.mDescriptionvote = pDescriptionvote;
@@ -82,11 +82,11 @@ public class CVote {
         this.mDatefin = pDatefin;
     }
 
-    public CResultat getResultvote() {
+    public CResult getResultvote() {
         return mResultvote;
     }
 
-    public void setResultvote(CResultat pResultvote) {
+    public void setResultvote(CResult pResultvote) {
         this.mResultvote = pResultvote;
     }
 
@@ -98,11 +98,11 @@ public class CVote {
         this.mType = pType;
     }
 
-    public CMap<CRegle, String> getmRegle() {
+    public CMap<CRule, String> getmRegle() {
         return mRegle;
     }
 
-    public void setmRegle(CMap<CRegle, String> mRegle) {
+    public void setmRegle(CMap<CRule, String> mRegle) {
         this.mRegle = mRegle;
     }
 
@@ -114,11 +114,11 @@ public class CVote {
         this.mStatusvote = pStatusvote;
     }
 
-    public COrganisateur getOrganisateur() {
+    public COrganizer getOrganisateur() {
         return mOrganisateur;
     }
 
-    public void setOrganisateur(COrganisateur pOrganisateur) {
+    public void setOrganisateur(COrganizer pOrganisateur) {
         this.mOrganisateur = pOrganisateur;
     }
 
@@ -130,11 +130,11 @@ public class CVote {
         this.mMapvote = pMapvote;
     }
 
-    public CMap<CCandidat, String> getMapcandidat() {
+    public CMap<CCandidate, String> getMapcandidat() {
         return mMapcandidat;
     }
 
-    public void setMapcandidat(CMap<CCandidat, String> pMapcandidat) {
+    public void setMapcandidat(CMap<CCandidate, String> pMapcandidat) {
         this.mMapcandidat = pMapcandidat;
     }
 
