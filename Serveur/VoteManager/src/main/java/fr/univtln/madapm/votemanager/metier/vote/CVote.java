@@ -17,7 +17,7 @@ public class CVote {
     private String mDatefin;
     private CResultat mResultvote;
     private CType mType;
-    private CRegle mRegle;
+    private CMap<CRegle, String> mRegle;
     private String mStatusvote;
 
     private COrganisateur mOrganisateur;
@@ -25,7 +25,8 @@ public class CVote {
     private CMap<CCandidat, String> mMapcandidat = new CMap<CCandidat, String>();
 
     public CVote(int pIdvote, String pNomvote, String pDescriptionvote, String pDatedebut, String pDatefin,
-                 CResultat pResultvote, CType pType, CRegle pRegle, String pStatusvote, COrganisateur pOrganisateur,
+                 CResultat pResultvote, CType pType, CMap<CRegle, String> pRegle, String pStatusvote,
+                 COrganisateur pOrganisateur,
                  CMap<CParticipant, String> pMapvote, CMap<CCandidat, String> pMapcandidat) {
         this.mIdvote = pIdvote;
         this.mNomvote = pNomvote;
@@ -97,11 +98,11 @@ public class CVote {
         this.mType = pType;
     }
 
-    public CRegle getmRegle() {
+    public CMap<CRegle, String> getmRegle() {
         return mRegle;
     }
 
-    public void setmRegle(CRegle mRegle) {
+    public void setmRegle(CMap<CRegle, String> mRegle) {
         this.mRegle = mRegle;
     }
 
@@ -151,7 +152,7 @@ public class CVote {
      * @param puser
      */
     public void deleteParticipant(CParticipant puser){
-        puser.setVote("Abstention");
+        puser.setMonVote("Abstention");
         this.mMapvote.remove(puser);
     }
 
@@ -160,7 +161,7 @@ public class CVote {
      * @param puser
      */
     public void deleteVote(CParticipant puser){
-        puser.setVote("Abstention");
+        puser.setMonVote("Abstention");
         this.mMapvote.replace(puser, this.mMapvote.get(puser), "Abstention");
     }
 
@@ -170,7 +171,7 @@ public class CVote {
      * @param pstring
      */
     public void voteOrReplaceVote(CParticipant puser, String pstring){
-        puser.setVote(pstring);
+        puser.setMonVote(pstring);
         this.mMapvote.replace(puser, this.mMapvote.get(puser), pstring);
     }
 

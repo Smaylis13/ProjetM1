@@ -10,9 +10,9 @@ package fr.univtln.madapm.votemanager.metier.user;
  */
 public class CUser {
 
-    private int mId;
-    private String mEmail;
-    private String mPassword;
+    protected int mId;
+    protected String mEmail;
+    protected String mPassword;
 
     protected CUser(int pId, String pEmail, String pPassword) {
         this.mId = pId;

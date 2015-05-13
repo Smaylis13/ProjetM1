@@ -1,5 +1,7 @@
 package fr.univtln.madapm.votemanager.metier.vote;
 
+import fr.univtln.madapm.votemanager.metier.CMap;
+
 /**
  * Created by civars169 on 12/05/15.
  * copyright Christian
@@ -7,15 +9,15 @@ package fr.univtln.madapm.votemanager.metier.vote;
 public class CResultat {
 
     private int midresultat;
-    private String mresultat;
+    private String mresultat; //Résultat du vote
     private CVote mvote;
-    private CCandidat mcandidat;
+    private CMap<CCandidat, String> mscore; //Contien les scores individuelles des candidats
 
-    public CResultat(int pidresultat, String presultat, CVote pvote, CCandidat pcandidat) {
+    public CResultat(int pidresultat, String presultat, CVote pvote, CMap<CCandidat, String> pscore) {
         this.midresultat = pidresultat;
         this.mresultat = presultat;
         this.mvote = pvote;
-        this.mcandidat = pcandidat;
+        this.mscore = pscore;
     }
 
     public int getMidresultat() {
@@ -42,12 +44,12 @@ public class CResultat {
         this.mvote = pvote;
     }
 
-    public CCandidat getCandidat() {
-        return mcandidat;
+    public CMap<CCandidat, String> getCandidat() {
+        return mscore;
     }
 
-    public void setCandidat(CCandidat pcandidat) {
-        this.mcandidat = pcandidat;
+    public void setCandidat(CMap<CCandidat, String> pscore) {
+        this.mscore = pscore;
     }
 
     @Override
@@ -55,7 +57,8 @@ public class CResultat {
         return "CResultat{" +
                 "midresultat=" + midresultat +
                 ", mresultat='" + mresultat + '\'' +
-                ", mvote=" + mvote +
+                ", mvote=" + mvote + '\'' +
+                ", mscore=" + mscore +
                 '}';
     }
 }
