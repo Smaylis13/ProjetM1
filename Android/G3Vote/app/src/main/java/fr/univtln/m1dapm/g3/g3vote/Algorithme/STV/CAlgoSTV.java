@@ -33,22 +33,27 @@ public class CAlgoSTV extends AAlgorithme {
     }
 
 
-    /// Methode d'initialisation du vote (charge les regles)
     @Override
-    protected void initVote()
+    protected void initVote() {
+
+    }
+
+    /// Methode d'initialisation du vote (charge les regles)
+    //@Override
+    public void initVote(Map<CChoix<List>, Integer> pChoix)
     {
         int lNbVote=0, lNbElu=0;
         mVote.getRegles();
-        getChoix();
+        getChoix(pChoix);
 
         Calcul_Quota();
 
     }
 
     /// Charge la liste des choix faits par les votants de la BDD
-    private void getChoix()
+    public void getChoix(Map<CChoix<List>, Integer> pChoix)
     {
-        mChoix = new HashMap<CChoix<List>, Integer>();
+        mChoix = new HashMap<CChoix<List>, Integer>(pChoix);
 
         for (Map.Entry choix : mChoix.entrySet())
             mNbVote += (int)choix.getValue();
