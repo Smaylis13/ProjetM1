@@ -33,8 +33,8 @@ public class CJson {
 
         String pathFileEnd="/src/json/"+po.getClass().getSimpleName();
 
-        Gson gson = new Gson();
-        String json = gson.toJson(po);
+        Gson lgson = new Gson();
+        String ljson = lgson.toJson(po);
 
         File lfile = new File(pathFileLinux+pathFileEnd+".json");
         try {
@@ -45,13 +45,13 @@ public class CJson {
 
         try {
             FileWriter writer = new FileWriter(pathFileLinux+pathFileEnd+".json");
-            writer.write(json);
+            writer.write(ljson);
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        System.out.println(json);
+        System.out.println(ljson);
     }
 
     /**
@@ -64,26 +64,26 @@ public class CJson {
 
         String pathFileEnd="/src/json/"+ppath;
 
-        Gson gson = new Gson();
+        Gson lgson = new Gson();
 
         try {
 
-            BufferedReader br = new BufferedReader(
+            BufferedReader lbr = new BufferedReader(
                     new FileReader(pathFileLinux+pathFileEnd+".json"));
 
             switch(pclass){
                 case "User":
-                    return gson.fromJson(br, CUser.class);
+                    return lgson.fromJson(lbr, CUser.class);
                 case "Candidate":
-                    return gson.fromJson(br, CCandidat.class);
+                    return lgson.fromJson(lbr, CCandidat.class);
                 case "Vote":
-                    return gson.fromJson(br, CVote.class);
+                    return lgson.fromJson(lbr, CVote.class);
                 case "Groupe":
-                    return gson.fromJson(br, CGroupe.class);
+                    return lgson.fromJson(lbr, CGroupe.class);
                 case "Particapnt":
-                    return gson.fromJson(br, CParticipant.class);
+                    return lgson.fromJson(lbr, CParticipant.class);
                 case "Organisateur":
-                    return gson.fromJson(br, COrganisateur.class);
+                    return lgson.fromJson(lbr, COrganisateur.class);
                 default:
                     return null;
             }
