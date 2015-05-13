@@ -26,7 +26,7 @@ public class CTestMetier {
          * Création des acteurs
          */
 
-        CMap<CParticipant, String> votant = new CMap<CParticipant, String>();
+        CMap<CParticipant, String> votant = new CMap<>();
         CParticipant participant1 = new CParticipant(2, "Gérad Menvussa", "motdepasse");
         CParticipant participant2 = new CParticipant(3, "Eléanor Mamontre", "or");
         votant.put(participant1, "Pascalou");
@@ -38,7 +38,7 @@ public class CTestMetier {
 
 
 
-        CMap<CCandidat, String> mapCandidat = new CMap<CCandidat, String>();
+        CMap<CCandidat, String> mapCandidat = new CMap<>();
         CCandidat candidat1 = new CCandidat(1, "banane", "c'est une banane");
         CCandidat candidat2 = new CCandidat(2, "cerise", "miam");
         System.out.println(candidat1);

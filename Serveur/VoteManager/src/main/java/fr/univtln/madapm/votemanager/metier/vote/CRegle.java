@@ -6,35 +6,35 @@ package fr.univtln.madapm.votemanager.metier.vote;
  */
 public class CRegle {
 
-    private int midRegle;
-    private String mdescription;
+    private int mIdRegle;
+    private String mDescription;
 
-    public CRegle(int pidRegle, String pdescription) {
-        this.midRegle = pidRegle;
-        this.mdescription = pdescription;
+    public CRegle(int pIdRegle, String pDescription) {
+        this.mIdRegle = pIdRegle;
+        this.mDescription = pDescription;
     }
 
     public int getIdRegle() {
-        return midRegle;
+        return mIdRegle;
     }
 
-    public void setIdRegle(int pidRegle) {
-        this.midRegle = pidRegle;
+    public void setIdRegle(int pIdRegle) {
+        this.mIdRegle = pIdRegle;
     }
 
     public String getDescription() {
-        return mdescription;
+        return mDescription;
     }
 
-    public void setDescription(String pdescription) {
-        this.mdescription = pdescription;
+    public void setDescription(String pDescription) {
+        this.mDescription = pDescription;
     }
 
     @Override
     public String toString() {
         return "CRegle{" +
-                "midRegle=" + midRegle +
-                ", mdescription='" + mdescription + '\'' +
+                "midRegle=" + mIdRegle +
+                ", mdescription='" + mDescription + '\'' +
                 '}';
     }
 }

@@ -7,7 +7,6 @@ import fr.univtln.madapm.votemanager.metier.user.CParticipant;
 import fr.univtln.madapm.votemanager.metier.user.CUser;
 import fr.univtln.madapm.votemanager.metier.vote.CCandidat;
 import fr.univtln.madapm.votemanager.metier.vote.CVote;
-import org.codehaus.jackson.map.ObjectMapper;
 
 import java.io.*;
 
@@ -17,26 +16,24 @@ import java.io.*;
  */
 public class CJson {
 
-    private String mslach = "\\";
+    private String mSlach = "\\";
 
-    private String mpathFile=new File("").getAbsolutePath();
-    private String mpathFileLinux=mpathFile.replace(mslach, "/");
-
-    ObjectMapper mmapper = new ObjectMapper();
+    private String mPathFile=new File("").getAbsolutePath();
+    private String mPathFileLinux=mPathFile.replace(mSlach, "/");
 
     /**
      * Méthode qui converti un objet en Json et le place dans
      * le fichier correspondant au nom de sa classe
-     * @param po Objet à passer en JSON
+     * @param pobject Objet à passer en JSON
      */
-    public void objectToJson(Object po){
+    public void objectToJson(Object pobject){
 
-        String lpathFileEnd="/src/json/"+po.getClass().getSimpleName();
+        String lpathFileEnd="/src/json/"+pobject.getClass().getSimpleName();
 
         Gson lgson = new Gson();
-        String ljson = lgson.toJson(po);
+        String ljson = lgson.toJson(pobject);
 
-        File lfile = new File(mpathFileLinux+lpathFileEnd+".json");
+        File lfile = new File(mPathFileLinux+lpathFileEnd+".json");
         try {
             boolean newFile = lfile.createNewFile();
         } catch (IOException e) {
@@ -44,7 +41,7 @@ public class CJson {
         }
 
         try {
-            FileWriter writer = new FileWriter(mpathFileLinux+lpathFileEnd+".json");
+            FileWriter writer = new FileWriter(mPathFileLinux+lpathFileEnd+".json");
             writer.write(ljson);
             writer.close();
         } catch (IOException e) {
@@ -69,7 +66,7 @@ public class CJson {
         try {
 
             BufferedReader lbr = new BufferedReader(
-                    new FileReader(mpathFileLinux+lpathFileEnd+".json"));
+                    new FileReader(mPathFileLinux+lpathFileEnd+".json"));
 
             switch(pclass){
                 case "User":

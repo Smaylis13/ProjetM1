@@ -8,57 +8,57 @@ import fr.univtln.madapm.votemanager.metier.CMap;
  */
 public class CResultat {
 
-    private int midresultat;
-    private String mresultat; //Résultat du vote
-    private CVote mvote;
-    private CMap<CCandidat, String> mscore; //Contien les scores individuelles des candidats
+    private int mIdresultat;
+    private String mResultat; //Résultat du vote
+    private CVote mVote;
+    private CMap<CCandidat, String> mScore; //Contien les scores individuelles des candidats
 
-    public CResultat(int pidresultat, String presultat, CVote pvote, CMap<CCandidat, String> pscore) {
-        this.midresultat = pidresultat;
-        this.mresultat = presultat;
-        this.mvote = pvote;
-        this.mscore = pscore;
+    public CResultat(int pIdresultat, String pResultat, CVote pVote, CMap<CCandidat, String> pScore) {
+        this.mIdresultat = pIdresultat;
+        this.mResultat = pResultat;
+        this.mVote = pVote;
+        this.mScore = pScore;
     }
 
     public int getMidresultat() {
-        return midresultat;
+        return mIdresultat;
     }
 
-    public void setMidresultat(int pidresultat) {
-        this.midresultat = pidresultat;
+    public void setMidresultat(int pIdresultat) {
+        this.mIdresultat = pIdresultat;
     }
 
     public String getMresultat() {
-        return mresultat;
+        return mResultat;
     }
 
-    public void setMresultat(String presultat) {
-        this.mresultat = presultat;
+    public void setMresultat(String pResultat) {
+        this.mResultat = pResultat;
     }
 
     public CVote getMvote() {
-        return mvote;
+        return mVote;
     }
 
-    public void setMvote(CVote pvote) {
-        this.mvote = pvote;
+    public void setMvote(CVote pVote) {
+        this.mVote = pVote;
     }
 
     public CMap<CCandidat, String> getCandidat() {
-        return mscore;
+        return mScore;
     }
 
-    public void setCandidat(CMap<CCandidat, String> pscore) {
-        this.mscore = pscore;
+    public void setCandidat(CMap<CCandidat, String> pScore) {
+        this.mScore = pScore;
     }
 
     @Override
     public String toString() {
         return "CResultat{" +
-                "midresultat=" + midresultat +
-                ", mresultat='" + mresultat + '\'' +
-                ", mvote=" + mvote + '\'' +
-                ", mscore=" + mscore +
+                "midresultat=" + mIdresultat +
+                ", mresultat='" + mResultat + '\'' +
+                ", mvote=" + mVote + '\'' +
+                ", mscore=" + mScore +
                 '}';
     }
 }
