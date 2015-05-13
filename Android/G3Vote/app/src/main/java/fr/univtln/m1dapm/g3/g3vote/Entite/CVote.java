@@ -28,4 +28,20 @@ public class CVote {
 
     private CResultat mResultat;
 
+    public CVote(int mIdVote, String mNom) {
+        this.mIdVote = mIdVote;
+        this.mNom = mNom;
+    }
+
+    public List<CCandidat> getListCandidat() {
+        return mListCandidat;
+    }
+
+    public void addCandidat(CCandidat pCandidat) {
+        mListCandidat.add(pCandidat);
+    }
+
+    public List<CRegle> getRegles() {
+        return mListRegle;
+    }
 }

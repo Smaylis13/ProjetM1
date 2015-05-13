@@ -19,7 +19,7 @@ public class CAlgoSTV extends AAlgorithme {
 
     protected int mQuota, mNbElu, mNbVote;
 
-    protected Map<CChoix<List>, Integer> mChoice;
+    protected Map<CChoix<List>, Integer> mChoix;
 
     public CAlgoSTV() {
         super();
@@ -28,6 +28,8 @@ public class CAlgoSTV extends AAlgorithme {
     public CAlgoSTV(CVote pVote, int pNbElu) {
         super(pVote);
         mNbElu = pNbElu;
+
+        initVote();
     }
 
 
@@ -36,24 +38,24 @@ public class CAlgoSTV extends AAlgorithme {
     protected void initVote()
     {
         int lNbVote=0, lNbElu=0;
-        getRegles();
+        mVote.getRegles();
         getChoix();
 
         Calcul_Quota();
-    }
 
+    }
 
     /// Charge la liste des choix faits par les votants de la BDD
     private void getChoix()
     {
-        mChoice = new HashMap<CChoix<List>, Integer>();
+        mChoix = new HashMap<CChoix<List>, Integer>();
 
-        for (Map.Entry choix : mChoice.entrySet())
+        for (Map.Entry choix : mChoix.entrySet())
             mNbVote += (int)choix.getValue();
     }
 
     /// Methode de calcul de l'algorithme STV
-    private CResultat Calul(List<CChoix> pListChoix)
+    public CResultat CalculResultat()
     {
         boolean lNewElu = false;
         List<CCandidat> lElus = new ArrayList<CCandidat>();
@@ -92,7 +94,7 @@ public class CAlgoSTV extends AAlgorithme {
 
         }
 
-        lResultat.setmValeur(lElus);
+        lResultat.setValeur(lElus);
         return  lResultat;
     }
 
@@ -105,7 +107,7 @@ public class CAlgoSTV extends AAlgorithme {
         lSurplus = pCandVote.get(pCandElu) - mQuota;
 
         /// Parcours de la liste des choix
-        for (CChoix<List> choix : mChoice.keySet())
+        for (CChoix<List> choix : mChoix.keySet())
         {
             List<CCandidat> cands = new ArrayList<CCandidat>(choix.getChoix());
             cands.retainAll(pCandVote.keySet());
@@ -114,7 +116,7 @@ public class CAlgoSTV extends AAlgorithme {
             if(cands.get(0) == pCandElu && cands.size()>1)
             {
                 /// incrementation proportionnelle du nombre de vote du second candidat
-                lRatio = mChoice.get(choix) / pCandVote.get(pCandElu);
+                lRatio = mChoix.get(choix) / pCandVote.get(pCandElu);
                 lCandVote.put(cands.get(1), (lRatio*lSurplus) );
             }
         }
@@ -130,14 +132,14 @@ public class CAlgoSTV extends AAlgorithme {
         Map<CCandidat, Integer> lCandVote = new HashMap<>(pCandVote);
 
         /// Parcours de la liste des choix
-        for (CChoix<List> choix : mChoice.keySet())
+        for (CChoix<List> choix : mChoix.keySet())
         {
             List<CCandidat> cands = new ArrayList<CCandidat>(choix.getChoix());
             cands.retainAll(pCandVote.keySet());
 
             /// Le candidat elimine est le premier dans ce choix
             if(cands.get(0) == pCandElim && cands.size()>1)
-                lCandVote.put(cands.get(1), pCandVote.get(cands.get(1)) + mChoice.get(choix) ); /// Ajout du nombre de vote au second candidat
+                lCandVote.put(cands.get(1), pCandVote.get(cands.get(1)) + mChoix.get(choix) ); /// Ajout du nombre de vote au second candidat
 
         }
 
@@ -173,15 +175,15 @@ public class CAlgoSTV extends AAlgorithme {
         Map<CCandidat, Integer> lCandNbVote  = new HashMap<CCandidat, Integer>();
 
         ///Parcours de la liste des choix
-        for(Map.Entry choix : mChoice.entrySet())
+        for(Map.Entry choix : mChoix.entrySet())
         {
             CListChoix lchoix = (CListChoix) choix;
             CCandidat lCand = lchoix.getIndexValue(0);
 
             if(lCandNbVote.containsKey(lCand))
-                lCandNbVote.put(lCand, lCandNbVote.get(lCand) + mChoice.get(choix));
+                lCandNbVote.put(lCand, lCandNbVote.get(lCand) + mChoix.get(choix));
             else
-                lCandNbVote.put(lCand, mChoice.get(choix));
+                lCandNbVote.put(lCand, mChoix.get(choix));
 
             /*  REMPLISSAGE DE LA LISTE FAUX!!!!!!!!!!!!!
             if (lCandNbVote.containsKey(choix.getKey()))
