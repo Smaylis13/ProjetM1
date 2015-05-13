@@ -5,15 +5,15 @@ import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidat;
 /**
  * Created by lyamsi on 12/05/15.
  */
-public class CCandidatBorda extends CCandidat{
+public class CCandidateBorda extends CCandidat{
     private int mTotal;
 
-    public CCandidatBorda(int mId, String mNom, String mDescription) {
+    public CCandidateBorda(int mId, String mNom, String mDescription) {
         super(mId, mNom, mDescription);
         this.mTotal = 0;
     }
 
-    public CCandidatBorda(String mNom) {
+    public CCandidateBorda(String mNom) {
         super(mNom);
         this.mTotal = 0;
     }

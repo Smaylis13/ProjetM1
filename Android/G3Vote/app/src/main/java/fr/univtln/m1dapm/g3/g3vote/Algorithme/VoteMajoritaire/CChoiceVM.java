@@ -10,7 +10,7 @@ import java.util.Map;
  * Majority Judjement
  * @author lyamsi
  */
-public class CChoixVM {
+public class CChoiceVM {
     /**
      * Nom du candidat
      */
@@ -45,7 +45,7 @@ public class CChoixVM {
      * Création d'un candidat
      * @param pNom
      */
-    public CChoixVM(String pNom){
+    public CChoiceVM(String pNom){
         mNom = pNom;
         mDescription = "";
     }
@@ -55,7 +55,7 @@ public class CChoixVM {
      * @param pNom
      * @param pDescription
      */
-    public CChoixVM(String pNom, String pDescription){
+    public CChoiceVM(String pNom, String pDescription){
         mNom = pNom;
         mDescription = pDescription;
     }

@@ -8,18 +8,18 @@ import java.util.Map;
  *@author G3
  *
  */
-public class CVotantVM {///extends CUtilisateur{
+public class CVoterVM {///extends CUtilisateur{
     /**
      * MAP clé/valeur avec comme clé un candidat et comme valeur la noté attribué
      */
-    private Map<CChoixVM,Integer> mListCandidateNote = new HashMap<CChoixVM, Integer>();
-    public CVotantVM(){}
+    private Map<CChoiceVM,Integer> mListCandidateNote = new HashMap<CChoiceVM, Integer>();
+    public CVoterVM(){}
 
     /**
      *
      * @return la map clé/valeur <-> candidat/note
      */
-    public Map<CChoixVM, Integer> getMapCandidateNote() {
+    public Map<CChoiceVM, Integer> getMapCandidateNote() {
         return mListCandidateNote;
     }
 
@@ -28,7 +28,7 @@ public class CVotantVM {///extends CUtilisateur{
      * @param pNote
      * @return void
      */
-    public void addCN(CChoixVM pCandidate , int pNote){
+    public void addCN(CChoiceVM pCandidate , int pNote){
         mListCandidateNote.put(pCandidate,pNote);
     }
 }
