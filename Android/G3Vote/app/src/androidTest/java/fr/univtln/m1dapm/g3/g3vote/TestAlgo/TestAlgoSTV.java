@@ -1,9 +1,12 @@
 package fr.univtln.m1dapm.g3.g3vote.TestAlgo;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import fr.univtln.m1dapm.g3.g3vote.Algorithme.STV.CAlgoSTV;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidat;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CChoix;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CResultat;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
 
@@ -28,6 +31,10 @@ public class TestAlgoSTV {
         lVote.addCandidat(lCand5);
 
         CAlgoSTV lAlgo = new CAlgoSTV(lVote, 2);
+
+        Map<CChoix<List>, Integer> lChoix = new HashMap<CChoix<List>, Integer>();
+
+        lAlgo.initVote(lChoix);
 
         CResultat<List<CCandidat>> lListRes = new CResultat<>();
 
