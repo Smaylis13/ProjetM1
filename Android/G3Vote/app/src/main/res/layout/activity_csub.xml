@@ -7,7 +7,7 @@
     tools:context="fr.univtln.m1dapm.g3.g3vote.Interface.CSubActivity">
 
     <EditText
-        android:id="@+id/MailSubInput"
+        android:id="@+id/mailSubInput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
@@ -20,15 +20,15 @@
         android:layout_alignParentStart="true" />
 
     <EditText
-        android:id="@+id/PassSubInput"
+        android:id="@+id/passSubInput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:ems="10"
         android:hint="@string/passHint"
-        android:layout_below="@+id/MailSubInput"
-        android:layout_alignRight="@+id/MailSubInput"
-        android:layout_alignEnd="@+id/MailSubInput"
+        android:layout_below="@+id/mailSubInput"
+        android:layout_alignRight="@+id/mailSubInput"
+        android:layout_alignEnd="@+id/mailSubInput"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -38,7 +38,7 @@
         android:layout_height="wrap_content"
         android:text="@string/bSubValidationText"
 
-        android:layout_below="@+id/PassSubInput"
-        android:layout_alignRight="@+id/PassSubInput"
-        android:layout_alignEnd="@+id/PassSubInput" />
+        android:layout_below="@+id/passSubInput"
+        android:layout_alignRight="@+id/passSubInput"
+        android:layout_alignEnd="@+id/passSubInput" />
 </RelativeLayout>
