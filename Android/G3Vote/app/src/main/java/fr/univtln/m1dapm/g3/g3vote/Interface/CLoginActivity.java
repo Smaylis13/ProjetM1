@@ -1,7 +1,7 @@
 package fr.univtln.m1dapm.g3.g3vote.Interface;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -9,7 +9,7 @@ import android.view.View;
 
 import fr.univtln.m1dapm.g3.g3vote.R;
 
-public class CLoginActivity extends ActionBarActivity {
+public class CLoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
