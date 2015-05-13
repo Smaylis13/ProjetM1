@@ -1,7 +1,7 @@
 package fr.univtln.madapm.votemanager.metier.vote;
 
 import fr.univtln.madapm.votemanager.metier.CMap;
-import fr.univtln.madapm.votemanager.metier.user.COrganisateur;
+import fr.univtln.madapm.votemanager.metier.user.COrganizer;
 import fr.univtln.madapm.votemanager.metier.user.CParticipant;
 
 /**
@@ -15,19 +15,19 @@ public class CVote {
     private String mDescriptionvote;
     private String mDatedebut;
     private String mDatefin;
-    private CResultat mResultvote;
+    private CResult mResultvote;
     private CType mType;
-    private CMap<CRegle, String> mRegle;
+    private CMap<CRule, String> mRegle;
     private String mStatusvote;
 
-    private COrganisateur mOrganisateur;
-    private CMap<CParticipant, String> mMapvote = new CMap<CParticipant,String>();
-    private CMap<CCandidat, String> mMapcandidat = new CMap<CCandidat, String>();
+    private COrganizer mOrganisateur;
+    private CMap<CParticipant, CChoix> mMapvote = new CMap<>();
+    private CMap<CCandidate, String> mMapcandidat = new CMap<>();
 
     public CVote(int pIdvote, String pNomvote, String pDescriptionvote, String pDatedebut, String pDatefin,
-                 CResultat pResultvote, CType pType, CMap<CRegle, String> pRegle, String pStatusvote,
-                 COrganisateur pOrganisateur,
-                 CMap<CParticipant, String> pMapvote, CMap<CCandidat, String> pMapcandidat) {
+                 CResult pResultvote, CType pType, CMap<CRule, String> pRegle, String pStatusvote,
+                 COrganizer pOrganisateur,
+                 CMap<CParticipant, CChoix> pMapvote, CMap<CCandidate, String> pMapcandidat) {
         this.mIdvote = pIdvote;
         this.mNomvote = pNomvote;
         this.mDescriptionvote = pDescriptionvote;
@@ -82,11 +82,11 @@ public class CVote {
         this.mDatefin = pDatefin;
     }
 
-    public CResultat getResultvote() {
+    public CResult getResultvote() {
         return mResultvote;
     }
 
-    public void setResultvote(CResultat pResultvote) {
+    public void setResultvote(CResult pResultvote) {
         this.mResultvote = pResultvote;
     }
 
@@ -98,11 +98,11 @@ public class CVote {
         this.mType = pType;
     }
 
-    public CMap<CRegle, String> getmRegle() {
+    public CMap<CRule, String> getmRegle() {
         return mRegle;
     }
 
-    public void setmRegle(CMap<CRegle, String> mRegle) {
+    public void setmRegle(CMap<CRule, String> mRegle) {
         this.mRegle = mRegle;
     }
 
@@ -114,42 +114,42 @@ public class CVote {
         this.mStatusvote = pStatusvote;
     }
 
-    public COrganisateur getOrganisateur() {
+    public COrganizer getOrganisateur() {
         return mOrganisateur;
     }
 
-    public void setOrganisateur(COrganisateur pOrganisateur) {
+    public void setOrganisateur(COrganizer pOrganisateur) {
         this.mOrganisateur = pOrganisateur;
     }
 
-    public CMap<CParticipant, String> getMapvote() {
+    public CMap<CParticipant, CChoix> getMapvote() {
         return mMapvote;
     }
 
-    public void setMapvote(CMap<CParticipant, String> pMapvote) {
+    public void setMapvote(CMap<CParticipant, CChoix> pMapvote) {
         this.mMapvote = pMapvote;
     }
 
-    public CMap<CCandidat, String> getMapcandidat() {
+    public CMap<CCandidate, String> getMapcandidat() {
         return mMapcandidat;
     }
 
-    public void setMapcandidat(CMap<CCandidat, String> pMapcandidat) {
+    public void setMapcandidat(CMap<CCandidate, String> pMapcandidat) {
         this.mMapcandidat = pMapcandidat;
     }
 
     /**
      * Ajoute un participant supplémentaire pour le vote
-     * @param puser
-     * @param pstring
+     * @param puser Participant concerné
+     * @param pchoix Vote de l'partivipant
      */
-    public void addParticipant(CParticipant puser, String pstring){
-        this.mMapvote.put(puser, pstring);
+    public void addParticipant(CParticipant puser, CChoix pchoix){
+        this.mMapvote.put(puser, pchoix);
     }
 
     /**
      * Supprime un participant à un vote
-     * @param puser
+     * @param puser Participant concerné
      */
     public void deleteParticipant(CParticipant puser){
         puser.setMonVote("Abstention");
@@ -158,21 +158,21 @@ public class CVote {
 
     /**
      * Suprime le vote d'un utilisateur
-     * @param puser
+     * @param puser Participant concerné
      */
     public void deleteVote(CParticipant puser){
         puser.setMonVote("Abstention");
-        this.mMapvote.replace(puser, this.mMapvote.get(puser), "Abstention");
+        //this.mMapvote.replace(puser, this.mMapvote.get(puser), "Abstention"); TODO mettre à jour
     }
 
     /**
      * Vote ou modification d'un vote d'un utilisateur
-     * @param puser
-     * @param pstring
+     * @param puser Participant concerné
+     * @param pstring Vote du participant
      */
     public void voteOrReplaceVote(CParticipant puser, String pstring){
         puser.setMonVote(pstring);
-        this.mMapvote.replace(puser, this.mMapvote.get(puser), pstring);
+        //this.mMapvote.replace(puser, this.mMapvote.get(puser), pstring); TODO mettre à jour
     }
 
     @Override

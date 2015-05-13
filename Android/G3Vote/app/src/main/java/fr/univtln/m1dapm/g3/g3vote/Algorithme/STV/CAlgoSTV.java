@@ -17,42 +17,50 @@ import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
  */
 public class CAlgoSTV extends AAlgorithme {
 
-    int mQuota, mNbElu, mNbVote;
+    protected int mQuota, mNbElu, mNbVote;
 
-    Map<CChoix<List>, Integer> mChoice;
+    protected Map<CChoix<List>, Integer> mChoix;
 
     public CAlgoSTV() {
         super();
     }
 
-    public CAlgoSTV(CVote pVote) {
+    public CAlgoSTV(CVote pVote, int pNbElu) {
         super(pVote);
+        mNbElu = pNbElu;
+
+        initVote();
     }
 
+
+    @Override
+    protected void initVote() {
+
+    }
 
     /// Methode d'initialisation du vote (charge les regles)
-    @Override
-    protected void initVote()
+    //@Override
+    public void initVote(Map<CChoix<List>, Integer> pChoix)
     {
         int lNbVote=0, lNbElu=0;
-        getRegles();
-        getChoix();
+        mVote.getRegles();
+        getChoix(pChoix);
 
         Calcul_Quota();
+
     }
 
-
     /// Charge la liste des choix faits par les votants de la BDD
-    private void getChoix()
+    public void getChoix(Map<CChoix<List>, Integer> pChoix)
     {
-        mChoice = new HashMap<CChoix<List>, Integer>();
+        mChoix = new HashMap<CChoix<List>, Integer>(pChoix);
 
-        for (Map.Entry choix : mChoice.entrySet())
+        for (Map.Entry choix : mChoix.entrySet())
             mNbVote += (int)choix.getValue();
     }
 
     /// Methode de calcul de l'algorithme STV
-    private CResultat Calul(List<CChoix> pListChoix)
+    public CResultat CalculResultat()
     {
         boolean lNewElu = false;
         List<CCandidat> lElus = new ArrayList<CCandidat>();
@@ -91,34 +99,34 @@ public class CAlgoSTV extends AAlgorithme {
 
         }
 
-        lResultat.setmValeur(lElus);
+        lResultat.setValeur(lElus);
         return  lResultat;
     }
 
     /// Methode de reattribution des voix en plus d'un candidat elu
-    private Map<CCandidat, Integer> distribSurplus(Map<CCandidat, Integer> pCandVote, CCandidat pCAndElu)
+    private Map<CCandidat, Integer> distribSurplus(Map<CCandidat, Integer> pCandVote, CCandidat pCandElu)
     {
         Map<CCandidat, Integer> lCandVote = new HashMap<CCandidat, Integer>(pCandVote);
         int lSurplus, lRatio;
 
-        lSurplus = (int)pCandVote.get(pCAndElu) - mQuota;
+        lSurplus = pCandVote.get(pCandElu) - mQuota;
 
         /// Parcours de la liste des choix
-        for (CChoix<List> choix : mChoice.keySet())
+        for (CChoix<List> choix : mChoix.keySet())
         {
-            List<CCandidat> cands = new ArrayList<CCandidat>((List)choix.getChoix());
+            List<CCandidat> cands = new ArrayList<CCandidat>(choix.getChoix());
             cands.retainAll(pCandVote.keySet());
 
             /// Le candidat elu est le premier candidat dans ce choix
-            if(cands.get(0) == pCAndElu && cands.size()>1)
+            if(cands.get(0) == pCandElu && cands.size()>1)
             {
                 /// incrementation proportionnelle du nombre de vote du second candidat
-                lRatio = mChoice.get(choix) / pCandVote.get(pCAndElu);
+                lRatio = mChoix.get(choix) / pCandVote.get(pCandElu);
                 lCandVote.put(cands.get(1), (lRatio*lSurplus) );
             }
         }
 
-        lCandVote.remove(pCAndElu);
+        lCandVote.remove(pCandElu);
 
         return lCandVote;
     }
@@ -129,14 +137,14 @@ public class CAlgoSTV extends AAlgorithme {
         Map<CCandidat, Integer> lCandVote = new HashMap<>(pCandVote);
 
         /// Parcours de la liste des choix
-        for (CChoix<List> choix : mChoice.keySet())
+        for (CChoix<List> choix : mChoix.keySet())
         {
-            List<CCandidat> cands = new ArrayList<CCandidat>((List)choix.getChoix());
+            List<CCandidat> cands = new ArrayList<CCandidat>(choix.getChoix());
             cands.retainAll(pCandVote.keySet());
 
             /// Le candidat elimine est le premier dans ce choix
             if(cands.get(0) == pCandElim && cands.size()>1)
-                lCandVote.put(cands.get(1), pCandVote.get(cands.get(1)) + mChoice.get(choix) ); /// Ajout du nombre de vote au second candidat
+                lCandVote.put(cands.get(1), pCandVote.get(cands.get(1)) + mChoix.get(choix) ); /// Ajout du nombre de vote au second candidat
 
         }
 
@@ -153,7 +161,9 @@ public class CAlgoSTV extends AAlgorithme {
 
         /// Parcours de la liste du nombre de vote par candidat
         for(Map.Entry cand : pMap.entrySet()) {
-            if ((int)cand.getValue() < lMin && lMin>0)
+            if(lMin > 0)
+                lMin = (int)cand.getValue();
+            if ((int)cand.getValue() < lMin)
             {
                 lMin = (int)cand.getValue();
                 lCandElim = (CCandidat)cand.getKey();
@@ -170,15 +180,15 @@ public class CAlgoSTV extends AAlgorithme {
         Map<CCandidat, Integer> lCandNbVote  = new HashMap<CCandidat, Integer>();
 
         ///Parcours de la liste des choix
-        for(Map.Entry choix : mChoice.entrySet())
+        for(Map.Entry choix : mChoix.entrySet())
         {
             CListChoix lchoix = (CListChoix) choix;
             CCandidat lCand = lchoix.getIndexValue(0);
 
             if(lCandNbVote.containsKey(lCand))
-                lCandNbVote.put(lCand, lCandNbVote.get(lCand) + mChoice.get(choix));
+                lCandNbVote.put(lCand, lCandNbVote.get(lCand) + mChoix.get(choix));
             else
-                lCandNbVote.put(lCand, mChoice.get(choix));
+                lCandNbVote.put(lCand, mChoix.get(choix));
 
             /*  REMPLISSAGE DE LA LISTE FAUX!!!!!!!!!!!!!
             if (lCandNbVote.containsKey(choix.getKey()))

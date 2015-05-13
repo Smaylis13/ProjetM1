@@ -12,14 +12,15 @@ public class CAlgoBorda {
      * Clé : liste de candidat trié par les élécteurs  (plusieurs classements)
      * value : nombre de candidat ayant préféré ce classement
      */
-    private Map<List<CCandidatBorda>,Integer> mClassementNb;
+    private Map<List<CCandidateBorda>,Integer> mRankingNb;
     /**
      * La taille de List<CCandidatBorda>
      */
-    private int mSizeClassement;
+    private int mSizeRanking;
+
 
     public CAlgoBorda() {
-        mClassementNb = new HashMap<List<CCandidatBorda>,Integer>();
+        mRankingNb = new HashMap<List<CCandidateBorda>,Integer>();
     }
 
     /**
@@ -27,51 +28,47 @@ public class CAlgoBorda {
      * @param pList un classement fait par un élécteur
      * @return nombre de personne ayant fait le même classement
      */
-    public int getN(List<CCandidatBorda> pList){
-        return mClassementNb.get(pList);
+    public int getN(List<CCandidateBorda> pList){
+        return mRankingNb.get(pList);
     }
 
-    public void put(List<CCandidatBorda> pClassement){
-        if(mClassementNb.containsKey(pClassement)){
-            mClassementNb.put(pClassement, mClassementNb.get(pClassement) + 1 );
+    /**
+     * Quand une personne vote, c'est cette fonction qui devrais être appelé
+     * Elle compte en même temps le nombre de votant ayant fait ce classement
+     * @param pClassement
+     */
+    public void put(List<CCandidateBorda> pClassement){
+        if(mRankingNb.containsKey(pClassement)){
+            mRankingNb.put(pClassement, mRankingNb.get(pClassement) + 1 );
         }else{
-            mClassementNb.put(pClassement,1);
+            mRankingNb.put(pClassement,1);
         }
-        mSizeClassement = mClassementNb.size();
+        mSizeRanking = mRankingNb.size();
     }
 
     /**
      *
      * @return candidat gagnant
      */
-    public CCandidatBorda borda(){
-        Map<CCandidatBorda,Integer> result = new HashMap<CCandidatBorda,Integer>();
-        List<CCandidatBorda> candidates = mClassementNb.keySet().iterator().next();
-        int max = 0;CCandidatBorda vainqueur = null;
-        for (CCandidatBorda c : candidates) {
-            int value=0;
-            for (Map.Entry<List<CCandidatBorda>, Integer> element : mClassementNb.entrySet()){
-                int position = element.getKey().indexOf(c);
-                value += element.getValue()*(mSizeClassement-position);
+    public CCandidateBorda borda(){
+        List<CCandidateBorda> candidates = mRankingNb.keySet().iterator().next();
+        int lMax = 0;
+        CCandidateBorda lWinner = null;
+        for (CCandidateBorda c : candidates) {
+            int lValue=0;
+            for (Map.Entry<List<CCandidateBorda>, Integer> element : mRankingNb.entrySet()){
+                int lPosition = element.getKey().indexOf(c);
+                lValue += element.getValue()*(mSizeRanking-lPosition);
             }
-            c.setmTotal(value);
-            result.put(c,value);
+            c.setmTotal(lValue);
             // chercher le max
-            if (value > max){
-                max = value;
-                vainqueur = c;
+            if (lValue > lMax){
+                lMax = lValue;
+                lWinner = c;
             }
 
         }
-        // chercher le max
-       /* int max = 0;CCandidatBorda vainqueur = null;
-        for (Map.Entry<CCandidatBorda, Integer> element : result.entrySet()) {
-            if ( element.getValue() > max){
-                max = element.getValue();
-                vainqueur = element.getKey();
-            }
-        }*/
-        return vainqueur;
+        return lWinner;
     }
 
 }

@@ -10,14 +10,14 @@ import fr.univtln.madapm.votemanager.metier.CMap;
 /**
  * Un groupe correspond à une liste de contacts pour un utilisateur.
  */
-public class CGroupe {
+public class CGroup {
 
     private int mIdgroupe;
     private String mNomgroupe;
     private String mDescriptiongroupe;
     private CMap<CParticipant, String> mMapgroupe;
 
-    public CGroupe(int pIdgroupe, String pNomgroupe, String pDescriptiongroupe, CMap<CParticipant, String> pMapgroupe) {
+    public CGroup(int pIdgroupe, String pNomgroupe, String pDescriptiongroupe, CMap<CParticipant, String> pMapgroupe) {
         this.mIdgroupe = pIdgroupe;
         this.mNomgroupe = pNomgroupe;
         this.mDescriptiongroupe = pDescriptiongroupe;

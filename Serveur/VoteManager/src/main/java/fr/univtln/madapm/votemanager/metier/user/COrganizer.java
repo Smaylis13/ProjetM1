@@ -4,20 +4,20 @@ package fr.univtln.madapm.votemanager.metier.user;
  * Created by civars169 on 05/05/15.
  * copyright Christian
  */
-public class COrganisateur extends CUser {
+public class COrganizer extends CUser {
 
-    private CGroupe mGroupe; //défini les contacts d'un organisateur en vue d'un vote.
+    private CGroup mGroupe; //défini les contacts d'un organisateur en vue d'un vote.
 
-    public COrganisateur(int pId, String pEmail, String pPassword, CGroupe pGroupe) {
+    public COrganizer(int pId, String pEmail, String pPassword, CGroup pGroupe) {
         super(pId, pEmail, pPassword);
         this.mGroupe = pGroupe;
     }
 
-    public CGroupe getGroupe() {
+    public CGroup getGroupe() {
         return mGroupe;
     }
 
-    public void setGroupe(CGroupe pGroupe) {
+    public void setGroupe(CGroup pGroupe) {
         this.mGroupe = pGroupe;
     }
 

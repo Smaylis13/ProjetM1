@@ -14,11 +14,15 @@ public class CResultat<T> {
         mValeur = pValeur;
     }
 
-    public T getmValeur() {
+    public T getValeur() {
         return mValeur;
     }
 
-    public void setmValeur(T mValeur) {
-        this.mValeur = mValeur;
+    public void setValeur(T pValeur) {
+        this.mValeur = pValeur;
+    }
+
+    public void copieValeur( CResultat pResultat){
+        this.setValeur((T) pResultat.getValeur());
     }
 }

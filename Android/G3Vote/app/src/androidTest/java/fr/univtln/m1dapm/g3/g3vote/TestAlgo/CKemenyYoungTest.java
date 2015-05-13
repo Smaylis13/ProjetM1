@@ -1,8 +1,9 @@
-package fr.univtln.m1dapm.g3.g3vote.Algorithme.kemeny_young;
+package fr.univtln.m1dapm.g3.g3vote.TestAlgo;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.univtln.m1dapm.g3.g3vote.Algorithme.KemenyYoung.CKemenyYoung;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidat;
 
 /**

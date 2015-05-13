@@ -1,13 +1,12 @@
 package fr.univtln.madapm.votemanager.metier.json;
 
 import com.google.gson.Gson;
-import fr.univtln.madapm.votemanager.metier.user.CGroupe;
-import fr.univtln.madapm.votemanager.metier.user.COrganisateur;
+import fr.univtln.madapm.votemanager.metier.user.CGroup;
+import fr.univtln.madapm.votemanager.metier.user.COrganizer;
 import fr.univtln.madapm.votemanager.metier.user.CParticipant;
 import fr.univtln.madapm.votemanager.metier.user.CUser;
-import fr.univtln.madapm.votemanager.metier.vote.CCandidat;
+import fr.univtln.madapm.votemanager.metier.vote.CCandidate;
 import fr.univtln.madapm.votemanager.metier.vote.CVote;
-import org.codehaus.jackson.map.ObjectMapper;
 
 import java.io.*;
 
@@ -17,26 +16,24 @@ import java.io.*;
  */
 public class CJson {
 
-    String slach = "\\";
+    private String mSlach = "\\";
 
-    String pathFile=new File("").getAbsolutePath();
-    String pathFileLinux=pathFile.replace(slach, "/");
-
-    ObjectMapper mapper = new ObjectMapper();
+    private String mPathFile=new File("").getAbsolutePath();
+    private String mPathFileLinux=mPathFile.replace(mSlach, "/");
 
     /**
      * Méthode qui converti un objet en Json et le place dans
      * le fichier correspondant au nom de sa classe
-     * @param po
+     * @param pobject Objet à passer en JSON
      */
-    public void objectToJson(Object po){
+    public void objectToJson(Object pobject){
 
-        String pathFileEnd="/src/json/"+po.getClass().getSimpleName();
+        String lpathFileEnd="/src/json/"+pobject.getClass().getSimpleName();
 
         Gson lgson = new Gson();
-        String ljson = lgson.toJson(po);
+        String ljson = lgson.toJson(pobject);
 
-        File lfile = new File(pathFileLinux+pathFileEnd+".json");
+        File lfile = new File(mPathFileLinux+lpathFileEnd+".json");
         try {
             boolean newFile = lfile.createNewFile();
         } catch (IOException e) {
@@ -44,7 +41,7 @@ public class CJson {
         }
 
         try {
-            FileWriter writer = new FileWriter(pathFileLinux+pathFileEnd+".json");
+            FileWriter writer = new FileWriter(mPathFileLinux+lpathFileEnd+".json");
             writer.write(ljson);
             writer.close();
         } catch (IOException e) {
@@ -56,34 +53,34 @@ public class CJson {
 
     /**
      * Méthode qui reconstruit un objet via un fichier .json
-     * @param ppath
-     * @param pclass
-     * @return
+     * @param ppath Chemin du fichier .JSON
+     * @param pclass Classe de l'objet du JSON
+     * @return Objet du fichier JSON
      */
     public Object jsonToObject(String ppath, String pclass){
 
-        String pathFileEnd="/src/json/"+ppath;
+        String lpathFileEnd="/src/json/"+ppath;
 
         Gson lgson = new Gson();
 
         try {
 
             BufferedReader lbr = new BufferedReader(
-                    new FileReader(pathFileLinux+pathFileEnd+".json"));
+                    new FileReader(mPathFileLinux+lpathFileEnd+".json"));
 
             switch(pclass){
                 case "User":
                     return lgson.fromJson(lbr, CUser.class);
                 case "Candidate":
-                    return lgson.fromJson(lbr, CCandidat.class);
+                    return lgson.fromJson(lbr, CCandidate.class);
                 case "Vote":
                     return lgson.fromJson(lbr, CVote.class);
                 case "Groupe":
-                    return lgson.fromJson(lbr, CGroupe.class);
+                    return lgson.fromJson(lbr, CGroup.class);
                 case "Particapnt":
                     return lgson.fromJson(lbr, CParticipant.class);
                 case "Organisateur":
-                    return lgson.fromJson(lbr, COrganisateur.class);
+                    return lgson.fromJson(lbr, COrganizer.class);
                 default:
                     return null;
             }

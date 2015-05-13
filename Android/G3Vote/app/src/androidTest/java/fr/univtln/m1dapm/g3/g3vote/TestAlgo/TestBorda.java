@@ -1,7 +1,10 @@
-package fr.univtln.m1dapm.g3.g3vote.Algorithme.Borda;
+package fr.univtln.m1dapm.g3.g3vote.TestAlgo;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import fr.univtln.m1dapm.g3.g3vote.Algorithme.Borda.CAlgoBorda;
+import fr.univtln.m1dapm.g3.g3vote.Algorithme.Borda.CCandidatBorda;
 
 /**
  * Created by lyamsi on 12/05/15.
@@ -9,15 +12,15 @@ import java.util.List;
 public class TestBorda {
     public static void main(String[] args) {
         // 4 Candidats :
-        CCandidatBorda A = new CCandidatBorda("A");
-        CCandidatBorda B = new CCandidatBorda("B");
-        CCandidatBorda C = new CCandidatBorda("C");
-        CCandidatBorda D = new CCandidatBorda("D");
+        CCandidateBorda A = new CCandidateBorda("A");
+        CCandidateBorda B = new CCandidateBorda("B");
+        CCandidateBorda C = new CCandidateBorda("C");
+        CCandidateBorda D = new CCandidateBorda("D");
         // 4 clessemnt pour ce test
-        List<CCandidatBorda> classement1 = new ArrayList<CCandidatBorda>();
-        List<CCandidatBorda> classement2 = new ArrayList<CCandidatBorda>();
-        List<CCandidatBorda> classement3 = new ArrayList<CCandidatBorda>();
-        List<CCandidatBorda> classement4 = new ArrayList<CCandidatBorda>();
+        List<CCandidateBorda> classement1 = new ArrayList<CCandidateBorda>();
+        List<CCandidateBorda> classement2 = new ArrayList<CCandidateBorda>();
+        List<CCandidateBorda> classement3 = new ArrayList<CCandidateBorda>();
+        List<CCandidateBorda> classement4 = new ArrayList<CCandidateBorda>();
         // 1) ABCD 2) BCDA 3) CDBA 4) DCBA
         classement1.add(A);classement1.add(B);classement1.add(C);classement1.add(D);
         classement2.add(B);classement2.add(C);classement2.add(D);classement2.add(A);

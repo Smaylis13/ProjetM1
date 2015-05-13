@@ -6,10 +6,10 @@ package fr.univtln.madapm.votemanager.metier;
  */
 
 import fr.univtln.madapm.votemanager.metier.json.CJson;
-import fr.univtln.madapm.votemanager.metier.user.CGroupe;
-import fr.univtln.madapm.votemanager.metier.user.COrganisateur;
+import fr.univtln.madapm.votemanager.metier.user.CGroup;
+import fr.univtln.madapm.votemanager.metier.user.COrganizer;
 import fr.univtln.madapm.votemanager.metier.user.CParticipant;
-import fr.univtln.madapm.votemanager.metier.vote.CCandidat;
+import fr.univtln.madapm.votemanager.metier.vote.CCandidate;
 import fr.univtln.madapm.votemanager.metier.vote.CType;
 import fr.univtln.madapm.votemanager.metier.vote.CVote;
 
@@ -26,21 +26,21 @@ public class CTestMetier {
          * Création des acteurs
          */
 
-        CMap<CParticipant, String> votant = new CMap<CParticipant, String>();
+        CMap<CParticipant, String> votant = new CMap<>();
         CParticipant participant1 = new CParticipant(2, "Gérad Menvussa", "motdepasse");
         CParticipant participant2 = new CParticipant(3, "Eléanor Mamontre", "or");
         votant.put(participant1, "Pascalou");
         votant.put(participant2, "elen");
-        CGroupe groupevotant = new CGroupe(1, "le groupe de votant", "vote1", votant);
+        CGroup groupevotant = new CGroup(1, "le groupe de votant", "vote1", votant);
 
-        COrganisateur organisateur = new COrganisateur(1, "Pascal LARIVE", "Ylios", groupevotant);
+        COrganizer organisateur = new COrganizer(1, "Pascal LARIVE", "Ylios", groupevotant);
         System.out.println(organisateur);
 
 
 
-        CMap<CCandidat, String> mapCandidat = new CMap<CCandidat, String>();
-        CCandidat candidat1 = new CCandidat(1, "banane", "c'est une banane");
-        CCandidat candidat2 = new CCandidat(2, "cerise", "miam");
+        CMap<CCandidate, String> mapCandidat = new CMap<>();
+        CCandidate candidat1 = new CCandidate(1, "banane", "c'est une banane");
+        CCandidate candidat2 = new CCandidate(2, "cerise", "miam");
         System.out.println(candidat1);
         mapCandidat.put(candidat1, candidat1.getNomcandidat());
         mapCandidat.put(candidat2, candidat2.getNomcandidat());

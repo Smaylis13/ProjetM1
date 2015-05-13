@@ -6,22 +6,22 @@ package fr.univtln.madapm.votemanager.metier.vote;
  */
 public class CType {
 
-    private int midType;
+    private int mIdType;
     private String mNom;
     private String mDescription;
 
     public CType(int pidType, String pNom, String pDescription) {
-        this.midType = pidType;
+        this.mIdType = pidType;
         this.mNom = pNom;
         this.mDescription = pDescription;
     }
 
     public int getidType() {
-        return midType;
+        return mIdType;
     }
 
-    public void setidType(int pidType) {
-        this.midType = pidType;
+    public void setidType(int pIdType) {
+        this.mIdType = pIdType;
     }
 
     public String getNom() {
@@ -43,7 +43,7 @@ public class CType {
     @Override
     public String toString() {
         return "CType{" +
-                "midType=" + midType +
+                "midType=" + mIdType +
                 ", mNom='" + mNom + '\'' +
                 ", mDescription='" + mDescription + '\'' +
                 '}';
