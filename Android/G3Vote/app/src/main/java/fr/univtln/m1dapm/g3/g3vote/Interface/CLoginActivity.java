@@ -47,6 +47,7 @@ public class CLoginActivity extends AppCompatActivity {
 
     //gere le clic sur le bouton se connecter
     public void Log(View view) {
+        //TODO: handle the connection of the user
         Intent intent = new Intent(this,CHubActivity.class);
         startActivity(intent);
     }

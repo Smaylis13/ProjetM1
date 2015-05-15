@@ -37,4 +37,6 @@ public class CSubActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    //TODO: handle the inscription on the server
 }

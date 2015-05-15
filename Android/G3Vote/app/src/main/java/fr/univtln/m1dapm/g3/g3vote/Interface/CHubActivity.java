@@ -132,7 +132,7 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
             // Return a PlaceholderFragment (defined as a static inner class below).
             switch (position){
                 case 0:
-                    return MyVotesFragment.newInstance(position);
+                    return CHubMyVotesFragment.newInstance(position);
                 case 1:
                     return CHubCreateVoteFragment.newInstance(position + 1);
                 case 2:
@@ -147,6 +147,7 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
             return 3;
         }
 
+        //Tab titles
         @Override
         public CharSequence getPageTitle(int position) {
             Locale l = Locale.getDefault();
@@ -162,20 +163,18 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
         }
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
 
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
+     // A placeholder fragment containing a simple view.
+
+    /*public static class PlaceholderFragment extends Fragment {
+
+         // The fragment argument representing the section number for this
+         // fragment.
+
+        private static final String ARG_SECTION_NUMBER = "section_number";
+         // Returns a new instance of this fragment for the given section
+         // number.
+
         public static PlaceholderFragment newInstance(int sectionNumber) {
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
@@ -193,40 +192,7 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
             View rootView = inflater.inflate(R.layout.fragment_chub, container, false);
             return rootView;
         }
-    }
-
-    public static class MyVotesFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static MyVotesFragment newInstance(int sectionNumber) {
-            MyVotesFragment fragment = new MyVotesFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        public MyVotesFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_chub_myvote, container, false);
-            return rootView;
-        }
-    }
-
-
-
+    }*/
     public static class ContactFragment extends Fragment {
         /**
          * The fragment argument representing the section number for this
@@ -258,12 +224,13 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
 
     }
 
-
+    //handle click on button below text date fin
     public void showDateEndPickerDialog(View view) {
         android.support.v4.app.DialogFragment newFragment = new CDateEndPickerFragment();
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
+    //handle click on button below text date debut
     public void showDateBeginPickerDialog(View view) {
         android.support.v4.app.DialogFragment newFragment = new CDateBeginPickerFragment();
         newFragment.show(getSupportFragmentManager(), "datePicker");

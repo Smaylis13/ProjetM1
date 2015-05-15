@@ -48,6 +48,7 @@ public class CHubCreateVoteFragment extends Fragment {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, VOTE);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spin.setAdapter(adapter);
+
         final TextView text = (TextView) rootView.findViewById(R.id.describeVoteType);
         spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
@@ -55,17 +56,17 @@ public class CHubCreateVoteFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1,
                                        int position, long id) {
-
+                //TODO: add better descriptions to the votes types
                 switch (position)
                 {
                     case 0:
                         text.setText("le vote STV sert a blablabla");
                         break;
                     case 1:
-                        text.setText("le vote KY sert a blablabla");
+                        text.setText("le vote KY sert a blablabl");
                         break;
                     case 2:
-                        text.setText("le vote JM sert a blablabla");
+                        text.setText(" le vote JM sert a blablabla");
                         break;
                     default:
                         break;
@@ -75,13 +76,13 @@ public class CHubCreateVoteFragment extends Fragment {
 
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
-                // TODO Auto-generated method stub
-
             }
 
         });
         return rootView;
     }
+
+    //TODO: handle the clik on validate to go to the right vote conf interface with the data
 
 
 }

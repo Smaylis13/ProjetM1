@@ -30,7 +30,8 @@ public class CDateBeginPickerFragment extends DialogFragment
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
         // TODO: stock the date to be send to the server at the end of the vote creation
-        // TODO: change the button so it shows the selected date
+
+        //change the button so it shows the selected date
         final Button button = (Button) getActivity().findViewById(R.id.bVoteDateBegin);
         String date = day+"/"+month+"/"+year;
         button.setText(date);
