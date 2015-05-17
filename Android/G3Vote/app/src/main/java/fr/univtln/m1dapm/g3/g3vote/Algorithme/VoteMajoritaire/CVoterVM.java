@@ -8,7 +8,7 @@ import java.util.Map;
  *@author G3
  *
  */
-public class CVoterVM {///extends CUtilisateur{
+public class CVoterVM {///extends CUser{
     /**
      * MAP clé/valeur avec comme clé un candidat et comme valeur la noté attribué
      */

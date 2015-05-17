@@ -33,4 +33,6 @@
     <string name="sTV">le vote STV sert a blablabla</string>
     <string name="kemenyYoung">le vote KY sert a blablabla</string>
     <string name="jugementMajority">le vote JM sert a blablabla</string>
+    <string name="userFirstNameInputHint">Prénom</string>
+    <string name="userLastNameInputHint">Nom de famille</string>
 </resources>
