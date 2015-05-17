@@ -7,38 +7,44 @@
     tools:context="fr.univtln.m1dapm.g3.g3vote.Interface.CSubActivity">
 
     <EditText
-        android:id="@+id/mailSubInput"
-        android:layout_width="wrap_content"
+        android:id="@+id/userFirstNameInput"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="@string/userFirstNameInputHint" />
+
+    <EditText
+        android:id="@+id/userLastNameInput"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="@string/userLastNameInputHint"
+        android:layout_below="@id/userFirstNameInput"/>
+    <EditText
+        android:id="@+id/userMailInput"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
         android:ems="10"
         android:hint="@string/mailHint"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_below="@id/userLastNameInput"/>
 
     <EditText
-        android:id="@+id/passSubInput"
-        android:layout_width="wrap_content"
+        android:id="@+id/userPasswordInput"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:ems="10"
         android:hint="@string/passHint"
-        android:layout_below="@+id/mailSubInput"
-        android:layout_alignRight="@+id/mailSubInput"
-        android:layout_alignEnd="@+id/mailSubInput"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_below="@+id/userMailInput"/>
 
     <Button
         android:id="@+id/BSubValidation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/bSubValidationText"
-
-        android:layout_below="@+id/passSubInput"
-        android:layout_alignRight="@+id/passSubInput"
-        android:layout_alignEnd="@+id/passSubInput" />
+        android:onClick="validateSub"
+        android:layout_below="@+id/userPasswordInput"
+        android:layout_alignRight="@+id/userPasswordInput"
+        android:layout_alignEnd="@+id/userPasswordInput" />
 </RelativeLayout>

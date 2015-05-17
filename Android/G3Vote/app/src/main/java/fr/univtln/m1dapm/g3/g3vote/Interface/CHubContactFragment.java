@@ -5,7 +5,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
+import java.util.ArrayList;
+
+import fr.univtln.m1dapm.g3.g3vote.Entite.CUser;
 import fr.univtln.m1dapm.g3.g3vote.R;
 
 /**
@@ -36,7 +40,20 @@ public class CHubContactFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View rootView = inflater.inflate(R.layout.fragment_chub_contact, container, false);
+
+        //Récupération du composant ListView
+        ListView list = (ListView)rootView.findViewById(R.id.ListView01);
+
+        //Récupération de la liste des personnes
+        ArrayList<CUser> listP = CUser.getAListOfUser();
+
+        //Création et initialisation de l'Adapter pour les personnes
+        CUserAdapter adapter = new CUserAdapter(rootView.getContext(), listP);
+
+        //Initialisation de la liste avec les données
+        list.setAdapter(adapter);
         return rootView;
     }
 
