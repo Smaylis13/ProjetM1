@@ -15,7 +15,7 @@ import javax.ws.rs.core.MediaType;
  * copyright Christian
  */
 
-@Path("vote")
+@Path("/vote")
 public class CVoteRest {
 /*
     @GET
@@ -30,6 +30,10 @@ public class CVoteRest {
     @Consumes(MediaType.APPLICATION_JSON)
     public void addVote(CVote pNewVote){
         CVoteDAO lVoteDao=new CVoteDAO();
-        lVoteDao.create(pNewVote);
+        try {
+            lVoteDao.create(pNewVote);
+        }catch (Exception e){
+            System.out.println(e);
+        }
     }
 }

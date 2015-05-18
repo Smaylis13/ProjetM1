@@ -15,7 +15,7 @@ import java.util.List;
  * Défini les utilisauteurs qui peuvent être organisateur et participant.
  */
 @Entity
-@Table(name="utilisateur")
+@Table(name="utilisateur",uniqueConstraints =@UniqueConstraint(columnNames={"MAIL"}))
 public class CUser {
 
     @Id
@@ -27,6 +27,10 @@ public class CUser {
     private String mEmail;
     @Column(name="MOT_DE_PASSE",nullable = false)
     private String mPassword;
+    @Column(name="NOM",nullable = false)
+    private String mName;
+    @Column(name="PRENOM",nullable = false)
+    private String mFirstName;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name="appartient", joinColumns = {@JoinColumn(name="ID_UTILISATEUR",nullable = false,updatable = false)},
@@ -75,7 +79,23 @@ public class CUser {
         this.mPassword = pPassword;
     }
 
-   /* public List<CVote> getmOrganisedVotes() {
+    public String getName() {
+        return mName;
+    }
+
+    public void setName(String pName) {
+        this.mName = pName;
+    }
+
+    public String getSurname() {
+        return mFirstName;
+    }
+
+    public void setSurname(String pFirstName) {
+        this.mFirstName = pFirstName;
+    }
+
+    /* public List<CVote> getmOrganisedVotes() {
         return mOrganisedVotes;
     }*/
 
