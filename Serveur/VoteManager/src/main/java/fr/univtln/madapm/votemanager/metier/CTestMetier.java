@@ -32,6 +32,8 @@ public class CTestMetier {
         participants.add(utilisateur2);
         participants.add(utilisateur3);
 
+        System.out.println(participants);
+
         /**
          * Création d'un vote
          */
@@ -76,6 +78,8 @@ public class CTestMetier {
 
         vote.addChoice(utilisateur2, candidate1, 1);
         vote.addChoice(utilisateur3, candidate3, 1);
+
+        System.out.println(results);
 
         /**
          * Opération sur les votes
