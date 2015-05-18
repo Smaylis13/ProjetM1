@@ -2,8 +2,6 @@ package fr.univtln.madapm.votemanager.metier.json;
 
 import com.google.gson.Gson;
 import fr.univtln.madapm.votemanager.metier.user.CGroup;
-import fr.univtln.madapm.votemanager.metier.user.COrganizer;
-import fr.univtln.madapm.votemanager.metier.user.CParticipant;
 import fr.univtln.madapm.votemanager.metier.user.CUser;
 import fr.univtln.madapm.votemanager.metier.vote.CCandidate;
 import fr.univtln.madapm.votemanager.metier.vote.CVote;
@@ -77,10 +75,6 @@ public class CJson {
                     return lgson.fromJson(lbr, CVote.class);
                 case "Groupe":
                     return lgson.fromJson(lbr, CGroup.class);
-                case "Particapnt":
-                    return lgson.fromJson(lbr, CParticipant.class);
-                case "Organisateur":
-                    return lgson.fromJson(lbr, COrganizer.class);
                 default:
                     return null;
             }
