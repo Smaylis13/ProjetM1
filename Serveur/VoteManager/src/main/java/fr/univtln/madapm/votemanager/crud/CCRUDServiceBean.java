@@ -14,8 +14,10 @@ public class CCRUDServiceBean<T> implements ICRUDService<T> {
     private EntityManager mEM = CConstantes.EM;
     private EntityTransaction mET = CConstantes.ET;
 
+
     @Override
     public T create(T pT) {
+        System.out.println(pT);
         mET.begin();
         this.mEM.persist(pT);
         this.mEM.flush();

@@ -57,8 +57,12 @@ public class CMainServer extends Application {
         System.out.println("Connection à la base de donnée");
 
         String url = "jdbc:mysql://localhost/VoteManager";
-        String login = "server";
+        /*String login = "server";
         String password = "root";
+        */
+        String login = "root";
+        String password = "";
+
         Connection connection = null;
 
         try {

@@ -5,16 +5,47 @@ package fr.univtln.madapm.votemanager.metier.user;
  * copyright Christian
  */
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import fr.univtln.madapm.votemanager.metier.vote.CVote;
+
+import javax.persistence.*;
+import java.util.List;
+
 /**
  * Défini les utilisauteurs qui peuvent être organisateur et participant.
  */
+@Entity
+@Table(name="utilisateur")
 public class CUser {
 
-    protected int mId;
-    protected String mEmail;
-    protected String mPassword;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="ID_UTILISATEUR")
+    @JsonIgnore
+    public int mId;
+    @Column(name="MAIL", nullable = false)
+    private String mEmail;
+    @Column(name="MOT_DE_PASSE",nullable = false)
+    private String mPassword;
 
-    protected CUser(int pId, String pEmail, String pPassword) {
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name="appartient", joinColumns = {@JoinColumn(name="ID_UTILISATEUR",nullable = false,updatable = false)},
+            inverseJoinColumns = {@JoinColumn(name="ID_GROUPE",nullable = false,updatable = false)})
+    private List<CGroup> mListGroups;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name="a_contact", joinColumns = {@JoinColumn(name="ID_UTILISATEUR",nullable = false,updatable = false)},
+            inverseJoinColumns = {@JoinColumn(name="ID_CONTACT",nullable = false,updatable = false)})
+    private List<CUser> mListContacts;
+
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL, mappedBy="mOrganisateur")
+    private List<CVote> mOrganisedVotes=null;
+
+    public CUser(){
+    }
+
+    public CUser(int pId, String pEmail, String pPassword) {
         this.mId = pId;
         this.mEmail = pEmail;
         this.mPassword = pPassword;
@@ -24,9 +55,9 @@ public class CUser {
         return mId;
     }
 
-    public void setId(int pId) {
+  /*  public void setId(int pId) {
         this.mId = pId;
-    }
+    }*/
 
     public String getEmail() {
         return mEmail;
@@ -43,6 +74,10 @@ public class CUser {
     public void setPassword(String pPassword) {
         this.mPassword = pPassword;
     }
+
+   /* public List<CVote> getmOrganisedVotes() {
+        return mOrganisedVotes;
+    }*/
 
     @Override
     public String toString() {

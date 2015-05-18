@@ -7,7 +7,7 @@ import javax.ws.rs.Path;
  * copyright Christian
  */
 
-@Path("groupe")
+//@Path("groupe")
 public class CGroupeRest {
 
 }

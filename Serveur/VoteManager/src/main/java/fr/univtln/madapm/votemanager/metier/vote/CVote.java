@@ -1,195 +1,211 @@
 package fr.univtln.madapm.votemanager.metier.vote;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import fr.univtln.madapm.votemanager.metier.CMap;
 import fr.univtln.madapm.votemanager.metier.user.COrganizer;
 import fr.univtln.madapm.votemanager.metier.user.CParticipant;
+import fr.univtln.madapm.votemanager.metier.user.CUser;
+
+import javax.persistence.*;
+import javax.xml.bind.annotation.XmlElement;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by civars169 on 05/05/15.
  * copyright Christian
  */
+@Entity
+@Table(name="vote")
 public class CVote {
 
-    private int mIdvote;
-    private String mNomvote;
-    private String mDescriptionvote;
-    private String mDatedebut;
-    private String mDatefin;
-    private CResult mResultvote;
-    private CType mType;
-    private CMap<CRule, String> mRegle;
-    private String mStatusvote;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="ID_VOTE")
+    @JsonIgnore
+    private int mIdVote;
+    @Column(name="NOM_VOTE")
+    private String mNomVote;
+    @Column(name="DESCRIPTION_VOTE")
+    private String mDescriptionVote;
+    @Column(name="DATE_DEBUT_VOTE")
+    private String mDateDebut;
+    @Column(name="DATE_FIN_VOTE")
+    private String mDateFin;
 
-    private COrganizer mOrganisateur;
-    private CMap<CParticipant, CChoix> mMapvote = new CMap<>();
-    private CMap<CCandidate, String> mMapcandidat = new CMap<>();
+    @Column(name="STATUT_VOTE")
+    private boolean mStatusVote;
+
+    @JoinColumn(name = "ID_UTILISATEUR")
+    @ManyToOne(fetch= FetchType.LAZY,optional=false)
+    private CUser mOrganisateur;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="mVote")
+    private List<CResult> mResultVote;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name="certifie", joinColumns = {@JoinColumn(name="ID_VOTE",nullable = false,updatable = false)},
+            inverseJoinColumns = {@JoinColumn(name="ID_TYPE",nullable = false,updatable = false)})
+    private List<CType> mType;
+
+    @JoinTable(name="parametre", joinColumns = {@JoinColumn(name="ID_VOTE",nullable = false,updatable = false)},
+            inverseJoinColumns = {@JoinColumn(name="ID_REGLE",nullable = false,updatable = false)})
+    @ManyToMany(fetch = FetchType.LAZY,cascade ={CascadeType.MERGE, CascadeType.PERSIST})
+    private List<CRule> mRegle;
+
+
+   /* @JsonIgnore
+    @Transient
+    public long mOrganisateurID=0;
+*/
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="mVote")
+    private List<CChoice> mChoices;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="mVote")
+    private List<CCandidate> mCandidate;
+
+    public CVote(){}
 
     public CVote(int pIdvote, String pNomvote, String pDescriptionvote, String pDatedebut, String pDatefin,
-                 CResult pResultvote, CType pType, CMap<CRule, String> pRegle, String pStatusvote,
-                 COrganizer pOrganisateur,
-                 CMap<CParticipant, CChoix> pMapvote, CMap<CCandidate, String> pMapcandidat) {
-        this.mIdvote = pIdvote;
-        this.mNomvote = pNomvote;
-        this.mDescriptionvote = pDescriptionvote;
-        this.mDatedebut = pDatedebut;
-        this.mDatefin = pDatefin;
-        this.mResultvote = pResultvote;
+                 List<CResult> pResultvote, List<CType> pType, List<CRule> pRegle, boolean pStatusvote,
+                 CUser pOrganisateur,
+                 List<CChoice> pChoices, List<CCandidate> pCandidate) {
+        this.mIdVote = pIdvote;
+        this.mNomVote = pNomvote;
+        this.mDescriptionVote = pDescriptionvote;
+        this.mDateDebut = pDatedebut;
+        this.mDateFin = pDatefin;
+        this.mResultVote = pResultvote;
         this.mType = pType;
         this.mRegle = pRegle;
-        this.mStatusvote = pStatusvote;
+        this.mStatusVote = pStatusvote;
         this.mOrganisateur = pOrganisateur;
-        this.mMapvote = pMapvote;
-        this.mMapcandidat = pMapcandidat;
+        this.mChoices = pChoices;
+        this.mCandidate = pCandidate;
     }
 
     public int getIdvote() {
-        return mIdvote;
+        return mIdVote;
     }
 
     public void setIdvote(int pIdvote) {
-        this.mIdvote = pIdvote;
+        this.mIdVote = pIdvote;
     }
 
     public String getNomvote() {
-        return mNomvote;
+        return mNomVote;
     }
 
     public void setNomvote(String pNomvote) {
-        this.mNomvote = pNomvote;
+        this.mNomVote = pNomvote;
     }
 
     public String getDescriptionvote() {
-        return mDescriptionvote;
+        return mDescriptionVote;
     }
 
     public void setDescriptionvote(String pDescriptionvote) {
-        this.mDescriptionvote = pDescriptionvote;
+        this.mDescriptionVote = pDescriptionvote;
     }
 
     public String getDatedebut() {
-        return mDatedebut;
+        return mDateDebut;
     }
 
     public void setDatedebut(String pDatedebut) {
-        this.mDatedebut = pDatedebut;
+        this.mDateDebut = pDatedebut;
     }
 
     public String getDatefin() {
-        return mDatefin;
+        return mDateFin;
     }
 
     public void setDatefin(String pDatefin) {
-        this.mDatefin = pDatefin;
+        this.mDateFin = pDatefin;
     }
 
-    public CResult getResultvote() {
-        return mResultvote;
+    public List<CResult> getResultvote() {
+        return mResultVote;
     }
 
-    public void setResultvote(CResult pResultvote) {
-        this.mResultvote = pResultvote;
+    public void setResultvote(List<CResult> pResultvote) {
+        this.mResultVote = pResultvote;
     }
 
-    public CType getType() {
+    public List<CType> getType() {
         return mType;
     }
 
-    public void setType(CType pType) {
+    public void setType(List<CType> pType) {
         this.mType = pType;
     }
 
-    public CMap<CRule, String> getmRegle() {
+    public List<CRule> getmRegle() {
         return mRegle;
     }
 
-    public void setmRegle(CMap<CRule, String> mRegle) {
+    public void setmRegle(List<CRule> mRegle) {
         this.mRegle = mRegle;
     }
 
-    public String getStatusvote() {
-        return mStatusvote;
+    public boolean getStatusvote() {
+        return mStatusVote;
     }
 
-    public void setStatusvote(String pStatusvote) {
-        this.mStatusvote = pStatusvote;
+    public void setStatusvote(boolean pStatusvote) {
+        this.mStatusVote = pStatusvote;
     }
 
-    public COrganizer getOrganisateur() {
+    public CUser getOrganisateur() {
         return mOrganisateur;
     }
 
-    public void setOrganisateur(COrganizer pOrganisateur) {
+    public void setOrganisateur(CUser pOrganisateur) {
         this.mOrganisateur = pOrganisateur;
     }
 
-    public CMap<CParticipant, CChoix> getMapvote() {
-        return mMapvote;
+    public List<CChoice> getMapvote() {
+        return mChoices;
     }
 
-    public void setMapvote(CMap<CParticipant, CChoix> pMapvote) {
-        this.mMapvote = pMapvote;
+    public void setMapvote(List<CChoice> pChoices) {
+        this.mChoices = pChoices;
     }
 
-    public CMap<CCandidate, String> getMapcandidat() {
-        return mMapcandidat;
+    public List<CCandidate> getMapcandidat() {
+        return mCandidate;
     }
 
-    public void setMapcandidat(CMap<CCandidate, String> pMapcandidat) {
-        this.mMapcandidat = pMapcandidat;
-    }
-
-    /**
-     * Ajoute un participant supplémentaire pour le vote
-     * @param puser Participant concerné
-     * @param pchoix Vote de l'partivipant
-     */
-    public void addParticipant(CParticipant puser, CChoix pchoix){
-        this.mMapvote.put(puser, pchoix);
+    public void setMapcandidat(List<CCandidate> pCandidate) {
+        this.mCandidate = pCandidate;
     }
 
     /**
-     * Supprime un participant à un vote
-     * @param puser Participant concerné
+     * Ajoute une sélection pour le vote
+     *
+     * @param pChoix
      */
-    public void deleteParticipant(CParticipant puser){
-        puser.setMonVote("Abstention");
-        this.mMapvote.remove(puser);
+    public void addParticipant(CChoice pChoix){
+        this.mChoices.add(pChoix);
     }
 
-    /**
-     * Suprime le vote d'un utilisateur
-     * @param puser Participant concerné
-     */
-    public void deleteVote(CParticipant puser){
-        puser.setMonVote("Abstention");
-        //this.mMapvote.replace(puser, this.mMapvote.get(puser), "Abstention"); TODO mettre à jour
-    }
 
-    /**
-     * Vote ou modification d'un vote d'un utilisateur
-     * @param puser Participant concerné
-     * @param pstring Vote du participant
-     */
-    public void voteOrReplaceVote(CParticipant puser, String pstring){
-        puser.setMonVote(pstring);
-        //this.mMapvote.replace(puser, this.mMapvote.get(puser), pstring); TODO mettre à jour
-    }
 
     @Override
     public String toString() {
         return "CVote{" +
-                "mIdvote=" + mIdvote +
-                ", mNomvote='" + mNomvote + '\'' +
-                ", mDescriptionvote='" + mDescriptionvote + '\'' +
-                ", mDatedebut='" + mDatedebut + '\'' +
-                ", mDatefin='" + mDatefin + '\'' +
-                ", mResultvote='" + mResultvote + '\'' +
+                "mIdvote=" + mIdVote +
+                ", mNomvote='" + mNomVote + '\'' +
+                ", mDescriptionvote='" + mDescriptionVote + '\'' +
+                ", mDatedebut='" + mDateDebut + '\'' +
+                ", mDatefin='" + mDateFin + '\'' +
+                ", mResultvote='" + mResultVote + '\'' +
                 ", mType='" + mType + '\'' +
                 ", mRegle='" + mRegle + '\'' +
-                ", mStatusvote='" + mStatusvote + '\'' +
+                ", mStatusvote='" + mStatusVote + '\'' +
                 ", mOrganisateur=" + mOrganisateur +
-                ", mMapvote=" + mMapvote +
-                ", mMapcandidat=" + mMapcandidat +
+                ", mChoices=" + mChoices +
+                ", mCandidate=" + mCandidate +
                 '}';
     }
 }

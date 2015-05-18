@@ -5,20 +5,39 @@ package fr.univtln.madapm.votemanager.metier.vote;
  * copyright Christian
  */
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
+import java.util.List;
+
 /**
  * Un candidat est un choix lors d'un vote.
  * Exemple, banane et cerise pour voter pour son fruit préféré.
  */
+@Entity
+@Table(name="candidat")
 public class CCandidate {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="ID_CANDIDAT")
+    @JsonIgnore
     private int mIdCandidat;
+    @Column(name="NOM_CANDIDAT")
     private String mNomCandidat;
+    @Column(name="DESCRIPTION_CANDIDAT")
     private String mDescriptionCandidat;
 
-    public CCandidate(int pIdCandidat, String pNomCandidat, String pDescriptionCandidat) {
+    @ManyToOne
+    @JoinColumn(name = "ID_VOTE")
+    private CVote mVote;
+
+
+    public CCandidate(int pIdCandidat, String pNomCandidat, String pDescriptionCandidat, CVote pVote) {
         this.mIdCandidat = pIdCandidat;
         this.mNomCandidat = pNomCandidat;
         this.mDescriptionCandidat = pDescriptionCandidat;
+        this.mVote = pVote;
     }
 
     public CCandidate(String pNomCandidat) {
