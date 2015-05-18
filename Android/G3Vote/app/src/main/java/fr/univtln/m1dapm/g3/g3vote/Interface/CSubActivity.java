@@ -60,7 +60,7 @@ public class CSubActivity extends AppCompatActivity {
             startActivity(intent);
         }
         else{
-            Toast.makeText(this,"tous les champs ne sont pas remplis",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,getString(R.string.subValidateErrorMessage),Toast.LENGTH_SHORT).show();
         }
     }
 }

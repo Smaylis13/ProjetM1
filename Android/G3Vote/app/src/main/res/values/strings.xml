@@ -29,10 +29,11 @@
     <string name="title_activity_gg">gg</string>
     <string name="validationText">Valider</string>
 
+    <string name="subValidateErrorMessage">Tous les champs ne sont pas remplis</string>
     <!-- description des votes -->
-    <string name="sTV">le vote STV sert a blablabla</string>
-    <string name="kemenyYoung">le vote KY sert a blablabla</string>
-    <string name="jugementMajority">le vote JM sert a blablabla</string>
+    <string name="stvDescription">le vote STV sert a blablabla</string>
+    <string name="kemenyYoungDescription">le vote KY sert a blablabla</string>
+    <string name="jugementMajorityDescription">le vote JM sert a blablabla</string>
     <string name="userFirstNameInputHint">Prénom</string>
     <string name="userLastNameInputHint">Nom de famille</string>
 </resources>
