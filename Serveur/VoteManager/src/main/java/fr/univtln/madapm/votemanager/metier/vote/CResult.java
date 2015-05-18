@@ -1,23 +1,42 @@
 package fr.univtln.madapm.votemanager.metier.vote;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import fr.univtln.madapm.votemanager.metier.CMap;
+
+import javax.persistence.*;
+import java.util.Map;
 
 /**
  * Created by civars169 on 12/05/15.
  * copyright Christian
  */
+@Entity
+@Table(name="resultat")
 public class CResult {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="ID_RESULTAT")
+    @JsonIgnore
     private int mIdResultat;
-    private String mResultat; //Résultat du vote
-    private CVote mVote;
-    private CMap<CCandidate, String> mScore; //Contient les scores individuels des candidats
 
-    public CResult(int pIdResultat, String pResultat, CVote pVote, CMap<CCandidate, String> pScore) {
+    @Column(name="ORDRE")
+    private int mOrder; //Résultat du vote
+
+    @JoinColumn(name="ID_VOTE")
+    @ManyToOne(fetch= FetchType.LAZY, cascade ={CascadeType.MERGE, CascadeType.PERSIST},optional=false)
+    private CVote mVote;
+
+    @JoinColumn(name="ID_CANDIDAT")
+    @OneToOne(fetch= FetchType.LAZY, cascade ={CascadeType.MERGE, CascadeType.PERSIST},optional=false)
+    private CCandidate mCandidate;
+
+    public CResult(){}
+    public CResult(int pIdResultat, int pOrder, CVote pVote, CCandidate pCandidate) {
         this.mIdResultat = pIdResultat;
-        this.mResultat = pResultat;
+        this.mOrder = pOrder;
         this.mVote = pVote;
-        this.mScore = pScore;
+        this.mCandidate = pCandidate;
     }
 
     public int getIdResultat() {
@@ -28,12 +47,12 @@ public class CResult {
         this.mIdResultat = pIdResultat;
     }
 
-    public String getResultat() {
-        return mResultat;
+    public int getResultat() {
+        return mOrder;
     }
 
-    public void setResultat(String pResultat) {
-        this.mResultat = pResultat;
+    public void setResultat(int pOrder) {
+        this.mOrder = pOrder;
     }
 
     public CVote getVote() {
@@ -44,21 +63,21 @@ public class CResult {
         this.mVote = pVote;
     }
 
-    public CMap<CCandidate, String> getCandidat() {
-        return mScore;
+    public CCandidate getCandidat() {
+        return mCandidate;
     }
 
-    public void setCandidat(CMap<CCandidate, String> pScore) {
-        this.mScore = pScore;
+    public void setCandidat(CCandidate pCandidate) {
+        this.mCandidate = pCandidate;
     }
 
     @Override
     public String toString() {
         return "CResultat{" +
                 "mIdResultat=" + mIdResultat +
-                ", mresultat='" + mResultat + '\'' +
+                ", mOrder='" + mOrder + '\'' +
                 ", mvote=" + mVote + '\'' +
-                ", mscore=" + mScore +
+                ", mCandidate=" + mCandidate +
                 '}';
     }
 }

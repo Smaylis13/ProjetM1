@@ -5,64 +5,83 @@ package fr.univtln.madapm.votemanager.metier.user;
  * copyright Christian
  */
 
-import fr.univtln.madapm.votemanager.metier.CMap;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
+import javax.persistence.*;
+import java.util.List;
 
 /**
  * Un groupe correspond à une liste de contacts pour un utilisateur.
  */
+@Entity
+@Table(name="groupe")
 public class CGroup {
 
-    private int mIdgroupe;
-    private String mNomgroupe;
-    private String mDescriptiongroupe;
-    private CMap<CParticipant, String> mMapgroupe;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="ID_GROUPE")
+    @JsonIgnore
+    private int mIdGroup;
+    @Column(name="NOM_GROUPE")
+    private String mGroupName;
 
-    public CGroup(int pIdgroupe, String pNomgroupe, String pDescriptiongroupe, CMap<CParticipant, String> pMapgroupe) {
-        this.mIdgroupe = pIdgroupe;
-        this.mNomgroupe = pNomgroupe;
-        this.mDescriptiongroupe = pDescriptiongroupe;
-        this.mMapgroupe = pMapgroupe;
+    @Column(name="DESCRIPTION_GROUPE")
+    private String mGroupDescription;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name="appartient", joinColumns = {@JoinColumn(name="ID_GROUPE",nullable = false,updatable = false)},
+            inverseJoinColumns = {@JoinColumn(name="ID_UTILISATEUR",nullable = false,updatable = false)})
+    private List<CUser> mListUsers;
+
+    public CGroup(){}
+
+    public CGroup(int pIdGroup, String pGroupName, String pGroupDescription, List<CUser> pListUsers) {
+        this.mIdGroup = pIdGroup;
+        this.mGroupName = pGroupName;
+        this.mGroupDescription = pGroupDescription;
+        this.mListUsers = pListUsers;
     }
 
     public int getIdgroupe() {
-        return mIdgroupe;
+        return mIdGroup;
     }
 
     public void setIdgroupe(int pIdgroupe) {
-        this.mIdgroupe = pIdgroupe;
+        this.mIdGroup = pIdgroupe;
     }
 
     public String getNomgroupe() {
-        return mNomgroupe;
+        return mGroupName;
     }
 
-    public void setNomgroupe(String pNomgroupe) {
-        this.mNomgroupe = pNomgroupe;
+    public void setNomgroupe(String pGroupName) {
+        this.mGroupName = pGroupName;
     }
 
     public String getDescriptiongroupe() {
-        return mDescriptiongroupe;
+        return mGroupDescription;
     }
 
-    public void setDescriptiongroupe(String pDescriptiongroupe) {
-        this.mDescriptiongroupe = pDescriptiongroupe;
+    public void setDescriptiongroupe(String pGroupDescription) {
+        this.mGroupDescription = pGroupDescription;
     }
 
-    public CMap getMapgroupe() {
-        return mMapgroupe;
+    public List<CUser> getListUsers() {
+        return mListUsers;
     }
 
-    public void setMapgroupe(CMap<CParticipant, String> pMapgroupe) {
-        this.mMapgroupe = pMapgroupe;
+    public void setListUsers(List<CUser> pListUsers) {
+        this.mListUsers = pListUsers;
     }
 
     @Override
     public String toString() {
         return "CGroupe{" +
-                "mIdgroupe=" + mIdgroupe +
-                ", mNomgroupe='" + mNomgroupe + '\'' +
-                ", mDescriptiongroupe='" + mDescriptiongroupe + '\'' +
-                ", mMapgroupe=" + mMapgroupe +
+                "mIdGroup=" + mIdGroup +
+                ", mGroupName='" + mGroupName + '\'' +
+                ", mGroupDescription='" + mGroupDescription + '\'' +
+                ", mListUsers=" + mListUsers +
                 '}';
     }
 }

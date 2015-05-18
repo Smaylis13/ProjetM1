@@ -2,6 +2,15 @@
 <persistence xmlns="http://java.sun.com/xml/ns/persistence" version="2.0">
     <persistence-unit name="mysqlconnection" transaction-type="RESOURCE_LOCAL">
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+        <class>fr.univtln.madapm.votemanager.metier.user.CUser</class>
+        <class>fr.univtln.madapm.votemanager.metier.vote.CVote</class>
+        <class>fr.univtln.madapm.votemanager.metier.vote.CResult</class>
+        <class>fr.univtln.madapm.votemanager.metier.vote.CType</class>
+        <class>fr.univtln.madapm.votemanager.metier.vote.CRule</class>
+        <class>fr.univtln.madapm.votemanager.metier.vote.CCandidate</class>
+        <class>fr.univtln.madapm.votemanager.metier.vote.CChoice</class>
+        <class>fr.univtln.madapm.votemanager.metier.user.CGroup</class>
+        <class>fr.univtln.madapm.votemanager.metier.vote.CDeleguation</class>
         <properties>
             <!-- Les paramètres de connexions -->
             <property name="javax.persistence.target-database" value="MySql"/>
@@ -13,7 +22,7 @@
             <!-- Les options de générations des tables -->
             <property name="eclipselink.ddl-generation.output-mode" value="both"/>
             <property name="eclipselink.ddl-generation" value="create-tables"/>
-            <!-- <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/> -->
+            <!-- <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>-->
             <!-- et des scripts SQL -->
             <property name="eclipselink.create-ddl-jdbc-file-name" value="createDDL_ddlGeneration.sql"/>
             <property name="eclipselink.drop-ddl-jdbc-file-name" value="dropDDL_ddlGeneration.sql"/>

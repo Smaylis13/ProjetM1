@@ -31,26 +31,26 @@ public class CTestMetier {
         CParticipant participant2 = new CParticipant(3, "Eléanor Mamontre", "or");
         votant.put(participant1, "Pascalou");
         votant.put(participant2, "elen");
-        CGroup groupevotant = new CGroup(1, "le groupe de votant", "vote1", votant);
+        //CGroup groupevotant = new CGroup(1, "le groupe de votant", "vote1", votant);
 
-        COrganizer organisateur = new COrganizer(1, "Pascal LARIVE", "Ylios", groupevotant);
-        System.out.println(organisateur);
+       // COrganizer organisateur = new COrganizer(1, "Pascal LARIVE", "Ylios", groupevotant);
+       // System.out.println(organisateur);
 
 
 
         CMap<CCandidate, String> mapCandidat = new CMap<>();
-        CCandidate candidat1 = new CCandidate(1, "banane", "c'est une banane");
-        CCandidate candidat2 = new CCandidate(2, "cerise", "miam");
+       /* CCandidate candidat1 = new CCandidate(1, "banane", "c'est une banane", mVote);
+        CCandidate candidat2 = new CCandidate(2, "cerise", "miam", mVote);
         System.out.println(candidat1);
         mapCandidat.put(candidat1, candidat1.getNomcandidat());
         mapCandidat.put(candidat2, candidat2.getNomcandidat());
-        System.out.println("Map de candidats\n"+mapCandidat+"\n");
+        System.out.println("Map de candidats\n"+mapCandidat+"\n");*/
 
 
         /**
          * Création d'un vote
          */
-
+/*
         CType type = new CType(1, "type1", "type");
 
         CVote vote1 = new CVote(1, "Vote", "Vote test", "aujourd'hui", "aujourd'hui", null, type, null, null,
@@ -61,13 +61,13 @@ public class CTestMetier {
         vote1.voteOrReplaceVote(participant1, "<Vote>banane</Vote>");
         vote1.voteOrReplaceVote(participant2, "<Vote>cerise</Vote>");
 
-        System.out.println("\nVotes des participants\n" + vote1);
+        System.out.println("\nVotes des participants\n" + vote1);*/
 
         /**
          * Opération sur les votes
          */
 
-        vote1.deleteVote(participant2);
+       /* vote1.deleteVote(participant2);
 
         System.out.println("Le participant 2 se retire de ce vote\n" + vote1);
 
@@ -80,7 +80,7 @@ public class CTestMetier {
         CJson json = new CJson();
         json.objectToJson(candidat1);
 
-        json.jsonToObject("CCandidat", "Candidat");
+        json.jsonToObject("CCandidat", "Candidat");*/
 
 
         System.out.println("Fin du programme test métier");
