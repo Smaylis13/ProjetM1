@@ -3,6 +3,7 @@ package fr.univtln.madapm.votemanager.rest;
 import fr.univtln.madapm.votemanager.dao.CGroupDAO;
 import fr.univtln.madapm.votemanager.metier.user.CGroup;
 
+
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
@@ -23,8 +24,22 @@ public class CGroupRest {
 
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
-    public void addGroup(CGroup pGroup){
+    public CGroup addGroup(CGroup pGroup){
         CGroupDAO lGroupDAO = new CGroupDAO();
-        lGroupDAO.create(pGroup);
+        return lGroupDAO.create(pGroup);
+    }
+
+    @DELETE
+    @Produces(MediaType.APPLICATION_JSON)
+    public void deleteGroup(@PathParam("pId") int pId){
+        CGroupDAO lGroupDAO = new CGroupDAO();
+        lGroupDAO.deleteGroup(pId);
+    }
+
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public CGroup updateGroup(CGroup pGroup){
+        CGroupDAO lGroupDAO = new CGroupDAO();
+        return lGroupDAO.updateGroup(pGroup);
     }
 }
