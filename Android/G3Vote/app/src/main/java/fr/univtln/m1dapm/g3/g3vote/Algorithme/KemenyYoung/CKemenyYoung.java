@@ -82,6 +82,19 @@ public class CKemenyYoung {
         return pListCand;
     }
 
+    public List<CCandidat> resultat (int pnbvainqueur ) {
+        int maxvote = 0;
+        int maxvoteposition=0;
+        for (int i = 0; i < mListResult.size(); i++) {
+            if (mListResult.get(i).getNbVote() > maxvote) {
+                maxvote = mListResult.get(i).getNbVote();
+                maxvoteposition=i;
+            }
+        }
+        return mListResult.get(maxvoteposition).getChoix();
+    }
+
+
 
     public void nouveauVote(List<CCandidat> choix) { // ajout des point liée au nouveau vote
         CCandidat candidat1 = new CCandidat();
