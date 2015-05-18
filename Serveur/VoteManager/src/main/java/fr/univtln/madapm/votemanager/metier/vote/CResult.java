@@ -39,13 +39,6 @@ public class CResult {
         this.mCandidate = pCandidate;
     }
 
-    public int getIdResultat() {
-        return mIdResultat;
-    }
-
-    public void setIdResultat(int pIdResultat) {
-        this.mIdResultat = pIdResultat;
-    }
 
     public int getResultat() {
         return mOrder;
