@@ -8,6 +8,6 @@ import javax.ws.rs.Path;
  */
 
 //@Path("groupe")
-public class CGroupRest {
+public class CGroupeRest {
 
 }
