@@ -12,4 +12,16 @@ public class CCandidateDAO extends CCRUDServiceBean<CCandidate> implements ICand
     public CCandidate findById(int pId) {
         return find(CCandidate.class, pId);
     }
+
+    public void deleteCandidate(int pId){
+        delete(CCandidate.class, pId);
+    }
+
+    public CCandidate updateCandidate(CCandidate pCandidate){
+        return update(pCandidate);
+    }
+
+    public CCandidate createCandidate(CCandidate pCandidate){
+        return create(pCandidate);
+    }
 }
