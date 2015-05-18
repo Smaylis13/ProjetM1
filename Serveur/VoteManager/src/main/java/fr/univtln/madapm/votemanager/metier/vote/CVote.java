@@ -1,15 +1,10 @@
 package fr.univtln.madapm.votemanager.metier.vote;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import fr.univtln.madapm.votemanager.metier.CMap;
-import fr.univtln.madapm.votemanager.metier.user.COrganizer;
-import fr.univtln.madapm.votemanager.metier.user.CParticipant;
 import fr.univtln.madapm.votemanager.metier.user.CUser;
 
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlElement;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by civars169 on 05/05/15.
@@ -68,8 +63,23 @@ public class CVote {
 
     public CVote(int pIdvote, String pNomvote, String pDescriptionvote, String pDatedebut, String pDatefin,
                  List<CResult> pResultvote, List<CType> pType, List<CRule> pRegle, boolean pStatusvote,
-                 CUser pOrganisateur,
-                 List<CChoice> pChoices, List<CCandidate> pCandidate) {
+                 CUser pOrganisateur, List<CCandidate> pCandidate) {
+        this.mIdVote = pIdvote;
+        this.mNomVote = pNomvote;
+        this.mDescriptionVote = pDescriptionvote;
+        this.mDateDebut = pDatedebut;
+        this.mDateFin = pDatefin;
+        this.mResultVote = pResultvote;
+        this.mType = pType;
+        this.mRegle = pRegle;
+        this.mStatusVote = pStatusvote;
+        this.mOrganisateur = pOrganisateur;
+        this.mCandidate = pCandidate;
+    }
+
+    public CVote(int pIdvote, String pNomvote, String pDescriptionvote, String pDatedebut, String pDatefin,
+                 List<CResult> pResultvote, List<CType> pType, List<CRule> pRegle, boolean pStatusvote,
+                 CUser pOrganisateur, List<CChoice> pChoices, List<CCandidate> pCandidate) {
         this.mIdVote = pIdvote;
         this.mNomVote = pNomvote;
         this.mDescriptionVote = pDescriptionvote;
@@ -189,7 +199,17 @@ public class CVote {
         this.mChoices.add(pChoix);
     }
 
-
+    /**
+     * Ajoute le choix d'un participant
+     *
+     * @param pUser Participant concerné
+     * @param pCandidate Candidat concerné
+     * @param pChois chois pour ce candidat
+     */
+    public void addChoice(CUser pUser, CCandidate pCandidate, int pChois){
+        CKeyChoice lKeyChoice = new CKeyChoice();
+        CChoice lChoice = new CChoice(lKeyChoice, this, pUser, pCandidate, pChois);
+    }
 
     @Override
     public String toString() {
