@@ -33,7 +33,7 @@ public class CAlgoBorda {
     }
 
     /**
-     * Quand une personne vote, c'est cette fonction qui devrais être appelé
+     * Quand une personne vote, c'est cette fonction qui devrais être appelée
      * Elle compte en même temps le nombre de votant ayant fait ce classement
      * @param pClassement
      */
@@ -51,13 +51,13 @@ public class CAlgoBorda {
      * @return candidat gagnant
      */
     public CCandidateBorda borda(){
-        List<CCandidateBorda> candidates = mRankingNb.keySet().iterator().next();
+        List<CCandidateBorda> lCandidates = mRankingNb.keySet().iterator().next();
         int lMax = 0;
         CCandidateBorda lWinner = null;
-        for (CCandidateBorda c : candidates) {
+        for (CCandidateBorda c : lCandidates) {
             int lValue=0;
             for (Map.Entry<List<CCandidateBorda>, Integer> element : mRankingNb.entrySet()){
-                int lPosition = element.getKey().indexOf(c);
+                int lPosition = element.getKey().indexOf(c)+1;
                 lValue += element.getValue()*(mSizeRanking-lPosition);
             }
             c.setmTotal(lValue);

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/home/lyamsi/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.2.3/91ac0b4c3a38b721c7548baa239950f23b65b56e/gson-2.2.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="91ac0b4c3a38b721c7548baa239950f23b65b56e">
+        <dex dex="/home/lyamsi/PROJET_FIN_M1/projetm1g3/Android/android-websocket-example-master/app/build/intermediates/pre-dexed/debug/gson-2.2.3-780c367bbc699dfbb21026e80d2d93422df54e2f.jar" />
+    </item>
+    <item
+        jar="/home/lyamsi/PROJET_FIN_M1/projetm1g3/Android/android-websocket-example-master/app/libs/android-websockets.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="aefd756694d19e632d1f99f397a78c14fde93be8">
+        <dex dex="/home/lyamsi/PROJET_FIN_M1/projetm1g3/Android/android-websocket-example-master/app/build/intermediates/pre-dexed/debug/android-websockets-f731be2cdf715d70c42d1ac84e503d7cac08098c.jar" />
+    </item>
+
+</items>

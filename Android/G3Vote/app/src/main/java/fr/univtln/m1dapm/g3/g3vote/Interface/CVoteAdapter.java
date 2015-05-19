@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -61,13 +62,23 @@ public class CVoteAdapter extends BaseAdapter {
             layoutItem = (RelativeLayout) convertView;
         }
 
+        if (position%2==0){
+            layoutItem.setBackgroundColor(-7829368);//gris clair
+        }
+
         //(2) : Récupération des TextView de notre layout
         TextView ltv_voteName = (TextView)layoutItem.findViewById(R.id.lTV_voteName);
         TextView ltv_voteStatus = (TextView)layoutItem.findViewById(R.id.lTV_voteStatus);
         TextView ltv_beginDate = (TextView)layoutItem.findViewById(R.id.lTV_beginDate);
         TextView ltv_endDate = (TextView)layoutItem.findViewById(R.id.lTV_endDate);
+        ImageView liv_icon = (ImageView)layoutItem.findViewById(R.id.icon);
 
-
+        if(mListVote.get(position).ismVoted()){
+            liv_icon.setImageResource(R.mipmap.ic_yes_vote);
+        }
+        else{
+            liv_icon.setImageResource(R.mipmap.ic_no_vote);
+        }
         //(3) : Renseignement des valeurs
         ltv_voteName.setText(mListVote.get(position).getmNom());
         if (mListVote.get(position).getmStatut()){
@@ -78,6 +89,7 @@ public class CVoteAdapter extends BaseAdapter {
             ltv_voteStatus.setText("fini");
             ltv_voteStatus.setTextColor(Color.parseColor("red"));
         }
+
 
         //ltv_beginDate.setText(mListVote.get(position).getmDebut().getGregorianChange().toString());
         //ltv_endDate.setText(mListVote.get(position).getmFin().getGregorianChange().toString());
