@@ -20,6 +20,15 @@ public class CVote {
     private String mDescription;
 
     private boolean mStatut;
+    private boolean mVoted;
+
+    public boolean ismVoted() {
+        return mVoted;
+    }
+
+    public void setmVoted(boolean mVoted) {
+        this.mVoted = mVoted;
+    }
 
     private List<CRegle> mListRegle;
 
@@ -63,11 +72,12 @@ public class CVote {
         this.mFin=mFin;
     }
 
-    public CVote(int mIdVote, String mNom, boolean mStatut, Date debut, Date fin){
+    public CVote(int mIdVote, String mNom, boolean mStatut,boolean mVoted, Date debut, Date fin){
         this(mIdVote,mNom);
         this.mStatut=mStatut;
         this.beginDate = debut;
         this.endDate = fin;
+        this.mVoted=mVoted;
     }
     public String getmNom() {
         return mNom;
@@ -135,11 +145,11 @@ public class CVote {
 // representation of a date with the defined format.
 
 
-        listVote.add(new CVote(1,"elireToto",true,d1,d2));
-        listVote.add(new CVote(2,"elireTata",true,d3,d4));
-        listVote.add(new CVote(3,"elireTiti",false,d5,d6));
-        listVote.add(new CVote(4,"elireTete",true,d7,d8));
-        listVote.add(new CVote(5,"elireTutu",false,d9,d10));
+        listVote.add(new CVote(1,"elireToto",true,true,d1,d2));
+        listVote.add(new CVote(2,"elireTata",true,false,d3,d4));
+        listVote.add(new CVote(3,"elireTiti",false,true,d5,d6));
+        listVote.add(new CVote(4,"elireTete",true,false,d7,d8));
+        listVote.add(new CVote(5,"elireTutu",false,true,d9,d10));
         return listVote;
     }
 }

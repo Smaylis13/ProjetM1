@@ -3,13 +3,25 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content">
 
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_yes_vote"
+        android:layout_alignBottom="@+id/linearLayout"
+        android:layout_alignTop="@+id/lLL_vote" />
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="1dp"
-        android:id="@+id/lLL_vote">
+        android:id="@+id/lLL_vote"
+        android:layout_toRightOf="@id/icon">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lTVvoteNameLabel"/>
         <TextView
             android:text="Nom du vote"
             android:id="@+id/lTV_voteName"
@@ -34,7 +46,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="1dp"
         android:layout_below="@id/lLL_vote"
-        android:id="@+id/linearLayout">
+        android:id="@+id/linearLayout"
+        android:layout_toRightOf="@id/icon">
 
         <TextView
             android:text="Date Début"
