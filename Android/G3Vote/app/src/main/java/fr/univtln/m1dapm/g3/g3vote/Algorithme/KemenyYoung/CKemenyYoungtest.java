@@ -1,17 +1,19 @@
-package fr.univtln.m1dapm.g3.g3vote.TestAlgo;
+package fr.univtln.m1dapm.g3.g3vote.Algorithme.KemenyYoung;
 
-import junit.framework.TestCase;
+import java.util.ArrayList;
+import java.util.List;
+
+import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidat;
 
 /**
  * Created by Pierre on 19/05/2015.
  */
-public class CKemenyYoungTest extends TestCase {
-
+public class CKemenyYoungtest {
 
     public static void main(String[] args) {
 
-        System.out.println("test");
-        /*CKemenyYoung kemenyYoung=new CKemenyYoung();
+
+        CKemenyYoung kemenyYoung=new CKemenyYoung();
         CCandidat a=new CCandidat("Memphis");
         CCandidat b=new CCandidat("Nashville");
         CCandidat c=new CCandidat("Chattanooga");
@@ -64,38 +66,11 @@ public class CKemenyYoungTest extends TestCase {
         for (i=0;i<17;i++) {
             kemenyYoung.nouveauVote(listkno);
         }
-        List listresult = new ArrayList();*/
+        List listresult = new ArrayList();
         //kemenyYoung.affiche();
-        //listresult=kemenyYoung.resultat(4);
+        listresult=kemenyYoung.resultat(4);
 
 
-        //System.out.println(listresult);
-    }
-
-    public void testInitVote() throws Exception {
-
-    }
-
-    public void testInittab() throws Exception {
-
-    }
-
-    public void testAffiche() throws Exception {
-
-    }
-
-    public void testGenerate() throws Exception {
-
-    }
-
-    public void testResultat() throws Exception {
-
-
-
-
-    }
-
-    public void testNouveauVote() throws Exception {
-
+        System.out.println(listresult);
     }
 }

@@ -3,18 +3,17 @@ package fr.univtln.m1dapm.g3.g3vote.Algorithme.KemenyYoung;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.univtln.m1dapm.g3.g3vote.Algorithme.AAlgorithme;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidat;
 
 /**
  * Created by Pierre on 07/05/2015.
  */
-public class CKemenyYoung {
+public class CKemenyYoung extends AAlgorithme {
 
-    private int n;
-    private List<CCandidat> mListCand;
-    private CCandidat tmp;
+    private int mNombreCandidat;
     private List<CChoixpossible> mListResult;
-    private int fact;
+    private int mTailleList;
 
 
     /////////////////////////////////////////////////////////////////////////////////////////////
@@ -24,17 +23,22 @@ public class CKemenyYoung {
     public CKemenyYoung() {
     }
 
+    @Override
+    protected void initVote() {
 
-    public void inittab(int n, List<CCandidat> pListCand) {
-        this.n = n;
+    }
+
+
+    public void inittab(int pNombreCandidat, List<CCandidat> pListCand) {
+        this.mNombreCandidat = pNombreCandidat;
 
         int i;
-        fact = 1;
-        for (i = 0; i < n; i++) {
-            fact = fact * (n - i);
+        mTailleList = 1;
+        for (i = 0; i < mNombreCandidat; i++) {
+            mTailleList = mTailleList * (mNombreCandidat - i);
         }
         mListResult = new ArrayList<CChoixpossible>();// crée la liste des résultat possible
-        generate(n, pListCand); //remplie la liste des résultat possible
+        generate(mNombreCandidat, pListCand); //remplie la liste des résultat possible
 
 
 
@@ -48,33 +52,34 @@ public class CKemenyYoung {
 
     }
     public void affiche () {
-        for (int i = 0; i < fact; i++) {
+        for (int i = 0; i < mTailleList; i++) {
             System.out.println(mListResult.get(i).toString());
         }
     }
 
 
-    public List<CCandidat> generate(int n, List<CCandidat> pListCand) {
+    public List<CCandidat> generate(int pNombreCandidat, List<CCandidat> pListCand) {
         int i;
 
         CChoixpossible lChoixpossible = new CChoixpossible(pListCand); //création de choix
 
 
-        if (n == 1) {
+        if (pNombreCandidat == 1) {
 
             mListResult.add(lChoixpossible); // mise en place du choix parmi les résultat possible
 
         } else {
-            for (i = 0; i < n; i++) { // fait tout les choix possible
-                pListCand = generate(n - 1, pListCand);
-                if (n % 2 == 0) {
-                    tmp = pListCand.get(i);
-                    pListCand.set(i, pListCand.get(n - 1));
-                    pListCand.set(n - 1, tmp);
+            CCandidat pcandidattemporaire;
+            for (i = 0; i < pNombreCandidat; i++) { // fait tout les choix possible
+                pListCand = generate(pNombreCandidat - 1, pListCand);
+                if (pNombreCandidat % 2 == 0) {
+                    pcandidattemporaire = pListCand.get(i);
+                    pListCand.set(i, pListCand.get(pNombreCandidat - 1));
+                    pListCand.set(pNombreCandidat - 1, pcandidattemporaire);
                 } else {
-                    tmp = pListCand.get(0);
-                    pListCand.set(0, pListCand.get(n - 1));
-                    pListCand.set(n - 1, tmp);
+                    pcandidattemporaire = pListCand.get(0);
+                    pListCand.set(0, pListCand.get(pNombreCandidat - 1));
+                    pListCand.set(pNombreCandidat - 1, pcandidattemporaire);
                 }
 
             }
@@ -102,20 +107,20 @@ public class CKemenyYoung {
         int y;
         int z;
         int poid = 0;
-        for (int i = 0; i < fact; i++) {
-            for (int j = 0; j < n; j++) {
-                for (int x = j + 1; x < n; x++) {
+        for (int i = 0; i < mTailleList; i++) {
+            for (int j = 0; j < mNombreCandidat; j++) {
+                for (int x = j + 1; x < mNombreCandidat; x++) {
                     candidat1 = choix.get(j);
                     candidat2 = choix.get(x);
                     y = 0;
                     z = 0;
 
-                    for (y=0;y<n;y++){//trouve la position de candida 1 dans le résultat en cour
+                    for (y=0;y<mNombreCandidat;y++){//trouve la position de candida 1 dans le résultat en cour
                         if (candidat1.equals( mListResult.get(i).getIndexValue(y))){
                             break;
                         }
                     }
-                    for (z=0;z<n;z++){//trouve la position de candida 2 dans le résultat en cour
+                    for (z=0;z<mNombreCandidat;z++){//trouve la position de candida 2 dans le résultat en cour
                         if (candidat2.equals(mListResult.get(i).getIndexValue(z))){
                             break;
                         }
