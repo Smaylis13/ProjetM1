@@ -15,7 +15,7 @@ import java.util.List;
  * Défini les utilisauteurs qui peuvent être organisateur et participant.
  */
 @Entity
-@Table(name="utilisateur",uniqueConstraints =@UniqueConstraint(columnNames={"MAIL"}))
+@Table(name="utilisateur")
 public class CUser {
 
     @Id
@@ -23,7 +23,7 @@ public class CUser {
     @Column(name="ID_UTILISATEUR")
     @JsonIgnore
     public int mId;
-    @Column(name="MAIL", nullable = false)
+    @Column(name="MAIL", nullable = false,unique = true)
     private String mEmail;
     @Column(name="MOT_DE_PASSE",nullable = false)
     private String mPassword;
@@ -87,11 +87,11 @@ public class CUser {
         this.mName = pName;
     }
 
-    public String getSurname() {
+    public String getFirstName() {
         return mFirstName;
     }
 
-    public void setSurname(String pFirstName) {
+    public void setFirstName(String pFirstName) {
         this.mFirstName = pFirstName;
     }
 

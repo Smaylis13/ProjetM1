@@ -29,9 +29,11 @@ public class CUserRest {
 
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    public void addUser(CUser pNewUser){
+    public int addUser(CUser pNewUser){
+        System.out.println("HELLO");
         CUserDAO lUserDAO=new CUserDAO();
         lUserDAO.create(pNewUser);
+        return pNewUser.getId();
     }
 
 }

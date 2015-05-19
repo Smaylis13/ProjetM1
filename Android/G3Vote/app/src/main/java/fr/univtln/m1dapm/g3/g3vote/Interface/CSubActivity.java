@@ -1,6 +1,7 @@
 package fr.univtln.m1dapm.g3.g3vote.Interface;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,10 +11,25 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.concurrent.ExecutionException;
+
+import fr.univtln.m1dapm.g3.g3vote.Communication.CCommunication;
+import fr.univtln.m1dapm.g3.g3vote.Communication.CEnvoiMessage;
+import fr.univtln.m1dapm.g3.g3vote.Communication.CRequestTypesEnum;
+import fr.univtln.m1dapm.g3.g3vote.Communication.CTaskParam;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CUser;
 import fr.univtln.m1dapm.g3.g3vote.R;
 
 public class CSubActivity extends AppCompatActivity {
+    private static Context sContext;
+
+    public static Context getsContext() {
+        return sContext;
+    }
+
+    public static void setsContext(Context sContext) {
+        CSubActivity.sContext = sContext;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,19 +61,21 @@ public class CSubActivity extends AppCompatActivity {
 
     //TODO: handle the inscription on the server
     public void validateSub(View view) {
-        final EditText ET_prenom = (EditText)findViewById(R.id.userFirstNameInput);
-        final EditText ET_nom = (EditText)findViewById(R.id.userLastNameInput);
-        final EditText ET_mail = (EditText)findViewById(R.id.userMailInput);
-        final EditText ET_password = (EditText)findViewById(R.id.userPasswordInput);
-        final String prenom = ET_prenom.getText().toString();
-        final String nom = ET_nom.getText().toString();
-        final String mail = ET_mail.getText().toString();
-        final String password = ET_password.getText().toString();
-        if (prenom != null && !prenom.isEmpty() && nom!=null && !nom.isEmpty() && mail!=null &&
-               !mail.isEmpty() && password!= null && !password.isEmpty()) {
-            CUser user = new CUser(prenom, nom, mail, password);
-            Intent intent = new Intent(this,CHubActivity.class);
-            startActivity(intent);
+        final EditText lET_FirstName = (EditText)findViewById(R.id.userFirstNameInput);
+        final EditText lET_Name = (EditText)findViewById(R.id.userLastNameInput);
+        final EditText lET_Mail = (EditText)findViewById(R.id.userMailInput);
+        final EditText lET_Password = (EditText)findViewById(R.id.userPasswordInput);
+        final String lFirstName = lET_FirstName.getText().toString();
+        final String lName = lET_Name.getText().toString();
+        final String lMail = lET_Mail.getText().toString();
+        final String lPassword = lET_Password.getText().toString();
+        if (lFirstName != null && !lFirstName.isEmpty() && lName!=null && !lName.isEmpty() && lMail!=null &&
+               !lMail.isEmpty() && lPassword!= null && !lPassword.isEmpty()) {
+            CUser lUser = new CUser(lFirstName, lName, lMail, lPassword);
+            CTaskParam lParams=new CTaskParam(CRequestTypesEnum.add_new_user,lUser);
+            sContext=getApplicationContext();
+            CCommunication lCom=new CCommunication();
+            lCom.execute(lParams);
         }
         else{
             Toast.makeText(this,"tous les champs ne sont pas remplis",Toast.LENGTH_SHORT).show();
