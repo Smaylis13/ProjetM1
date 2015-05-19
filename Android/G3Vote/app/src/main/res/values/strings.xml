@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">EVS</string>
     <string name="title_activity_csub">EVS Inscription</string>
-    <string name="title_activity_chub">EVS Acceuil</string>
+    <string name="title_activity_chub">EVS Accueil</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
