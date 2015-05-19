@@ -5,8 +5,9 @@ import java.util.List;
 import java.util.Random;
 
 import fr.univtln.m1dapm.g3.g3vote.Algorithme.VoteMajoritaire.CAlgoVoteMaj;
-import fr.univtln.m1dapm.g3.g3vote.Algorithme.VoteMajoritaire.CChoixVM;
-import fr.univtln.m1dapm.g3.g3vote.Algorithme.VoteMajoritaire.CVotantVM;
+import fr.univtln.m1dapm.g3.g3vote.Algorithme.VoteMajoritaire.CChoiceVM;
+
+import fr.univtln.m1dapm.g3.g3vote.Algorithme.VoteMajoritaire.CVoterVM;
 
 /**
  * Created by lyamsi on 09/05/15.
