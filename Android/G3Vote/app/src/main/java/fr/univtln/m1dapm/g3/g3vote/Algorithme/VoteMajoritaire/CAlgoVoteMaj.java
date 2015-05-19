@@ -114,7 +114,7 @@ public class CAlgoVoteMaj {
 
         for (CChoiceVM c : mChoices) {
             if (c.sommeNote() > lMax) {
-                lMax = c.sommeNote();
+                lMax = c.getmSum();
                 lWinner = c;
             }
         }

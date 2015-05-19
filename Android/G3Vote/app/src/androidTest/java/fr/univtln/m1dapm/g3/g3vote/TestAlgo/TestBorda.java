@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.univtln.m1dapm.g3.g3vote.Algorithme.Borda.CAlgoBorda;
-import fr.univtln.m1dapm.g3.g3vote.Algorithme.Borda.CCandidatBorda;
+import fr.univtln.m1dapm.g3.g3vote.Algorithme.Borda.CCandidateBorda;
 
 /**
  * Created by lyamsi on 12/05/15.
