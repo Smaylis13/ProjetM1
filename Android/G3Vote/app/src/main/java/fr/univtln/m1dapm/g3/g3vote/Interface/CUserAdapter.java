@@ -60,6 +60,9 @@ public class CUserAdapter extends BaseAdapter{
             layoutItem = (RelativeLayout) convertView;
         }
 
+        if (position%2==0){
+            layoutItem.setBackgroundColor(-7829368);//gris clair
+        }
         //(2) : Récupération des TextView de notre layout
         TextView tv_Nom = (TextView)layoutItem.findViewById(R.id.TV_Nom);
         TextView tv_Prenom = (TextView)layoutItem.findViewById(R.id.TV_Prenom);

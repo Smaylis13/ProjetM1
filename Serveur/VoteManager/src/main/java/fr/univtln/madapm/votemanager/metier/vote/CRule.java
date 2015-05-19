@@ -33,13 +33,7 @@ public class CRule {
         this.mDescription = pDescription;
     }
 
-    public int getIdRegle() {
-        return mIdRegle;
-    }
 
-    public void setIdRegle(int pIdRegle) {
-        this.mIdRegle = pIdRegle;
-    }
 
     public String getDescription() {
         return mDescription;

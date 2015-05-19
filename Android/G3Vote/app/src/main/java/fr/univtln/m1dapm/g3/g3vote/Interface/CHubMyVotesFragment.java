@@ -5,7 +5,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
+import java.util.ArrayList;
+
+import fr.univtln.m1dapm.g3.g3vote.Entite.CUser;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
 import fr.univtln.m1dapm.g3.g3vote.R;
 
 /**
@@ -44,6 +49,17 @@ public class CHubMyVotesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_chub_myvote, container, false);
+        //Récupération du composant ListView
+        ListView list = (ListView)rootView.findViewById(R.id.lListViewMyVote);
+
+        //Récupération de la liste des personnes
+        ArrayList<CVote> listVote = CVote.getAListOfVote();
+
+        //Création et initialisation de l'Adapter pour les personnes
+        CVoteAdapter adapter = new CVoteAdapter(rootView.getContext(), listVote);
+
+        //Initialisation de la liste avec les données
+        list.setAdapter(adapter);
         return rootView;
     }
 }

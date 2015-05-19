@@ -11,4 +11,19 @@ public class CUserDAO extends CCRUDServiceBean<CUser> implements IUserDAO{
     public CUser findByID(int pId) {
         return find(CUser.class,pId);
     }
+
+    @Override
+    public void deleteUser(int pId) {
+        delete(CUser.class, pId);
+    }
+
+    @Override
+    public CUser updateUser(CUser pType) {
+        return update(pType);
+    }
+
+    @Override
+    public CUser createUser(CUser pType) {
+        return create(pType);
+    }
 }

@@ -1,15 +1,10 @@
 package fr.univtln.madapm.votemanager.metier.vote;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import fr.univtln.madapm.votemanager.metier.CMap;
-import fr.univtln.madapm.votemanager.metier.user.COrganizer;
-import fr.univtln.madapm.votemanager.metier.user.CParticipant;
 import fr.univtln.madapm.votemanager.metier.user.CUser;
 
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlElement;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by civars169 on 05/05/15.
@@ -37,11 +32,11 @@ public class CVote {
     private boolean mStatusVote;
 
     @JoinColumn(name = "ID_UTILISATEUR")
-    @ManyToOne(fetch= FetchType.LAZY,optional=false)
+    @ManyToOne(fetch= FetchType.LAZY,optional=false,cascade = CascadeType.PERSIST)
     private CUser mOrganisateur;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy="mVote")
-    private List<CResult> mResultVote;
+    private List<CResult> mResultVote=null;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name="certifie", joinColumns = {@JoinColumn(name="ID_VOTE",nullable = false,updatable = false)},
@@ -54,12 +49,8 @@ public class CVote {
     private List<CRule> mRegle;
 
 
-   /* @JsonIgnore
-    @Transient
-    public long mOrganisateurID=0;
-*/
     @OneToMany(cascade = CascadeType.ALL, mappedBy="mVote")
-    private List<CChoice> mChoices;
+    private List<CChoice> mChoices=null;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy="mVote")
     private List<CCandidate> mCandidate;
@@ -68,8 +59,23 @@ public class CVote {
 
     public CVote(int pIdvote, String pNomvote, String pDescriptionvote, String pDatedebut, String pDatefin,
                  List<CResult> pResultvote, List<CType> pType, List<CRule> pRegle, boolean pStatusvote,
-                 CUser pOrganisateur,
-                 List<CChoice> pChoices, List<CCandidate> pCandidate) {
+                 CUser pOrganisateur, List<CCandidate> pCandidate) {
+        this.mIdVote = pIdvote;
+        this.mNomVote = pNomvote;
+        this.mDescriptionVote = pDescriptionvote;
+        this.mDateDebut = pDatedebut;
+        this.mDateFin = pDatefin;
+        this.mResultVote = pResultvote;
+        this.mType = pType;
+        this.mRegle = pRegle;
+        this.mStatusVote = pStatusvote;
+        this.mOrganisateur = pOrganisateur;
+        this.mCandidate = pCandidate;
+    }
+
+    public CVote(int pIdvote, String pNomvote, String pDescriptionvote, String pDatedebut, String pDatefin,
+                 List<CResult> pResultvote, List<CType> pType, List<CRule> pRegle, boolean pStatusvote,
+                 CUser pOrganisateur, List<CChoice> pChoices, List<CCandidate> pCandidate) {
         this.mIdVote = pIdvote;
         this.mNomVote = pNomvote;
         this.mDescriptionVote = pDescriptionvote;
@@ -84,53 +90,47 @@ public class CVote {
         this.mCandidate = pCandidate;
     }
 
-    public int getIdvote() {
-        return mIdVote;
-    }
 
-    public void setIdvote(int pIdvote) {
-        this.mIdVote = pIdvote;
-    }
-
-    public String getNomvote() {
+    public int getIdVote(){return mIdVote;}
+    public String getVoteName() {
         return mNomVote;
     }
 
-    public void setNomvote(String pNomvote) {
+    public void setVoteName(String pNomvote) {
         this.mNomVote = pNomvote;
     }
 
-    public String getDescriptionvote() {
+    public String getDescriptionVote() {
         return mDescriptionVote;
     }
 
-    public void setDescriptionvote(String pDescriptionvote) {
+    public void setDescriptionVote(String pDescriptionvote) {
         this.mDescriptionVote = pDescriptionvote;
     }
 
-    public String getDatedebut() {
+    public String getDateDebut() {
         return mDateDebut;
     }
 
-    public void setDatedebut(String pDatedebut) {
+    public void setDateDebut(String pDatedebut) {
         this.mDateDebut = pDatedebut;
     }
 
-    public String getDatefin() {
+    public String getDateFin() {
         return mDateFin;
     }
 
-    public void setDatefin(String pDatefin) {
+    public void setDateFin(String pDatefin) {
         this.mDateFin = pDatefin;
     }
 
-    public List<CResult> getResultvote() {
+    /*public List<CResult> getResultVote() {
         return mResultVote;
     }
 
-    public void setResultvote(List<CResult> pResultvote) {
+    public void setResultVote(List<CResult> pResultvote) {
         this.mResultVote = pResultvote;
-    }
+    }*/
 
     public List<CType> getType() {
         return mType;
@@ -140,19 +140,19 @@ public class CVote {
         this.mType = pType;
     }
 
-    public List<CRule> getmRegle() {
+    public List<CRule> getRegle() {
         return mRegle;
     }
 
-    public void setmRegle(List<CRule> mRegle) {
+    public void setRegle(List<CRule> mRegle) {
         this.mRegle = mRegle;
     }
 
-    public boolean getStatusvote() {
+    public boolean getStatusVote() {
         return mStatusVote;
     }
 
-    public void setStatusvote(boolean pStatusvote) {
+    public void setStatusVote(boolean pStatusvote) {
         this.mStatusVote = pStatusvote;
     }
 
@@ -164,21 +164,21 @@ public class CVote {
         this.mOrganisateur = pOrganisateur;
     }
 
-    public List<CChoice> getMapvote() {
+   /* public List<CChoice> getVotes() {
         return mChoices;
     }
 
-    public void setMapvote(List<CChoice> pChoices) {
+    public void setVotes(List<CChoice> pChoices) {
         this.mChoices = pChoices;
-    }
+    }*/
 
-    public List<CCandidate> getMapcandidat() {
+    public List<CCandidate> getCandidates() {
         return mCandidate;
     }
 
-    public void setMapcandidat(List<CCandidate> pCandidate) {
+   /* public void setCandidates(List<CCandidate> pCandidate) {
         this.mCandidate = pCandidate;
-    }
+    }*/
 
     /**
      * Ajoute une sélection pour le vote
@@ -189,7 +189,17 @@ public class CVote {
         this.mChoices.add(pChoix);
     }
 
-
+    /**
+     * Ajoute le choix d'un participant
+     *
+     * @param pUser Participant concerné
+     * @param pCandidate Candidat concerné
+     * @param pChois chois pour ce candidat
+     */
+    public void addChoice(CUser pUser, CCandidate pCandidate, int pChois){
+        CKeyChoice lKeyChoice = new CKeyChoice();
+        CChoice lChoice = new CChoice(lKeyChoice, this, pUser, pCandidate, pChois);
+    }
 
     @Override
     public String toString() {

@@ -1,6 +1,5 @@
 package fr.univtln.madapm.votemanager.metier.vote;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import fr.univtln.madapm.votemanager.metier.user.CUser;
 
 import javax.persistence.*;
@@ -36,11 +35,23 @@ public class CChoice {
 
     public CChoice(){}
 
-    public CChoice(CKeyChoice pIdChoix, CVote pVote, CUser pUser, CCandidate pCandidate){
+    public CChoice(CKeyChoice pIdChoix, CVote pVote, CUser pUser, CCandidate pCandidate, int pScore){
         this.mIdChoix = pIdChoix;
         this.mVote = pVote;
         this.mUser = pUser;
         this.mCandidate = pCandidate;
+        this.mScore = pScore;
+    }
+
+    @Override
+    public String toString() {
+        return "CChoice{" +
+                "mIdChoix=" + mIdChoix +
+                ", mVote=" + mVote +
+                ", mUser=" + mUser +
+                ", mCandidate=" + mCandidate +
+                ", mScore=" + mScore +
+                '}';
     }
 }
 

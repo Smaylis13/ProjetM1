@@ -1,16 +1,26 @@
 package fr.univtln.m1dapm.g3.g3vote.Entite;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by ludo on 05/05/15.
  */
-public class CUser {
+public class CUser implements Serializable{
 
+    private int mIdUser;
     private String mFirstName;//prenom
     private String mLastName;//nom
     private String mMail;
     private String mPassword;
+
+    public int getIdUser() {
+        return mIdUser;
+    }
+
+    public void setIdUser(int mIdUser) {
+        this.mIdUser = mIdUser;
+    }
 
     public String getFirstName() {
         return mFirstName;

@@ -47,13 +47,6 @@ public class CCandidate {
     public CCandidate() {
     }
 
-    public int getIdCandidat() {
-        return mIdCandidat;
-    }
-
-    public void setIdCandidat(int pIdCandidat) {
-        this.mIdCandidat = pIdCandidat;
-    }
 
     public String getNomCandidat() {
         return mNomCandidat;

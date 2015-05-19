@@ -60,13 +60,13 @@ public class CHubCreateVoteFragment extends Fragment {
                 switch (position)
                 {
                     case 0:
-                        text.setText("le vote STV sert a blablabla");
+                        text.setText(getString(R.string.stvDescription));
                         break;
                     case 1:
-                        text.setText("le vote KY sert a blablabl");
+                        text.setText(getString(R.string.kemenyYoungDescription));
                         break;
                     case 2:
-                        text.setText(" le vote JM sert a blablabla");
+                        text.setText(getString(R.string.jugementMajorityDescription));
                         break;
                     default:
                         break;
