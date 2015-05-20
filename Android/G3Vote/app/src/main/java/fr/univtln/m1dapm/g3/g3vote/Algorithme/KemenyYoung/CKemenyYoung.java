@@ -5,6 +5,7 @@ import java.util.List;
 
 import fr.univtln.m1dapm.g3.g3vote.Algorithme.AAlgorithme;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidat;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CChoixpossible;
 
 /**
  * Created by Pierre on 07/05/2015.

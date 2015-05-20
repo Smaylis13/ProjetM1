@@ -20,13 +20,18 @@ public class CVoteUninominalMajoritaireTest {
         CCandidat b=new CCandidat("b");
         CCandidat c=new CCandidat("c");
         CCandidat d=new CCandidat("d");
+        CCandidat e=new CCandidat("e");
+        CCandidat f=new CCandidat("f");
+        CCandidat g=new CCandidat("g");
         List list = new ArrayList();
         list.add(a);
         list.add(b);
         list.add(c);
         list.add(d);
-        vote.initVote(list);
-
+        list.add(e);
+        list.add(f);
+        list.add(g);
+        vote.initVote(list, 2, 3);
         for (int i=0;i<50;i++){
             vote.nouveauVote(a);
         }
@@ -39,9 +44,34 @@ public class CVoteUninominalMajoritaireTest {
         for (int i=0;i<20;i++){
             vote.nouveauVote(d);
         }
+        for (int i=0;i<65;i++){
+            vote.nouveauVote(e);
+        }
+        for (int i=0;i<95;i++){
+            vote.nouveauVote(f);
+        }
+        for (int i=0;i<15;i++){
+            vote.nouveauVote(g);
+        }
+
+        vote.affiche();
+        vote.toursuivant();
+        System.out.println("tour suivant");
+        vote.affiche();
+
+        for (int i=0;i<50;i++){
+            vote.nouveauVote(e);
+        }
+        for (int i=0;i<60;i++){
+            vote.nouveauVote(f);
+        }
+        for (int i=0;i<75;i++) {
+            vote.nouveauVote(c);
+        }
+
         CCandidat result;
         result=vote.resultat();
 
-        System.out.println(result);
+       System.out.println(result);
     }
 }
