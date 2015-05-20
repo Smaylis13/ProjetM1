@@ -4,6 +4,7 @@ package fr.univtln.m1dapm.g3.g3vote.Interface;
  * Created by chris on 15/05/15.
  */
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -23,7 +24,8 @@ public class CHubCreateVoteFragment extends Fragment {
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
 
-    private static final String[] VOTE = new String[] {"STV", "Kemeny-Young", "Jugement Majoritaire"};
+    private static final String[] VOTE = new String[] {"STV", "Kemeny-Young", "Jugement Majoritaire",
+    "uninominal à 1 tour","uninominal à 2 tour"};
     /**
      * Returns a new instance of this fragment for the given section
      * number.
@@ -68,6 +70,11 @@ public class CHubCreateVoteFragment extends Fragment {
                     case 2:
                         text.setText(getString(R.string.jugementMajorityDescription));
                         break;
+                    case 3:
+                        text.setText(getString(R.string.uninomialOneTurnVoteDescription));
+                        break;
+                    case 4:
+                        text.setText(getString(R.string.uninominalTwoTurnVoteDescription));
                     default:
                         break;
                 }
@@ -83,6 +90,8 @@ public class CHubCreateVoteFragment extends Fragment {
     }
 
     //TODO: handle the clik on validate to go to the right vote conf interface with the data
+
+
 
 
 }

@@ -3,6 +3,7 @@ package fr.univtln.m1dapm.g3.g3vote.Interface;
 import java.util.Locale;
 
 
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -17,6 +18,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Spinner;
+
 import fr.univtln.m1dapm.g3.g3vote.R;
 
 
@@ -115,6 +118,8 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
     }
 
+
+
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
@@ -174,4 +179,35 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
         android.support.v4.app.DialogFragment newFragment = new CDateBeginPickerFragment();
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }
+
+    //handle the clik on the validate button
+    public void validateVoteType(View view) {
+        Spinner spin = (Spinner)findViewById(R.id.voteTypeList);
+        int test = spin.getSelectedItemPosition();
+        switch (test) {
+            case 0://STV
+                Intent intent0 = new Intent(this, CVoteConfSTV.class);
+                startActivity(intent0);
+                break;
+            case 1://Kemeny-young
+                Intent intent1 = new Intent(this, CVoteConfKemenyYoung.class);
+                startActivity(intent1);
+                break;
+            case 2://Jugement Majoritaire
+                Intent intent2 = new Intent(this, CVoteConfMajorityJugement.class);
+                startActivity(intent2);
+                break;
+            case 3://uninominal à 1 tour
+                Intent intent3 = new Intent(this, CVoteConfUninominalOneTurn.class);
+                startActivity(intent3);
+                break;
+            case 4://uninominal à 2 tour
+                Intent intent4 = new Intent(this, CVoteConfUninominalTwoTurn.class);
+                startActivity(intent4);
+                break;
+            default:
+                break;
+        }
+    }
+
 }
