@@ -95,6 +95,16 @@
             <artifactId>gson</artifactId>
             <version>1.7.1</version>
         </dependency>
+        <dependency>
+            <groupId>org.mod4j.org.apache.commons</groupId>
+            <artifactId>cli</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.directory.studio</groupId>
+            <artifactId>org.apache.commons.codec</artifactId>
+            <version>1.8</version>
+        </dependency>
 
         <dependency>
             <groupId>org.apache.oltu.oauth2</groupId>
