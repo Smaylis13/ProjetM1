@@ -6,12 +6,10 @@ import junit.framework.TestCase;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.Timer;
 
 import fr.univtln.m1dapm.g3.g3vote.Algorithme.STV.CAlgoSTV;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidat;
@@ -38,11 +36,11 @@ public class CAlgoSTVTest extends TestCase {
 
 
  //       Log.i("Vote : ", "Creation Vote");
-        CAlgoSTV lAlgo = new CAlgoSTV(lVote, 10);
+        CAlgoSTV lAlgo = new CAlgoSTV(lVote, 3);
 
         Map<CListChoix, Double> lChoix = new HashMap<>();
         Random lRandom = new Random();
-        for(int i=0; i<200; i++)
+        for(int i=0; i<100000; i++)
         {
             List<CCandidat> lList1 = new ArrayList<>(lCands);
             Collections.shuffle(lList1);
