@@ -14,8 +14,12 @@ public class CListChoix extends CChoix<List<CCandidat>>
 
     public CCandidat getIndexValue(int pIndice)
     {
-        return (CCandidat)mChoix.get(pIndice);
+        return mChoix.get(pIndice);
     }
 
-
+    public void removeCandidat(CCandidat pCand)
+    {
+        if(mChoix.contains(pCand))
+            mChoix.remove(pCand);
+    }
 }

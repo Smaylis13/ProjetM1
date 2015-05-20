@@ -2,10 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="fr.univtln.m1dapm.g3.g3vote" >
 
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET" />
 
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+=======
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+>>>>>>> 4e759b819d8743e2ad1dfc74cd216790e20de18f
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -27,40 +30,19 @@
             android:name=".Interface.CHubActivity"
             android:label="@string/title_activity_chub" >
         </activity>
-        <activity
-            android:name=".Interface.CVoteConfUninominalOneTurn"
-            android:label="@string/title_activity_cvote_uninominal_one_turn" >
-        </activity>
-
         <!-- Service -->
-        <service android:name=".Service.CNotificationService" />
+        <service android:name=".Service.CNotificationService"></service>
 
         <receiver
-            android:name=".Receiver.CNetworkReceiver"
+            android:name=".Receiver.CNotificationReceiver"
             android:enabled="true"
             android:exported="true"
-            android:label="BootReceiver" >
+            android:label="BootReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 
-        <activity
-            android:name=".Interface.CVoteConfSTV"
-            android:label="@string/title_activity_cvote_conf_stv" >
-        </activity>
-        <activity
-            android:name=".Interface.CVoteConfKemenyYoung"
-            android:label="@string/title_activity_cvote_conf_kemeny_young" >
-        </activity>
-        <activity
-            android:name=".Interface.CVoteConfMajorityJugement"
-            android:label="@string/title_activity_cvote_conf_majority_jugement" >
-        </activity>
-        <activity
-            android:name=".Interface.CVoteConfUninominalTwoTurn"
-            android:label="@string/title_activity_cvote_conf_uninominal_two_turn" >
-        </activity>
     </application>
 
 </manifest>

@@ -1,13 +1,15 @@
 package fr.univtln.m1dapm.g3.g3vote.Algorithme.STV;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import fr.univtln.m1dapm.g3.g3vote.Algorithme.AAlgorithme;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidat;
-import fr.univtln.m1dapm.g3.g3vote.Entite.CChoix;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CListChoix;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CResultat;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
@@ -17,9 +19,10 @@ import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
  */
 public class CAlgoSTV extends AAlgorithme {
 
-    protected int mQuota, mNbElu, mNbVote;
+    protected double mQuota;
+    protected int mNbElu, mNbVote;
 
-    protected Map<CChoix<List>, Integer> mChoix;
+    protected Map<CListChoix, Double> mChoix;
 
     public CAlgoSTV() {
         super();
@@ -40,7 +43,7 @@ public class CAlgoSTV extends AAlgorithme {
 
     /// Methode d'initialisation du vote (charge les regles)
     //@Override
-    public void initVote(Map<CChoix<List>, Integer> pChoix)
+    public void initVote(Map<CListChoix, Double> pChoix)
     {
         int lNbVote=0, lNbElu=0;
         mVote.getRegles();
@@ -51,39 +54,49 @@ public class CAlgoSTV extends AAlgorithme {
     }
 
     /// Charge la liste des choix faits par les votants de la BDD
-    public void getChoix(Map<CChoix<List>, Integer> pChoix)
+    private void getChoix(Map<CListChoix, Double> pChoix)
     {
-        mChoix = new HashMap<CChoix<List>, Integer>(pChoix);
+        mChoix = new HashMap<>(pChoix);
 
         for (Map.Entry choix : mChoix.entrySet())
-            mNbVote += (int)choix.getValue();
+            mNbVote += (double)choix.getValue();
     }
 
     /// Methode de calcul de l'algorithme STV
     public CResultat CalculResultat()
     {
         boolean lNewElu = false;
-        List<CCandidat> lElus = new ArrayList<CCandidat>();
-        List<CCandidat> lElim = new ArrayList<CCandidat>();
+        List<CCandidat> lElus = new ArrayList<>();
+        List<CCandidat> lElim = new ArrayList<>();
         CResultat<List<CCandidat>> lResultat = new CResultat<>();
-        Map<CCandidat,Integer> lCandNbVote;
+        Map<CCandidat,Double> lCandNbVote;
 
         lCandNbVote = calcNbVote();
 
         /// boucle de comptage des elus
         while(lElus.size() < mNbElu)
         {
-           Map ltmpCandVote = new HashMap<CCandidat, Integer>(lCandNbVote);
+           Map<CCandidat, Double> ltmpCandVote = new HashMap<>(lCandNbVote);
+/*
+            double lNbvote = 0.0; /// Comptage du nombre de votes restants
 
+            for(Map.Entry choix : mChoix.entrySet())
+                lNbvote += (double)choix.getValue();
+
+            Log.i("Vote : ", "Nombre de votes restants : " + lNbvote);
+*/
+            lNewElu = false;
             /// Verification de la presence d'une majoritee
            for(Map.Entry cand : lCandNbVote.entrySet())
            {
                /// Presence d'une majoritee
-               if((int)cand.getValue() >= mQuota)
+               if((double)cand.getValue() >= mQuota)
                {
                    lNewElu = true;
+          //         Log.i("Vote : ", "Elu : " + ((CCandidat) cand.getKey()).getNom() + " avec " + cand.getValue() + " voix");
                    lElus.add((CCandidat)cand.getKey());
-                   ltmpCandVote = distribSurplus(ltmpCandVote,(CCandidat)cand);
+                   ltmpCandVote = distribSurplus(ltmpCandVote,(CCandidat)cand.getKey());
+                   break;
                }
            }
 
@@ -104,68 +117,89 @@ public class CAlgoSTV extends AAlgorithme {
     }
 
     /// Methode de reattribution des voix en plus d'un candidat elu
-    private Map<CCandidat, Integer> distribSurplus(Map<CCandidat, Integer> pCandVote, CCandidat pCandElu)
+    private Map<CCandidat, Double> distribSurplus(Map<CCandidat, Double> pCandVote, CCandidat pCandElu)
     {
-        Map<CCandidat, Integer> lCandVote = new HashMap<CCandidat, Integer>(pCandVote);
-        int lSurplus, lRatio;
+        Map<CCandidat, Double> lCandVote = new HashMap<>(pCandVote);
+        double lSurplus;
+        double lRatioVote;
 
         lSurplus = pCandVote.get(pCandElu) - mQuota;
+  //      Log.i("Vote : ", "surplus " + lSurplus);
 
         /// Parcours de la liste des choix
-        for (CChoix<List> choix : mChoix.keySet())
+        for (CListChoix choix : mChoix.keySet())
         {
-            List<CCandidat> cands = new ArrayList<CCandidat>(choix.getChoix());
-            cands.retainAll(pCandVote.keySet());
+            List<CCandidat> cands = choix.getChoix();
+       //     cands.retainAll(pCandVote.keySet());
 
-            /// Le candidat elu est le premier candidat dans ce choix
+            /// Le candidat elu est le premier dans ce choix
             if(cands.get(0) == pCandElu && cands.size()>1)
             {
                 /// incrementation proportionnelle du nombre de vote du second candidat
-                lRatio = mChoix.get(choix) / pCandVote.get(pCandElu);
-                lCandVote.put(cands.get(1), (lRatio*lSurplus) );
+                double lNbVoteChoix = mChoix.get(choix);
+                double lNbVoteCandElu = pCandVote.get(pCandElu);
+                lRatioVote =  lNbVoteChoix / lNbVoteCandElu ;
+                lCandVote.put(cands.get(1), ((lRatioVote*lSurplus) + lCandVote.get(cands.get(1))));
+                mChoix.put(choix, (lRatioVote * lSurplus));
+/*
+                Log.i("Vote : ", "Ratio " + lRatioVote + " pour " + cands.get(1).getNom());
+                Log.i("Vote : ", "ancien score " + pCandVote.get(cands.get(1)));
+                Log.i("Vote : ", "gagne " + (lRatioVote*lSurplus) + " voix ");
+                Log.i("Vote : ", "nouveau score " + lCandVote.get(cands.get(1)));
+                Log.i("Vote : ", "////////////////////////////////////////////");*/
             }
         }
 
         lCandVote.remove(pCandElu);
 
+        removeCandidat(pCandElu);
+
         return lCandVote;
     }
 
     /// Methode d'heritage des votes d'un candidat elimine
-    private Map<CCandidat, Integer> heriteVote(Map<CCandidat, Integer> pCandVote, CCandidat pCandElim)
+    private Map<CCandidat, Double> heriteVote(Map<CCandidat, Double> pCandVote, CCandidat pCandElim)
     {
-        Map<CCandidat, Integer> lCandVote = new HashMap<>(pCandVote);
+        Map<CCandidat, Double> lCandVote = new HashMap<>(pCandVote);
 
         /// Parcours de la liste des choix
-        for (CChoix<List> choix : mChoix.keySet())
+        for (CListChoix choix : mChoix.keySet())
         {
-            List<CCandidat> cands = new ArrayList<CCandidat>(choix.getChoix());
-            cands.retainAll(pCandVote.keySet());
+            List<CCandidat> cands = new ArrayList<>(choix.getChoix());
+       //     cands.retainAll(pCandVote.keySet());
 
             /// Le candidat elimine est le premier dans ce choix
-            if(cands.get(0) == pCandElim && cands.size()>1)
-                lCandVote.put(cands.get(1), pCandVote.get(cands.get(1)) + mChoix.get(choix) ); /// Ajout du nombre de vote au second candidat
+            if(cands.get(0) == pCandElim && cands.size()>1) {
+          /*      Log.i("Vote : ", "Candidat elim : " + pCandElim.getNom() + " Nb voix : " + pCandVote.get(pCandElim));
+                Log.i("Vote : ", "Candidat suivant : " + cands.get(1).getNom() + " Nb voix : " + pCandVote.get(cands.get(1)));
+                Log.i("Vote : ", "gagne : " + mChoix.get(choix) + " voix");*/
+                lCandVote.put(cands.get(1), (lCandVote.get(cands.get(1)) + mChoix.get(choix))); /// Ajout du nombre de vote au second candidat
+            //    Log.i("Vote : ", "Candidat : " + cands.get(1).getNom() + " nouveau Nb voix : " + lCandVote.get(cands.get(1)));
+            }
 
         }
 
         lCandVote.remove(pCandElim);
+        removeCandidat(pCandElim);
 
         return lCandVote;
     }
 
     /// Methode de recherche du candidat avec le moins de vote
-    private CCandidat getCandidatElim(Map<CCandidat, Integer> pMap)
+    private CCandidat getCandidatElim(Map<CCandidat, Double> pMap)
     {
         CCandidat lCandElim = new CCandidat();
-        int lMin=0;
+        double lMin=0;
 
         /// Parcours de la liste du nombre de vote par candidat
         for(Map.Entry cand : pMap.entrySet()) {
-            if(lMin > 0)
-                lMin = (int)cand.getValue();
-            if ((int)cand.getValue() < lMin)
+            if(lMin == 0) {
+                lMin = (double) cand.getValue();
+                lCandElim = (CCandidat) cand.getKey();
+            }
+            if ((double)cand.getValue() < lMin)
             {
-                lMin = (int)cand.getValue();
+                lMin = (double)cand.getValue();
                 lCandElim = (CCandidat)cand.getKey();
             }
         }
@@ -175,27 +209,20 @@ public class CAlgoSTV extends AAlgorithme {
     }
 
     /// Methode de calcul du nombre de vote pour chaque candidat
-    private Map<CCandidat, Integer> calcNbVote()
+    private Map<CCandidat, Double> calcNbVote()
     {
-        Map<CCandidat, Integer> lCandNbVote  = new HashMap<CCandidat, Integer>();
+        Map<CCandidat, Double> lCandNbVote  = new HashMap<>();
+
+        for (CCandidat cand : mChoix.entrySet().iterator().next().getKey().getChoix())
+                lCandNbVote.put(cand, 0.0);
 
         ///Parcours de la liste des choix
-        for(Map.Entry choix : mChoix.entrySet())
+        for(CListChoix choix : mChoix.keySet())
         {
-            CListChoix lchoix = (CListChoix) choix;
-            CCandidat lCand = lchoix.getIndexValue(0);
+            CCandidat lCand = choix.getIndexValue(0);
 
             if(lCandNbVote.containsKey(lCand))
                 lCandNbVote.put(lCand, lCandNbVote.get(lCand) + mChoix.get(choix));
-            else
-                lCandNbVote.put(lCand, mChoix.get(choix));
-
-            /*  REMPLISSAGE DE LA LISTE FAUX!!!!!!!!!!!!!
-            if (lCandNbVote.containsKey(choix.getKey()))
-                lCandNbVote.put((CCandidat)choix.getKey(),(Integer)((int)lCandNbVote.get(choix.getKey())+(int)choix.getValue()));
-            else
-                lCandNbVote.put((CCandidat) choix.getKey(), (Integer) choix.getValue());
-            */
         }
 
         return lCandNbVote;
@@ -204,6 +231,14 @@ public class CAlgoSTV extends AAlgorithme {
     /// Methode de calcul du quota necessaire a l'election d'un candidat
     private void Calcul_Quota()
     {
-        mQuota = (mNbVote/mNbElu)+1;
+        mQuota = (mNbVote/(mNbElu+1))+1;
+
+ //       Log.i("Vote : ", "Quota : " + mQuota);
+    }
+
+    private void removeCandidat(CCandidat pCand)
+    {
+        for(CListChoix choix : mChoix.keySet())
+            choix.removeCandidat(pCand);
     }
 }

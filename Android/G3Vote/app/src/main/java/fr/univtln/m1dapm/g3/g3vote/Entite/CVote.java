@@ -34,7 +34,7 @@ public class CVote {
 
     private List<CChoix> mListChoix;
 
-    private List <CCandidat> mListCandidat;
+    private List <CCandidat> mListCandidat = new ArrayList<>();
 
     private GregorianCalendar mDebut;
 
