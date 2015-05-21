@@ -12,10 +12,36 @@ import fr.univtln.m1dapm.g3.g3vote.Entite.CVoixCandidat;
 /**
  * Created by Pierre on 20/05/2015.
  */
+
+
+/**
+ * <b>CVoteUninomialMajoritaire est la classe qui gére les vote similaire au vote présidenciel francais </b>
+ *<p>
+ * un vote CVoteUninominalMajoritaire est caractérisé par les informations suivante
+ *<ul>
+ *     <li>une liste des candidat  </li>
+ *     <li> le nombre de tour  </li>
+ *     <li> le nombre de candidat au tour deux  </li>
+ *
+ *</ul>
+ *</p>
+ *
+ * @author rouzic pierre
+ *
+ */
 public class CVoteUninominalMajoritaire extends AAlgorithme{
 
+    /**
+     * liste des candidat
+     */
     private List<CVoixCandidat> mListeCandidat;//liste des candidat
+    /**
+     * nombre de tour (1 ou 2 actuelement)
+     */
     private int mNbtour;// nombre de tour (1 ou 2)
+    /**
+     * nombre de candidat au tour deux
+     */
     private int mNbCandidatTour2;// nombre de candidat qui passe au deusiemme tour
 
 
@@ -23,20 +49,45 @@ public class CVoteUninominalMajoritaire extends AAlgorithme{
     protected void initVote() {
 
     }
+    /**
+     * constructeur du vote CVoteUninominalMajoritaire
+     * <p>le constructeur n'initialise pas les parametre </p>
+     *
+     * @see CVoteUninominalMajoritaire#initVote(List, int, int)
+     */
 
     public  CVoteUninominalMajoritaire(){}
+
+    /**
+     * initialisation du vote
+     *
+     * <p>initialise les parametre   </p>
+     * @param pListeCandidat
+     *          la liste des candidat qui se sont présenter
+     * @param pNbtour
+     *          le nombre de tour prevu (1 ou 2)
+     * @param pNbcandidattour2
+     *          le nombre de candidat quil restera au tour 2
+     */
 
     protected void initVote(List<CCandidat> pListeCandidat,int pNbtour,int pNbcandidattour2) {
         /** initialise le vote avec pour argument la liste des candidat**/
         mListeCandidat=new ArrayList<CVoixCandidat>();
         mNbtour=pNbtour;
         mNbCandidatTour2=pNbcandidattour2;
-        for (int i =0;i<pListeCandidat.size();i++){//mise en place de la map et de la liste pour ce vote
+        for (int i =0;i<pListeCandidat.size();i++){//mise en place de la liste pour ce vote
             CVoixCandidat voixCandidat=new CVoixCandidat(pListeCandidat.get(i));
             mListeCandidat.add(voixCandidat);
         }
     }
 
+    /**
+     * traitement d'un nouveau vote
+     *
+     * <p> a l'arriver d'un nouveau bulletin ajoute une voi au candidat dans la liste </p>
+     * @param pchoix
+     *          candidat choisi par le votant
+     */
     public void nouveauVote(CCandidat pchoix){// ajoute un au nombre de vote pour le candidat
         /** permet de valider le choix d'un votant avec pour argument le candidat choisi **/
         for (int i = 0; i <mListeCandidat.size() ; i++) {
@@ -48,6 +99,11 @@ public class CVoteUninominalMajoritaire extends AAlgorithme{
         }
     }
 
+    /**
+     * fini le tour 1
+     * <p>cherche les candidat avec le plus de voix et les place dans une nouvelle liste de taille le nombre de candidat
+     * au tour deux puis transforme la liste des candidat en la liste des candidat au tour deux </p>
+     */
     public void toursuivant(){
 
         List<CVoixCandidat> plistetour2=new ArrayList<>();//crée la nouvelle liste de candidat pour le tour suivant
@@ -89,12 +145,20 @@ public class CVoteUninominalMajoritaire extends AAlgorithme{
         }
     }
 
+    /**
+     * fonction d'affichage sur la sortie sout
+     */
     public void affiche(){
         for (int i = 0; i <mListeCandidat.size() ; i++) {
             System.out.println(mListeCandidat.get(i));
         }
     }
 
+    /**
+     * fonction de calcule de resultat
+     * <p>cherche dans la liste des candidat celui qui a le plus de voix , pui le renvoi </p>
+     * @return le candidat qui a le plus de voix
+     */
     public CCandidat resultat(){// renvoi le candidat avec le plus de vote pour lui
         /** donne le resultat du vote sans parametre avec pour retour le candidat avec le plus de vote pour lui  **/
         Integer pnbvotemax=0;
