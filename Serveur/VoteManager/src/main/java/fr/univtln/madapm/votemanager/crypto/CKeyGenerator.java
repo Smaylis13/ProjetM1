@@ -13,6 +13,8 @@ import javax.crypto.SecretKey;
  */
 public class CKeyGenerator {
 
+    private static final String TRANSFORMATION_STRING = "AES";
+
     private SecretKey mClef;
 
     /**
@@ -26,18 +28,14 @@ public class CKeyGenerator {
         return mClef;
     }
 
-    public void setClef(SecretKey pClef) {
-        this.mClef = pClef;
-    }
-
     /**
      * Méthode de génération de clef AES 128 bits
      * @return clef
      */
-    public SecretKey keyGen(){
+    SecretKey keyGen(){
         KeyGenerator lKeyGen;
         try {
-            lKeyGen = KeyGenerator.getInstance("AES");
+            lKeyGen = KeyGenerator.getInstance(TRANSFORMATION_STRING);
             lKeyGen.init(128);
             SecretKey lClef = lKeyGen.generateKey();
             System.out.println("clef (" + lClef.getAlgorithm() + "," + lClef.getFormat()

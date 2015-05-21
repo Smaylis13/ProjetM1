@@ -25,8 +25,9 @@ public class CTestCrypto {
 
         CAESFileCrypt aesFileCrypt = new CAESFileCrypt();
         try {
-            aesFileCrypt.encrypterFichier(keyGenerator.getClef(), "/json/CVote.json", "/json/CVoteEncrypt.txt");
-            aesFileCrypt.decrypterFichier(keyGenerator.getClef(), "/json/CVoteEncrypt.txt", "/json/CVoteDecrypt.json");
+            aesFileCrypt.encrypterFichier(keyGenerator.getClef(), "/src/json/CVote.json", "/src/json/CVoteEncrypt.txt");
+            aesFileCrypt.decrypterFichier(keyGenerator.getClef(), "/src/json/CVoteEncrypt.txt", "/src/json/CVoteDecrypt.json");
+            System.out.println("test");
         } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException e) {
             e.printStackTrace();
         }
