@@ -3,12 +3,14 @@ package fr.univtln.madapm.votemanager.rest;
 import fr.univtln.madapm.votemanager.dao.CUserDAO;
 import fr.univtln.madapm.votemanager.dao.CVoteDAO;
 import fr.univtln.madapm.votemanager.metier.user.CUser;
+import fr.univtln.madapm.votemanager.metier.vote.CCandidate;
 import fr.univtln.madapm.votemanager.metier.vote.CVote;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
+import java.util.List;
 
 /**
  * Created by civars169 on 06/05/15.
@@ -30,10 +32,8 @@ public class CVoteRest {
     @Consumes(MediaType.APPLICATION_JSON)
     public void addVote(CVote pNewVote){
         CVoteDAO lVoteDao=new CVoteDAO();
-        try {
-            lVoteDao.create(pNewVote);
-        }catch (Exception e){
-            System.out.println(e);
-        }
+        //List<CCandidate> lCandidats=pNewVote.getCandidates();
+        //pNewVote.setCandidates(null);
+        lVoteDao.create(pNewVote);
     }
 }

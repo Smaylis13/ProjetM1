@@ -8,6 +8,7 @@ import fr.univtln.madapm.votemanager.metier.user.CUser;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 /**
  * Created by civars169 on 06/05/15.
@@ -30,10 +31,19 @@ public class CUserRest {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     public int addUser(CUser pNewUser){
-        System.out.println("HELLO");
         CUserDAO lUserDAO=new CUserDAO();
         lUserDAO.create(pNewUser);
         return pNewUser.getId();
+    }
+
+    @DELETE
+    @Path("/{pId}")
+    public Response removeUser(@PathParam("pId") int pId){
+        System.out.println(pId);
+        CUserDAO lUserDAO=new CUserDAO();
+        lUserDAO.deleteUser(pId);
+        return Response.status(Response.Status.NO_CONTENT)// 204
+                .entity("User has been removed").build();
     }
 
 }

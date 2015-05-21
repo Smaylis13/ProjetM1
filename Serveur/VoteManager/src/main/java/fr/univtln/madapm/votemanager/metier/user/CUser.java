@@ -6,6 +6,8 @@ package fr.univtln.madapm.votemanager.metier.user;
  */
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import fr.univtln.madapm.votemanager.metier.vote.CChoice;
+import fr.univtln.madapm.votemanager.metier.vote.CDeleguation;
 import fr.univtln.madapm.votemanager.metier.vote.CVote;
 
 import javax.persistence.*;
@@ -15,7 +17,7 @@ import java.util.List;
  * Défini les utilisauteurs qui peuvent être organisateur et participant.
  */
 @Entity
-@Table(name="utilisateur")
+@Table(name="utilisateur",uniqueConstraints =@UniqueConstraint(columnNames={"MAIL"}))
 public class CUser {
 
     @Id
@@ -46,6 +48,18 @@ public class CUser {
     @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL, mappedBy="mOrganisateur")
     private List<CVote> mOrganisedVotes=null;
 
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL, mappedBy="mUser")
+    private List<CChoice> mParticipations;
+
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL, mappedBy="mUser")
+    private List<CDeleguation> mMadeDeleguations;
+
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL, mappedBy="mRepresentativeUser")
+    private List<CDeleguation> mReceivedDeleguations;
+
     public CUser(){
     }
 
@@ -62,6 +76,31 @@ public class CUser {
   /*  public void setId(int pId) {
         this.mId = pId;
     }*/
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CUser user = (CUser) o;
+
+        if(this.getEmail()!=user.getEmail()) return false;
+
+        if(this.getId()!=user.getId()) return false;
+
+        if(this.getName()!=user.getName()) return false;
+
+        if(this.getFirstName()!=user.getFirstName()) return false;
+
+        if(this.getPassword()!=user.getPassword()) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return this.getEmail()!=null?this.getEmail().hashCode():0;
+    }
 
     public String getEmail() {
         return mEmail;
@@ -105,6 +144,8 @@ public class CUser {
                 "mId=" + mId +
                 ", mEmail='" + mEmail + '\'' +
                 ", mPassword='" + mPassword + '\'' +
+                ", mName='" + mName + '\'' +
+                ", mFirstName='" + mFirstName + '\'' +
                 '}';
     }
 }

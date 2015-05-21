@@ -41,7 +41,10 @@ public class CCRUDServiceBean<T> implements ICRUDService<T> {
 
     @Override
     public void delete(Class pType, Object pId) {
+        mET.begin();
         Object lRef = this.mEM.getReference(pType, pId);
+        this.mEM.remove(lRef);
+        mET.commit();
     }
 
     @Override
