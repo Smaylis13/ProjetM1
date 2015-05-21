@@ -39,9 +39,9 @@ public class CHubMyVotesFragment extends Fragment {
     }
 
     //TODO: add 2 tabs one "Participant" and one "Admin"
-    //TODO: create 2 ListView that will be displayed in each tab showing the corresponding vote
-    //TODO: create an adapter that will pull content from a DB Query to gather the votes of the user
-    //TODO: Fill the ListViews with the adapter
+
+
+
     //TODO: make every element of the ListView clikable, then add interface to handle the votes
     //TODO: add a button in the action bar that will refresh the content of the ListViews
 

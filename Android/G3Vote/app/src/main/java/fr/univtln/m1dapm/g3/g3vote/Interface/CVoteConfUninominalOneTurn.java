@@ -19,21 +19,24 @@ public class CVoteConfUninominalOneTurn extends AppCompatActivity {
     private ArrayList<CCandidat> listCandidat = new ArrayList<CCandidat>();
     private CCandidat candidat = new CCandidat();
 
+    private CCandidatAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cvote_conf_uninominal_one_turn);
 
         //Récupération du composant ListView
-        ListView list = (ListView)findViewById(R.id.lListViewMyVote);
+        ListView list = (ListView)findViewById(R.id.lLVUninomialOneTurn);
 
         //Récupération de la liste des personnes
-        ArrayList<CCandidat> listCandidat = new ArrayList<CCandidat>();
-        CCandidat candidat = new CCandidat();
+        //ArrayList<CCandidat> listCandidat = new ArrayList<CCandidat>();
+        //CCandidat candidat = new CCandidat();
         listCandidat.add(candidat);
-
+        listCandidat.add(candidat);
+        adapter = new CCandidatAdapter(this, listCandidat);
         //Création et initialisation de l'Adapter pour les personnes
-        CCandidatAdapter adapter = new CCandidatAdapter(this, listCandidat);
+
 
         //Initialisation de la liste avec les données
         list.setAdapter(adapter);
@@ -47,12 +50,15 @@ public class CVoteConfUninominalOneTurn extends AppCompatActivity {
         return true;
     }
 
-    public void addChoiceButton(View view) {
-
-
-
+    /*public void addChoiceButton(View view) {
+        listCandidat.add(candidat);
+        adapter.notifyDataSetChanged();
     }
 
     public void removeChoiceButton(View view) {
-    }
+        if (listCandidat.size()>2){
+
+        }
+
+    }*/
 }
