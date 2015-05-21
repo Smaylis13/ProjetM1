@@ -23,6 +23,12 @@ public class CAESCrypt {
 
     private static final byte[] lByte = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 
+    /**
+     * Fonction d'encryptage de données
+     * @param pKey Clef secrète génèrer via CKeyGenerator
+     * @param pStrToEncrypt Données à encrypter
+     * @return Données cryptées
+     */
     public byte[] encrypt(SecretKey pKey, String pStrToEncrypt)
     {
         try
@@ -37,6 +43,12 @@ public class CAESCrypt {
 
     }
 
+    /**
+     * Fonction d'appel de décryptage de données
+     * @param pKey clef secrète qui a été utilisé pour le cryptage
+     * @param pByteToDecrypt Données cryptées
+     * @return Données décryptées
+     */
     public String decrypt(SecretKey pKey, byte[] pByteToDecrypt)
     {
         try
@@ -51,8 +63,21 @@ public class CAESCrypt {
         return null;
     }
 
-    public static byte[] encryptCipher(SecretKey pSecretKey, String pTransformation,
-                                      String pMessage) throws NoSuchAlgorithmException, NoSuchPaddingException,
+    /**
+     * Fonction interne de cryptage
+     * @param pSecretKey Clef secrète à générer
+     * @param pTransformation Mode de transformation (DES,AES,...)
+     * @param pMessage Données à crypter
+     * @return Données cryptées
+     * @throws NoSuchAlgorithmException
+     * @throws NoSuchPaddingException
+     * @throws InvalidKeyException
+     * @throws IllegalBlockSizeException
+     * @throws BadPaddingException
+     * @throws InvalidAlgorithmParameterException
+     */
+    private static byte[] encryptCipher(SecretKey pSecretKey, String pTransformation,
+                                        String pMessage) throws NoSuchAlgorithmException, NoSuchPaddingException,
             InvalidKeyException, IllegalBlockSizeException, BadPaddingException,
             InvalidAlgorithmParameterException {
         IvParameterSpec lIvParameterSpec = new IvParameterSpec(lByte);
@@ -63,8 +88,21 @@ public class CAESCrypt {
         return lByteCipherText;
     }
 
-    public static String decryptCipher(SecretKey pSecretKey, String pTransformation,
-                                      byte[] pMessage) throws NoSuchAlgorithmException, NoSuchPaddingException,
+    /**
+     * Fonction interne de décryptage
+     * @param pSecretKey Clef secrète utilisé pour le cryptage
+     * @param pTransformation Mode de transformation (DES,AES,...)
+     * @param pMessage Données à décrypter
+     * @return Données décryptées
+     * @throws NoSuchAlgorithmException
+     * @throws NoSuchPaddingException
+     * @throws InvalidKeyException
+     * @throws IllegalBlockSizeException
+     * @throws BadPaddingException
+     * @throws InvalidAlgorithmParameterException
+     */
+    private static String decryptCipher(SecretKey pSecretKey, String pTransformation,
+                                        byte[] pMessage) throws NoSuchAlgorithmException, NoSuchPaddingException,
             InvalidKeyException, IllegalBlockSizeException, BadPaddingException,
             InvalidAlgorithmParameterException {
         IvParameterSpec lIvParameterSpec = new IvParameterSpec(lByte);

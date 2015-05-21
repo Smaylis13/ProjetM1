@@ -1,10 +1,5 @@
 package fr.univtln.madapm.votemanager.metier.user;
 
-/**
- * Created by civars169 on 05/05/15.
- * copyright Christian
- */
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import fr.univtln.madapm.votemanager.metier.vote.CChoice;
 import fr.univtln.madapm.votemanager.metier.vote.CDeleguation;
@@ -12,6 +7,11 @@ import fr.univtln.madapm.votemanager.metier.vote.CVote;
 
 import javax.persistence.*;
 import java.util.List;
+
+/**
+ * Created by civars169 on 05/05/15.
+ * copyright Christian
+ */
 
 /**
  * Défini les utilisauteurs qui peuvent être organisateur et participant.

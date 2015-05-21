@@ -1,15 +1,15 @@
 package fr.univtln.madapm.votemanager.metier.user;
 
-/**
- * Created by civars169 on 05/05/15.
- * copyright Christian
- */
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 import javax.persistence.*;
 import java.util.List;
+
+/**
+ * Created by civars169 on 05/05/15.
+ * copyright Christian
+ */
 
 /**
  * Un groupe correspond à une liste de contacts pour un utilisateur.
