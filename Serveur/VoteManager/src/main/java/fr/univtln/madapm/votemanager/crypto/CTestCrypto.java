@@ -8,6 +8,10 @@ import java.security.NoSuchAlgorithmException;
  * Created by civars169 on 20/05/15.
  * copyright Christian
  */
+
+/**
+ * Classe de test pour la cryptographie
+ */
 public class CTestCrypto {
     public static void main(String[] args) {
 
@@ -31,6 +35,8 @@ public class CTestCrypto {
         } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException e) {
             e.printStackTrace();
         }
-        System.out.println("http://www.jmdoudoux.fr/java/dej/chap-jce.htm");
+
+        System.out.println("fin du test");
+
     }
 }

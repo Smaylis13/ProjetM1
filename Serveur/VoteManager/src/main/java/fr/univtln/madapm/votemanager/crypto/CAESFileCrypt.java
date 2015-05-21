@@ -21,10 +21,7 @@ import java.security.NoSuchAlgorithmException;
  */
 public class CAESFileCrypt {
 
-    private final String mSlach = "\\";
-
     private final String mPathFile=new File("").getAbsolutePath();
-    private final String mPathFileLinux=mPathFile.replace(mSlach, "/");
 
     private static final String TRANSFORMATION_STRING = "AES";
 
@@ -33,14 +30,15 @@ public class CAESFileCrypt {
      * @param pClef Clef secrète générer via CKeyGenerator
      * @param pSource Chemin du fichier à crypter
      * @param pCible Chemin du fichier qui contiendra les données cryptées
+     * @return La fonction retour 1 si l'opération a réussit, 0 si elle a échoué
      * @throws NoSuchAlgorithmException
      * @throws NoSuchPaddingException
      * @throws InvalidKeyException
      */
-    public void encrypterFichier(SecretKey pClef, String pSource, String pCible)
+    public int encrypterFichier(SecretKey pClef, String pSource, String pCible)
             throws NoSuchAlgorithmException, NoSuchPaddingException,
             InvalidKeyException {
-        encrypterDecrypterFichier(Cipher.ENCRYPT_MODE, pClef, pSource, pCible);
+        return encrypterDecrypterFichier(Cipher.ENCRYPT_MODE, pClef, pSource, pCible);
     }
 
     /**
@@ -48,14 +46,15 @@ public class CAESFileCrypt {
      * @param pClef Clef secrète utilisé lors du cryptage
      * @param pSource Chemin du fichier à décrypter
      * @param pCible Chemin du fichier qui contiendra les données décryptées
+     * @return La fonction retour 1 si l'opération a réussit, 0 si elle a échoué
      * @throws NoSuchAlgorithmException
      * @throws NoSuchPaddingException
      * @throws InvalidKeyException
      */
-    public void decrypterFichier(SecretKey pClef, String pSource, String pCible)
+    public int decrypterFichier(SecretKey pClef, String pSource, String pCible)
             throws NoSuchAlgorithmException, NoSuchPaddingException,
             InvalidKeyException {
-        encrypterDecrypterFichier(Cipher.DECRYPT_MODE, pClef, pSource, pCible);
+        return encrypterDecrypterFichier(Cipher.DECRYPT_MODE, pClef, pSource, pCible);
     }
 
     /**
@@ -64,11 +63,12 @@ public class CAESFileCrypt {
      * @param pClef Clef secrète de cryptage
      * @param pSource Chemin du fichier à traiter
      * @param pCible Chemin du fichier qui contiendra les données traitées
+     * @return La fonction retour 1 si l'opération a réussit, 0 si elle a échoué
      * @throws NoSuchAlgorithmException
      * @throws NoSuchPaddingException
      * @throws InvalidKeyException
      */
-    private void encrypterDecrypterFichier(int pMode, SecretKey pClef, String pSource, String pCible)
+    private int encrypterDecrypterFichier(int pMode, SecretKey pClef, String pSource, String pCible)
             throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException {
         Cipher lCipher = Cipher.getInstance(TRANSFORMATION_STRING);
         lCipher.init(pMode, pClef);
@@ -78,21 +78,18 @@ public class CAESFileCrypt {
         CipherInputStream lCipherInput;
 
         try {
-            System.out.println("oietnfrehvj");
-            System.out.println(mPathFile+pSource);
-            System.out.println(mPathFile+pCible);
+            System.out.println("Fichier "+mPathFile+pSource);
+            System.out.println("Résultat "+mPathFile+pCible);
             lFilleInput = new FileInputStream(mPathFile+pSource);
-            System.out.println(mPathFileLinux+pSource);
-            System.out.println("sieovyndghud");
             lCipherInput = new CipherInputStream(lFilleInput, lCipher);
             lFilleOutput = new FileOutputStream(mPathFile+pCible);
-            System.out.println(mPathFileLinux+pCible);
             byte[] lb = new byte[8];
             int li = lCipherInput.read(lb);
             while (li != -1) {
                 lFilleOutput.write(lb, 0, li);
                 li = lCipherInput.read(lb);
             }
+            return 1;
         } catch (IOException ioe) {
             if (lFilleInput != null) {
                 try {
@@ -109,6 +106,7 @@ public class CAESFileCrypt {
                 }
             }
         }
+    return 0;
     }
 
 }

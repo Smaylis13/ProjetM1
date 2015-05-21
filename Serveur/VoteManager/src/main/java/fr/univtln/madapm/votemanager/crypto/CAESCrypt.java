@@ -21,7 +21,7 @@ public class CAESCrypt {
     private static final String ENCRYPTION_MODE = "CBC";
     private static final String PADDING_STRING = "PKCS5Padding";
 
-    private static final byte[] lByte = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}; //TODO IVParameter
+    private static final byte[] lByte = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 
     /**
      * Fonction d'encryptage de données

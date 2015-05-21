@@ -54,3 +54,5 @@ public class CKeyGenerator {
                 '}';
     }
 }
+
+//http://www.java2s.com/Tutorial/Java/0490__Security/ImplementingtheDiffieHellmankeyexchange.htm
