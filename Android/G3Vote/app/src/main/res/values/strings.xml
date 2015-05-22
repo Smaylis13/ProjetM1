@@ -37,15 +37,10 @@
     <string name="userFirstNameInputHint">Prénom</string>
     <string name="userLastNameInputHint">Nom de famille</string>
     <string name="lTVvoteNameLabel">Nom du vote :</string>
-    <string name="lTVHelpMessageLog">Si vous avez déjà un compte, veuillez renseigner votre mail et
-        votre mot de passe et appuyer sur le boutton se connecter. Sinon veuillez appuyer sur le bouton s\'inscrire</string>
+    <string name="lTVHelpMessageLog">Si vous avez déjà un compte, veuillez renseigner votre mail et votre mot de passe et appuyer sur le boutton se connecter. Sinon veuillez appuyer sur le bouton s\'inscrire</string>
     <string name="lTVspinnerName">Type de Vote</string>
-    <string name="uninomialOneTurnVoteDescription">Dans ce vote l\'électeur doit choisir un candidat
-        parmi plusieurs. Celui qui recueille le plus de voix (majorité relative) remporte les élections.</string>
-    <string name="uninominalTwoTurnVoteDescription">Au premier tour, l\'électeur doit choisir un
-        candidat parmi plusieurs.Si un candidat recueille la majorité absolue (plus de 50 %), il est élu.
-        Sinon, on organise un second tour dans lequel le candidat qui recueille le plus de voix
-        est élu.</string>
+    <string name="uninomialOneTurnVoteDescription">Dans ce vote l\'électeur doit choisir un candidat parmi plusieurs. Celui qui recueille le plus de voix (majorité relative) remporte les élections.</string>
+    <string name="uninominalTwoTurnVoteDescription">Au premier tour, l\'électeur doit choisir un candidat parmi plusieurs. Si un candidat recueille la majorité absolue (plus de 50 %), il est élu. Sinon, on organise un second tour dans lequel le candidat qui recueille le plus de voix est élu.</string>
     <string name="title_activity_cvote_uninominal_one_turn">Vote uninominal 1 tour</string>
     <string name="title_activity_cvote_conf_stv">Vote STV</string>
     <string name="title_activity_cvote_conf_kemeny_young">Vote Kemeny-Young</string>

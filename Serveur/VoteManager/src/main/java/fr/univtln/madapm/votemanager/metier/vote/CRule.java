@@ -11,7 +11,7 @@ import java.util.List;
  * copyright Christian
  */
 @Entity
-@Table(name="regle")
+@Table(name="regle",uniqueConstraints =@UniqueConstraint(columnNames={"DESCRIPTION_REGLE"}))
 public class CRule {
 
     @Id

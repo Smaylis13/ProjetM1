@@ -50,7 +50,7 @@ public class CVoteUninominalMajoritaire extends AAlgorithme{
 
     public void toursuivant(){
 
-        List<CVoixCandidat> plistetour2=new ArrayList<>();//crée la nouvelle liste de candidat pour le tour suivant
+        List<CVoixCandidat> plistetour2=new ArrayList<>();//cree la nouvelle liste de candidat pour le tour suivant
         int minvoteplace=0;
         int minvote=mListeCandidat.get(0).getMvote();
         plistetour2.add(mListeCandidat.get(0));

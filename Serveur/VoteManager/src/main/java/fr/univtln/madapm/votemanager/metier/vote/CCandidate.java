@@ -32,6 +32,9 @@ public class CCandidate {
     @JoinColumn(name = "ID_VOTE")
     private CVote mVote;
 
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL, mappedBy="mCandidate")
+    private List<CChoice> mChoices;
 
     public CCandidate(int pIdCandidat, String pNomCandidat, String pDescriptionCandidat, CVote pVote) {
         this.mIdCandidat = pIdCandidat;
