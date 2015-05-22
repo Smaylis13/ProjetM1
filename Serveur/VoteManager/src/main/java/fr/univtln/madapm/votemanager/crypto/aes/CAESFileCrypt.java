@@ -1,4 +1,4 @@
-package fr.univtln.madapm.votemanager.crypto;
+package fr.univtln.madapm.votemanager.crypto.aes;
 
 import javax.crypto.Cipher;
 import javax.crypto.CipherInputStream;

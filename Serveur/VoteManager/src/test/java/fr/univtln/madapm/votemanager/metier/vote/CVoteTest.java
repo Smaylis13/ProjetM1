@@ -1,22 +1,14 @@
-package fr.univtln.madapm.votemanager.metier;
-
-/**
- * Created by civars169 on 05/05/15.
- * copyright Christian
- */
+package fr.univtln.madapm.votemanager.metier.vote;
 
 import fr.univtln.madapm.votemanager.metier.json.CJson;
 import fr.univtln.madapm.votemanager.metier.user.CUser;
-import fr.univtln.madapm.votemanager.metier.vote.*;
+import junit.framework.TestCase;
 
 import java.util.ArrayList;
 
-/**
- * Classe de test du code métier du serveur
- */
-public class CTestMetier {
+public class CVoteTest extends TestCase {
 
-    public static void main(String[] args) {
+    public void testVote() throws Exception {
         System.out.println("Démarage programme test métier");
 
 
@@ -101,5 +93,4 @@ public class CTestMetier {
 
         System.out.println("Fin du programme test métier");
     }
-
 }

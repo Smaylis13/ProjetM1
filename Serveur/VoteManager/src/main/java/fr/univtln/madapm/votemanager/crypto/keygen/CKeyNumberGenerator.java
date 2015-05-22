@@ -1,4 +1,4 @@
-package fr.univtln.madapm.votemanager.crypto;
+package fr.univtln.madapm.votemanager.crypto.keygen;
 
 /**
  * Created by civars169 on 21/05/15.
