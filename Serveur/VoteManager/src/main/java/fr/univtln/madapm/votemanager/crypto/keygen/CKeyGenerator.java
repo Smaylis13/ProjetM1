@@ -1,4 +1,4 @@
-package fr.univtln.madapm.votemanager.crypto;
+package fr.univtln.madapm.votemanager.crypto.keygen;
 
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
@@ -32,7 +32,7 @@ public class CKeyGenerator {
     private static final BigInteger mA = new BigInteger(Integer.toString(mKeyNumberGenerator.getA()));
     private static final BigInteger mB = new BigInteger(Integer.toString(mKeyNumberGenerator.getB()));
 
-    /**private
+    /**
      * Génère la clef automatiquement à sa construction
      */
     public CKeyGenerator() {

@@ -1,20 +1,17 @@
 package fr.univtln.madapm.votemanager.crypto;
 
+import fr.univtln.madapm.votemanager.crypto.aes.CAESCrypt;
+import fr.univtln.madapm.votemanager.crypto.aes.CAESFileCrypt;
+import fr.univtln.madapm.votemanager.crypto.keygen.CKeyGenerator;
+import junit.framework.TestCase;
+
 import javax.crypto.NoSuchPaddingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
-/**
- * Created by civars169 on 20/05/15.
- * copyright Christian
- */
+public class CAESFileCryptTest extends TestCase {
 
-/**
- * Classe de test pour la cryptographie
- */
-public class CTestCrypto {
-    public static void main(String[] args) {
-
+    public void testEncrypterDecrypterFichier() throws Exception {
         String str = "Capitaine Kurk à Enterprise, vous me recevez?";
         System.out.println(str);
 
@@ -37,6 +34,5 @@ public class CTestCrypto {
         }
 
         System.out.println("fin du test");
-
     }
 }

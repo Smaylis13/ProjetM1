@@ -5,6 +5,8 @@ package fr.univtln.madapm.votemanager.crypto;
  * copyright Christian
  */
 
+import fr.univtln.madapm.votemanager.crypto.keygen.CKeyGenerator;
+
 /**
  * Classe de test sur la génération de clef de cryptage privé et public
  */
@@ -15,8 +17,6 @@ public class CTestCryptoKey {
 
         CKeyGenerator keyGenerator = new CKeyGenerator();
         System.out.println(keyGenerator);
-
-        keyGenerator.createKey();
 
         System.out.println("Fin du test");
 

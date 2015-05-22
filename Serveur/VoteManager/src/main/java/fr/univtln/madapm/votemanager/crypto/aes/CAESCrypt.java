@@ -1,4 +1,4 @@
-package fr.univtln.madapm.votemanager.crypto;
+package fr.univtln.madapm.votemanager.crypto.aes;
 
 import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;
