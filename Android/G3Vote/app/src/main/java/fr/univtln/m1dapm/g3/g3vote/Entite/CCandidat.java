@@ -1,9 +1,11 @@
 package fr.univtln.m1dapm.g3.g3vote.Entite;
 
+import java.io.Serializable;
+
 /**
  * Created by ludo on 06/05/15.
  */
-public class CCandidat {
+public class CCandidat implements Serializable{
 
     private int mIdCandidat;
     private String mNom;

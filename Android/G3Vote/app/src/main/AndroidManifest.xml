@@ -4,7 +4,7 @@
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -33,7 +33,7 @@
         </activity>
 
         <!-- Service -->
-        <service android:name=".Service.CNotificationService"></service>
+        <service android:name=".Service.CNotificationService" />
 
         <receiver
             android:name=".Receiver.CNetworkReceiver"
@@ -60,6 +60,10 @@
         <activity
             android:name=".Interface.CVoteConfUninominalTwoTurn"
             android:label="@string/title_activity_cvote_conf_uninominal_two_turn" >
+        </activity>
+        <activity
+            android:name=".Interface.CTestActivity"
+            android:label="@string/title_activity_ctest" >
         </activity>
     </application>
 

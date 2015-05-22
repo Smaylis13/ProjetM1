@@ -10,10 +10,37 @@ import fr.univtln.m1dapm.g3.g3vote.Entite.CChoixpossible;
 /**
  * Created by Pierre on 07/05/2015.
  */
+
+/**
+ * <b>CKemenyYoung est la classe qui gére les vote de kemeny young</b>
+ *<p>
+ * un vote CKemenyYoung est caractérisé par les informations suivante
+ *<ul>
+ *     <li>un nombre de candidat </li>
+ *     <li> une liste des resultat possible  </li>
+ *     <li> la taille de la liste des resultat possible </li>
+ *
+ *</ul>
+ *</p>
+ *
+ * @author rouzic pierre
+ *
+ */
 public class CKemenyYoung extends AAlgorithme {
 
+
+    /**
+     * le nombre de candidat
+     *
+     */
     private int mNombreCandidat;
+    /**
+     * la liste des resultat possible est une liste de liste
+     */
     private List<CChoixpossible> mListResult;
+    /**
+     * la taille de la liste des tesultat possible est calculer
+     */
     private int mTailleList;
 
 
@@ -21,8 +48,15 @@ public class CKemenyYoung extends AAlgorithme {
     /*           LES REGLES DE CODAGES !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!   */
     /////////////////////////////////////////////////////////////////////////////////////////////
 
+
+    /**
+     * constructeur du vote CKemenyYoung
+     * <p>le constructeur n'initialise pas les parametre </p>
+     *
+     * @see CKemenyYoung#inittab(int, List)
+     */
     public CKemenyYoung() {
-    }
+    initVote();}
 
     @Override
     protected void initVote() {
@@ -30,6 +64,18 @@ public class CKemenyYoung extends AAlgorithme {
     }
 
 
+    /**
+     * initialise vraiment le vote et lance la generation de la liste resultat
+     *
+     * <p>initialise les diferente valeur puis lance la generation de la liste resultat</p>
+     * @param pNombreCandidat
+     *              nombre de candidat qui peuvent etre choisi
+     * @param pListCand
+     *              la liste des candidat
+     *
+     *
+     * @see CKemenyYoung#generate(int, List)
+     */
     public void inittab(int pNombreCandidat, List<CCandidat> pListCand) {
         this.mNombreCandidat = pNombreCandidat;
 
@@ -38,8 +84,8 @@ public class CKemenyYoung extends AAlgorithme {
         for (i = 0; i < mNombreCandidat; i++) {
             mTailleList = mTailleList * (mNombreCandidat - i);
         }
-        mListResult = new ArrayList<CChoixpossible>();// crée la liste des résultat possible
-        generate(mNombreCandidat, pListCand); //remplie la liste des résultat possible
+        mListResult = new ArrayList<CChoixpossible>();// cree la liste des resultat possible
+        generate(mNombreCandidat, pListCand); //remplie la liste des resultat possible
 
 
 
@@ -47,27 +93,43 @@ public class CKemenyYoung extends AAlgorithme {
         /*for (i = 0; i < fact; i++) {
             System.out.println(mListResult.get(i).toString());
             System.out.println(mListResult.get(i).getNbVote());
-            //A optimisé
+            //A optimise
         }*/
 
 
     }
+
+    /**
+     * affiche la liste resultat dans la sorti sout
+     */
+
     public void affiche () {
         for (int i = 0; i < mTailleList; i++) {
             System.out.println(mListResult.get(i).toString());
         }
     }
 
+    /**
+     * generation de la liste des resultat possible
+     * <p>
+     *     place les candidat les un après les autre de manierre recursive pour cree toute les combinason possible
+     * </p>
+     * @param pNombreCandidat
+     *              nombre de candidat restant a placer
+     * @param pListCand
+     *              liste des candidat restant a placer
+     * @return pListCand
+     */
 
     public List<CCandidat> generate(int pNombreCandidat, List<CCandidat> pListCand) {
         int i;
 
-        CChoixpossible lChoixpossible = new CChoixpossible(pListCand); //création de choix
+        CChoixpossible lChoixpossible = new CChoixpossible(pListCand); //creation de choix
 
 
         if (pNombreCandidat == 1) {
 
-            mListResult.add(lChoixpossible); // mise en place du choix parmi les résultat possible
+            mListResult.add(lChoixpossible); // mise en place du choix parmi les resultat possible
 
         } else {
             CCandidat pcandidattemporaire;
@@ -88,6 +150,16 @@ public class CKemenyYoung extends AAlgorithme {
         return pListCand;
     }
 
+    /**
+     * envoie le gagnant
+     * <p>cherche dans la liste des resultat possible celui qui a le plus de point et le renvoi</p>
+     * @param pnbvainqueur
+     *              le nombre de vainqueur que la fonction vous renvera
+     * @return la liste gagnante
+     *
+     * @see CKemenyYoung#mListResult
+     */
+
     public List<CCandidat> resultat (int pnbvainqueur ) {
         int maxvote = 0;
         int maxvoteposition=0;
@@ -101,8 +173,14 @@ public class CKemenyYoung extends AAlgorithme {
     }
 
 
+    /**
+     * recoi le nouveau vote
+     * <p> recupere le vote envoyer par le votant ajoute les point au different resultat possible  </p>
+     * @param choix
+     *              choix effectuer par le votant
+     */
 
-    public void nouveauVote(List<CCandidat> choix) { // ajout des point liée au nouveau vote
+    public void nouveauVote(List<CCandidat> choix) { // ajout des point liee au nouveau vote
         CCandidat candidat1 = new CCandidat();
         CCandidat candidat2 = new CCandidat();
         int y;
@@ -116,18 +194,18 @@ public class CKemenyYoung extends AAlgorithme {
                     y = 0;
                     z = 0;
 
-                    for (y=0;y<mNombreCandidat;y++){//trouve la position de candida 1 dans le résultat en cour
+                    for (y=0;y<mNombreCandidat;y++){//trouve la position de candida 1 dans le resultat en cour
                         if (candidat1.equals( mListResult.get(i).getIndexValue(y))){
                             break;
                         }
                     }
-                    for (z=0;z<mNombreCandidat;z++){//trouve la position de candida 2 dans le résultat en cour
+                    for (z=0;z<mNombreCandidat;z++){//trouve la position de candida 2 dans le resultat en cour
                         if (candidat2.equals(mListResult.get(i).getIndexValue(z))){
                             break;
                         }
                     }
 
-                    if (y < z) { // vérifie que ils sont dans le même ordre
+                    if (y < z) { // verifie que ils sont dans le même ordre
                        poid++; // si oui on ajoute 1 point au vote
                     }
                 }

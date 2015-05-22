@@ -18,11 +18,24 @@ public class CKemenyYoungtest {
         CCandidat b=new CCandidat("Nashville");
         CCandidat c=new CCandidat("Chattanooga");
         CCandidat d=new CCandidat("knoxville");
+        CCandidat e=new CCandidat("toulon");
+        CCandidat f=new CCandidat("la garde");
+        CCandidat g=new CCandidat("cuers");
+
+
+
+
+
         List list = new ArrayList();
         list.add(a);
         list.add(b);
         list.add(c);
         list.add(d);
+        list.add(e);
+        list.add(f);
+        list.add(g);
+
+
         kemenyYoung.inittab(list.size(),list);
 
 
@@ -32,6 +45,10 @@ public class CKemenyYoungtest {
         listmem.add(b);
         listmem.add(c);
         listmem.add(d);
+        listmem.add(e);
+        listmem.add(f);
+        listmem.add(g);
+
 
         for (i=0;i<42;i++) {
             kemenyYoung.nouveauVote(listmem);
@@ -40,7 +57,10 @@ public class CKemenyYoungtest {
         List listnash = new ArrayList();
         listnash.add(b);
         listnash.add(c);
+        listnash.add(g);
         listnash.add(d);
+        listnash.add(e);
+        listnash.add(f);
         listnash.add(a);
 
         for (i=0;i<26;i++) {
@@ -51,6 +71,9 @@ public class CKemenyYoungtest {
         listchat.add(c);
         listchat.add(d);
         listchat.add(b);
+        listchat.add(g);
+        listchat.add(e);
+        listchat.add(f);
         listchat.add(a);
 
         for (i=0;i<15;i++) {
@@ -59,9 +82,13 @@ public class CKemenyYoungtest {
 
         List listkno = new ArrayList();
         listkno.add(d);
+        listkno.add(g);
+        listkno.add(f);
+        listkno.add(e);
         listkno.add(c);
         listkno.add(b);
         listkno.add(a);
+
 
         for (i=0;i<17;i++) {
             kemenyYoung.nouveauVote(listkno);

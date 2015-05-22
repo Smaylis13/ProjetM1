@@ -1,7 +1,6 @@
 package fr.univtln.madapm.votemanager.metier.vote;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import fr.univtln.madapm.votemanager.metier.user.CGroup;
 
 import javax.persistence.*;
 import java.util.List;
@@ -28,6 +27,7 @@ public class CRule {
     private List<CType> mListTypesAllow;
 
     public CRule(){}
+
     public CRule(int pIdRegle, String pDescription) {
         this.mIdRegle = pIdRegle;
         this.mDescription = pDescription;

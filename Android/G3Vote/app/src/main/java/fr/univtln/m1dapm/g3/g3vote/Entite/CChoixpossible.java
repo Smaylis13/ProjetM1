@@ -16,10 +16,14 @@ public class CChoixpossible {
 
     public CChoixpossible(List<CCandidat> pChoix) {
         mOrdre = new ArrayList<CCandidat>(pChoix);
+        mNbVote=0;
     }
 
     public int getNbVote() {
         return mNbVote;
+    }
+    public void setNbVote(int pnbvote){
+        this.mNbVote=pnbvote;
     }
 
     public void updateNbVote(int mNbVote) {
