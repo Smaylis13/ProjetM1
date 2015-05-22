@@ -15,20 +15,28 @@ import fr.univtln.m1dapm.g3.g3vote.Entite.CVoixCandidat;
 
 
 /**
- * <p> cette classe permet de chercher si il y a un vainqueur par la methode de condorcet</p>
+ * <p> cette classe permet de chercher les vainqueurs par la methode de condorcet</p>
  */
 public class CCondorcet extends AAlgorithme {
 
 
-
-
-
-    public CCondorcet (){}
+    /**
+     * constructeur de CCondorcet
+     */
+    public CCondorcet (){initVote();}
     @Override
     protected void initVote() {
     }
 
 
+    /**
+     * resultat calcule et renvoi les gagnant par la methode de condorcet
+     * <p>la fonction calcule tout les duel puis ajoute les point de chaque candidat par raport au autre , enfin la fonction crée une liste des candidat
+     * dans l'ordre décroissant </p>
+     * @param pListResult
+     *          liste des vote et le nombre de foi que ils furent choisi
+     * @return liste des gagnant dans l'ordre
+     */
     public List<CCandidat> resultat (List<CChoixpossible> pListResult){
         //System.out.println(pListResult);
         CCandidat candidat1 = new CCandidat();

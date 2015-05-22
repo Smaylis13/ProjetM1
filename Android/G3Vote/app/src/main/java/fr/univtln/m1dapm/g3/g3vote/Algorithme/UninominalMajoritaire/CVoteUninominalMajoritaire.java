@@ -47,7 +47,7 @@ public class CVoteUninominalMajoritaire extends AAlgorithme{
 
     @Override
     protected void initVote() {
-
+    initVote();
     }
     /**
      * constructeur du vote CVoteUninominalMajoritaire

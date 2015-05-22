@@ -56,7 +56,7 @@ public class CKemenyYoung extends AAlgorithme {
      * @see CKemenyYoung#inittab(int, List)
      */
     public CKemenyYoung() {
-    }
+    initVote();}
 
     @Override
     protected void initVote() {
