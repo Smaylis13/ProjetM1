@@ -15,9 +15,9 @@ import fr.univtln.m1dapm.g3.g3vote.Entite.CVoixCandidat;
 
 
 /**
- * <b>CVoteUninomialMajoritaire est la classe qui gére les vote similaire au vote présidenciel francais </b>
+ * <b>CVoteUninomialMajoritaire est la classe qui gere les vote similaire au vote presidenciel francais </b>
  *<p>
- * un vote CVoteUninominalMajoritaire est caractérisé par les informations suivante
+ * un vote CVoteUninominalMajoritaire est caracterise par les informations suivante
  *<ul>
  *     <li>une liste des candidat  </li>
  *     <li> le nombre de tour  </li>
@@ -63,7 +63,7 @@ public class CVoteUninominalMajoritaire extends AAlgorithme{
      *
      * <p>initialise les parametre   </p>
      * @param pListeCandidat
-     *          la liste des candidat qui se sont présenter
+     *          la liste des candidat qui se sont presenter
      * @param pNbtour
      *          le nombre de tour prevu (1 ou 2)
      * @param pNbcandidattour2
@@ -106,7 +106,7 @@ public class CVoteUninominalMajoritaire extends AAlgorithme{
      */
     public void toursuivant(){
 
-        List<CVoixCandidat> plistetour2=new ArrayList<>();//crée la nouvelle liste de candidat pour le tour suivant
+        List<CVoixCandidat> plistetour2=new ArrayList<>();//cree la nouvelle liste de candidat pour le tour suivant
         int minvoteplace=0;
         int minvote=mListeCandidat.get(0).getMvote();
         plistetour2.add(mListeCandidat.get(0));

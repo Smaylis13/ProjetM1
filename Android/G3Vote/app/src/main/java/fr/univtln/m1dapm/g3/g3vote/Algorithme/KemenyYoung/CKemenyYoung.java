@@ -65,11 +65,11 @@ public class CKemenyYoung extends AAlgorithme {
 
 
     /**
-     * initialise vraiment le vote et lance la génération de la liste resultat
+     * initialise vraiment le vote et lance la generation de la liste resultat
      *
-     * <p>initialise les diférente valeur puis lance la generation de la liste resultat</p>
+     * <p>initialise les diferente valeur puis lance la generation de la liste resultat</p>
      * @param pNombreCandidat
-     *              nombre de candidat qui peuvent étre choisi
+     *              nombre de candidat qui peuvent etre choisi
      * @param pListCand
      *              la liste des candidat
      *
@@ -84,8 +84,8 @@ public class CKemenyYoung extends AAlgorithme {
         for (i = 0; i < mNombreCandidat; i++) {
             mTailleList = mTailleList * (mNombreCandidat - i);
         }
-        mListResult = new ArrayList<CChoixpossible>();// crée la liste des résultat possible
-        generate(mNombreCandidat, pListCand); //remplie la liste des résultat possible
+        mListResult = new ArrayList<CChoixpossible>();// cree la liste des resultat possible
+        generate(mNombreCandidat, pListCand); //remplie la liste des resultat possible
 
 
 
@@ -93,7 +93,7 @@ public class CKemenyYoung extends AAlgorithme {
         /*for (i = 0; i < fact; i++) {
             System.out.println(mListResult.get(i).toString());
             System.out.println(mListResult.get(i).getNbVote());
-            //A optimisé
+            //A optimise
         }*/
 
 
@@ -112,7 +112,7 @@ public class CKemenyYoung extends AAlgorithme {
     /**
      * generation de la liste des resultat possible
      * <p>
-     *     place les candidat les un après les autre de manierre recursive pour crée toute les combinason possible
+     *     place les candidat les un après les autre de manierre recursive pour cree toute les combinason possible
      * </p>
      * @param pNombreCandidat
      *              nombre de candidat restant a placer
@@ -124,12 +124,12 @@ public class CKemenyYoung extends AAlgorithme {
     public List<CCandidat> generate(int pNombreCandidat, List<CCandidat> pListCand) {
         int i;
 
-        CChoixpossible lChoixpossible = new CChoixpossible(pListCand); //création de choix
+        CChoixpossible lChoixpossible = new CChoixpossible(pListCand); //creation de choix
 
 
         if (pNombreCandidat == 1) {
 
-            mListResult.add(lChoixpossible); // mise en place du choix parmi les résultat possible
+            mListResult.add(lChoixpossible); // mise en place du choix parmi les resultat possible
 
         } else {
             CCandidat pcandidattemporaire;
@@ -154,7 +154,7 @@ public class CKemenyYoung extends AAlgorithme {
      * envoie le gagnant
      * <p>cherche dans la liste des resultat possible celui qui a le plus de point et le renvoi</p>
      * @param pnbvainqueur
-     *              le nombre de vainqueur que la fonction vous renvéra
+     *              le nombre de vainqueur que la fonction vous renvera
      * @return la liste gagnante
      *
      * @see CKemenyYoung#mListResult
@@ -175,12 +175,12 @@ public class CKemenyYoung extends AAlgorithme {
 
     /**
      * recoi le nouveau vote
-     * <p> récupére le vote envoyer par le votant ajoute les point au différent résultat possible  </p>
+     * <p> recupere le vote envoyer par le votant ajoute les point au different resultat possible  </p>
      * @param choix
      *              choix effectuer par le votant
      */
 
-    public void nouveauVote(List<CCandidat> choix) { // ajout des point liée au nouveau vote
+    public void nouveauVote(List<CCandidat> choix) { // ajout des point liee au nouveau vote
         CCandidat candidat1 = new CCandidat();
         CCandidat candidat2 = new CCandidat();
         int y;
@@ -194,18 +194,18 @@ public class CKemenyYoung extends AAlgorithme {
                     y = 0;
                     z = 0;
 
-                    for (y=0;y<mNombreCandidat;y++){//trouve la position de candida 1 dans le résultat en cour
+                    for (y=0;y<mNombreCandidat;y++){//trouve la position de candida 1 dans le resultat en cour
                         if (candidat1.equals( mListResult.get(i).getIndexValue(y))){
                             break;
                         }
                     }
-                    for (z=0;z<mNombreCandidat;z++){//trouve la position de candida 2 dans le résultat en cour
+                    for (z=0;z<mNombreCandidat;z++){//trouve la position de candida 2 dans le resultat en cour
                         if (candidat2.equals(mListResult.get(i).getIndexValue(z))){
                             break;
                         }
                     }
 
-                    if (y < z) { // vérifie que ils sont dans le même ordre
+                    if (y < z) { // verifie que ils sont dans le même ordre
                        poid++; // si oui on ajoute 1 point au vote
                     }
                 }

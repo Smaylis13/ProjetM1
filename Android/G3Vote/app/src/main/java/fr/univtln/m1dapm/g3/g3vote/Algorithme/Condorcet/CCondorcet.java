@@ -31,8 +31,8 @@ public class CCondorcet extends AAlgorithme {
 
     /**
      * resultat calcule et renvoi les gagnant par la methode de condorcet
-     * <p>la fonction calcule tout les duel puis ajoute les point de chaque candidat par raport au autre , enfin la fonction crée une liste des candidat
-     * dans l'ordre décroissant </p>
+     * <p>la fonction calcule tout les duel puis ajoute les point de chaque candidat par raport au autre , enfin la fonction cree une liste des candidat
+     * dans l'ordre decroissant </p>
      * @param pListResult
      *          liste des vote et le nombre de foi que ils furent choisi
      * @return liste des gagnant dans l'ordre
@@ -44,7 +44,7 @@ public class CCondorcet extends AAlgorithme {
         List<CChoixpossible> duel=new ArrayList<CChoixpossible>();
         int l,m,numduel=0;
         for (int i = 0; i <pListResult.get(0).getChoix().size() ; i++) {
-            for (int j = i+1; j <pListResult.get(0).getChoix().size() ; j++) {// crée le duel de candidat
+            for (int j = i+1; j <pListResult.get(0).getChoix().size() ; j++) {// cree le duel de candidat
                 candidat1 = pListResult.get(0).getChoix().get(i);
                 candidat2 = pListResult.get(0).getChoix().get(j);
                 List<CCandidat> duocandidat =new ArrayList<CCandidat>();
