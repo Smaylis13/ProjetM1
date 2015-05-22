@@ -53,4 +53,5 @@
     <string name="title_activity_cvote_conf_majority_jugement">Vote Jugement Majoritaire</string>
     <string name="title_activity_cvote_conf_uninominal_two_turn">Vote uninomial 2 tours</string>
     <string name="lETChoiceHint">Choix</string>
+    <string name="title_activity_ctest">CTestActivity</string>
 </resources>
