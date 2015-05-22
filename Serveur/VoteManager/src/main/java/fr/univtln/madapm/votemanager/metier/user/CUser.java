@@ -16,8 +16,12 @@ import java.util.List;
 /**
  * Défini les utilisauteurs qui peuvent être organisateur et participant.
  */
+
 @Entity
 @Table(name="utilisateur",uniqueConstraints =@UniqueConstraint(columnNames={"MAIL"}))
+@NamedQueries({
+        @NamedQuery(name = "CUser.findAll", query = "SELECT c FROM CUser c where c.mEmail= :emailUser")
+})
 public class CUser {
 
     @Id
@@ -69,7 +73,7 @@ public class CUser {
         this.mPassword = pPassword;
     }
 
-    public int getId() {
+    public int getmId() {
         return mId;
     }
 
@@ -84,53 +88,53 @@ public class CUser {
 
         CUser user = (CUser) o;
 
-        if(this.getEmail()!=user.getEmail()) return false;
+        if(this.getmEmail()!=user.getmEmail()) return false;
 
-        if(this.getId()!=user.getId()) return false;
+        if(this.getmId()!=user.getmId()) return false;
 
-        if(this.getName()!=user.getName()) return false;
+        if(this.getmName()!=user.getmName()) return false;
 
-        if(this.getFirstName()!=user.getFirstName()) return false;
+        if(this.getmFirstName()!=user.getmFirstName()) return false;
 
-        if(this.getPassword()!=user.getPassword()) return false;
+        if(this.getmPassword()!=user.getmPassword()) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        return this.getEmail()!=null?this.getEmail().hashCode():0;
+        return this.getmEmail()!=null?this.getmEmail().hashCode():0;
     }
 
-    public String getEmail() {
+    public String getmEmail() {
         return mEmail;
     }
 
-    public void setEmail(String pEmail) {
+    public void setmEmail(String pEmail) {
         this.mEmail = pEmail;
     }
 
-    public String getPassword() {
+    public String getmPassword() {
         return mPassword;
     }
 
-    public void setPassword(String pPassword) {
+    public void setmPassword(String pPassword) {
         this.mPassword = pPassword;
     }
 
-    public String getName() {
+    public String getmName() {
         return mName;
     }
 
-    public void setName(String pName) {
+    public void setmName(String pName) {
         this.mName = pName;
     }
 
-    public String getFirstName() {
+    public String getmFirstName() {
         return mFirstName;
     }
 
-    public void setFirstName(String pFirstName) {
+    public void setmFirstName(String pFirstName) {
         this.mFirstName = pFirstName;
     }
 

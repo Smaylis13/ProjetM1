@@ -1,5 +1,6 @@
 package fr.univtln.m1dapm.g3.g3vote.Interface;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,10 +8,24 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 
+import fr.univtln.m1dapm.g3.g3vote.Communication.CCommunication;
+import fr.univtln.m1dapm.g3.g3vote.Communication.CRequestTypesEnum;
+import fr.univtln.m1dapm.g3.g3vote.Communication.CTaskParam;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CUser;
 import fr.univtln.m1dapm.g3.g3vote.R;
 
 public class CLoginActivity extends AppCompatActivity {
+    private static Context sContext;
+
+    public static Context getsContext() {
+        return sContext;
+    }
+
+    public static void setsContext(Context sContext) {
+        CLoginActivity.sContext = sContext;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +64,14 @@ public class CLoginActivity extends AppCompatActivity {
     //gere le clic sur le bouton se connecter
     public void Log(View view) {
         //TODO: handle the connection of the user
+        /*final EditText lET_Mail = (EditText)findViewById(R.id.mailInput);
+        final EditText lET_Password = (EditText)findViewById(R.id.passInput);
+        final String lMail = lET_Mail.getText().toString();
+        final String lPassword = lET_Password.getText().toString();
+        sContext=getApplicationContext();
+        CTaskParam lParams=new CTaskParam(CRequestTypesEnum.log_user,new CUser(null,null,lMail,lPassword));
+        CCommunication lCom=new CCommunication();
+        lCom.execute(lParams);*/
         Intent intent = new Intent(this,CHubActivity.class);
         startActivity(intent);
     }

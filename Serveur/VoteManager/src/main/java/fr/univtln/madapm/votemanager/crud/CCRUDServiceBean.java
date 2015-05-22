@@ -17,7 +17,6 @@ public class CCRUDServiceBean<T> implements ICRUDService<T> {
 
     @Override
     public T create(T pT) {
-        System.out.println(pT);
         mET.begin();
         this.mEM.persist(pT);
         this.mEM.flush();
@@ -85,7 +84,7 @@ public class CCRUDServiceBean<T> implements ICRUDService<T> {
             lQuery.setMaxResults(pResultLimit);
         for(Map.Entry lEntry : lRawParameters)
             lQuery.setParameter((String) lEntry.getKey(), lEntry.getValue());
-        return null;
+        return lQuery.getResultList();
     }
 
     public List findByNativeQuery(String mSQL, Class mType){

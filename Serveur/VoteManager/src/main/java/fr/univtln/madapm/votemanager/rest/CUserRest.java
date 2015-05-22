@@ -9,6 +9,10 @@ import fr.univtln.madapm.votemanager.metier.user.CUser;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by civars169 on 06/05/15.
@@ -18,6 +22,7 @@ import javax.ws.rs.core.Response;
 
 @Path("/user")
 public class CUserRest {
+
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -33,7 +38,28 @@ public class CUserRest {
     public int addUser(CUser pNewUser){
         CUserDAO lUserDAO=new CUserDAO();
         lUserDAO.create(pNewUser);
-        return pNewUser.getId();
+        return pNewUser.getmId();
+    }
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/connect")
+    public Response logUser(CUser pUser){
+        System.out.println("here");
+        System.out.println(pUser.toString());
+        Map<String,String> lParams = new HashMap<>();
+        lParams.put("emailUser",pUser.getmEmail());
+        CUserDAO lUserDAO=new CUserDAO();
+        System.out.println("pass");
+        List<CUser> lUsers=new ArrayList<>();
+        lUsers=lUserDAO.findWithNamedQuery("CUser.findAll",lParams);
+        CUser lFindedUser=lUsers.get(0);
+        System.out.println(lFindedUser.toString());
+        if ((pUser.getmEmail().equals(lFindedUser.getmEmail()))&&(pUser.getmPassword().equals(lFindedUser.getmPassword())))
+            return Response.status(200).entity(lFindedUser).build();
+        else
+            return Response.status(401).build();
     }
 
     @DELETE

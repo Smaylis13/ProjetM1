@@ -6,6 +6,10 @@ import java.io.Serializable;
  * Created by Ookami on 18/05/2015.
  */
 public enum CRequestTypesEnum implements Serializable {
+    auth_user,
+    log_user,
     get_user,
-    add_new_user
+    add_new_user,
+    delete_user,
+    add_new_vote
 }

@@ -8,18 +8,18 @@ import java.util.ArrayList;
  */
 public class CUser implements Serializable{
 
-    private int mIdUser;
+    private int mId;
     private String mFirstName;//prenom
-    private String mLastName;//nom
-    private String mMail;
+    private String mName;//nom
+    private String mEmail;
     private String mPassword;
 
-    public int getIdUser() {
-        return mIdUser;
+    public int getId() {
+        return mId;
     }
 
-    public void setIdUser(int mIdUser) {
-        this.mIdUser = mIdUser;
+    public void setId(int mIdUser) {
+        this.mId = mIdUser;
     }
 
     public String getFirstName() {
@@ -30,20 +30,20 @@ public class CUser implements Serializable{
         this.mFirstName = firstName;
     }
 
-    public String getLastName() {
-        return mLastName;
+    public String getName() {
+        return mName;
     }
 
-    public void setLastName(String lastName) {
-        this.mLastName = lastName;
+    public void setName(String lastName) {
+        this.mName = lastName;
     }
 
-    public String getMail() {
-        return mMail;
+    public String getEmail() {
+        return mEmail;
     }
 
-    public void setMail(String mail) {
-        this.mMail = mail;
+    public void setEmail(String mail) {
+        this.mEmail = mail;
     }
 
     public String getPassword() {
@@ -61,8 +61,8 @@ public class CUser implements Serializable{
     public CUser (String firstName, String lastName, String mail, String password ){
         super();
         this.mFirstName = firstName;
-        this.mLastName = lastName;
-        this.mMail = mail;
+        this.mName = lastName;
+        this.mEmail = mail;
         this.mPassword = password;
     }
 
@@ -78,5 +78,16 @@ public class CUser implements Serializable{
         listUser.add(new CUser("John","Doe","john.matrix@gmail.com","pass"));
 
         return listUser;
+    }
+
+    @Override
+    public String toString() {
+        return "CUser{" +
+                "mId=" + mId +
+                ", mFirstName='" + mFirstName + '\'' +
+                ", mName='" + mName + '\'' +
+                ", mEmail='" + mEmail + '\'' +
+                ", mPassword='" + mPassword + '\'' +
+                '}';
     }
 }
