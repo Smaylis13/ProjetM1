@@ -69,9 +69,9 @@ public class CUserAdapter extends BaseAdapter{
         TextView tv_Mail = (TextView)layoutItem.findViewById(R.id.TV_Mail);
 
         //(3) : Renseignement des valeurs
-        tv_Nom.setText(mListUser.get(position).getLastName());
+        tv_Nom.setText(mListUser.get(position).getName());
         tv_Prenom.setText(mListUser.get(position).getFirstName());
-        tv_Mail.setText(mListUser.get(position).getMail());
+        tv_Mail.setText(mListUser.get(position).getEmail());
 
         //On retourne l'item créé.
         return layoutItem;

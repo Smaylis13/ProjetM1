@@ -5,15 +5,30 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 
+import java.util.ArrayList;
+
+import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidat;
 import fr.univtln.m1dapm.g3.g3vote.R;
 
 public class CVoteConfKemenyYoung extends AppCompatActivity {
+
+
+    private static ArrayList<CCandidat> listCandidat = new ArrayList<CCandidat>();
+    private CCandidat candidat = new CCandidat();
+
+    private CCandidatAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cvote_conf_kemeny_young);
+
+
+        //ListView list = (ListView)findViewById(R.id.lL);
+
+
     }
 
     @Override
