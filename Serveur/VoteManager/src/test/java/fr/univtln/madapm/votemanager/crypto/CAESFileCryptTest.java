@@ -9,6 +9,14 @@ import javax.crypto.NoSuchPaddingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
+/**
+ * Created by civars169 on 20/05/15.
+ * copyright Christian
+ */
+
+/**
+ * Classe de test sur la génération de clef de cryptage privé et public
+ */
 public class CAESFileCryptTest extends TestCase {
 
     public void testEncrypterDecrypterFichier() throws Exception {
