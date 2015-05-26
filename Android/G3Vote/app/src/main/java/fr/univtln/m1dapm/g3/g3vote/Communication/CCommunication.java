@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.google.gson.Gson;
+/*import com.google.gson.Gson;
 
 import org.apache.oltu.oauth2.client.OAuthClient;
 import org.apache.oltu.oauth2.client.URLConnectionClient;
@@ -13,7 +13,7 @@ import org.apache.oltu.oauth2.client.response.OAuthAccessTokenResponse;
 import org.apache.oltu.oauth2.common.OAuth;
 import org.apache.oltu.oauth2.common.exception.OAuthProblemException;
 import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
-import org.apache.oltu.oauth2.common.message.types.GrantType;
+import org.apache.oltu.oauth2.common.message.types.GrantType;*/
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -49,6 +49,7 @@ public class CCommunication extends AsyncTask<Object, Void, String> {
         InputStream in = null;
         String lResponse=null;
         CTaskParam lParams=(CTaskParam)pObject[0];
+        /*
         try {
             switch (lParams.getRequestType()) {
                 case log_user:
@@ -155,7 +156,7 @@ public class CCommunication extends AsyncTask<Object, Void, String> {
             Log.e("CCommunication",e.toString());
         } catch (OAuthProblemException e) {
             Log.e("CCommunication",e.toString());
-        }
+        }*/
         return null;
 
     }
