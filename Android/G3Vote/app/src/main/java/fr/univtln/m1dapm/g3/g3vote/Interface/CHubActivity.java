@@ -1,5 +1,7 @@
 package fr.univtln.m1dapm.g3.g3vote.Interface;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 
@@ -13,12 +15,17 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import fr.univtln.m1dapm.g3.g3vote.R;
 
@@ -180,34 +187,53 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
+    public static java.util.Date getDateFromDatePicker(DatePicker datePicker){
+        int day = datePicker.getDayOfMonth();
+        int month = datePicker.getMonth();
+        int year =  datePicker.getYear();
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, day);
+
+        return calendar.getTime();
+    }
+
     //handle the clik on the validate button
     public void validateVoteType(View view) {
         Spinner spin = (Spinner)findViewById(R.id.voteTypeList);
+        final EditText lET_VoteName = (EditText)findViewById(R.id.voteNameInput);
+        final Button lB_DateDebut = (Button)findViewById(R.id.bVoteDateBegin);
+        final Button lB_DateFin = (Button)findViewById(R.id.bVoteDateEnd);
+        final String lVoteName = lET_VoteName.getText().toString();
+        final String lDateDebut=lB_DateDebut.getText().toString();
+        final String lDateFin=lB_DateFin.getText().toString();
+
+
         int test = spin.getSelectedItemPosition();
+        Intent lIntent=null;
         switch (test) {
             case 0://STV
-                Intent intent0 = new Intent(this, CVoteConfSTV.class);
-                startActivity(intent0);
+                lIntent = new Intent(this, CVoteConfSTV.class);
                 break;
             case 1://Kemeny-young
-                Intent intent1 = new Intent(this, CVoteConfKemenyYoung.class);
-                startActivity(intent1);
+                lIntent = new Intent(this, CVoteConfKemenyYoung.class);
                 break;
             case 2://Jugement Majoritaire
-                Intent intent2 = new Intent(this, CVoteConfMajorityJugement.class);
-                startActivity(intent2);
+                lIntent = new Intent(this, CVoteConfMajorityJugement.class);
                 break;
             case 3://uninominal à 1 tour
-                Intent intent3 = new Intent(this, CVoteConfUninominalOneTurn.class);
-                startActivity(intent3);
+                lIntent = new Intent(this, CVoteConfUninominalOneTurn.class);
                 break;
             case 4://uninominal à 2 tour
-                Intent intent4 = new Intent(this, CVoteConfUninominalTwoTurn.class);
-                startActivity(intent4);
+                lIntent = new Intent(this, CVoteConfUninominalTwoTurn.class);
                 break;
             default:
                 break;
         }
+        lIntent.putExtra("VOTE_NAME",lVoteName);
+        lIntent.putExtra("START_DATE",lDateDebut);
+        lIntent.putExtra("END_DATE",lDateFin);
+        startActivity(lIntent);
     }
 
 }
