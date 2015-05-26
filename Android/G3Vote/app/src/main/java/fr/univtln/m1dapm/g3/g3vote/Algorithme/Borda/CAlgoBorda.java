@@ -57,7 +57,7 @@ public class CAlgoBorda {
         for (CCandidateBorda c : lCandidates) {
             int lValue=0;
             for (Map.Entry<List<CCandidateBorda>, Integer> element : mRankingNb.entrySet()){
-                int lPosition = element.getKey().indexOf(c)+1;
+                int lPosition = element.getKey().indexOf(c);
                 lValue += element.getValue()*(mSizeRanking-lPosition);
             }
             c.setmTotal(lValue);
