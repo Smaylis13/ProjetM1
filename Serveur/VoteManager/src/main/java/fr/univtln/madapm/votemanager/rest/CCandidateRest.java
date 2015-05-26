@@ -32,7 +32,8 @@ public class CCandidateRest {
     public Response deleteCandidate(@PathParam("pId") int pId){
         CCandidateDAO lCandidateDAO = new CCandidateDAO();
         lCandidateDAO.deleteCandidate(pId);
-        return Response.status(Response.Status.NO_CONTENT).entity("Candidate had been removed").build();
+        return Response.status(Response.Status.NO_CONTENT)// 204
+                .entity("Candidate has been removed").build();
     }
 
     @POST
