@@ -1,7 +1,6 @@
 package fr.univtln.madapm.votemanager.metier.vote;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import fr.univtln.madapm.votemanager.metier.CMap;
 
 import javax.persistence.*;
 import java.util.Map;
