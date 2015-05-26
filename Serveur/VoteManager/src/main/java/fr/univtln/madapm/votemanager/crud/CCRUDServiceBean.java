@@ -1,10 +1,15 @@
 package fr.univtln.madapm.votemanager.crud;
 
+import org.eclipse.persistence.exceptions.DatabaseException;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.PersistenceException;
 import javax.persistence.Query;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 
 /**
@@ -16,7 +21,7 @@ public class CCRUDServiceBean<T> implements ICRUDService<T> {
 
 
     @Override
-    public T create(T pT) {
+    public T create(T pT){
         mET.begin();
         this.mEM.persist(pT);
         this.mEM.flush();
@@ -24,6 +29,7 @@ public class CCRUDServiceBean<T> implements ICRUDService<T> {
         mET.commit();
         return pT;
     }
+
 
     @Override
     public T find(Class pType, Object pId) {

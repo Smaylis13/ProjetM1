@@ -3,8 +3,9 @@ package fr.univtln.m1dapm.g3.g3vote.Communication;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
-import com.google.gson.Gson;
+/*import com.google.gson.Gson;
 
 import org.apache.oltu.oauth2.client.OAuthClient;
 import org.apache.oltu.oauth2.client.URLConnectionClient;
@@ -13,7 +14,7 @@ import org.apache.oltu.oauth2.client.response.OAuthAccessTokenResponse;
 import org.apache.oltu.oauth2.common.OAuth;
 import org.apache.oltu.oauth2.common.exception.OAuthProblemException;
 import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
-import org.apache.oltu.oauth2.common.message.types.GrantType;
+import org.apache.oltu.oauth2.common.message.types.GrantType;*/
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -35,20 +36,22 @@ import fr.univtln.m1dapm.g3.g3vote.Interface.CSubActivity;
 /**
  * Created by ludo on 05/05/15.
  */
-public class CCommunication extends AsyncTask<Object, Void, String> {
-    public static final String SERVER_URL="http://192.168.1.92:9999/";
+public class CCommunication extends AsyncTask<Object, Void, Integer> {
+    public static final String SERVER_URL="http://10.21.205.16:80/";
     public final static String LOGGED_USER = "fr.univtln.m1dapm.g3.g3vote.LOGGED_USER";
 
 
 
     @Override
-    protected String doInBackground(Object...pObject) {
+    protected Integer doInBackground(Object...pObject) {
         URL lUrl = null;
         OutputStreamWriter lOut=null;
         HttpURLConnection lHttpCon = null;
-        InputStream in = null;
+        InputStream lIn = null;
         String lResponse=null;
+        int lCode;
         CTaskParam lParams=(CTaskParam)pObject[0];
+        /*
         try {
             switch (lParams.getRequestType()) {
                 case log_user:
@@ -69,19 +72,22 @@ public class CCommunication extends AsyncTask<Object, Void, String> {
                     //lOut=lHttpCon.getOutputStream();
                     lOut.write(lUserOBJ.toString());
                     lOut.flush();
-                    //lOut.close();
-                    in = new BufferedInputStream(lHttpCon.getInputStream());
-                    lResponse = readStream(in);
-                    JSONObject lJsonUser=new JSONObject(lResponse);
-
-                    //Log.e("TEST",lResponse);
-                    Gson lGson = new Gson();
-                    String test= lGson.toJson(lUser);
-                    CUser lLoggedUser=lGson.fromJson(lResponse, CUser.class);
-                    Intent lLogIntent=new Intent(CLoginActivity.getsContext(),CHubActivity.class);
-                    lLogIntent.putExtra(LOGGED_USER, lLoggedUser);
-                    lLogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    CSubActivity.getsContext().startActivity(lLogIntent);
+                    lCode=lHttpCon.getResponseCode();
+                    if(lCode==200) {
+                        //lOut.close();
+                        lIn = new BufferedInputStream(lHttpCon.getInputStream());
+                        lResponse = readStream(lIn);
+                        Gson lGson = new Gson();
+                        CUser lLoggedUser=lGson.fromJson(lResponse, CUser.class);
+                        Intent lLogIntent=new Intent(CLoginActivity.getsContext(),CHubActivity.class);
+                        lLogIntent.putExtra(LOGGED_USER, lLoggedUser);
+                        lLogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        CSubActivity.getsContext().startActivity(lLogIntent);
+                        return lCode;
+                    }
+                    else if(lCode==401){
+                        return lCode;
+                    }
                 break;
                 case auth_user:
                     OAuthClientRequest lRequest = OAuthClientRequest
@@ -119,15 +125,20 @@ public class CCommunication extends AsyncTask<Object, Void, String> {
                     //lOut=lHttpCon.getOutputStream();
                     lOut.write(lNewUserOBJ.toString());
                     lOut.flush();
-                    //lOut.close();
-                    in = new BufferedInputStream(lHttpCon.getInputStream());
-                    lResponse = readStream(in);
-                    lNewUser.setId(Integer.decode(lResponse));
-                    //CSubActivity.getIntentCSubActivity().putExtra(LOGGED_USER,lNewUser);
-                    Intent lIntent=new Intent(CSubActivity.getsContext(),CHubActivity.class);
-                    lIntent.putExtra(LOGGED_USER,lNewUser);
-                    lIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    CSubActivity.getsContext().startActivity(lIntent);
+                    lCode=lHttpCon.getResponseCode();
+                    if(lCode==201) {
+                        //lOut.close();
+                        lIn = new BufferedInputStream(lHttpCon.getInputStream());
+                        lResponse = readStream(lIn);
+                        lNewUser.setId(Integer.decode(lResponse));
+                        //CSubActivity.getIntentCSubActivity().putExtra(LOGGED_USER,lNewUser);
+                        Intent lIntent = new Intent(CSubActivity.getsContext(), CHubActivity.class);
+                        lIntent.putExtra(LOGGED_USER, lNewUser);
+                        lIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        CSubActivity.getsContext().startActivity(lIntent);
+                    }
+                    else
+                        return lCode;
                 break;
 
                 case delete_user:
@@ -136,8 +147,8 @@ public class CCommunication extends AsyncTask<Object, Void, String> {
                     lHttpCon.setDoInput(true);
                     lHttpCon.setRequestMethod("DELETE");
                     //lOut.close();
-                    in = new BufferedInputStream(lHttpCon.getInputStream());
-                    lResponse = readStream(in);
+                    lIn = new BufferedInputStream(lHttpCon.getInputStream());
+                    lResponse = readStream(lIn);
                     //CSubActivity.getIntentCSubActivity().putExtra(LOGGED_USER,lNewUser);
                     int lReponse = lHttpCon.getResponseCode();
                 break;
@@ -155,11 +166,19 @@ public class CCommunication extends AsyncTask<Object, Void, String> {
             Log.e("CCommunication",e.toString());
         } catch (OAuthProblemException e) {
             Log.e("CCommunication",e.toString());
-        }
+        }*/
         return null;
 
     }
 
+    public void onPostExecute(Integer pCode){
+        if(pCode!=null) {
+            if (pCode == 401)
+                Toast.makeText(CLoginActivity.getsContext(), "Mauvais login/mot de passe", Toast.LENGTH_SHORT).show();
+            if(pCode==409)
+                Toast.makeText(CSubActivity.getsContext(), "L'utilisateur existe déjà", Toast.LENGTH_SHORT).show();
+        }
+    }
     //startActivity(mIntent);
 
 

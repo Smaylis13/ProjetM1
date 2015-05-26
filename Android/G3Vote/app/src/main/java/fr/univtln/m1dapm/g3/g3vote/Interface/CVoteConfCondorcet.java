@@ -16,41 +16,29 @@ import java.util.ArrayList;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidat;
 import fr.univtln.m1dapm.g3.g3vote.R;
 
-public class CVoteConfKemenyYoung extends AppCompatActivity {
-
+public class CVoteConfCondorcet extends AppCompatActivity {
 
     private static ArrayList<CCandidat> listCandidat = new ArrayList<CCandidat>();
     private CCandidat candidat = new CCandidat();
 
     private CCandidatAdapter adapter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cvote_conf_kemeny_young);
+        setContentView(R.layout.activity_cvote_conf_condorcet);
 
 
-        ListView list = (ListView)findViewById(R.id.lLVKemenyYoung);
+        ListView list = (ListView)findViewById(R.id.lLVCondorcet);
         listCandidat.add(candidat);
         listCandidat.add(candidat);
         adapter = new CCandidatAdapter(this, listCandidat);
 
         list.setAdapter(adapter);
-
-
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_cvote_conf_kemeny_young, menu);
-        return true;
-    }
-
-
-    public void validateConfKemenyYoung(View view) {
+    public void validateConfCondorcet(View view) {
         for (int i = 0; i <listCandidat.size() ; i++) {
-            ListView test = (ListView)findViewById(R.id.lLVKemenyYoung);
+            ListView test = (ListView)findViewById(R.id.lLVCondorcet);
             View cde = test.getChildAt(i);
             EditText editText=(EditText)cde.findViewById(R.id.choiceName);
             String string=editText.getText().toString();
@@ -69,13 +57,19 @@ public class CVoteConfKemenyYoung extends AppCompatActivity {
     }
 
     public void removeChoiceButton(View view) {
-        if (listCandidat.size()>2){
+        if (listCandidat.size() > 2) {
             listCandidat.remove(listCandidat.lastIndexOf(candidat));
             // ListView test = (ListView)findViewById(R.id.lLVUninomialOneTurn);
             //Log.i("contenu",listCandidat.toString());
             adapter.notifyDataSetChanged();
         }
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_cvote_conf_condorcet, menu);
+        return true;
     }
 
     @Override

@@ -65,6 +65,10 @@
             android:name=".Interface.CTestActivity"
             android:label="@string/title_activity_ctest" >
         </activity>
+        <activity
+            android:name=".Interface.CVoteConfCondorcet"
+            android:label="@string/title_activity_cvote_conf_condorcet" >
+        </activity>
     </application>
 
 </manifest>

@@ -8,7 +8,7 @@ import fr.univtln.madapm.votemanager.metier.vote.CResult;
  */
 public interface IResultDAO extends ICRUDService<CResult> {
     public CResult findById(int pId);
-    public void deleteGroup(int pId);
+    public void deleteResult(int pId);
     public CResult updateResult(CResult pResult);
     public CResult createResult(CResult pResult);
 }

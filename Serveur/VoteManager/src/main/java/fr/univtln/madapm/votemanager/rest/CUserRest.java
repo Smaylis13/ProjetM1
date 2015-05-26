@@ -5,7 +5,9 @@ import fr.univtln.madapm.votemanager.crud.CConstantes;
 import fr.univtln.madapm.votemanager.dao.CUserDAO;
 import fr.univtln.madapm.votemanager.metier.user.CGroup;
 import fr.univtln.madapm.votemanager.metier.user.CUser;
+import org.eclipse.persistence.exceptions.DatabaseException;
 
+import javax.persistence.PersistenceException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -35,10 +37,17 @@ public class CUserRest {
 
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    public int addUser(CUser pNewUser){
+    public Response addUser(CUser pNewUser){
+        Map<String,String> lParams = new HashMap<>();
+        lParams.put("emailUser",pNewUser.getmEmail());
         CUserDAO lUserDAO=new CUserDAO();
-        lUserDAO.create(pNewUser);
-        return pNewUser.getmId();
+        List<CUser> lUsers=new ArrayList<>();
+        lUsers=lUserDAO.findWithNamedQuery("CUser.findAll",lParams);
+        if(lUsers.isEmpty()) {
+            lUserDAO.create(pNewUser);
+            return Response.status(201).entity(pNewUser.getmId()).build();
+        }
+        return Response.status(409).entity(0).build();
     }
 
     @POST
@@ -46,20 +55,18 @@ public class CUserRest {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/connect")
     public Response logUser(CUser pUser){
-        System.out.println("here");
-        System.out.println(pUser.toString());
         Map<String,String> lParams = new HashMap<>();
         lParams.put("emailUser",pUser.getmEmail());
         CUserDAO lUserDAO=new CUserDAO();
-        System.out.println("pass");
         List<CUser> lUsers=new ArrayList<>();
         lUsers=lUserDAO.findWithNamedQuery("CUser.findAll",lParams);
-        CUser lFindedUser=lUsers.get(0);
-        System.out.println(lFindedUser.toString());
-        if ((pUser.getmEmail().equals(lFindedUser.getmEmail()))&&(pUser.getmPassword().equals(lFindedUser.getmPassword())))
-            return Response.status(200).entity(lFindedUser).build();
-        else
-            return Response.status(401).build();
+        if(!lUsers.isEmpty()) {
+            CUser lFindedUser = lUsers.get(0);
+            if ((pUser.getmEmail().equals(lFindedUser.getmEmail())) && (pUser.getmPassword().equals(lFindedUser.getmPassword())))
+                return Response.status(200).entity(lFindedUser).build();
+
+        }
+        return Response.status(401).header("WWW-Authenticate", "xBasic realm=\"fake\"").build();
     }
 
     @DELETE
