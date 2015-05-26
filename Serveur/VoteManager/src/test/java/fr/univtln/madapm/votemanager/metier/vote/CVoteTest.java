@@ -6,6 +6,14 @@ import junit.framework.TestCase;
 
 import java.util.ArrayList;
 
+/**
+ * Created by civars169 on 20/05/15.
+ * copyright Christian
+ */
+
+/**
+ * Classe de test pour un vote
+ */
 public class CVoteTest extends TestCase {
 
     public void testVote() throws Exception {

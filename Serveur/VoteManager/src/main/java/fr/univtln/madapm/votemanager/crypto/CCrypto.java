@@ -5,4 +5,5 @@ package fr.univtln.madapm.votemanager.crypto;
  * copyright Christian
  */
 public class CCrypto {
+    //Todo méthode d'accées facile à la crypto du projet de vote
 }

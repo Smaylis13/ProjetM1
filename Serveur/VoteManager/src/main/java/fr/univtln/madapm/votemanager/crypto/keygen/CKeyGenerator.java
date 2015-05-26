@@ -24,13 +24,10 @@ public class CKeyGenerator {
 
     private SecretKey mClef;
 
-    private static final CKeyNumberGenerator mKeyNumberGenerator = new CKeyNumberGenerator();
     static SecureRandom mRmd = new SecureRandom();
 
     private static final BigInteger mP = BigInteger.probablePrime(SIZE, mRmd);
     private static final BigInteger mG = BigInteger.probablePrime(SIZE, mRmd);
-    private static final BigInteger mA = new BigInteger(Integer.toString(mKeyNumberGenerator.getA()));
-    private static final BigInteger mB = new BigInteger(Integer.toString(mKeyNumberGenerator.getB()));
 
     /**
      * Génère la clef automatiquement à sa construction
@@ -43,10 +40,6 @@ public class CKeyGenerator {
         return mClef;
     }
 
-    public static CKeyNumberGenerator getKeyNumberGenerator() {
-        return mKeyNumberGenerator;
-    }
-
     /**
      * Méthode de génération de clef AES 128 bits
      * @return Clef
@@ -57,7 +50,7 @@ public class CKeyGenerator {
             lKeyGen = KeyGenerator.getInstance(TRANSFORMATION_STRING);
             lKeyGen.init(128);
             SecretKey lClef = lKeyGen.generateKey();
-            System.out.println("clef (" + lClef.getAlgorithm() + "," + lClef.getFormat()
+            System.out.println("clef (" + lClef.getAlgorithm() + "," /*+ lClef.getFormat()*/
                     + ") : " + new String(lClef.getEncoded()));
             return lClef;
         } catch (Exception e) {
@@ -68,12 +61,16 @@ public class CKeyGenerator {
 
     /**
      * Fonction qui calcule une clef en fonction de paramètre spécifique
-     * @param pP Premier paramètre
-     * @param pG Deuxième paramètre
+     * @param pG paramètre reçu
      * @return La clef calculé avec les deux paramètres
      */
-    public SecretKeySpec specificKeyKeyGen(int pP, int pG) {
-        byte[] lKey = bigIntToByteArray(pP+pG);
+    public SecretKeySpec specificKeyKeyGen(BigInteger pG) {
+        System.out.println(mG);
+        System.out.println(pG);
+        BigInteger lBig = mG;
+        lBig = lBig.and(pG);
+        System.out.println(lBig);
+        byte[] lKey = lBig.toByteArray();
         MessageDigest lSha;
         try {
             lSha = MessageDigest.getInstance("SHA-1");
@@ -84,16 +81,6 @@ public class CKeyGenerator {
             e.printStackTrace();
         }
         return null;
-    }
-
-    /**
-     * Fonction qui converti un int en byte[]
-     * @param pi Tnteger
-     * @return Tableau de byte
-     */
-    private byte[] bigIntToByteArray(final int pi ) {
-        BigInteger lBigInt = BigInteger.valueOf(pi);
-        return lBigInt.toByteArray();
     }
 
     @Override

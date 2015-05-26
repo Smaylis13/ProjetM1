@@ -3,7 +3,6 @@ package fr.univtln.madapm.votemanager.metier.vote;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.util.Map;
 
 /**
  * Created by civars169 on 12/05/15.
