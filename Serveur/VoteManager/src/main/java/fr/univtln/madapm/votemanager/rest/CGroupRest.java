@@ -6,6 +6,7 @@ import fr.univtln.madapm.votemanager.metier.user.CGroup;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 /**
  * Created by civars169 on 06/05/15.
@@ -26,14 +27,16 @@ public class CGroupRest {
     @Produces(MediaType.APPLICATION_JSON)
     public CGroup addGroup(CGroup pGroup){
         CGroupDAO lGroupDAO = new CGroupDAO();
-        return lGroupDAO.create(pGroup);
+        return lGroupDAO.createGroup(pGroup);
     }
 
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
-    public void deleteGroup(@PathParam("pId") int pId){
+    public Response deleteGroup(@PathParam("pId") int pId){
         CGroupDAO lGroupDAO = new CGroupDAO();
         lGroupDAO.deleteGroup(pId);
+        return Response.status(Response.Status.NO_CONTENT)// 204
+                .entity("Group has been removed").build();
     }
 
     @POST

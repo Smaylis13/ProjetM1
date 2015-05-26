@@ -5,6 +5,7 @@ import fr.univtln.madapm.votemanager.metier.vote.CCandidate;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 /**
  * Created by sebastien on 18/05/15.
@@ -28,9 +29,11 @@ public class CCandidateRest {
 
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
-    public void deleteCandidate(@PathParam("pId") int pId){
+    public Response deleteCandidate(@PathParam("pId") int pId){
         CCandidateDAO lCandidateDAO = new CCandidateDAO();
         lCandidateDAO.deleteCandidate(pId);
+        return Response.status(Response.Status.NO_CONTENT)// 204
+                .entity("Candidate has been removed").build();
     }
 
     @POST
