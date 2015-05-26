@@ -14,7 +14,7 @@ public class CResultDAO extends CCRUDServiceBean<CResult> implements IResultDAO 
     }
 
     @Override
-    public void deleteGroup(int pId) {
+    public void deleteResult(int pId) {
         delete(CResult.class, pId);
     }
 
