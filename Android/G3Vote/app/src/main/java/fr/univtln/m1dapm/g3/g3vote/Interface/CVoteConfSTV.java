@@ -21,7 +21,7 @@ public class CVoteConfSTV extends AppCompatActivity {
 
 
     private static ArrayList<CCandidate> mListCandidat = new ArrayList<CCandidate>();
-    private CCandidate mCandidat = new CCandidate();
+    private CCandidate mCandidat;
 
     private CCandidatAdapter mAdapter;
 
@@ -31,8 +31,8 @@ public class CVoteConfSTV extends AppCompatActivity {
         setContentView(R.layout.activity_cvote_conf_stv);
 
         ListView lList = (ListView)findViewById(R.id.lLVSTV);
-        mListCandidat.add(mCandidat);
-        mListCandidat.add(mCandidat);
+        mListCandidat.add(new CCandidate());
+        mListCandidat.add(new CCandidate());
         mAdapter = new CCandidatAdapter(this, mListCandidat);
 
         lList.setAdapter(mAdapter);
@@ -46,8 +46,12 @@ public class CVoteConfSTV extends AppCompatActivity {
             View lCde = lTest.getChildAt(i);
             EditText lEditText = (EditText) lCde.findViewById(R.id.choiceName);
             String lString = lEditText.getText().toString();
+
             mListCandidat.get(i).setNom(lString);
-            Log.i("test", lString);
+
+            Log.i("test", mListCandidat.get(i).getNom());
+
+
         }
         Intent lIntent = new Intent(this,CTestActivity.class);
         lIntent.putExtra("liste de Candidat",mListCandidat);
@@ -56,7 +60,8 @@ public class CVoteConfSTV extends AppCompatActivity {
     }
 
     public void addChoiceButton(View pView) {
-        mListCandidat.add(mCandidat);
+
+        mListCandidat.add(new CCandidate());
         mAdapter.notifyDataSetChanged();
     }
 
