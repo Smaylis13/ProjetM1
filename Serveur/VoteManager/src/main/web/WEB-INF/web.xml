@@ -23,4 +23,5 @@
         <url-pattern>/VoteManager/*</url-pattern>
     </servlet-mapping>
 
+
 </web-app>

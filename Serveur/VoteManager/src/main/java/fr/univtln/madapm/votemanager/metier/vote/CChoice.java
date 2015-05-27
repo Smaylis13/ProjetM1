@@ -1,5 +1,6 @@
 package fr.univtln.madapm.votemanager.metier.vote;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import fr.univtln.madapm.votemanager.metier.user.CUser;
 
 import javax.persistence.*;
@@ -9,24 +10,25 @@ import javax.persistence.*;
  * copyright Christian
  */
 @Entity
-@Table(name="participe")
+@Table(name="participe", uniqueConstraints =@UniqueConstraint(columnNames={"ID_VOTE","ID_UTILISATEUR","ID_CANDIDAT"}))
 public class CChoice {
 
-    @EmbeddedId
-    private CKeyChoice mIdChoix;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="ID_PARTICIPATION")
+    @JsonIgnore
+    private int mIdChoice;
 
     @ManyToOne
-    @MapsId("mIdVote")
     @JoinColumn(name = "ID_VOTE")
     private CVote mVote;
 
     @ManyToOne
-    @MapsId("mIdUser")
     @JoinColumn(name = "ID_UTILISATEUR")
     private CUser mUser;
 
     @ManyToOne
-    @MapsId("mIdCandidate")
     @JoinColumn(name = "ID_CANDIDAT" )
     private CCandidate mCandidate;
 
@@ -35,8 +37,7 @@ public class CChoice {
 
     public CChoice(){}
 
-    public CChoice(CKeyChoice pIdChoix, CVote pVote, CUser pUser, CCandidate pCandidate, int pScore){
-        this.mIdChoix = pIdChoix;
+    public CChoice(CVote pVote, CUser pUser, CCandidate pCandidate, int pScore){
         this.mVote = pVote;
         this.mUser = pUser;
         this.mCandidate = pCandidate;
@@ -46,7 +47,7 @@ public class CChoice {
     @Override
     public String toString() {
         return "CChoice{" +
-                "mIdChoix=" + mIdChoix +
+                "mIdChoice=" + mIdChoice +
                 ", mVote=" + mVote +
                 ", mUser=" + mUser +
                 ", mCandidate=" + mCandidate +

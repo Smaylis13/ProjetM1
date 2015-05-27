@@ -6,6 +6,7 @@ import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.ext.Provider;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -15,6 +16,7 @@ import java.util.Map;
 /**
  * Created by civars169 on 20/05/15.
  */
+@Provider
 public class CInterceptorHTTPRequest implements ContainerRequestFilter {
     @Override
     public void filter(ContainerRequestContext pContainerRequestContext) throws IOException {

@@ -20,7 +20,7 @@ public class CVote {
     @JsonIgnore
     private int mIdVote;
     @Column(name="NOM_VOTE")
-    private String mNomVote;
+    private String mVoteName;
     @Column(name="DESCRIPTION_VOTE")
     private String mDescriptionVote;
     @Column(name="DATE_DEBUT_VOTE")
@@ -55,13 +55,17 @@ public class CVote {
     @OneToMany(cascade = CascadeType.ALL, mappedBy="mVote")
     private List<CCandidate> mCandidate;
 
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL, mappedBy="mVote")
+    private List<CDeleguation> mDeleguations;
+
     public CVote(){}
 
     public CVote(int pIdvote, String pNomvote, String pDescriptionvote, String pDatedebut, String pDatefin,
                  List<CResult> pResultvote, List<CType> pType, List<CRule> pRegle, boolean pStatusvote,
                  CUser pOrganisateur, List<CCandidate> pCandidate) {
         this.mIdVote = pIdvote;
-        this.mNomVote = pNomvote;
+        this.mVoteName = pNomvote;
         this.mDescriptionVote = pDescriptionvote;
         this.mDateDebut = pDatedebut;
         this.mDateFin = pDatefin;
@@ -77,7 +81,7 @@ public class CVote {
                  List<CResult> pResultvote, List<CType> pType, List<CRule> pRegle, boolean pStatusvote,
                  CUser pOrganisateur, List<CChoice> pChoices, List<CCandidate> pCandidate) {
         this.mIdVote = pIdvote;
-        this.mNomVote = pNomvote;
+        this.mVoteName = pNomvote;
         this.mDescriptionVote = pDescriptionvote;
         this.mDateDebut = pDatedebut;
         this.mDateFin = pDatefin;
@@ -91,20 +95,20 @@ public class CVote {
     }
 
 
-    public int getIdVote(){return mIdVote;}
-    public String getVoteName() {
-        return mNomVote;
+    public int getmIdVote(){return mIdVote;}
+    public String getmVoteName() {
+        return mVoteName;
     }
 
-    public void setVoteName(String pNomvote) {
-        this.mNomVote = pNomvote;
+    public void setmVoteName(String pNomvote) {
+        this.mVoteName = pNomvote;
     }
 
-    public String getDescriptionVote() {
+    public String getmDescriptionVote() {
         return mDescriptionVote;
     }
 
-    public void setDescriptionVote(String pDescriptionvote) {
+    public void setmDescriptionVote(String pDescriptionvote) {
         this.mDescriptionVote = pDescriptionvote;
     }
 
@@ -176,9 +180,9 @@ public class CVote {
         return mCandidate;
     }
 
-   /* public void setCandidates(List<CCandidate> pCandidate) {
+    public void setCandidates(List<CCandidate> pCandidate) {
         this.mCandidate = pCandidate;
-    }*/
+    }
 
     /**
      * Ajoute une sélection pour le vote
@@ -198,14 +202,14 @@ public class CVote {
      */
     public void addChoice(CUser pUser, CCandidate pCandidate, int pChois){
         CKeyChoice lKeyChoice = new CKeyChoice();
-        CChoice lChoice = new CChoice(lKeyChoice, this, pUser, pCandidate, pChois);
+        CChoice lChoice = new CChoice(this, pUser, pCandidate, pChois);
     }
 
     @Override
     public String toString() {
         return "CVote{" +
                 "mIdvote=" + mIdVote +
-                ", mNomvote='" + mNomVote + '\'' +
+                ", mNomvote='" + mVoteName + '\'' +
                 ", mDescriptionvote='" + mDescriptionVote + '\'' +
                 ", mDatedebut='" + mDateDebut + '\'' +
                 ", mDatefin='" + mDateFin + '\'' +
