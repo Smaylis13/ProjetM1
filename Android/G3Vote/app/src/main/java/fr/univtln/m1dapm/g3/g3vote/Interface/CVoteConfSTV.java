@@ -67,7 +67,7 @@ public class CVoteConfSTV extends AppCompatActivity {
 
     public void removeChoiceButton(View pView) {
         if (mListCandidat.size() > 2) {
-            mListCandidat.remove(mListCandidat.lastIndexOf(mCandidat));
+            mListCandidat.remove(mListCandidat.size()-1);
             // ListView test = (ListView)findViewById(R.id.lLVUninomialOneTurn);
             //Log.i("contenu",listCandidat.toString());
             mAdapter.notifyDataSetChanged();

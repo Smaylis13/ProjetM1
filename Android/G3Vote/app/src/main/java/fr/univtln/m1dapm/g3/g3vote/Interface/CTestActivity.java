@@ -1,12 +1,15 @@
 package fr.univtln.m1dapm.g3.g3vote.Interface;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -31,11 +34,6 @@ public class CTestActivity extends AppCompatActivity {
         ListView list = (ListView)findViewById(R.id.LVCandidat);
         List lListNomCandidat =new ArrayList();
 
-
-
-
-
-
         Bundle extras = getIntent().getExtras();
         if (extras==null){
             return;
@@ -45,12 +43,42 @@ public class CTestActivity extends AppCompatActivity {
 
         for (int i = 0; i <listCandidat.size() ; i++) {
             lListNomCandidat.add(listCandidat.get(i).getNom());
-            System.out.println(listCandidat.get(i).getNom());
+
         }
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, lListNomCandidat);
         list.setAdapter(adapter);
 
 
+/* je sui perdu reprendre tuto http://tutos-android-france.com/listview-afficher-une-liste-delements/
+        View cellule = null;
+
+        CCandidatViewHolder viewHolder = (CCandidatViewHolder) cellule.getTag();
+//comme nos vues sont réutilisées, notre cellule possède déjà un ViewHolder
+
+        if(viewHolder == null){
+
+            //si elle n'avait pas encore de ViewHolder
+            viewHolder = new CCandidatViewHolder();
+
+            //récupérer nos sous vues
+            viewHolder.mNomCandidat = (TextView) cellule.findViewById(R.id.NomCandidat);
+            viewHolder.mDescriptionCandidat = (TextView) cellule.findViewById(R.id.DescriptionCandidat);
+            viewHolder.mImageCandidat = (ImageView) cellule.findViewById(R.id.imageCandidat);
+
+            //puis on sauvegarde le mini-controlleur dans la vue
+            cellule.setTag(viewHolder);
+
+        }
+*/
+
+    }
+
+
+    public void validate (View view){
+
+        //Intent intent = new Intent(this,/*A remplire*/.class);
+        //intent.putExtra("liste de Candidat",listCandidat);
+        //startActivity(intent);
 
     }
 
