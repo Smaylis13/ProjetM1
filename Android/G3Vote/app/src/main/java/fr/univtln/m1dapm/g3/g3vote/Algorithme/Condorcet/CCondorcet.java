@@ -1,11 +1,14 @@
 package fr.univtln.m1dapm.g3.g3vote.Algorithme.Condorcet;
 
 import java.util.ArrayList;
+import java.util.IdentityHashMap;
 import java.util.List;
 
 import fr.univtln.m1dapm.g3.g3vote.Algorithme.AAlgorithme;
-import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidat;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CChoixpossible;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CResultat;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CVoixCandidat;
 
 /**
  * Created by Pierre on 21/05/2015.
@@ -26,6 +29,11 @@ public class CCondorcet extends AAlgorithme {
     protected void initVote() {
     }
 
+    @Override
+    protected CResultat CalculResultat() {
+        return null;
+    }
+
 
     /**
      * resultat calcule et renvoi les gagnant par la methode de condorcet
@@ -35,17 +43,17 @@ public class CCondorcet extends AAlgorithme {
      *          liste des vote et le nombre de foi que ils furent choisi
      * @return liste des gagnant dans l'ordre
      */
-    public List<CCandidate> resultat (List<CChoixpossible> pListResult){
+    public List<CCandidat> resultat (List<CChoixpossible> pListResult){
         //System.out.println(pListResult);
-        CCandidate candidat1 = new CCandidate();
-        CCandidate candidat2 = new CCandidate();
+        CCandidat candidat1 = new CCandidat();
+        CCandidat candidat2 = new CCandidat();
         List<CChoixpossible> duel=new ArrayList<CChoixpossible>();
         int l,m,numduel=0;
         for (int i = 0; i <pListResult.get(0).getChoix().size() ; i++) {
             for (int j = i+1; j <pListResult.get(0).getChoix().size() ; j++) {// cree le duel de candidat
                 candidat1 = pListResult.get(0).getChoix().get(i);
                 candidat2 = pListResult.get(0).getChoix().get(j);
-                List<CCandidate> duocandidat =new ArrayList<CCandidate>();
+                List<CCandidat> duocandidat =new ArrayList<CCandidat>();
                 duocandidat.add(candidat1);
                 duocandidat.add(candidat2);
                 CChoixpossible choixduel =new CChoixpossible(duocandidat);
@@ -116,7 +124,7 @@ public class CCondorcet extends AAlgorithme {
             }
 
         }
-        List<CCandidate> resultat =new ArrayList<CCandidate>();
+        List<CCandidat> resultat =new ArrayList<CCandidat>();
         for (int i = 0; i <indice.size() ; i++) {
             resultat.add(pListResult.get(0).getChoix().get(indice.get(i)));
         }

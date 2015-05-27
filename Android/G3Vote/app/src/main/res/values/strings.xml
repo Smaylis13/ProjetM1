@@ -31,7 +31,7 @@
 
     <string name="subValidateErrorMessage">Tous les champs ne sont pas remplis</string>
     <!-- description des votes -->
-    <string name="stvDescription">le vote STV sert a blablabla</string>
+    <string name="stvDescription">Classement des candidats par preference</string>
     <string name="kemenyYoungDescription">le vote KY sert a choisir un ordre gagnant parmit les candidat il est trés couteux il est donc impossible de le réaliser pour plus de 9 candidat,
         dans ce vote l\'électeur doit ordonée les candidat par ordre de preference </string>
     <string name="jugementMajorityDescription">le vote JM sert a blablabla</string>

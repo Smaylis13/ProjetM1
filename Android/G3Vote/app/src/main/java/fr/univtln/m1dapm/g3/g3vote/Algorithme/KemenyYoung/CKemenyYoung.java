@@ -6,6 +6,7 @@ import java.util.List;
 import fr.univtln.m1dapm.g3.g3vote.Algorithme.AAlgorithme;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CChoixpossible;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CResultat;
 
 /**
  * Created by Pierre on 07/05/2015.
@@ -43,12 +44,6 @@ public class CKemenyYoung extends AAlgorithme {
      */
     private int mTailleList;
 
-
-    /////////////////////////////////////////////////////////////////////////////////////////////
-    /*           LES REGLES DE CODAGES !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!   */
-    /////////////////////////////////////////////////////////////////////////////////////////////
-
-
     /**
      * constructeur du vote CKemenyYoung
      * <p>le constructeur n'initialise pas les parametre </p>
@@ -61,6 +56,11 @@ public class CKemenyYoung extends AAlgorithme {
     @Override
     protected void initVote() {
 
+    }
+
+    @Override
+    protected CResultat CalculResultat() {
+        return null;
     }
 
 

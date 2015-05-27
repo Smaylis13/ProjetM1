@@ -1,5 +1,6 @@
 package fr.univtln.m1dapm.g3.g3vote.Algorithme;
 
+import fr.univtln.m1dapm.g3.g3vote.Entite.CResultat;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
 
 /**
@@ -22,4 +23,6 @@ public abstract class AAlgorithme {
     }
 
     protected abstract void initVote();
+
+    protected abstract CResultat CalculResultat();
 }
