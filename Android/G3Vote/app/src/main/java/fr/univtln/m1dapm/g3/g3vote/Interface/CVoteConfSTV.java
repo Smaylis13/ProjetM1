@@ -1,19 +1,71 @@
 package fr.univtln.m1dapm.g3.g3vote.Interface;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ListView;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidat;
 import fr.univtln.m1dapm.g3.g3vote.R;
 
 public class CVoteConfSTV extends AppCompatActivity {
 
+
+    private static ArrayList<CCandidat> mlistCandidat = new ArrayList<CCandidat>();
+    private CCandidat mcandidat = new CCandidat();
+
+    private CCandidatAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cvote_conf_stv);
+
+        ListView list = (ListView)findViewById(R.id.lLVSTV);
+        mlistCandidat.add(mcandidat);
+        mlistCandidat.add(mcandidat);
+        adapter = new CCandidatAdapter(this, mlistCandidat);
+
+        list.setAdapter(adapter);
+    }
+
+
+
+    public void validateConfCondorcet(View view) {
+        for (int i = 0; i <mlistCandidat.size() ; i++) {
+            ListView test = (ListView)findViewById(R.id.lLVSTV);
+            View cde = test.getChildAt(i);
+            EditText editText=(EditText)cde.findViewById(R.id.choiceName);
+            String string=editText.getText().toString();
+            mlistCandidat.get(i).setNom(string);
+            Log.i("test", string);
+        }
+        Intent intent = new Intent(this,CTestActivity.class);
+        intent.putExtra("liste de Candidat",mlistCandidat);
+        startActivity(intent);
+
+    }
+
+    public void addChoiceButton(View view) {
+        mlistCandidat.add(mcandidat);
+        adapter.notifyDataSetChanged();
+    }
+
+    public void removeChoiceButton(View view) {
+        if (mlistCandidat.size() > 2) {
+            mlistCandidat.remove(mlistCandidat.lastIndexOf(mcandidat));
+            // ListView test = (ListView)findViewById(R.id.lLVUninomialOneTurn);
+            //Log.i("contenu",listCandidat.toString());
+            adapter.notifyDataSetChanged();
+        }
     }
 
     @Override
