@@ -22,12 +22,17 @@ public class CKeyGenerator {
     private static final String TRANSFORMATION_STRING = "AES";
     private static final int SIZE = 128;
 
-    private SecretKey mClef;
+    private final SecretKey mClef;
 
-    static SecureRandom mRmd = new SecureRandom();
+    private static final SecureRandom mRmd = new SecureRandom();
+    private static final BigInteger mPublicKey = BigInteger.probablePrime(SIZE, mRmd);
 
-    private static final BigInteger mP = BigInteger.probablePrime(SIZE, mRmd);
-    private static final BigInteger mG = BigInteger.probablePrime(SIZE, mRmd);
+    private final double lval = Math.PI * Math.pow(2, 894);
+    public BigInteger mClefInt = BigInteger.valueOf((int)Math.pow(2, (Math.pow(2, 1024) - Math.pow(2, 960) - 1 +
+            Math.pow(2, 64) * (  lval + 129093 ))));
+
+    //public byte[] mClefByte = DatatypeConverter.parseHexBinary(mClefString);
+    //public long mClefInt = Long.parseLong(mClefHexa, 16);
 
     /**
      * Génère la clef automatiquement à sa construction
@@ -44,13 +49,13 @@ public class CKeyGenerator {
      * Méthode de génération de clef AES 128 bits
      * @return Clef
      */
-    static SecretKey keyGen(){
+    private static SecretKey keyGen(){
         KeyGenerator lKeyGen;
         try {
             lKeyGen = KeyGenerator.getInstance(TRANSFORMATION_STRING);
             lKeyGen.init(128);
             SecretKey lClef = lKeyGen.generateKey();
-            System.out.println("clef (" + lClef.getAlgorithm() + "," /*+ lClef.getFormat()*/
+            System.out.println("clef (" + lClef.getAlgorithm() /*+ "," + lClef.getFormat()*/
                     + ") : " + new String(lClef.getEncoded()));
             return lClef;
         } catch (Exception e) {
@@ -65,9 +70,9 @@ public class CKeyGenerator {
      * @return La clef calculé avec les deux paramètres
      */
     public SecretKeySpec specificKeyKeyGen(BigInteger pG) {
-        System.out.println(mG);
+        System.out.println(mPublicKey);
         System.out.println(pG);
-        BigInteger lBig = mG;
+        BigInteger lBig = mPublicKey;
         lBig = lBig.and(pG);
         System.out.println(lBig);
         byte[] lKey = lBig.toByteArray();

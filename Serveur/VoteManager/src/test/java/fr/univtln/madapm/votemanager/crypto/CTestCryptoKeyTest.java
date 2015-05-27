@@ -33,6 +33,8 @@ public class CTestCryptoKeyTest extends TestCase {
 
         System.out.println(aesCrypt.decrypt(clef, cyphertext));
 
+        System.out.println(keyGenerator.mClefInt);
+
 
         System.out.println("Fin du test");
     }
