@@ -20,51 +20,51 @@ public class CVoteConfMajorityJugement extends AppCompatActivity {
 
 
 
-    private static ArrayList<CCandidat> mlistCandidat = new ArrayList<CCandidat>();
-    private CCandidat mcandidat = new CCandidat();
+    private static ArrayList<CCandidat> mListCandidat = new ArrayList<CCandidat>();
+    private CCandidat mCandidat = new CCandidat();
 
-    private CCandidatAdapter adapter;
+    private CCandidatAdapter mAdapter;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onCreate(Bundle pSavedInstanceState) {
+        super.onCreate(pSavedInstanceState);
         setContentView(R.layout.activity_cvote_conf_majority_jugement);
 
-        ListView list = (ListView)findViewById(R.id.lLVMajorityJugement);
-        mlistCandidat.add(mcandidat);
-        mlistCandidat.add(mcandidat);
-        adapter = new CCandidatAdapter(this, mlistCandidat);
+        ListView lList = (ListView)findViewById(R.id.lLVMajorityJugement);
+        mListCandidat.add(mCandidat);
+        mListCandidat.add(mCandidat);
+        mAdapter = new CCandidatAdapter(this, mListCandidat);
 
-        list.setAdapter(adapter);
+        lList.setAdapter(mAdapter);
     }
 
 
-
-    public void validateConfCondorcet(View view) {
-        for (int i = 0; i <mlistCandidat.size() ; i++) {
-            ListView test = (ListView)findViewById(R.id.lLVMajorityJugement);
-            View cde = test.getChildAt(i);
-            EditText editText=(EditText)cde.findViewById(R.id.choiceName);
-            String string=editText.getText().toString();
-            mlistCandidat.get(i).setNom(string);
-            Log.i("test", string);
+    public void validateConfMajorityJugement(View pView){
+        for (int i = 0; i <mListCandidat.size() ; i++) {
+            ListView lTest = (ListView)findViewById(R.id.lLVMajorityJugement);
+            View lCde = lTest.getChildAt(i);
+            EditText editText=(EditText) lCde.findViewById(R.id.choiceName);
+            String lString = editText.getText().toString();
+            mListCandidat.get(i).setNom(lString);
+            Log.i("test", lString);
         }
-        Intent intent = new Intent(this,CTestActivity.class);
-        intent.putExtra("liste de Candidat",mlistCandidat);
-        startActivity(intent);
+        Intent lIntent = new Intent(this,CTestActivity.class);
+        lIntent.putExtra("liste de Candidat",mListCandidat);
+        startActivity(lIntent);
 
     }
 
-    public void addChoiceButton(View view) {
-        mlistCandidat.add(mcandidat);
-        adapter.notifyDataSetChanged();
+    public void addChoiceButton(View pView) {
+        mListCandidat.add(mCandidat);
+        mAdapter.notifyDataSetChanged();
     }
 
-    public void removeChoiceButton(View view) {
-        if (mlistCandidat.size() > 2) {
-            mlistCandidat.remove(mlistCandidat.lastIndexOf(mcandidat));
+    public void removeChoiceButton(View pView) {
+        if (mListCandidat.size() > 2) {
+            mListCandidat.remove(mListCandidat.lastIndexOf(mCandidat));
             // ListView test = (ListView)findViewById(R.id.lLVUninomialOneTurn);
             //Log.i("contenu",listCandidat.toString());
-            adapter.notifyDataSetChanged();
+            mAdapter.notifyDataSetChanged();
         }
     }
     @Override
@@ -79,10 +79,10 @@ public class CVoteConfMajorityJugement extends AppCompatActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        int lId = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (lId == R.id.action_settings) {
             return true;
         }
 
