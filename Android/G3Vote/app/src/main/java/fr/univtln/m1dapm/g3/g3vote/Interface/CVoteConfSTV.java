@@ -20,73 +20,74 @@ import fr.univtln.m1dapm.g3.g3vote.R;
 public class CVoteConfSTV extends AppCompatActivity {
 
 
-    private static ArrayList<CCandidate> mlistCandidat = new ArrayList<CCandidate>();
-    private CCandidate mcandidat = new CCandidate();
+    private static ArrayList<CCandidate> mListCandidat = new ArrayList<CCandidate>();
+    private CCandidate mCandidat = new CCandidate();
 
-    private CCandidatAdapter adapter;
+    private CCandidatAdapter mAdapter;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onCreate(Bundle pSavedInstanceState) {
+        super.onCreate(pSavedInstanceState);
         setContentView(R.layout.activity_cvote_conf_stv);
 
-        ListView list = (ListView)findViewById(R.id.lLVSTV);
-        mlistCandidat.add(mcandidat);
-        mlistCandidat.add(mcandidat);
-        adapter = new CCandidatAdapter(this, mlistCandidat);
+        ListView lList = (ListView)findViewById(R.id.lLVSTV);
+        mListCandidat.add(mCandidat);
+        mListCandidat.add(mCandidat);
+        mAdapter = new CCandidatAdapter(this, mListCandidat);
 
-        list.setAdapter(adapter);
+        lList.setAdapter(mAdapter);
     }
 
 
 
-    public void validateConfCondorcet(View view) {
-        for (int i = 0; i <mlistCandidat.size() ; i++) {
-            ListView test = (ListView)findViewById(R.id.lLVSTV);
-            View cde = test.getChildAt(i);
-            EditText editText=(EditText)cde.findViewById(R.id.choiceName);
-            String string=editText.getText().toString();
-            mlistCandidat.get(i).setNom(string);
-            Log.i("test", string);
+    public void validateConfSTV(View pView) {
+        for (int i = 0; i <mListCandidat.size() ; i++) {
+            ListView lTest = (ListView)findViewById(R.id.lLVSTV);
+            View lCde = lTest.getChildAt(i);
+            EditText lEditText = (EditText) lCde.findViewById(R.id.choiceName);
+            String lString = lEditText.getText().toString();
+            mListCandidat.get(i).setNom(lString);
+            Log.i("test", lString);
         }
-        Intent intent = new Intent(this,CTestActivity.class);
-        intent.putExtra("liste de Candidat",mlistCandidat);
-        startActivity(intent);
+        Intent lIntent = new Intent(this,CTestActivity.class);
+        lIntent.putExtra("liste de Candidat",mListCandidat);
+        startActivity(lIntent);
 
     }
 
-    public void addChoiceButton(View view) {
-        mlistCandidat.add(mcandidat);
-        adapter.notifyDataSetChanged();
+    public void addChoiceButton(View pView) {
+        mListCandidat.add(mCandidat);
+        mAdapter.notifyDataSetChanged();
     }
 
-    public void removeChoiceButton(View view) {
-        if (mlistCandidat.size() > 2) {
-            mlistCandidat.remove(mlistCandidat.lastIndexOf(mcandidat));
+    public void removeChoiceButton(View pView) {
+        if (mListCandidat.size() > 2) {
+            mListCandidat.remove(mListCandidat.lastIndexOf(mCandidat));
             // ListView test = (ListView)findViewById(R.id.lLVUninomialOneTurn);
             //Log.i("contenu",listCandidat.toString());
-            adapter.notifyDataSetChanged();
+            mAdapter.notifyDataSetChanged();
         }
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu pMenu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_cvote_conf_stv, menu);
+        getMenuInflater().inflate(R.menu.menu_cvote_conf_stv, pMenu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem pItem) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        int lId = pItem.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (lId == R.id.action_settings) {
             return true;
         }
 
-        return super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(pItem);
     }
 }
