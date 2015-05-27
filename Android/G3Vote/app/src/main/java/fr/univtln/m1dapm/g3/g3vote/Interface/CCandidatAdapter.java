@@ -1,22 +1,16 @@
 package fr.univtln.m1dapm.g3.g3vote.Interface;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidat;
-import fr.univtln.m1dapm.g3.g3vote.Entite.CChoix;
-import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
 import fr.univtln.m1dapm.g3.g3vote.R;
 
 /**
@@ -28,15 +22,15 @@ public class CCandidatAdapter extends BaseAdapter {
     //Un mécanisme pour gérer l'affichage graphique depuis un layout XML
     private LayoutInflater mInflater;
     //A list of Choices
-    private List<CCandidat> mListCandidat;
+    private List<CCandidate> mListCandidat;
 
-    public CCandidatAdapter(Context context, List<CCandidat> listCandidat){
+    public CCandidatAdapter(Context context, List<CCandidate> listCandidat){
         this.mContext=context;
         this.mListCandidat=listCandidat;
         this.mInflater = LayoutInflater.from(mContext);
     }
 
-    public List<CCandidat> getmListCandidat() {
+    public List<CCandidate> getmListCandidat() {
         return mListCandidat;
     }
 

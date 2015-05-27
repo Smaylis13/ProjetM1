@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.Random;
 
 import fr.univtln.m1dapm.g3.g3vote.Algorithme.STV.CAlgoSTV;
-import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidat;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CListChoix;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CResultat;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
@@ -32,7 +32,7 @@ public class CAlgoSTVTest extends TestCase {
         int lNbCands = 20;
         CVote lVote = new CVote(1, "test");
 
-        List<CCandidat> lCands = genererCandidats(lNbCands);
+        List<CCandidate> lCands = genererCandidats(lNbCands);
 
 
  //       Log.i("Vote : ", "Creation Vote");
@@ -42,7 +42,7 @@ public class CAlgoSTVTest extends TestCase {
         Random lRandom = new Random();
         for(int i=0; i<100000; i++)
         {
-            List<CCandidat> lList1 = new ArrayList<>(lCands);
+            List<CCandidate> lList1 = new ArrayList<>(lCands);
             Collections.shuffle(lList1);
             CListChoix lChoix1 = new CListChoix(lList1);
             if(lChoix.containsKey(lChoix1))
@@ -56,7 +56,7 @@ public class CAlgoSTVTest extends TestCase {
         lAlgo.initVote(lChoix);
 
         Log.i("Vote : ", "Demarrage Calcul Resultat");
-        CResultat<List<CCandidat>> lListRes = new CResultat<>();
+        CResultat<List<CCandidate>> lListRes = new CResultat<>();
 
         float debut = System.nanoTime();
 
@@ -66,15 +66,15 @@ public class CAlgoSTVTest extends TestCase {
 
         Log.i("Vote : ", "Duree du calcul : " + (fin-debut)/1000 + "µs");
 
-        for(CCandidat cand : lListRes.getValeur())
+        for(CCandidate cand : lListRes.getValeur())
             Log.i("Vote : ", "Vainqueurs : " + cand.getNom());
     }
 
-    private List<CCandidat> genererCandidats(int pNbCand)
+    private List<CCandidate> genererCandidats(int pNbCand)
     {
-        List<CCandidat> lCands = new ArrayList<>();
+        List<CCandidate> lCands = new ArrayList<>();
         for(int i=0; i<pNbCand; i++)
-            lCands.add(new CCandidat(i, mNomsCands[i]));
+            lCands.add(new CCandidate(i, mNomsCands[i]));
 
         return lCands;
     }

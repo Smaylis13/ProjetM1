@@ -3,7 +3,7 @@ package fr.univtln.m1dapm.g3.g3vote.Algorithme.Condorcet;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidat;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CChoixpossible;
 
 /**
@@ -17,10 +17,10 @@ public class CCondorcetTest {
         CCondorcet condorcet = new CCondorcet();
         List<CChoixpossible> Listresult=new ArrayList<CChoixpossible>();
 
-        CCandidat a=new CCandidat("Memphis");
-        CCandidat b=new CCandidat("Nashville");
-        CCandidat c=new CCandidat("Chattanooga");
-        CCandidat d=new CCandidat("knoxville");
+        CCandidate a=new CCandidate("Memphis");
+        CCandidate b=new CCandidate("Nashville");
+        CCandidate c=new CCandidate("Chattanooga");
+        CCandidate d=new CCandidate("knoxville");
 
 
         List list = new ArrayList();

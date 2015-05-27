@@ -73,15 +73,15 @@ public class CVoteAdapter extends BaseAdapter {
         TextView ltv_endDate = (TextView)layoutItem.findViewById(R.id.lTV_endDate);
         ImageView liv_icon = (ImageView)layoutItem.findViewById(R.id.icon);
 
-        if(mListVote.get(position).ismVoted()){
+        /*if(mListVote.get(position).ismVoted()){
             liv_icon.setImageResource(R.mipmap.ic_yes_vote);
         }
         else{
             liv_icon.setImageResource(R.mipmap.ic_no_vote);
-        }
+        }*/
         //(3) : Renseignement des valeurs
-        ltv_voteName.setText(mListVote.get(position).getmNom());
-        if (mListVote.get(position).getmStatut()){
+        ltv_voteName.setText(mListVote.get(position).getmVoteName());
+        if (mListVote.get(position).getmStatusVote()){
             ltv_voteStatus.setText("en Cours");
             ltv_voteStatus.setTextColor(Color.parseColor("green"));
         }

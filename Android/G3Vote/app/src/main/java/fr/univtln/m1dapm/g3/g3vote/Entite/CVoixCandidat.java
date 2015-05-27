@@ -4,27 +4,27 @@ package fr.univtln.m1dapm.g3.g3vote.Entite;
  * Created by Pierre on 20/05/2015.
  */
 public class CVoixCandidat {
-    private CCandidat mcandidat;
+    private CCandidate mcandidat;
     private int mvote;
 
     public CVoixCandidat() {
     }
 
-    public CVoixCandidat(CCandidat mcandidat) {
+    public CVoixCandidat(CCandidate mcandidat) {
         this.mcandidat = mcandidat;
         mvote=0;
     }
 
-    public CVoixCandidat(CCandidat mcandidat, int mvote) {
+    public CVoixCandidat(CCandidate mcandidat, int mvote) {
         this.mcandidat = mcandidat;
         this.mvote = mvote;
     }
 
-    public CCandidat getMcandidat() {
+    public CCandidate getMcandidat() {
         return mcandidat;
     }
 
-    public void setMcandidat(CCandidat mcandidat) {
+    public void setMcandidat(CCandidate mcandidat) {
         this.mcandidat = mcandidat;
     }
 

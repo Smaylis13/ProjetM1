@@ -9,12 +9,12 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidat;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
 import fr.univtln.m1dapm.g3.g3vote.R;
 
 public class CTestActivity extends ActionBarActivity {
 
-    private static ArrayList<CCandidat> listCandidat = new ArrayList<CCandidat>();
+    private static ArrayList<CCandidate> listCandidat = new ArrayList<CCandidate>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +26,7 @@ public class CTestActivity extends ActionBarActivity {
             return;
         }
         RelativeLayout rl = (RelativeLayout)findViewById(R.id.test);
-        listCandidat=(ArrayList<CCandidat>)extras.get("liste de Candidat");
+        listCandidat=(ArrayList<CCandidate>)extras.get("liste de Candidat");
         for (int i = 0; i <listCandidat.size() ; i++) {
             TextView textView = new TextView(this);
             textView.setText(listCandidat.get(i).getNom());

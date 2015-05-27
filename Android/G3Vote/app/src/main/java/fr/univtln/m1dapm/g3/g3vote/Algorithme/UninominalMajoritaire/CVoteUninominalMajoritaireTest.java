@@ -1,12 +1,9 @@
 package fr.univtln.m1dapm.g3.g3vote.Algorithme.UninominalMajoritaire;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
 import java.util.List;
-import java.util.Map;
 
-import fr.univtln.m1dapm.g3.g3vote.Algorithme.KemenyYoung.CKemenyYoung;
-import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidat;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
 
 /**
  * Created by Pierre on 20/05/2015.
@@ -16,13 +13,13 @@ public class CVoteUninominalMajoritaireTest {
     public static void main(String[] args) {
 
         CVoteUninominalMajoritaire vote = new CVoteUninominalMajoritaire();
-        CCandidat a=new CCandidat("a");
-        CCandidat b=new CCandidat("b");
-        CCandidat c=new CCandidat("c");
-        CCandidat d=new CCandidat("d");
-        CCandidat e=new CCandidat("e");
-        CCandidat f=new CCandidat("f");
-        CCandidat g=new CCandidat("g");
+        CCandidate a=new CCandidate("a");
+        CCandidate b=new CCandidate("b");
+        CCandidate c=new CCandidate("c");
+        CCandidate d=new CCandidate("d");
+        CCandidate e=new CCandidate("e");
+        CCandidate f=new CCandidate("f");
+        CCandidate g=new CCandidate("g");
         List list = new ArrayList();
         list.add(a);
         list.add(b);
@@ -69,7 +66,7 @@ public class CVoteUninominalMajoritaireTest {
             vote.nouveauVote(c);
         }
 
-        CCandidat result;
+        CCandidate result;
         result=vote.resultat();
 
        System.out.println(result);

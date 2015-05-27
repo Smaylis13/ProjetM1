@@ -6,20 +6,20 @@ import java.util.List;
  * Created by ludo on 07/05/15.
  */
 
-public class CListChoix extends CChoix<List<CCandidat>>
+public class CListChoix extends CChoice
 {
-    public CListChoix(List<CCandidat> pChoix) {
+    /*public CListChoix(List<CCandidate> pChoix) {
         super(pChoix);
     }
 
-    public CCandidat getIndexValue(int pIndice)
+    public CCandidate getIndexValue(int pIndice)
     {
         return mChoix.get(pIndice);
     }
 
-    public void removeCandidat(CCandidat pCand)
+    public void removeCandidat(CCandidate pCand)
     {
         if(mChoix.contains(pCand))
             mChoix.remove(pCand);
-    }
+    }*/
 }

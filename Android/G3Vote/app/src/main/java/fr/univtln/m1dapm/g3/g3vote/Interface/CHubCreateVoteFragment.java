@@ -25,7 +25,7 @@ public class CHubCreateVoteFragment extends Fragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
 
     private static final String[] VOTE = new String[] {"STV", "Kemeny-Young", "Jugement Majoritaire",
-    "uninominal à 1 tour","uninominal à 2 tour"};
+    "uninominal à 1 tour","uninominal à 2 tour","Condorcet","Borda"};
     /**
      * Returns a new instance of this fragment for the given section
      * number.
@@ -75,6 +75,14 @@ public class CHubCreateVoteFragment extends Fragment {
                         break;
                     case 4:
                         text.setText(getString(R.string.uninominalTwoTurnVoteDescription));
+                        break;
+                    case 5:
+                        text.setText(getString(R.string.CondorcetDescription));
+                        break;
+                    case 6:
+                        text.setText(getString(R.string.BordaDescription));
+                        break;
+
                     default:
                         break;
                 }

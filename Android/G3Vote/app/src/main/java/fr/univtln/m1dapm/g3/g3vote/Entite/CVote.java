@@ -3,9 +3,7 @@ package fr.univtln.m1dapm.g3.g3vote.Entite;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -15,112 +13,101 @@ public class CVote {
 
     private int mIdVote;
 
-    private String mNom;
+    private String mVoteName;
 
-    private String mDescription;
+    private String mDescriptionVote;
 
-    private boolean mStatut;
-    private boolean mVoted;
+    private boolean mStatusVote;
 
-    public boolean ismVoted() {
-        return mVoted;
+
+    private List <CCandidate> mListCandidat = new ArrayList<>();
+
+    private Date mDateDebut;
+    private Date mDateFin;
+
+    private CUser mOrganisateur;
+
+    private List<CResult> mResultVote=null;
+
+    private List<CType> mType;
+
+    private List<CRule> mRules;
+
+    private List<CChoice> mChoices=null;
+
+    private List<CCandidate> mCandidate;
+
+    private List<CDeleguation> mDeleguations;
+
+    public CVote(String pVoteName, String pDescriptionVote, boolean pStatusVote, List<CCandidate> pListCandidat, Date pDateDebut, Date pDateFin, CUser pOrganisateur, List<CResult> pResultVote, List<CType> pType, List<CRule> pRules, List<CCandidate> pCandidate, List<CDeleguation> pDeleguations) {
+        this.mVoteName = pVoteName;
+        this.mDescriptionVote = pDescriptionVote;
+        this.mStatusVote = pStatusVote;
+        this.mListCandidat = pListCandidat;
+        this.mDateDebut = pDateDebut;
+        this.mDateFin = pDateFin;
+        this.mOrganisateur = pOrganisateur;
+        this.mResultVote = pResultVote;
+        this.mType = pType;
+        this.mRules = pRules;
+        this.mCandidate = pCandidate;
+        this.mDeleguations = pDeleguations;
     }
 
-    public void setmVoted(boolean mVoted) {
-        this.mVoted = mVoted;
+    public CVote(int pIdVote, String pNom) {
+        this.mIdVote = pIdVote;
+        this.mVoteName = pNom;
     }
 
-    private List<CRegle> mListRegle;
-
-    private List<CChoix> mListChoix;
-
-    private List <CCandidat> mListCandidat = new ArrayList<>();
-
-    private GregorianCalendar mDebut;
-
-    private GregorianCalendar mFin;
-
-    private Date beginDate;
-    private Date endDate;
+    public CVote(int pIdVote, String pNom, boolean pStatut, Date pDebut, Date pFin){
+        this(pIdVote,pNom);
+        this.mStatusVote =pStatut;
+        this.mDateDebut = pDebut;
+        this.mDateFin = pFin;
+    }
 
     public Date getBeginDate() {
-        return beginDate;
+        return mDateDebut;
     }
 
     public void setBeginDate(Date beginDate) {
-        this.beginDate = beginDate;
+        this.mDateDebut = beginDate;
     }
 
     public Date getEndDate() {
-        return endDate;
+        return mDateFin;
     }
 
     public void setEndDate(Date endDate) {
-        this.endDate = endDate;
+        this.mDateFin = endDate;
     }
 
-    private CResultat mResultat;
-
-    public CVote(int mIdVote, String mNom) {
-        this.mIdVote = mIdVote;
-        this.mNom = mNom;
-    }
-    public CVote(int mIdVote, String mNom, boolean mStatut, GregorianCalendar mDebut, GregorianCalendar mFin){
-        this(mIdVote,mNom);
-        this.mStatut=mStatut;
-        this.mDebut=mDebut;
-        this.mFin=mFin;
+    public String getmVoteName() {
+        return mVoteName;
     }
 
-    public CVote(int mIdVote, String mNom, boolean mStatut,boolean mVoted, Date debut, Date fin){
-        this(mIdVote,mNom);
-        this.mStatut=mStatut;
-        this.beginDate = debut;
-        this.endDate = fin;
-        this.mVoted=mVoted;
-    }
-    public String getmNom() {
-        return mNom;
+    public void setmVoteName(String mVoteName) {
+        this.mVoteName = mVoteName;
     }
 
-    public void setmNom(String mNom) {
-        this.mNom = mNom;
+    public boolean getmStatusVote() {
+        return mStatusVote;
     }
 
-    public boolean getmStatut() {
-        return mStatut;
+    public void setmStatusVote(boolean mStatusVote) {
+        this.mStatusVote = mStatusVote;
     }
 
-    public void setmStatut(boolean mStatut) {
-        this.mStatut = mStatut;
-    }
-
-    public GregorianCalendar getmDebut() {
-        return mDebut;
-    }
-
-    public void setmDebut(GregorianCalendar mDebut) {
-        this.mDebut = mDebut;
-    }
-
-    public GregorianCalendar getmFin() {
-        return mFin;
-    }
-
-    public void setmFin(GregorianCalendar mFin) {
-        this.mFin = mFin;
-    }
-
-    public List<CCandidat> getListCandidat() {
+    public List<CCandidate> getListCandidat() {
         return mListCandidat;
     }
 
-    public void addCandidat(CCandidat pCandidat) {
+    public void addCandidat(CCandidate pCandidat) {
         mListCandidat.add(pCandidat);
     }
 
-    public List<CRegle> getRegles() {
-        return mListRegle;
+    public List<CRule> getmRules() {
+        return mRules;
     }
 
     public static ArrayList<CVote> getAListOfVote() {
@@ -145,11 +132,11 @@ public class CVote {
 // representation of a date with the defined format.
 
 
-        listVote.add(new CVote(1,"elireToto",true,true,d1,d2));
-        listVote.add(new CVote(2,"elireTata",true,false,d3,d4));
-        listVote.add(new CVote(3,"elireTiti",false,true,d5,d6));
-        listVote.add(new CVote(4,"elireTete",true,false,d7,d8));
-        listVote.add(new CVote(5,"elireTutu",false,true,d9,d10));
+        listVote.add(new CVote(1,"elireToto",true,d1,d2));
+        listVote.add(new CVote(2,"elireTata",true,d3,d4));
+        listVote.add(new CVote(3,"elireTiti",false,d5,d6));
+        listVote.add(new CVote(4,"elireTete",true,d7,d8));
+        listVote.add(new CVote(5,"elireTutu",false,d9,d10));
         return listVote;
     }
 }
