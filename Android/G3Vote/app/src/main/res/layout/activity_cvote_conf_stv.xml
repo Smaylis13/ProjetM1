@@ -32,7 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/validationText"
-        android:onClick="validateConfUniOne"
+        android:onClick="validateConfSTV"
         android:id="@+id/button"
         android:layout_alignParentTop="true"
         android:layout_alignRight="@+id/lLVSTV"
