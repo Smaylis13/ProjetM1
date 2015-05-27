@@ -1,5 +1,6 @@
 package fr.univtln.madapm.votemanager.metier.vote;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import fr.univtln.madapm.votemanager.metier.user.CUser;
 
 import javax.persistence.*;
@@ -8,24 +9,25 @@ import javax.persistence.*;
  * Created by Ookami on 17/05/2015.
  */
 @Entity
-@Table(name="delegue")
+@Table(name="delegue", uniqueConstraints =@UniqueConstraint(columnNames={"ID_UTILISATEUR","ID_MANDATAIRE","ID_VOTE"}))
 public class CDeleguation {
 
-    @EmbeddedId
-    private CKeyDeleguation mIdDeleguation;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="ID_DELEGATION")
+    @JsonIgnore
+    private int mIdDeleguation;
+
 
     @ManyToOne
-    @MapsId("mIdUser")
     @JoinColumn(name = "ID_UTILISATEUR")
     private CUser mUser;
 
     @ManyToOne
-    @MapsId("mIdRepresentative")
     @JoinColumn(name = "ID_MANDATAIRE")
     private CUser mRepresentativeUser;
 
     @ManyToOne
-    @MapsId("mIdVote")
     @JoinColumn(name = "ID_VOTE" )
     private CVote mVote;
 

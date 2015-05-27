@@ -45,7 +45,7 @@ public class CUserRest {
         lUsers=lUserDAO.findWithNamedQuery("CUser.findAll",lParams);
         if(lUsers.isEmpty()) {
             lUserDAO.create(pNewUser);
-            return Response.status(201).entity(pNewUser.getmId()).build();
+            return Response.status(201).entity(pNewUser.getmUserId()).build();
         }
         return Response.status(409).entity(0).build();
     }
