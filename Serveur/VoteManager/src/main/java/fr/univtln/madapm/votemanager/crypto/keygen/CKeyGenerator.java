@@ -6,8 +6,8 @@ import javax.crypto.spec.SecretKeySpec;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.util.Arrays;
+import java.util.Random;
 
 /**
  * Created by civars169 on 20/05/15.
@@ -17,15 +17,14 @@ import java.util.Arrays;
 /**
  * Génère une clef AES 128 bits
  */
-public class CKeyGenerator {
+public class CKeyGenerator extends Random {
 
     private static final String TRANSFORMATION_STRING = "AES";
     private static final int SIZE = 128;
 
     private final SecretKey mClef;
 
-    private static final SecureRandom mRmd = new SecureRandom();
-    private static final BigInteger mPublicKey = BigInteger.probablePrime(SIZE, mRmd);
+    private final byte[] mPublicKey = randByte(new byte[16]); // 16 bytes = 128 bits
 
     private final double lval = Math.PI * Math.pow(2, 894);
     public BigInteger mClefInt = BigInteger.valueOf((int)Math.pow(2, (Math.pow(2, 1024) - Math.pow(2, 960) - 1 +
@@ -69,13 +68,13 @@ public class CKeyGenerator {
      * @param pG paramètre reçu
      * @return La clef calculé avec les deux paramètres
      */
-    public SecretKeySpec specificKeyKeyGen(BigInteger pG) {
-        System.out.println(mPublicKey);
-        System.out.println(pG);
-        BigInteger lBig = mPublicKey;
-        lBig = lBig.and(pG);
-        System.out.println(lBig);
-        byte[] lKey = lBig.toByteArray();
+    public SecretKeySpec specificKeyKeyGen(byte[] pG) {
+        System.out.println(Arrays.toString(mPublicKey));
+        System.out.println(Arrays.toString(pG));
+        byte[] lBig = mPublicKey;
+        //byte[] lKey = lBig.xor pG;
+        byte[] lKey = mClef.getEncoded();
+        System.out.println(Arrays.toString(lKey));
         MessageDigest lSha;
         try {
             lSha = MessageDigest.getInstance("SHA-1");
@@ -86,6 +85,15 @@ public class CKeyGenerator {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public byte[] randByte(byte[] bytes) {
+        for (int i = 0, len = bytes.length; i < len; )
+            for (int rnd = nextInt(),
+                         n = Math.min(len - i, Integer.SIZE/Byte.SIZE);
+                 n-- > 0; rnd >>= Byte.SIZE)
+                bytes[i++] = (byte)rnd;
+        return bytes;
     }
 
     @Override

@@ -5,7 +5,6 @@ import fr.univtln.madapm.votemanager.crypto.aes.CAESFileCrypt;
 import fr.univtln.madapm.votemanager.crypto.keygen.CKeyGenerator;
 
 import javax.crypto.NoSuchPaddingException;
-import java.math.BigInteger;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
@@ -54,7 +53,7 @@ public class CCrypto {
      * @param pstr Données à crypter
      * @param pBigInteger Paramètre reçu par l'autre machine
      */
-    public void publicEncrypt(String pstr, BigInteger pBigInteger){
+    public void publicEncrypt(String pstr, byte[] pBigInteger){
         mAesCrypt.encrypt(mKeyGenerator.specificKeyKeyGen(pBigInteger), pstr);
     }
 
@@ -63,7 +62,7 @@ public class CCrypto {
      * @param pBytes Données à décrypter
      * @param pBigInteger Paramètre reçu par l'autre machine
      */
-    public void publicDecrypt(byte[] pBytes, BigInteger pBigInteger){
+    public void publicDecrypt(byte[] pBytes, byte[] pBigInteger){
         mAesCrypt.decrypt(mKeyGenerator.specificKeyKeyGen(pBigInteger), pBytes);
     }
 
@@ -73,7 +72,7 @@ public class CCrypto {
      * @param pCible Chemin interne du nouveau fichier crypté
      * @param pPublicParamKey Paramètre de l'autre machine pour générer la clef public commune
      */
-    public void fileEncrypt(String pPath, String pCible, BigInteger pPublicParamKey){
+    public void fileEncrypt(String pPath, String pCible, byte[] pPublicParamKey){
         try {
             mAesFileCrypt.encrypterFichier(mKeyGenerator.specificKeyKeyGen(pPublicParamKey), pPath, pCible);
         } catch (NoSuchAlgorithmException | InvalidKeyException | NoSuchPaddingException e) {
@@ -87,7 +86,7 @@ public class CCrypto {
      * @param pCible Chemin interne du nouveau fichier crypté
      * @param pPublicParamKey Paramètre de l'autre machine pour générer la clef public commune
      */
-    public void fileDecrypt(String pPath, String pCible, BigInteger pPublicParamKey){
+    public void fileDecrypt(String pPath, String pCible, byte[] pPublicParamKey){
         try {
             mAesFileCrypt.decrypterFichier(mKeyGenerator.specificKeyKeyGen(pPublicParamKey), pPath, pCible);
         } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException e) {
