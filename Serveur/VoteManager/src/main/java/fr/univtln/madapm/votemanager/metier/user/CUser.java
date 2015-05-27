@@ -28,7 +28,7 @@ public class CUser {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="ID_UTILISATEUR")
     @JsonIgnore
-    public int mId;
+    public int mUserId;
     @Column(name="MAIL", nullable = false,unique = true)
     private String mEmail;
     @Column(name="MOT_DE_PASSE",nullable = false)
@@ -67,18 +67,18 @@ public class CUser {
     public CUser(){
     }
 
-    public CUser(int pId, String pEmail, String pPassword) {
-        this.mId = pId;
+    public CUser(int pUserId, String pEmail, String pPassword) {
+        this.mUserId = pUserId;
         this.mEmail = pEmail;
         this.mPassword = pPassword;
     }
 
-    public int getmId() {
-        return mId;
+    public int getmUserId() {
+        return mUserId;
     }
 
   /*  public void setId(int pId) {
-        this.mId = pId;
+        this.mUserId = pId;
     }*/
 
     @Override
@@ -90,7 +90,7 @@ public class CUser {
 
         if(this.getmEmail()!=user.getmEmail()) return false;
 
-        if(this.getmId()!=user.getmId()) return false;
+        if(this.getmUserId()!=user.getmUserId()) return false;
 
         if(this.getmName()!=user.getmName()) return false;
 
@@ -145,7 +145,7 @@ public class CUser {
     @Override
     public String toString() {
         return "CUser{" +
-                "mId=" + mId +
+                "mUserId=" + mUserId +
                 ", mEmail='" + mEmail + '\'' +
                 ", mPassword='" + mPassword + '\'' +
                 ", mName='" + mName + '\'' +
