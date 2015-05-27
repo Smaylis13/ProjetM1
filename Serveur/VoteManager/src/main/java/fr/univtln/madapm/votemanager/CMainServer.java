@@ -1,24 +1,49 @@
 package fr.univtln.madapm.votemanager;
 
 
+import fr.univtln.madapm.votemanager.communication.authentification.CDatabase;
+import fr.univtln.madapm.votemanager.communication.authentification.CServlet;
+
+import org.glassfish.grizzly.http.server.HttpHandler;
 import org.glassfish.grizzly.http.server.HttpServer;
+import org.glassfish.grizzly.http.server.Request;
+import org.glassfish.grizzly.http.server.Response;
+import org.glassfish.grizzly.servlet.ServletRegistration;
+import org.glassfish.grizzly.servlet.WebappContext;
+import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
+import org.glassfish.jersey.grizzly2.servlet.GrizzlyWebContainerFactory;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
+import org.glassfish.jersey.servlet.ServletContainer;
+import org.mockito.Mockito;
 
+import javax.servlet.*;
+import javax.servlet.http.*;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.UriBuilder;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
+import java.security.Principal;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.*;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * Created by civars169 on 04/05/15.
  * copyright Christian
  */
 public class CMainServer extends Application {
+
+    private static CDatabase sDatabase=new CDatabase();
+
+    public static CDatabase getDatabase() {
+        return sDatabase;
+    }
 
     private static int getPort(int defaultPort) {
         //grab port from environment, otherwise fall back to default port 9999
@@ -33,19 +58,32 @@ public class CMainServer extends Application {
     }
 
     private static URI getBaseURI() {
-        return UriBuilder.fromUri("http://localhost/").port(getPort(9999)).build();
+        return UriBuilder.fromUri("http://10.21.205.16/").port(getPort(80)).build();
     }
 
     public static final URI BASE_URI = getBaseURI();
 
+
+
     protected static HttpServer startServer() throws IOException {
 
         final ResourceConfig lrc = new ResourceConfig().packages("fr.univtln.madapm.votemanager");
+        /*final HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
+        lrc.register(new AbstractBinder() {
+            @Override
+            protected void configure() {
+                bind(request).to(HttpServletRequest.class);
+            }
+        });*/
         lrc.register(JacksonFeature.class);
 
         // create and start a new instance of grizzly http server
         // exposing the Jersey application at BASE_URI
-        return GrizzlyHttpServerFactory.createHttpServer(BASE_URI, lrc);
+        //final Map<String,String> initParams=new HashMap<String,String>();
+        //initParams.put("com.sun.jersey.config.property.packages","fr.univtln.madapm.votemanager");
+        //return GrizzlyWebContainerFactory.create(BASE_URI,initParams);
+       return GrizzlyHttpServerFactory.createHttpServer(BASE_URI, lrc);
+        //return GrizzlyWebContainerFactory.create(BASE_URI);
     }
 
     public static void main(String[] args) throws IOException {
@@ -74,6 +112,14 @@ public class CMainServer extends Application {
 
         // Grizzly 2 initialization
         HttpServer httpServer = startServer();
+        final WebappContext context=new WebappContext("Servlet","");
+        final ServletRegistration register=context.addServlet("Servlet",new CServlet());
+        register.addMapping("/auth/*");
+        register.setInitParameter("fr.univtln.madapm.votemanager.communication.authentification", BASE_URI + ":9999");
+        context.deploy(httpServer);
+        //httpServer.start();
+
+
         System.out.println(String.format("Jersey app started with WADL available at "
                         + "%sapplication.wadl\nHit enter to stop it...",
                 BASE_URI));
@@ -83,7 +129,13 @@ public class CMainServer extends Application {
         }
         for the vps
         */
-        System.in.read();
+        CountDownLatch latch = new CountDownLatch(1);
+        try {
+            latch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        //System.in.read();
         //httpServer.stop();
         httpServer.shutdownNow();
         System.out.println("Serveur off");

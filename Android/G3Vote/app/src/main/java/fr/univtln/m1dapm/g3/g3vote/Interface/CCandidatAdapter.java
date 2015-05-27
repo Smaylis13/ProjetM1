@@ -50,6 +50,7 @@ public class CCandidatAdapter extends BaseAdapter {
         return position;
     }
 
+
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         RelativeLayout layoutItem;
@@ -65,7 +66,9 @@ public class CCandidatAdapter extends BaseAdapter {
         //ImageButton lib_addChoiceButton = (ImageButton)layoutItem.findViewById(R.id.addChoiceButton);
         //ImageButton lib_removeChoiceButton = (ImageButton)layoutItem.findViewById(R.id.removeChoiceButton);
 
+
         lET_choice.setHint(R.string.lETChoiceHint);
+
 
         //lib_addChoiceButton.setImageResource(R.mipmap.ic_add_button);
         //lib_removeChoiceButton.setImageResource(R.mipmap.ic_remove_button);
