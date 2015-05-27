@@ -18,23 +18,22 @@ import fr.univtln.m1dapm.g3.g3vote.R;
 public class CVoteConfKemenyYoung extends AppCompatActivity {
 
 
-    private static ArrayList<CCandidate> listCandidat = new ArrayList<CCandidate>();
-    private CCandidate candidat = new CCandidate();
+    private static ArrayList<CCandidate> mListCandidat = new ArrayList<CCandidate>();
 
-    private CCandidatAdapter adapter;
+    private CCandidatAdapter mAdapter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onCreate(Bundle pSavedInstanceState) {
+        super.onCreate(pSavedInstanceState);
         setContentView(R.layout.activity_cvote_conf_kemeny_young);
 
 
         ListView list = (ListView)findViewById(R.id.lLVKemenyYoung);
-        listCandidat.add(candidat);
-        listCandidat.add(candidat);
-        adapter = new CCandidatAdapter(this, listCandidat);
+        mListCandidat.add(new CCandidate());
+        mListCandidat.add(new CCandidate());
+        mAdapter = new CCandidatAdapter(this, mListCandidat);
 
-        list.setAdapter(adapter);
+        list.setAdapter(mAdapter);
 
 
     }
@@ -48,31 +47,31 @@ public class CVoteConfKemenyYoung extends AppCompatActivity {
 
 
     public void validateConfKemenyYoung(View view) {
-        for (int i = 0; i <listCandidat.size() ; i++) {
+        for (int i = 0; i < mListCandidat.size() ; i++) {
             ListView test = (ListView)findViewById(R.id.lLVKemenyYoung);
             View cde = test.getChildAt(i);
             EditText editText=(EditText)cde.findViewById(R.id.choiceName);
             String string=editText.getText().toString();
-            listCandidat.get(i).setNom(string);
+            mListCandidat.get(i).setNom(string);
             Log.i("test", string);
         }
         Intent intent = new Intent(this,CTestActivity.class);
-        intent.putExtra("liste de Candidat",listCandidat);
+        intent.putExtra("liste de Candidat", mListCandidat);
         startActivity(intent);
 
     }
 
     public void addChoiceButton(View view) {
-        listCandidat.add(candidat);
-        adapter.notifyDataSetChanged();
+        mListCandidat.add(new CCandidate());
+        mAdapter.notifyDataSetChanged();
     }
 
     public void removeChoiceButton(View view) {
-        if (listCandidat.size()>2){
-            listCandidat.remove(listCandidat.lastIndexOf(candidat));
+        if (mListCandidat.size()>2){
+            mListCandidat.remove(mListCandidat.size()-1);
             // ListView test = (ListView)findViewById(R.id.lLVUninomialOneTurn);
             //Log.i("contenu",listCandidat.toString());
-            adapter.notifyDataSetChanged();
+            mAdapter.notifyDataSetChanged();
         }
 
     }
