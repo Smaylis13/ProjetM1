@@ -1,5 +1,7 @@
 package fr.univtln.m1dapm.g3.g3vote.Interface;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -21,11 +23,21 @@ public class CVoteConfCondorcet extends AppCompatActivity {
 
     private CCandidatAdapter mAdapter;
 
+    private String mVoteName;
+    private String mDateDebut;
+    private String mDateFin;
+
     @Override
     protected void onCreate(Bundle pSavedInstanceState) {
         super.onCreate(pSavedInstanceState);
         setContentView(R.layout.activity_cvote_conf_condorcet);
-
+        Bundle extras = getIntent().getExtras();
+        if (extras==null){
+            return;
+        }
+        mVoteName = (String) extras.get("VOTE_NAME");
+        mDateDebut = (String) extras.get("START_DATE");
+        mDateFin = (String) extras.get("END_DATE");
 
         ListView list = (ListView)findViewById(R.id.lLVCondorcet);
         mListCandidat.add(new CCandidate());
@@ -46,6 +58,9 @@ public class CVoteConfCondorcet extends AppCompatActivity {
         }
         Intent lIntent = new Intent(this,CTestActivity.class);
         lIntent.putExtra("liste de Candidat",mListCandidat);
+        lIntent.putExtra("VOTE_NAME", mVoteName);
+        lIntent.putExtra("START_DATE", mDateFin);
+        lIntent.putExtra("END_DATE", mDateDebut);
         startActivity(lIntent);
 
     }
@@ -84,5 +99,34 @@ public class CVoteConfCondorcet extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(pItem);
+    }
+
+    @Override
+    public void onBackPressed() {
+        // On crée le dialogue
+        AlertDialog.Builder lConfirmationDialog = new AlertDialog.Builder(CVoteConfCondorcet.this);
+        // On modifie le titre
+        lConfirmationDialog.setTitle("Arrêt création vote");
+        // On modifie le message
+        lConfirmationDialog.setMessage("Voulez-vous arrêter la création du vote ?");
+        // Bouton Oui
+        lConfirmationDialog.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                // On termine l'activité
+                finish();
+            }
+        });
+
+        // Bouton non: on ferme le dialogue
+        lConfirmationDialog.setNegativeButton("Non", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        // On affiche le message
+        lConfirmationDialog.show();
     }
 }
