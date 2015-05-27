@@ -26,12 +26,14 @@ public class CTestCryptoKeyTest extends TestCase {
 
         CKeyGenerator keyGenerator = new CKeyGenerator();
         System.out.println(keyGenerator);
-        SecretKeySpec clef = keyGenerator.specificKeyKeyGen(BigInteger.probablePrime(128, new SecureRandom()));
+        SecretKeySpec clef = keyGenerator.specificKeyKeyGen(BigInteger.probablePrime(128, new SecureRandom()).toByteArray());
 
         CAESCrypt aesCrypt = new CAESCrypt();
         byte[] cyphertext = aesCrypt.encrypt(clef, str);
 
         System.out.println(aesCrypt.decrypt(clef, cyphertext));
+
+        System.out.println(keyGenerator.mClefInt);
 
 
         System.out.println("Fin du test");

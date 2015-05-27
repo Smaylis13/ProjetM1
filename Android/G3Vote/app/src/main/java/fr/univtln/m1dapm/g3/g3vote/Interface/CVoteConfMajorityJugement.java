@@ -21,7 +21,6 @@ public class CVoteConfMajorityJugement extends AppCompatActivity {
 
 
     private static ArrayList<CCandidate> mListCandidat = new ArrayList<CCandidate>();
-    private CCandidate mCandidat = new CCandidate();
 
     private CCandidatAdapter mAdapter;
 
@@ -31,8 +30,8 @@ public class CVoteConfMajorityJugement extends AppCompatActivity {
         setContentView(R.layout.activity_cvote_conf_majority_jugement);
 
         ListView lList = (ListView)findViewById(R.id.lLVMajorityJugement);
-        mListCandidat.add(mCandidat);
-        mListCandidat.add(mCandidat);
+        mListCandidat.add(new CCandidate());
+        mListCandidat.add(new CCandidate());
         mAdapter = new CCandidatAdapter(this, mListCandidat);
 
         lList.setAdapter(mAdapter);
@@ -49,19 +48,19 @@ public class CVoteConfMajorityJugement extends AppCompatActivity {
             Log.i("test", lString);
         }
         Intent lIntent = new Intent(this,CTestActivity.class);
-        lIntent.putExtra("liste de Candidat",mListCandidat);
+        lIntent.putExtra("liste de Candidat", mListCandidat);
         startActivity(lIntent);
 
     }
 
     public void addChoiceButton(View pView) {
-        mListCandidat.add(mCandidat);
+        mListCandidat.add(new CCandidate());
         mAdapter.notifyDataSetChanged();
     }
 
     public void removeChoiceButton(View pView) {
         if (mListCandidat.size() > 2) {
-            mListCandidat.remove(mListCandidat.lastIndexOf(mCandidat));
+            mListCandidat.remove(mListCandidat.size() - 1);
             // ListView test = (ListView)findViewById(R.id.lLVUninomialOneTurn);
             //Log.i("contenu",listCandidat.toString());
             mAdapter.notifyDataSetChanged();

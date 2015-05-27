@@ -19,10 +19,9 @@ import fr.univtln.m1dapm.g3.g3vote.R;
  */
 public class CVoteConfUninominalOneTurn extends AppCompatActivity {
 
-    private static ArrayList<CCandidate> listCandidat = new ArrayList<CCandidate>();
-    private CCandidate candidat = new CCandidate();
+    private static ArrayList<CCandidate> mListCandidat = new ArrayList<CCandidate>();
 
-    private CCandidatAdapter adapter;
+    private CCandidatAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,16 +32,16 @@ public class CVoteConfUninominalOneTurn extends AppCompatActivity {
         ListView list = (ListView)findViewById(R.id.lLVUninomialOneTurn);
 
         //Récupération de la liste des personnes
-        //ArrayList<CCandidat> listCandidat = new ArrayList<CCandidat>();
+        //ArrayList<CCandidat> mListCandidat = new ArrayList<CCandidat>();
         //CCandidat candidat = new CCandidat();
-        listCandidat.add(candidat);
-        listCandidat.add(candidat);
-        adapter = new CCandidatAdapter(this, listCandidat);
+        mListCandidat.add(new CCandidate());
+        mListCandidat.add(new CCandidate());
+        mAdapter = new CCandidatAdapter(this, mListCandidat);
         //Création et initialisation de l'Adapter pour les personnes
 
 
         //Initialisation de la liste avec les données
-        list.setAdapter(adapter);
+        list.setAdapter(mAdapter);
 
     }
 
@@ -55,31 +54,31 @@ public class CVoteConfUninominalOneTurn extends AppCompatActivity {
 
     //send vote parameters to the participant selection
     public void validateConfUniOne(View view) {
-        for (int i = 0; i <listCandidat.size() ; i++) {
+        for (int i = 0; i < mListCandidat.size() ; i++) {
             ListView test = (ListView)findViewById(R.id.lLVUninomialOneTurn);
             View cde = test.getChildAt(i);
             EditText editText=(EditText)cde.findViewById(R.id.choiceName);
             String string=editText.getText().toString();
-            listCandidat.get(i).setNom(string);
+            mListCandidat.get(i).setNom(string);
             Log.i("test",string);
         }
         Intent intent = new Intent(this,CTestActivity.class);
-        intent.putExtra("liste de Candidat",listCandidat);
+        intent.putExtra("liste de Candidat", mListCandidat);
         startActivity(intent);
 
     }
 
     public void addChoiceButton(View view) {
-        listCandidat.add(candidat);
-        adapter.notifyDataSetChanged();
+        mListCandidat.add(new CCandidate());
+        mAdapter.notifyDataSetChanged();
     }
 
     public void removeChoiceButton(View view) {
-        if (listCandidat.size()>2){
-            listCandidat.remove(listCandidat.lastIndexOf(candidat));
+        if (mListCandidat.size()>2){
+            mListCandidat.remove(mListCandidat.size() - 1);
            // ListView test = (ListView)findViewById(R.id.lLVUninomialOneTurn);
-            //Log.i("contenu",listCandidat.toString());
-            adapter.notifyDataSetChanged();
+            //Log.i("contenu",mListCandidat.toString());
+            mAdapter.notifyDataSetChanged();
         }
 
     }

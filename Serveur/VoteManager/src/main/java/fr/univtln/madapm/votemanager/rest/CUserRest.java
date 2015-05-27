@@ -1,13 +1,8 @@
 package fr.univtln.madapm.votemanager.rest;
 
-import fr.univtln.madapm.votemanager.crud.CCRUDServiceBean;
-import fr.univtln.madapm.votemanager.crud.CConstantes;
 import fr.univtln.madapm.votemanager.dao.CUserDAO;
-import fr.univtln.madapm.votemanager.metier.user.CGroup;
 import fr.univtln.madapm.votemanager.metier.user.CUser;
-import org.eclipse.persistence.exceptions.DatabaseException;
 
-import javax.persistence.PersistenceException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
