@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.univtln.m1dapm.g3.g3vote.Algorithme.AAlgorithme;
-import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidat;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CChoixpossible;
 
 /**
@@ -76,7 +76,7 @@ public class CKemenyYoung extends AAlgorithme {
      *
      * @see CKemenyYoung#generate(int, List)
      */
-    public void inittab(int pNombreCandidat, List<CCandidat> pListCand) {
+    public void inittab(int pNombreCandidat, List<CCandidate> pListCand) {
         this.mNombreCandidat = pNombreCandidat;
 
         int i;
@@ -121,7 +121,7 @@ public class CKemenyYoung extends AAlgorithme {
      * @return pListCand
      */
 
-    public List<CCandidat> generate(int pNombreCandidat, List<CCandidat> pListCand) {
+    public List<CCandidate> generate(int pNombreCandidat, List<CCandidate> pListCand) {
         int i;
 
         CChoixpossible lChoixpossible = new CChoixpossible(pListCand); //creation de choix
@@ -132,7 +132,7 @@ public class CKemenyYoung extends AAlgorithme {
             mListResult.add(lChoixpossible); // mise en place du choix parmi les resultat possible
 
         } else {
-            CCandidat pcandidattemporaire;
+            CCandidate pcandidattemporaire;
             for (i = 0; i < pNombreCandidat; i++) { // fait tout les choix possible
                 pListCand = generate(pNombreCandidat - 1, pListCand);
                 if (pNombreCandidat % 2 == 0) {
@@ -160,7 +160,7 @@ public class CKemenyYoung extends AAlgorithme {
      * @see CKemenyYoung#mListResult
      */
 
-    public List<CCandidat> resultat (int pnbvainqueur ) {
+    public List<CCandidate> resultat (int pnbvainqueur ) {
         int maxvote = 0;
         int maxvoteposition=0;
         for (int i = 0; i < mListResult.size(); i++) {
@@ -180,9 +180,9 @@ public class CKemenyYoung extends AAlgorithme {
      *              choix effectuer par le votant
      */
 
-    public void nouveauVote(List<CCandidat> choix) { // ajout des point liee au nouveau vote
-        CCandidat candidat1 = new CCandidat();
-        CCandidat candidat2 = new CCandidat();
+    public void nouveauVote(List<CCandidate> choix) { // ajout des point liee au nouveau vote
+        CCandidate candidat1 = new CCandidate();
+        CCandidate candidat2 = new CCandidate();
         int y;
         int z;
         int poid = 0;

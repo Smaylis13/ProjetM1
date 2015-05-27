@@ -11,7 +11,7 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidat;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
 import fr.univtln.m1dapm.g3.g3vote.R;
 
 /**
@@ -19,8 +19,8 @@ import fr.univtln.m1dapm.g3.g3vote.R;
  */
 public class CVoteConfUninominalOneTurn extends AppCompatActivity {
 
-    private static ArrayList<CCandidat> listCandidat = new ArrayList<CCandidat>();
-    private CCandidat candidat = new CCandidat();
+    private static ArrayList<CCandidate> listCandidat = new ArrayList<CCandidate>();
+    private CCandidate candidat = new CCandidate();
 
     private CCandidatAdapter adapter;
 

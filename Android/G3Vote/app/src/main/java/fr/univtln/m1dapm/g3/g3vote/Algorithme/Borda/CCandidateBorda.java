@@ -1,11 +1,11 @@
 package fr.univtln.m1dapm.g3.g3vote.Algorithme.Borda;
 
-import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidat;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
 
 /**
  * Created by lyamsi on 12/05/15.
  */
-public class CCandidateBorda extends CCandidat{
+public class CCandidateBorda extends CCandidate {
     private int mTotal;
 
     public CCandidateBorda(int mId, String mNom, String mDescription) {

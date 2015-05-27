@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by ludo on 06/05/15.
  */
-public class CCandidat implements Serializable{
+public class CCandidate implements Serializable{
 
     private int mIdCandidat;
     private String mNom;
@@ -45,22 +45,22 @@ public class CCandidat implements Serializable{
     }
 
 
-    public CCandidat(int mId, String mNom, String mDescription) {
+    public CCandidate(int mId, String mNom, String mDescription) {
         this.mIdCandidat = mId;
         this.mNom = mNom;
         this.mDescription = mDescription;
     }
 
-    public CCandidat(int mId, String mNom) {
+    public CCandidate(int mId, String mNom) {
         this.mIdCandidat = mId;
         this.mNom = mNom;
     }
 
-    public CCandidat(String mNom) {
+    public CCandidate(String mNom) {
         this.mNom = mNom;
     }
 
-    public CCandidat() {
+    public CCandidate() {
     }
 
 
@@ -69,12 +69,12 @@ public class CCandidat implements Serializable{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        CCandidat cCandidat = (CCandidat) o;
+        CCandidate cCandidate = (CCandidate) o;
 
-        if (mIdCandidat != cCandidat.mIdCandidat) return false;
-        if (mDescription != null ? !mDescription.equals(cCandidat.mDescription) : cCandidat.mDescription != null)
+        if (mIdCandidat != cCandidate.mIdCandidat) return false;
+        if (mDescription != null ? !mDescription.equals(cCandidate.mDescription) : cCandidate.mDescription != null)
             return false;
-        if (!mNom.equals(cCandidat.mNom)) return false;
+        if (!mNom.equals(cCandidate.mNom)) return false;
 
         return true;
     }

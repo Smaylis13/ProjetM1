@@ -3,8 +3,6 @@ package fr.univtln.m1dapm.g3.g3vote.Entite;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidat;
-
 /**
  * Created by Pierre on 09/05/2015.
  */
@@ -12,10 +10,10 @@ public class CChoixpossible {
 
 
     private int mNbVote; ///Variable de comptage du nombre de vote
-    private List<CCandidat> mOrdre;
+    private List<CCandidate> mOrdre;
 
-    public CChoixpossible(List<CCandidat> pChoix) {
-        mOrdre = new ArrayList<CCandidat>(pChoix);
+    public CChoixpossible(List<CCandidate> pChoix) {
+        mOrdre = new ArrayList<CCandidate>(pChoix);
         mNbVote=0;
     }
 
@@ -30,12 +28,12 @@ public class CChoixpossible {
         this.mNbVote += mNbVote;
     }
 
-    public CCandidat getIndexValue(int pIndice)
+    public CCandidate getIndexValue(int pIndice)
     {
         return mOrdre.get(pIndice);
     }
 
-    public List<CCandidat> getChoix() { return mOrdre; }
+    public List<CCandidate> getChoix() { return mOrdre; }
 
     @Override
     public String toString() {

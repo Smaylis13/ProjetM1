@@ -13,15 +13,15 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidat;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
 import fr.univtln.m1dapm.g3.g3vote.R;
 
 public class CVoteConfMajorityJugement extends AppCompatActivity {
 
 
 
-    private static ArrayList<CCandidat> mlistCandidat = new ArrayList<CCandidat>();
-    private CCandidat mcandidat = new CCandidat();
+    private static ArrayList<CCandidate> mlistCandidat = new ArrayList<CCandidate>();
+    private CCandidate mcandidat = new CCandidate();
 
     private CCandidatAdapter adapter;
     @Override

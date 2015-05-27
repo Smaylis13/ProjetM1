@@ -8,34 +8,34 @@ import java.util.ArrayList;
  */
 public class CUser implements Serializable{
 
-    private int mId;
+    private int mUserId;
     private String mFirstName;//prenom
     private String mName;//nom
     private String mEmail;
     private String mPassword;
 
     public int getId() {
-        return mId;
+        return mUserId;
     }
 
-    public void setId(int mIdUser) {
-        this.mId = mIdUser;
+    public void setId(int pIdUser) {
+        this.mUserId = pIdUser;
     }
 
     public String getFirstName() {
         return mFirstName;
     }
 
-    public void setFirstName(String firstName) {
-        this.mFirstName = firstName;
+    public void setFirstName(String pFirstName) {
+        this.mFirstName = pFirstName;
     }
 
     public String getName() {
         return mName;
     }
 
-    public void setName(String lastName) {
-        this.mName = lastName;
+    public void setName(String pLastName) {
+        this.mName = pLastName;
     }
 
     public String getEmail() {
@@ -83,7 +83,7 @@ public class CUser implements Serializable{
     @Override
     public String toString() {
         return "CUser{" +
-                "mId=" + mId +
+                "mUserId=" + mUserId +
                 ", mFirstName='" + mFirstName + '\'' +
                 ", mName='" + mName + '\'' +
                 ", mEmail='" + mEmail + '\'' +

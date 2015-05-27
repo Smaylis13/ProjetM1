@@ -3,7 +3,7 @@ package fr.univtln.m1dapm.g3.g3vote.Algorithme.KemenyYoung;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidat;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
 
 /**
  * Created by Pierre on 19/05/2015.
@@ -14,13 +14,13 @@ public class CKemenyYoungtest {
 
 
         CKemenyYoung kemenyYoung=new CKemenyYoung();
-        CCandidat a=new CCandidat("Memphis");
-        CCandidat b=new CCandidat("Nashville");
-        CCandidat c=new CCandidat("Chattanooga");
-        CCandidat d=new CCandidat("knoxville");
-        CCandidat e=new CCandidat("toulon");
-        CCandidat f=new CCandidat("la garde");
-        CCandidat g=new CCandidat("cuers");
+        CCandidate a=new CCandidate("Memphis");
+        CCandidate b=new CCandidate("Nashville");
+        CCandidate c=new CCandidate("Chattanooga");
+        CCandidate d=new CCandidate("knoxville");
+        CCandidate e=new CCandidate("toulon");
+        CCandidate f=new CCandidate("la garde");
+        CCandidate g=new CCandidate("cuers");
 
 
 
