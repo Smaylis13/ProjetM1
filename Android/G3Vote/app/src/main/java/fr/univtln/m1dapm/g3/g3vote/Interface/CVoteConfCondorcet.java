@@ -26,6 +26,7 @@ public class CVoteConfCondorcet extends AppCompatActivity {
     private String mVoteName;
     private String mDateDebut;
     private String mDateFin;
+    private static final String TYPE_VOTE = "Condorcet";
 
     @Override
     protected void onCreate(Bundle pSavedInstanceState) {
@@ -53,7 +54,7 @@ public class CVoteConfCondorcet extends AppCompatActivity {
             View cde = lTest.getChildAt(i);
             EditText lEditText=(EditText)cde.findViewById(R.id.choiceName);
             String lString=  lEditText.getText().toString();
-            mListCandidat.get(i).setNom(lString);
+            mListCandidat.get(i).setNomCandidat(lString);
             Log.i("test", lString);
         }
         Intent lIntent = new Intent(this,CTestActivity.class);
@@ -61,6 +62,7 @@ public class CVoteConfCondorcet extends AppCompatActivity {
         lIntent.putExtra("VOTE_NAME", mVoteName);
         lIntent.putExtra("START_DATE", mDateFin);
         lIntent.putExtra("END_DATE", mDateDebut);
+        lIntent.putExtra("VOTE_TYPE", TYPE_VOTE);
         startActivity(lIntent);
 
     }

@@ -1,5 +1,8 @@
 package fr.univtln.m1dapm.g3.g3vote.Entite;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -7,18 +10,19 @@ import java.util.ArrayList;
  * Created by ludo on 05/05/15.
  */
 public class CUser implements Serializable{
-
     private int mUserId;
     private String mFirstName;//prenom
+
     private String mName;//nom
     private String mEmail;
     private String mPassword;
 
-    public int getId() {
+    @JsonIgnore
+    public int getUserId() {
         return mUserId;
     }
 
-    public void setId(int pIdUser) {
+    public void setUserId(int pIdUser) {
         this.mUserId = pIdUser;
     }
 

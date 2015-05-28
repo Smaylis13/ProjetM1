@@ -28,6 +28,7 @@ public class CVoteConfUninominalOneTurn extends AppCompatActivity {
     private String mVoteName;
     private String mDateDebut;
     private String mDateFin;
+    private static final String TYPE_VOTE = "Uninominal à 1 tour";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +74,7 @@ public class CVoteConfUninominalOneTurn extends AppCompatActivity {
             View cde = test.getChildAt(i);
             EditText editText=(EditText)cde.findViewById(R.id.choiceName);
             String string=editText.getText().toString();
-            mListCandidat.get(i).setNom(string);
+            mListCandidat.get(i).setNomCandidat(string);
             Log.i("test",string);
         }
         Intent lIntent = new Intent(this,CTestActivity.class);
@@ -81,6 +82,7 @@ public class CVoteConfUninominalOneTurn extends AppCompatActivity {
         lIntent.putExtra("VOTE_NAME", mVoteName);
         lIntent.putExtra("START_DATE", mDateFin);
         lIntent.putExtra("END_DATE", mDateDebut);
+        lIntent.putExtra("VOTE_TYPE", TYPE_VOTE);
         startActivity(lIntent);
 
     }

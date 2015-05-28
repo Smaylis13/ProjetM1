@@ -73,15 +73,15 @@ public class CVoteAdapter extends BaseAdapter {
         TextView ltv_endDate = (TextView)layoutItem.findViewById(R.id.lTV_endDate);
         ImageView liv_icon = (ImageView)layoutItem.findViewById(R.id.icon);
 
-        /*if(mListVote.get(position).ismVoted()){
+        if(mListVote.get(position).isVoted()){
             liv_icon.setImageResource(R.mipmap.ic_yes_vote);
         }
         else{
             liv_icon.setImageResource(R.mipmap.ic_no_vote);
-        }*/
+        }
         //(3) : Renseignement des valeurs
-        ltv_voteName.setText(mListVote.get(position).getmVoteName());
-        if (mListVote.get(position).getmStatusVote()){
+        ltv_voteName.setText(mListVote.get(position).getVoteName());
+        if (mListVote.get(position).getStatusVote()){
             ltv_voteStatus.setText("en Cours");
             ltv_voteStatus.setTextColor(Color.parseColor("green"));
         }
@@ -94,8 +94,8 @@ public class CVoteAdapter extends BaseAdapter {
         //ltv_beginDate.setText(mListVote.get(position).getmDebut().getGregorianChange().toString());
         //ltv_endDate.setText(mListVote.get(position).getmFin().getGregorianChange().toString());
         DateFormat df = new SimpleDateFormat("MM/dd/yyyy");//new DateTime( currentDate ).toString("yyyy-MM-dd HH:mm:ss")
-        ltv_beginDate.setText(df.format(mListVote.get(position).getBeginDate()));
-        ltv_endDate.setText(df.format(mListVote.get(position).getEndDate()));
+        ltv_beginDate.setText(df.format(mListVote.get(position).getDateDebut()));
+        ltv_endDate.setText(df.format(mListVote.get(position).getDateFin()));
 
 
         //On retourne l'item créé.

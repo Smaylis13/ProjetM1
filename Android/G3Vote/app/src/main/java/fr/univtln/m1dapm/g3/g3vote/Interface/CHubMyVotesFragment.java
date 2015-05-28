@@ -1,13 +1,17 @@
 package fr.univtln.m1dapm.g3.g3vote.Interface;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import fr.univtln.m1dapm.g3.g3vote.Entite.CUser;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
@@ -22,19 +26,40 @@ public class CHubMyVotesFragment extends Fragment {
      * fragment.
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
+    private static List<CVote> sVotes=new ArrayList<>();
+    private static CHubMyVotesFragment sFragment;
+    private static CVoteAdapter sAdapter;
+    private static ListView sList;
+
+    public static CVoteAdapter getsAdapter(){return sAdapter;}
+    public List<CVote> getmVotes() {
+        return sVotes;
+    }
+
+    public void setmVotes(List<CVote> pVotes) {
+        this.sVotes.clear();
+        for (CVote lVote:pVotes) {
+            this.sVotes.add(lVote);
+            Log.e("TEST",lVote.toString());
+        }
+        sAdapter.notifyDataSetChanged();
+    }
 
     /**
      * Returns a new instance of this fragment for the given section
      * number.
      */
     public static CHubMyVotesFragment newInstance(int sectionNumber) {
-        CHubMyVotesFragment fragment = new CHubMyVotesFragment();
+        sFragment = new CHubMyVotesFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-        fragment.setArguments(args);
-        return fragment;
+        sFragment.setArguments(args);
+        return sFragment;
     }
 
+    public static CHubMyVotesFragment getInstance(){
+        return sFragment;
+    }
     public CHubMyVotesFragment() {
     }
 
@@ -50,16 +75,16 @@ public class CHubMyVotesFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_chub_myvote, container, false);
         //Récupération du composant ListView
-        ListView list = (ListView)rootView.findViewById(R.id.lListViewMyVote);
+        sList = (ListView)rootView.findViewById(R.id.lListViewMyVote);
 
         //Récupération de la liste des personnes
         ArrayList<CVote> listVote = CVote.getAListOfVote();
 
         //Création et initialisation de l'Adapter pour les personnes
-        CVoteAdapter adapter = new CVoteAdapter(rootView.getContext(), listVote);
+        sAdapter = new CVoteAdapter(rootView.getContext(), sVotes);
 
         //Initialisation de la liste avec les données
-        list.setAdapter(adapter);
+        sList.setAdapter(sAdapter);
         return rootView;
     }
 }
