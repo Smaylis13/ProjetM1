@@ -7,7 +7,11 @@ import android.support.v4.app.DialogFragment;
 import android.widget.Button;
 import android.widget.DatePicker;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.Locale;
 
 import fr.univtln.m1dapm.g3.g3vote.R;
 
@@ -34,7 +38,13 @@ public class CDateEndPickerFragment extends DialogFragment
         //change the button so it shows the selected date
         final Button button = (Button) getActivity().findViewById(R.id.bVoteDateEnd);
         //dans le calendrier les mois vont de 0 a 11 il faut ajouter 1 pour avoir le bon affichage
-        String date = day+"/"+(month+1)+"/"+year;
+        //String date = day+"/"+(month+1)+"/"+year;
+        //button.setText(date);
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE);
+        GregorianCalendar cal=new GregorianCalendar();
+        cal.set(year, month, day);
+
+        String date = dateFormat.format(cal.getTime());
         button.setText(date);
     }
 
