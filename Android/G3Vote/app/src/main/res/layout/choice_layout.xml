@@ -13,4 +13,17 @@
         android:inputType="text"
         android:layout_alignParentTop="true" />
 
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/choiceDescription"
+        android:layout_alignLeft="@+id/choiceName"
+        android:layout_below="@+id/choiceName"
+        android:singleLine="true"
+        android:inputType="text"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="24dp"
+        />
+
+
 </RelativeLayout>

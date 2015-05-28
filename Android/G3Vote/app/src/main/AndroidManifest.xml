@@ -2,9 +2,18 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="fr.univtln.m1dapm.g3.g3vote" >
 
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- //issma <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />-->
     <uses-permission android:name="android.permission.INTERNET" />
+
+
+    <uses-permission android:name="android.permission.USE_CREDENTIALS"/>
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+
+    <permission android:name="fr.univtln.m1dapm.g3.g3vote.permission.C2D_MESSAGE" android:protectionLevel="signature"/>
+    <uses-permission android:name="fr.univtln.m1dapm.g3.g3vote.permission.C2D_MESSAGE"/>
+
 
     <application
         android:allowBackup="true"
@@ -33,17 +42,16 @@
         </activity>
 
         <!-- Service -->
-        <service android:name=".Service.CNotificationService" />
-
-        <receiver
-            android:name=".Receiver.CNetworkReceiver"
-            android:enabled="true"
-            android:exported="true"
-            android:label="BootReceiver" >
+        <receiver   android:name=".Receiver.CGcmBroadcastReceiver"
+                    android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION"/>
+                <category android:name="fr.univtln.m1dapm.g3.g3vote"/>
             </intent-filter>
         </receiver>
+        <service android:name=".Service.CGcmIntentService"></service>
+
 
         <activity
             android:name=".Interface.CVoteConfSTV"
@@ -69,6 +77,10 @@
         <activity
             android:name=".Interface.CVoteConfCondorcet"
             android:label="@string/title_activity_cvote_conf_condorcet" >
+        </activity>
+        <activity
+            android:name=".Interface.CVoteConfBorda"
+            android:label="@string/title_activity_cvote_conf_borda" >
         </activity>
     </application>
 

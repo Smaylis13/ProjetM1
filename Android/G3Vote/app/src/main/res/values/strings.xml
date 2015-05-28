@@ -31,16 +31,16 @@
 
     <string name="subValidateErrorMessage">Tous les champs ne sont pas remplis</string>
     <!-- description des votes -->
-    <string name="stvDescription">le vote STV sert a blablabla</string>
-    <string name="kemenyYoungDescription">le vote KY sert a choisir un ordre gagnant parmit les candidat il est trés couteux il est donc impossible de le réaliser pour plus de 9 candidat,
-        dans ce vote l\'électeur doit ordonée les candidat par ordre de preference </string>
-    <string name="jugementMajorityDescription">le vote JM sert a blablabla</string>
-    <string name="CondorcetDescription">le vote de Condorcet sert a blablabla</string>
-    <string name="BordaDescription">le vote Borda sert a blablabla</string>
+    <string name="stvDescription">le vote STV sert à blablabla</string>
+    <string name="kemenyYoungDescription">le vote KY sert à choisir un ordre gagnant parmi les candidats. Il est très couteux, donc il est impossible de le réaliser pour plus de 9 candidats.
+        L\'électeur doit ordonner les candidats par ordre de préférence </string>
+    <string name="jugementMajorityDescription">le vote JM sert à blablabla</string>
+    <string name="CondorcetDescription">le vote de Condorcet sert à blablabla</string>
+    <string name="BordaDescription">le vote Borda sert à blablabla</string>
     <string name="userFirstNameInputHint">Prénom</string>
     <string name="userLastNameInputHint">Nom de famille</string>
     <string name="lTVvoteNameLabel">Nom du vote :</string>
-    <string name="lTVHelpMessageLog">Si vous avez déjà un compte, veuillez renseigner votre mail et votre mot de passe et appuyer sur le boutton se connecter. Sinon veuillez appuyer sur le bouton s\'inscrire</string>
+    <string name="lTVHelpMessageLog">Si vous avez déjà un compte, veuillez renseigner votre mail et votre mot de passe et appuyer sur le bouton se connecter. Sinon veuillez appuyer sur le bouton s\'inscrire</string>
     <string name="lTVspinnerName">Type de Vote</string>
     <string name="uninomialOneTurnVoteDescription">Dans ce vote l\'électeur doit choisir un candidat parmi plusieurs. Celui qui recueille le plus de voix (majorité relative) remporte les élections.</string>
     <string name="uninominalTwoTurnVoteDescription">Au premier tour, l\'électeur doit choisir un candidat parmi plusieurs. Si un candidat recueille la majorité absolue (plus de 50 %), il est élu. Sinon, on organise un second tour dans lequel le candidat qui recueille le plus de voix est élu.</string>
@@ -49,7 +49,9 @@
     <string name="title_activity_cvote_conf_kemeny_young">Vote Kemeny-Young</string>
     <string name="title_activity_cvote_conf_majority_jugement">Vote Jugement Majoritaire</string>
     <string name="title_activity_cvote_conf_uninominal_two_turn">Vote uninomial 2 tours</string>
+    <string name="title_activity_cvote_conf_borda">Vote Borda</string>
     <string name="lETChoiceHint">Choix</string>
+    <string name="lETDescriptionHint">Description</string>
     <string name="title_activity_ctest">CTestActivity</string>
-    <string name="title_activity_cvote_conf_condorcet">CVoteConfCondorcet</string>
+    <string name="title_activity_cvote_conf_condorcet">Vote Condorcet</string>
 </resources>
