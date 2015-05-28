@@ -15,7 +15,9 @@ import org.apache.oltu.oauth2.common.OAuth;
 import org.apache.oltu.oauth2.common.exception.OAuthProblemException;
 import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
 import org.apache.oltu.oauth2.common.message.types.GrantType;*/
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.apache.oltu.oauth2.client.OAuthClient;
 import org.apache.oltu.oauth2.client.URLConnectionClient;
@@ -33,13 +35,17 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
+import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.util.ArrayList;
 
 import fr.univtln.m1dapm.g3.g3vote.Entite.CUser;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CHubActivity;
+import fr.univtln.m1dapm.g3.g3vote.Interface.CHubMyVotesFragment;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CLoginActivity;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CSubActivity;
 
@@ -49,8 +55,6 @@ import fr.univtln.m1dapm.g3.g3vote.Interface.CSubActivity;
 public class CCommunication extends AsyncTask<Object, Void, Integer> {
     public static final String SERVER_URL="http://10.21.205.16:80/";
     public final static String LOGGED_USER = "fr.univtln.m1dapm.g3.g3vote.LOGGED_USER";
-
-
 
     @Override
     protected Integer doInBackground(Object...pObject) {
@@ -67,15 +71,18 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                 case log_user:
                     lUrl = new URL(SERVER_URL+"user/connect");
                     lHttpCon = (HttpURLConnection) lUrl.openConnection();
-                    JSONObject lUserOBJ = new JSONObject();
                     CUser lUser = (CUser) lParams.getObject();
-                    lUserOBJ.put("mEmail", lUser.getEmail());
+                   /* lUserOBJ.put("mEmail", lUser.getEmail());
                     lUserOBJ.put("mPassword", lUser.getPassword());
                     lUserOBJ.put("mFirstName", "unknown");
-                    lUserOBJ.put("mName", "unknown");
+                    lUserOBJ.put("mName", "unknown");*/
+                    ObjectMapper lMapper=new ObjectMapper();
+                    String lJsonString=lMapper.writeValueAsString(lUser);
+                    JSONObject lUserOBJ = new JSONObject(lJsonString);
                     lHttpCon.setDoOutput(true);
                     lHttpCon.setDoInput(true);
                     lHttpCon.setRequestMethod("POST");
+
                     lHttpCon.setRequestProperty("Content-Type", "application/json");
                     lHttpCon.setRequestProperty("Accept", "application/json");
                     lOut = new OutputStreamWriter(lHttpCon.getOutputStream());
@@ -92,8 +99,8 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                         Intent lLogIntent=new Intent(CLoginActivity.getsContext(),CHubActivity.class);
                         lLogIntent.putExtra(LOGGED_USER, lLoggedUser);
                         lLogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        CSubActivity.getsContext().startActivity(lLogIntent);
-                        return lCode;
+                        CLoginActivity.getsContext().startActivity(lLogIntent);
+                        //return lCode;
                     }
                     else if(lCode==401){
                         return lCode;
@@ -140,7 +147,7 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                         //lOut.close();
                         lIn = new BufferedInputStream(lHttpCon.getInputStream());
                         lResponse = readStream(lIn);
-                        lNewUser.setId(Integer.decode(lResponse));
+                        lNewUser.setUserId(Integer.decode(lResponse));
                         //CSubActivity.getIntentCSubActivity().putExtra(LOGGED_USER,lNewUser);
                         Intent lIntent = new Intent(CSubActivity.getsContext(), CHubActivity.class);
                         lIntent.putExtra(LOGGED_USER, lNewUser);
@@ -162,6 +169,55 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                     //CSubActivity.getIntentCSubActivity().putExtra(LOGGED_USER,lNewUser);
                     int lReponse = lHttpCon.getResponseCode();
                 break;
+                case get_vote:
+                    lUrl = new URL(SERVER_URL+"vote/"+Integer.toString((int)lParams.getObject()));
+                    lHttpCon = (HttpURLConnection) lUrl.openConnection();
+                    lHttpCon.setDoInput(true);
+                    lHttpCon.setRequestMethod("GET");
+                    lHttpCon.setRequestProperty("Accept", "application/json");
+                    lCode=lHttpCon.getResponseCode();
+                    if(lCode==201) {
+                        //lOut.close();
+                        lIn = new BufferedInputStream(lHttpCon.getInputStream());
+                        lResponse = readStream(lIn);
+                        Gson lGson = new Gson();
+                        CVote lGottenVote=lGson.fromJson(lResponse, CVote.class);
+                        //TODO change the intent
+                        Intent lIntent = new Intent(CSubActivity.getsContext(), CHubActivity.class);
+                        lIntent.putExtra("GOTTEN_VOTE", (java.io.Serializable) lGottenVote);
+                        lIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        CSubActivity.getsContext().startActivity(lIntent);
+                    }
+                    else
+                        return lCode;
+
+                break;
+                case get_votes:
+                    lUrl = new URL(SERVER_URL+"vote/all/"+Integer.toString((int)lParams.getObject()));
+                    lHttpCon = (HttpURLConnection) lUrl.openConnection();
+                    lHttpCon.setDoInput(true);
+                    lHttpCon.setRequestMethod("GET");
+                    lHttpCon.setRequestProperty("Accept", "application/json");
+                    lCode=lHttpCon.getResponseCode();
+                    if(lCode==201) {
+                        //lOut.close();
+                        lIn = new BufferedInputStream(lHttpCon.getInputStream());
+                        lResponse = readStream(lIn);
+                        Type listType = new TypeToken<ArrayList<CVote>>() {}.getType();
+                        ArrayList<CVote> lVotes = new Gson().fromJson(lResponse, listType);
+                        CHubMyVotesFragment.getInstance().setmVotes(lVotes);
+
+
+
+                        /*Intent lIntent = new Intent(CSubActivity.getsContext(), CHubActivity.class);
+                        lIntent.putParcelableArrayListExtra("GOTTEN_VOTES", lVotes);
+                        lIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        CSubActivity.getsContext().startActivity(lIntent);*/
+                    }
+                    else
+                        return lCode;
+
+                    break;
 
             }
         }catch (ProtocolException e) {
@@ -181,12 +237,13 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
 
     }
 
+
     public void onPostExecute(Integer pCode){
         if(pCode!=null) {
             if (pCode == 401)
                 Toast.makeText(CLoginActivity.getsContext(), "Mauvais login/mot de passe", Toast.LENGTH_SHORT).show();
             if(pCode==409)
-                Toast.makeText(CSubActivity.getsContext(), "L'utilisateur existe déjà", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CSubActivity.getsContext(), "L'élément existe déjà", Toast.LENGTH_SHORT).show();
         }
     }
     //startActivity(mIntent);

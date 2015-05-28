@@ -70,7 +70,7 @@ public class CVoteConfSTV extends AppCompatActivity {
             EditText lEditTextdescription = (EditText) lCde.findViewById(R.id.choiceDescription);
             String lStringdescription = lEditTextdescription.getText().toString();
 
-            mListCandidat.get(i).setNomCandidat(lString);            mListCandidat.get(i).setDescription(lStringdescription);
+            mListCandidat.get(i).setNomCandidat(lString);            mListCandidat.get(i).setDescriptionCandidat(lStringdescription);
 
             Log.i("test", mListCandidat.get(i).getNomCandidat());
 

@@ -1,5 +1,11 @@
 package fr.univtln.m1dapm.g3.g3vote.Entite;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -9,7 +15,8 @@ import java.util.List;
 /**
  * Created by ludo on 06/05/15.
  */
-public class CVote {
+public class CVote implements Serializable,Parcelable {
+
 
     private int mIdVote;
 
@@ -20,37 +27,40 @@ public class CVote {
     private boolean mStatusVote;
 
 
-    private List <CCandidate> mListCandidat = new ArrayList<>();
 
     private Date mDateDebut;
     private Date mDateFin;
 
-    private CUser mOrganisateur;
+    private int mIdOrganisateur;
 
     private List<CResult> mResultVote=null;
 
-    private List<CType> mType;
+    private List<CType> mTypes;
 
     private List<CRule> mRules;
 
-    private List<CChoice> mChoices=null;
+    private List<CChoice> mChoices;
 
-    private List<CCandidate> mCandidate;
+    private List<CCandidate> mCandidates;
 
     private List<CDeleguation> mDeleguations;
 
-    public CVote(String pVoteName, String pDescriptionVote, boolean pStatusVote, List<CCandidate> pListCandidat, Date pDateDebut, Date pDateFin, CUser pOrganisateur, List<CResult> pResultVote, List<CType> pType, List<CRule> pRules, List<CCandidate> pCandidate, List<CDeleguation> pDeleguations) {
+    @JsonIgnore
+    private boolean mVoted;
+
+    public CVote(){};
+
+    public CVote(String pVoteName, String pDescriptionVote, boolean pStatusVote, Date pDateDebut, Date pDateFin, int pOrganisateur, List<CResult> pResultVote, List<CType> pType, List<CRule> pRules, List<CCandidate> pCandidate, List<CDeleguation> pDeleguations) {
         this.mVoteName = pVoteName;
         this.mDescriptionVote = pDescriptionVote;
         this.mStatusVote = pStatusVote;
-        this.mListCandidat = pListCandidat;
         this.mDateDebut = pDateDebut;
         this.mDateFin = pDateFin;
-        this.mOrganisateur = pOrganisateur;
+        this.mIdOrganisateur = pOrganisateur;
         this.mResultVote = pResultVote;
-        this.mType = pType;
+        this.mTypes = pType;
         this.mRules = pRules;
-        this.mCandidate = pCandidate;
+        this.mCandidates = pCandidate;
         this.mDeleguations = pDeleguations;
     }
 
@@ -66,48 +76,86 @@ public class CVote {
         this.mDateFin = pFin;
     }
 
-    public Date getBeginDate() {
+    public void setIdVote(int pId){this.mIdVote=pId;}
+
+    public int getIdVote(){return this.mIdVote;}
+
+    public void setVoted(boolean pVoted){
+        this.mVoted=pVoted;
+    }
+
+    public String getDescriptionVote() {
+        return mDescriptionVote;
+    }
+
+    public void setDescriptionVote(String mDescriptionVote) {
+        this.mDescriptionVote = mDescriptionVote;
+    }
+
+    public int getOrganisateur(){ return mIdOrganisateur;}
+
+    public void setOrganisateur(int pId){
+        this.mIdOrganisateur=pId;
+    }
+
+    public Date getDateDebut() {
         return mDateDebut;
     }
 
-    public void setBeginDate(Date beginDate) {
+    public void setDateDebut(Date beginDate) {
         this.mDateDebut = beginDate;
     }
 
-    public Date getEndDate() {
+    public Date getDateFin() {
         return mDateFin;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setDateFin(Date endDate) {
         this.mDateFin = endDate;
     }
 
-    public String getmVoteName() {
+    public String getVoteName() {
         return mVoteName;
     }
 
-    public void setmVoteName(String mVoteName) {
+    public void setVoteName(String mVoteName) {
         this.mVoteName = mVoteName;
     }
 
-    public boolean getmStatusVote() {
+    public boolean getStatusVote() {
         return mStatusVote;
     }
 
-    public void setmStatusVote(boolean mStatusVote) {
+    public void setStatusVote(boolean mStatusVote) {
         this.mStatusVote = mStatusVote;
     }
 
-    public List<CCandidate> getListCandidat() {
-        return mListCandidat;
+    public void setCandidates(List<CCandidate> pCandidates){
+        this.mCandidates=pCandidates;
+    }
+
+    public List<CCandidate> getCandidates() {
+        return mCandidates;
     }
 
     public void addCandidat(CCandidate pCandidat) {
-        mListCandidat.add(pCandidat);
+        mCandidates.add(pCandidat);
     }
 
-    public List<CRule> getmRules() {
+    public List<CRule> getRegles() {
         return mRules;
+    }
+
+    public void setRegles(List<CRule> pRules){
+        this.mRules=pRules;
+    }
+
+    public List<CType> getTypes() {
+        return mTypes;
+    }
+
+    public void setTypes(List<CType> pTypes) {
+        this.mTypes = pTypes;
     }
 
     public static ArrayList<CVote> getAListOfVote() {
@@ -138,5 +186,39 @@ public class CVote {
         listVote.add(new CVote(4,"elireTete",true,d7,d8));
         listVote.add(new CVote(5,"elireTutu",false,d9,d10));
         return listVote;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
+    }
+
+    @Override
+    public String toString() {
+        return "CVote{" +
+                "mIdVote=" + mIdVote +
+                ", mVoteName='" + mVoteName + '\'' +
+                ", mStatusVote=" + mStatusVote +
+                ", mDescriptionVote='" + mDescriptionVote + '\'' +
+                ", mDateDebut=" + mDateDebut +
+                ", mDateFin=" + mDateFin +
+                ", mResultVote=" + mResultVote +
+                ", mType=" + mTypes +
+                ", mRules=" + mRules +
+                ", mChoices=" + mChoices +
+                ", mCandidate=" + mCandidates +
+                ", mDeleguations=" + mDeleguations +
+                ", mOrganisateur=" + mIdOrganisateur +
+                ", mVoted="+mVoted+
+                '}';
+    }
+
+    public boolean isVoted(){
+        return mVoted;
     }
 }

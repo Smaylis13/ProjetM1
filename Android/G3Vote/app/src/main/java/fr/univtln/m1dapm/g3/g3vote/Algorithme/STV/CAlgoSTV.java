@@ -43,7 +43,7 @@ public class CAlgoSTV extends AAlgorithme {
     public void initVote(Map<CListChoix, Double> pChoix)
     {
         int lNbVote=0, lNbElu=0;
-        mVote.getmRules();
+        mVote.getRegles();
         getChoix(pChoix);
 
         Calcul_Quota();
