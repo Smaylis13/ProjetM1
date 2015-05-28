@@ -1,10 +1,14 @@
 package fr.univtln.m1dapm.g3.g3vote.Algorithme.UninominalMajoritaire;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 
 import fr.univtln.m1dapm.g3.g3vote.Algorithme.AAlgorithme;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CResult;
+
 import fr.univtln.m1dapm.g3.g3vote.Entite.CVoixCandidat;
 
 /**
@@ -43,10 +47,16 @@ public class CVoteUninominalMajoritaire extends AAlgorithme{
     private int mNbCandidatTour2;// nombre de candidat qui passe au deusiemme tour
 
 
-    @Override
+    //@Override
     protected void initVote() {
     initVote();
     }
+
+    //@Override
+    protected CResult CalculResultat() {
+        return null;
+    }
+
     /**
      * constructeur du vote CVoteUninominalMajoritaire
      * <p>le constructeur n'initialise pas les parametre </p>

@@ -54,4 +54,8 @@
     <string name="lETDescriptionHint">Description</string>
     <string name="title_activity_ctest">CTestActivity</string>
     <string name="title_activity_cvote_conf_condorcet">Vote Condorcet</string>
+    <string name="validateVoteTypeETempty">Vous n\'avez pas remplis le nom du vote</string>
+    <string name="dateBeginEmpty">Vous n\'avez pas choisi de date de début</string>
+    <string name="dateEndEmpty">Vous n\'avez pas choisi de date de fin</string>
+    <string name="dateBeginAfterDateEnd">La date de début est avant la date de fin</string>
 </resources>

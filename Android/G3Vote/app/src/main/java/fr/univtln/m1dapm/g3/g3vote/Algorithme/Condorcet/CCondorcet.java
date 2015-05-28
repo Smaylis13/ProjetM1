@@ -1,11 +1,14 @@
 package fr.univtln.m1dapm.g3.g3vote.Algorithme.Condorcet;
 
 import java.util.ArrayList;
+import java.util.IdentityHashMap;
 import java.util.List;
 
 import fr.univtln.m1dapm.g3.g3vote.Algorithme.AAlgorithme;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CChoixpossible;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CResult;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CVoixCandidat;
 
 /**
  * Created by Pierre on 21/05/2015.
@@ -22,8 +25,13 @@ public class CCondorcet extends AAlgorithme {
      * constructeur de CCondorcet
      */
     public CCondorcet (){initVote();}
-    @Override
+    //@Override
     protected void initVote() {
+    }
+
+    //@Override
+    protected CResult CalculResultat() {
+        return null;
     }
 
 

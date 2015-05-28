@@ -6,15 +6,13 @@ import junit.framework.TestCase;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 import fr.univtln.m1dapm.g3.g3vote.Algorithme.STV.CAlgoSTV;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
-import fr.univtln.m1dapm.g3.g3vote.Entite.CListChoix;
-import fr.univtln.m1dapm.g3.g3vote.Entite.CResultat;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CChoice;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
 
 /**
@@ -22,52 +20,50 @@ import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
  */
 public class CAlgoSTVTest extends TestCase {
 
-    private String[] mNomsCands = {"Jack", "Paul", "Laurent", "Bernard", "Bob", "Momo", "Georges",
+    private final String[] mNomsCands = {"Jack", "Paul", "Laurent", "Bernard", "Bob", "Momo", "Georges",
             "Carlos", "Leon", "Theo", "John", "Hector", "Lea", "Sophie", "Bea", "Jeanne", "Toto",
-            "Eli", "Will", "Brad"};
+            "Eli", "Will", "Brad", "Chris", "Jacques", "Lou", "Lola", "Phil", "Grant", "Val", "Lee",
+            "Bruce", "Clark", "Didier", "Emma", "Joey", "Monique", "Ted"};
 
     public void testCalculResultat() throws Exception {
 
-    //    Log.i("Vote : ", "Demarrage");
-        int lNbCands = 20;
+        //    Log.i("Vote : ", "Demarrage");
+        int lNbCands = 10;
         CVote lVote = new CVote(1, "test");
 
         List<CCandidate> lCands = genererCandidats(lNbCands);
 
+        //       Log.i("Vote : ", "Creation Vote");
+        CAlgoSTV lAlgo = new CAlgoSTV(lVote, 5);
 
- //       Log.i("Vote : ", "Creation Vote");
-        CAlgoSTV lAlgo = new CAlgoSTV(lVote, 3);
+        List<CChoice> lChoices = new ArrayList<>();
 
-        Map<CListChoix, Double> lChoix = new HashMap<>();
         Random lRandom = new Random();
-        for(int i=0; i<100000; i++)
+        for(int i=0; i<500; i++)
         {
             List<CCandidate> lList1 = new ArrayList<>(lCands);
             Collections.shuffle(lList1);
-            CListChoix lChoix1 = new CListChoix(lList1);
-            if(lChoix.containsKey(lChoix1))
-                lChoix.put(lChoix1, (double)(lRandom.nextInt(19)+1) + lChoix.get(lChoix1));
-            else
-                lChoix.put(lChoix1, (double)(lRandom.nextInt(19)+1));
         }
 
+        Log.i("Vote : ", "Taille liste choix : " + lChoices.size());
 
- //       Log.i("Vote : ", "Initialisation Vote");
-        lAlgo.initVote(lChoix);
+
+        //       Log.i("Vote : ", "Initialisation Vote");
+        lAlgo.initVote(lChoices);
 
         Log.i("Vote : ", "Demarrage Calcul Resultat");
-        CResultat<List<CCandidate>> lListRes = new CResultat<>();
+        List<Integer> lListRes = new LinkedList<>();
 
-        float debut = System.nanoTime();
+        double debut = (double) System.currentTimeMillis();
 
-        lListRes.copieValeur(lAlgo.CalculResultat());
+        lListRes = lAlgo.CalculResultat();
 
-        float fin = System.nanoTime();
+        double fin = (double) System.currentTimeMillis();
 
-        Log.i("Vote : ", "Duree du calcul : " + (fin-debut)/1000 + "µs");
+        Log.i("Vote : ", "Duree du calcul : " + (fin-debut) + "ms");
 
-        for(CCandidate cand : lListRes.getValeur())
-            Log.i("Vote : ", "Vainqueurs : " + cand.getNom());
+        for(Integer candId : lListRes)
+            Log.i("Vote : ", "Vainqueurs : " + lCands.get(candId).getNomCandidat());
     }
 
     private List<CCandidate> genererCandidats(int pNbCand)

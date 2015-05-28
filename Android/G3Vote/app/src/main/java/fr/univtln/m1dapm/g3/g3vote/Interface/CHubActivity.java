@@ -12,8 +12,12 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -43,6 +47,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
@@ -444,14 +449,14 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
         int month = datePicker.getMonth();
         int year =  datePicker.getYear();
 
-        Calendar calendar = Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance(Locale.FRANCE);
         calendar.set(year, month, day);
 
         return calendar.getTime();
     }
 
     //handle the clik on the validate button
-    public void validateVoteType(View view) {
+    public void validateVoteType(View view) throws ParseException {
         Spinner spin = (Spinner)findViewById(R.id.voteTypeList);
         final EditText lET_VoteName = (EditText)findViewById(R.id.voteNameInput);
         final Button lB_DateDebut = (Button)findViewById(R.id.bVoteDateBegin);
@@ -460,6 +465,18 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
         final String lDateDebut=lB_DateDebut.getText().toString();
         final String lDateFin=lB_DateFin.getText().toString();
 
+        Date lDateDeDebut=new Date();
+        Date lDateDeFin=new Date();
+
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy",Locale.FRANCE);
+        if (!lDateDebut.equals("Choix date")){
+            lDateDeDebut = dateFormat.parse(lDateDebut);
+        }
+        if (!lDateFin.equals("Choix date")){
+            lDateDeFin = dateFormat.parse(lDateFin);
+        }
+
+        Log.i("valeur boutons","le début: "+lDateDebut+" la fin :"+lDateFin);
 
         int test = spin.getSelectedItemPosition();
         Intent lIntent=null;
@@ -482,10 +499,27 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
             default:
                 break;
         }
-        lIntent.putExtra("VOTE_NAME",lVoteName);
-        lIntent.putExtra("START_DATE",lDateDebut);
-        lIntent.putExtra("END_DATE",lDateFin);
-        startActivity(lIntent);
+
+        if(lVoteName.isEmpty()){
+            Toast.makeText(this, getString(R.string.validateVoteTypeETempty), Toast.LENGTH_SHORT).show();
+        }
+        else if (lDateDebut.equals("Choix date")){
+            Toast.makeText(this,getString(R.string.dateBeginEmpty),Toast.LENGTH_SHORT).show();
+        }
+        else if (lDateFin.equals("Choix date")){
+            Toast.makeText(this,getString(R.string.dateEndEmpty),Toast.LENGTH_SHORT).show();
+        }
+        else if(lDateDeDebut.after(lDateDeFin)) {
+            Toast.makeText(this,getString(R.string.dateBeginAfterDateEnd),Toast.LENGTH_SHORT).show();
+        }
+        else{
+            lIntent.putExtra("VOTE_NAME",lVoteName);
+            lIntent.putExtra("START_DATE",lDateDebut);
+            lIntent.putExtra("END_DATE",lDateFin);
+            startActivity(lIntent);
+        }
+
+
     }
 
     public class CVotesAsync extends AsyncTask<Object, Void, Integer> {

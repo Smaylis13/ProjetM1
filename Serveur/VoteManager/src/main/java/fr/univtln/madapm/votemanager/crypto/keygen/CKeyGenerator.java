@@ -3,7 +3,6 @@ package fr.univtln.madapm.votemanager.crypto.keygen;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
-import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
@@ -15,26 +14,20 @@ import java.util.Random;
  */
 
 /**
- * Génère une clef AES 128 bits
+ * Génèration de clef AES 128 bits
  */
 public class CKeyGenerator extends Random {
 
     private static final String TRANSFORMATION_STRING = "AES";
     private static final int SIZE = 128;
+    private static final int SIZES = 16;
 
     private final SecretKey mClef;
 
-    private final byte[] mPublicKey = randByte(new byte[16]); // 16 bytes = 128 bits
-
-    private final double lval = Math.PI * Math.pow(2, 894);
-    public BigInteger mClefInt = BigInteger.valueOf((int)Math.pow(2, (Math.pow(2, 1024) - Math.pow(2, 960) - 1 +
-            Math.pow(2, 64) * (  lval + 129093 ))));
-
-    //public byte[] mClefByte = DatatypeConverter.parseHexBinary(mClefString);
-    //public long mClefInt = Long.parseLong(mClefHexa, 16);
+    private final byte[] mPublicKey = randByte(new byte[SIZES]); // 16 bytes = 128 bits
 
     /**
-     * Génère la clef automatiquement à sa construction
+     * Génère la clef privé automatiquement à sa construction
      */
     public CKeyGenerator() {
         this.mClef = keyGen();
@@ -45,14 +38,14 @@ public class CKeyGenerator extends Random {
     }
 
     /**
-     * Méthode de génération de clef AES 128 bits
+     * Méthode de génération pour la clef privé AES 128 bits
      * @return Clef
      */
     private static SecretKey keyGen(){
         KeyGenerator lKeyGen;
         try {
             lKeyGen = KeyGenerator.getInstance(TRANSFORMATION_STRING);
-            lKeyGen.init(128);
+            lKeyGen.init(SIZE);
             SecretKey lClef = lKeyGen.generateKey();
             System.out.println("clef (" + lClef.getAlgorithm() /*+ "," + lClef.getFormat()*/
                     + ") : " + new String(lClef.getEncoded()));
@@ -71,15 +64,13 @@ public class CKeyGenerator extends Random {
     public SecretKeySpec specificKeyKeyGen(byte[] pG) {
         System.out.println(Arrays.toString(mPublicKey));
         System.out.println(Arrays.toString(pG));
-        byte[] lBig = mPublicKey;
-        //byte[] lKey = lBig.xor pG;
-        byte[] lKey = mClef.getEncoded();
+        byte[] lKey = pG;
         System.out.println(Arrays.toString(lKey));
         MessageDigest lSha;
         try {
             lSha = MessageDigest.getInstance("SHA-1");
             lKey = lSha.digest(lKey);
-            lKey = Arrays.copyOf(lKey, 16); // utilise les 128 premier bit
+            lKey = Arrays.copyOf(lKey, SIZES); // utilise les 128 premier bit
             return new SecretKeySpec(lKey, TRANSFORMATION_STRING);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();

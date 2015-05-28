@@ -8,8 +8,8 @@ import java.util.List;
 public class CRule {
 
     private int mIdRegle;
-    private String mDescription;
 
+    private String mDescription;
 
     private List<CType> mListTypesAllow;
 

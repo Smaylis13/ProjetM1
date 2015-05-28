@@ -1,7 +1,5 @@
-package fr.univtln.madapm.votemanager.crypto;
+package fr.univtln.madapm.votemanager.crypto.aes;
 
-import fr.univtln.madapm.votemanager.crypto.aes.CAESCrypt;
-import fr.univtln.madapm.votemanager.crypto.aes.CAESFileCrypt;
 import fr.univtln.madapm.votemanager.crypto.keygen.CKeyGenerator;
 import junit.framework.TestCase;
 
