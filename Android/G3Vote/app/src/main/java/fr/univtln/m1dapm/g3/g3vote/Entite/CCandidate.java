@@ -1,5 +1,7 @@
 package fr.univtln.m1dapm.g3.g3vote.Entite;
 
+import com.fasterxml.jackson.annotation.JsonSetter;
+
 import java.io.Serializable;
 
 /**
@@ -10,30 +12,6 @@ public class CCandidate implements Serializable{
     private int mIdCandidat;
     private String mNom;
     private String mDescription;
-
-    public int getId() {
-        return mIdCandidat;
-    }
-
-    public void setId(int mId) {
-        this.mIdCandidat = mId;
-    }
-
-    public String getNom() {
-        return mNom;
-    }
-
-    public void setNom(String mNom) {
-        this.mNom = mNom;
-    }
-
-    public String getDescription() {
-        return mDescription;
-    }
-
-    public void setDescription(String mDescription) {
-        this.mDescription = mDescription;
-    }
 
     @Override
     public String toString() {
@@ -85,5 +63,24 @@ public class CCandidate implements Serializable{
         result = 31 * result + mNom.hashCode();
         result = 31 * result + (mDescription != null ? mDescription.hashCode() : 0);
         return result;
+    }
+
+    @JsonSetter("nomCandidat")
+    public void setNomCandidat(String pName){
+        this.mNom=pName;
+    }
+
+    public String getNomCandidat(){return this.mNom;}
+
+    @JsonSetter("descriptionCandidat")
+    public void setDescriptionCandidat(String pDescript){
+        this.mDescription=pDescript;
+    }
+
+    public String getDescriptionCandidat(){return this.mDescription;}
+
+    @JsonSetter("id")
+    public void setId(int pId){
+        this.mIdCandidat=pId;
     }
 }
