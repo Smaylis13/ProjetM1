@@ -56,7 +56,7 @@ public class CTestActivity extends AppCompatActivity {
 
 
         for (int i = 0; i <listCandidat.size() ; i++) {
-            lListNomCandidat.add(listCandidat.get(i).getNom());
+            lListNomCandidat.add(listCandidat.get(i).getNomCandidat());
             adapter.add(listCandidat.get(i));
         }
 

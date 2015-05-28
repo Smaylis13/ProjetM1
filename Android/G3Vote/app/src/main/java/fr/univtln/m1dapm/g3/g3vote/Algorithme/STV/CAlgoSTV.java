@@ -1,15 +1,12 @@
 package fr.univtln.m1dapm.g3.g3vote.Algorithme.STV;
 
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import fr.univtln.m1dapm.g3.g3vote.Algorithme.AAlgorithme;
-import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidat;
-import fr.univtln.m1dapm.g3.g3vote.Entite.CListChoix;
-import fr.univtln.m1dapm.g3.g3vote.Entite.CResultat;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CChoice;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
 
 /*
@@ -20,7 +17,9 @@ public class CAlgoSTV extends AAlgorithme {
     protected double mQuota;
     protected int mNbElu, mNbVote;
 
-    protected Map<CListChoix, Double> mChoix;
+    protected List<List<Integer>> mChoice;
+
+    private List<Double> mChoiceNumb;
 
     public CAlgoSTV() {
         super();
@@ -30,50 +29,72 @@ public class CAlgoSTV extends AAlgorithme {
         super(pVote);
         mNbElu = pNbElu;
 
-        initVote();
-    }
-
-
-    @Override
-    protected void initVote() {
-
     }
 
     /// Methode d'initialisation du vote (charge les regles)
-    public void initVote(Map<CListChoix, Double> pChoix)
+    public void initVote(List<CChoice> pChoices)
     {
-        mVote.getRegles();
-        getChoix(pChoix);
+        getChoix(pChoices);
 
         Calcul_Quota();
 
     }
 
     /// Charge la liste des choix faits par les votants de la BDD
-    private void getChoix(Map<CListChoix, Double> pChoix)
+    private void getChoix(List<CChoice> pChoices)
     {
-        mChoix = new HashMap<>(pChoix);
+        mChoice = new LinkedList<>();
 
-        for (Map.Entry choix : mChoix.entrySet())
-            mNbVote += (double)choix.getValue();
+        List<List<Integer>> lChoices = new LinkedList<>();
+
+        for (CChoice choice : pChoices)
+        {
+            List<Integer> lCandList;
+            int lUserId = choice.getmUser().getUserId();
+
+            if (lChoices.get(lUserId) == null)
+                lCandList = new LinkedList<>();
+            else
+                lCandList = lChoices.get(lUserId);
+
+            lCandList.set(choice.getmScore()-1, choice.getmCandidate().getmIdCandidat());
+            lChoices.set(lUserId,lCandList);
+        }
+
+        mNbVote = lChoices.size();
+
+        for(List<Integer> choice : lChoices)
+        {
+            List<Integer> lChoice;
+
+            int lChoiceIndex = lChoices.indexOf(choice);
+
+            if (mChoice.contains(choice))
+                mChoiceNumb.set(lChoiceIndex, mChoiceNumb.get(lChoiceIndex));
+            else
+            {
+                mChoice.set(lChoiceIndex, choice);
+                mChoiceNumb.set(lChoiceIndex, 1.0);
+            }
+        }
+
     }
 
     /// Methode de calcul de l'algorithme STV
-    @Override
-    public CResultat CalculResultat()
+    public List<Integer> CalculResultat()
     {
         boolean lNewElu;
-        List<CCandidat> lElus = new ArrayList<>();
-        List<CCandidat> lElim = new ArrayList<>();
-        CResultat<List<CCandidat>> lResultat = new CResultat<>();
-        Map<CCandidat,Double> lCandNbVote;
+        List<Integer> lElus = new LinkedList<>();
+        List<Integer> lElim = new LinkedList<>();
+        List<Integer> lResult = new LinkedList<>();
+        List<Double> lCandNbVote;
 
         lCandNbVote = calcNbVote();
 
         /// boucle de comptage des elus
         while(lElus.size() < mNbElu)
         {
-           Map<CCandidat, Double> ltmpCandVote = new HashMap<>(lCandNbVote);
+            List<Double> ltmpCandVote = new LinkedList<>(lCandNbVote);
 /*
             double lNbvote = 0.0; /// Comptage du nombre de votes restants
 
@@ -84,60 +105,56 @@ public class CAlgoSTV extends AAlgorithme {
 */
             lNewElu = false;
             /// Verification de la presence d'une majoritee
-           for(Map.Entry cand : lCandNbVote.entrySet())
-           {
-               /// Presence d'une majoritee
-               if((double)cand.getValue() >= mQuota)
-               {
-                   lNewElu = true;
-          //         Log.i("Vote : ", "Elu : " + ((CCandidat) cand.getKey()).getNom() + " avec " + cand.getValue() + " voix");
-                   lElus.add((CCandidat)cand.getKey());
-                   ltmpCandVote = distribSurplus(ltmpCandVote,(CCandidat)cand.getKey());
-                   break;
-               }
-           }
+            for(Double candValue : lCandNbVote)
+            {
+                /// Presence d'une majoritee
+                if(candValue.doubleValue() >= mQuota)
+                {
+                    lNewElu = true;
+                    //         Log.i("Vote : ", "Elu : " + ((CCandidat) cand.getKey()).getNom() + " avec " + cand.getValue() + " voix");
+                    lElus.add(lCandNbVote.indexOf(candValue));
+                    ltmpCandVote = distribSurplus(ltmpCandVote, lCandNbVote.indexOf(candValue));
+                    break;
+                }
+            }
 
             /// Absence de nouveaux elus : elimination d'un candidat
-           if (!lNewElu)
-           {
-               lElim.add(getCandidatElim(ltmpCandVote));
+            if (!lNewElu)
+            {
+                lElim.add(getCandidatElim(ltmpCandVote));
 
-               ltmpCandVote = heriteVote(ltmpCandVote, lElim.get(lElim.size()-1));
-           }
+                ltmpCandVote = heriteVote(ltmpCandVote, lElim.get(lElim.size()-1));
+            }
 
-           lCandNbVote = ltmpCandVote;
+            lCandNbVote = ltmpCandVote;
 
         }
 
-        lResultat.setValeur(lElus);
-        return  lResultat;
+        return  lElus;
     }
 
     /// Methode de reattribution des voix en plus d'un candidat elu
-    private Map<CCandidat, Double> distribSurplus(Map<CCandidat, Double> pCandVote, CCandidat pCandElu)
+    private List<Double> distribSurplus(List<Double> pCandVote, int pIdCandElu)
     {
-        Map<CCandidat, Double> lCandVote = new HashMap<>(pCandVote);
+        List<Double> lCandVote = new LinkedList<>(pCandVote);
         double lSurplus;
         double lRatioVote;
 
-        lSurplus = pCandVote.get(pCandElu) - mQuota;
-  //      Log.i("Vote : ", "surplus " + lSurplus);
+        lSurplus = pCandVote.get(pIdCandElu) - mQuota;
+        //      Log.i("Vote : ", "surplus " + lSurplus);
 
         /// Parcours de la liste des choix
-        for (CListChoix choix : mChoix.keySet())
+        for (List<Integer> choice : mChoice)
         {
-            List<CCandidat> cands = choix.getChoix();
-       //     cands.retainAll(pCandVote.keySet());
-
             /// Le candidat elu est le premier dans ce choix
-            if(cands.get(0) == pCandElu && cands.size()>1)
+            if(choice.get(0) == pIdCandElu && choice.size()>1)
             {
                 /// incrementation proportionnelle du nombre de vote du second candidat
-                double lNbVoteChoix = mChoix.get(choix);
-                double lNbVoteCandElu = pCandVote.get(pCandElu);
+                double lNbVoteChoix = mChoiceNumb.get(mChoice.indexOf(choice));
+                double lNbVoteCandElu = pCandVote.get(pIdCandElu);
                 lRatioVote =  lNbVoteChoix / lNbVoteCandElu ;
-                lCandVote.put(cands.get(1), ((lRatioVote*lSurplus) + lCandVote.get(cands.get(1))));
-                mChoix.put(choix, (lRatioVote * lSurplus));
+                lCandVote.set(choice.get(1), ((lRatioVote * lSurplus) + lCandVote.get(choice.get(1))));
+                mChoiceNumb.set(mChoice.indexOf(choice), (lRatioVote * lSurplus));
 /*
                 Log.i("Vote : ", "Ratio " + lRatioVote + " pour " + cands.get(1).getNom());
                 Log.i("Vote : ", "ancien score " + pCandVote.get(cands.get(1)));
@@ -147,80 +164,53 @@ public class CAlgoSTV extends AAlgorithme {
             }
         }
 
-        lCandVote.remove(pCandElu);
+        mChoiceNumb.set(pIdCandElu, 0.0);
 
-        removeCandidat(pCandElu);
+        removeCandidat(pIdCandElu);
 
         return lCandVote;
     }
 
     /// Methode d'heritage des votes d'un candidat elimine
-    private Map<CCandidat, Double> heriteVote(Map<CCandidat, Double> pCandVote, CCandidat pCandElim)
+    private List<Double> heriteVote(List<Double> pCandVote, int pIdCandElim)
     {
-        Map<CCandidat, Double> lCandVote = new HashMap<>(pCandVote);
+        List<Double> lCandVote = new LinkedList<>(pCandVote);
 
         /// Parcours de la liste des choix
-        for (CListChoix choix : mChoix.keySet())
+        for (List<Integer> choice : mChoice)
         {
-            List<CCandidat> cands = new ArrayList<>(choix.getChoix());
-       //     cands.retainAll(pCandVote.keySet());
-
             /// Le candidat elimine est le premier dans ce choix
-            if(cands.get(0) == pCandElim && cands.size()>1) {
+            if(choice.get(0) == pIdCandElim && choice.size()>1) {
           /*      Log.i("Vote : ", "Candidat elim : " + pCandElim.getNom() + " Nb voix : " + pCandVote.get(pCandElim));
                 Log.i("Vote : ", "Candidat suivant : " + cands.get(1).getNom() + " Nb voix : " + pCandVote.get(cands.get(1)));
                 Log.i("Vote : ", "gagne : " + mChoix.get(choix) + " voix");*/
-                lCandVote.put(cands.get(1), (lCandVote.get(cands.get(1)) + mChoix.get(choix))); /// Ajout du nombre de vote au second candidat
-            //    Log.i("Vote : ", "Candidat : " + cands.get(1).getNom() + " nouveau Nb voix : " + lCandVote.get(cands.get(1)));
+                lCandVote.set(choice.get(1), (lCandVote.get(choice.get(1)) + mChoiceNumb.get(mChoice.indexOf(choice)))); /// Ajout du nombre de vote au second candidat
+                //    Log.i("Vote : ", "Candidat : " + cands.get(1).getNom() + " nouveau Nb voix : " + lCandVote.get(cands.get(1)));
             }
 
         }
 
-        lCandVote.remove(pCandElim);
-        removeCandidat(pCandElim);
+        mChoiceNumb.set(pIdCandElim, 0.0);
+
+        removeCandidat(pIdCandElim);
 
         return lCandVote;
     }
 
     /// Methode de recherche du candidat avec le moins de vote
-    private CCandidat getCandidatElim(Map<CCandidat, Double> pMap)
+    private int getCandidatElim(List<Double> pCandVote)
     {
-        CCandidat lCandElim = new CCandidat();
-        double lMin=0;
-
-        /// Parcours de la liste du nombre de vote par candidat
-        for(Map.Entry cand : pMap.entrySet()) {
-            if(lMin == 0) {
-                lMin = (double) cand.getValue();
-                lCandElim = (CCandidat) cand.getKey();
-            }
-            if ((double)cand.getValue() < lMin)
-            {
-                lMin = (double)cand.getValue();
-                lCandElim = (CCandidat)cand.getKey();
-            }
-        }
-
-
-        return lCandElim;
+        return pCandVote.indexOf(Collections.min(pCandVote));
     }
 
     /// Methode de calcul du nombre de vote pour chaque candidat
-    private Map<CCandidat, Double> calcNbVote()
+    private List<Double> calcNbVote()
     {
-        Map<CCandidat, Double> lCandNbVote  = new HashMap<>();
-
-        for (CCandidat cand : mChoix.entrySet().iterator().next().getKey().getChoix())
-                lCandNbVote.put(cand, 0.0);
+        List<Double> lCandNbVote  = new LinkedList<>();
 
         ///Parcours de la liste des choix
-        for(CListChoix choix : mChoix.keySet())
-        {
-            CCandidat lCand = choix.getIndexValue(0);
-
-            if(lCandNbVote.containsKey(lCand))
-                lCandNbVote.put(lCand, lCandNbVote.get(lCand) + mChoix.get(choix));
-        }
+        for(List<Integer> choice : mChoice)
+            lCandNbVote.set(choice.get(0), lCandNbVote.get(choice.get(0)) + 1.0);
 
         return lCandNbVote;
     }
@@ -230,12 +220,12 @@ public class CAlgoSTV extends AAlgorithme {
     {
         mQuota = (mNbVote/(mNbElu+1))+1;
 
- //       Log.i("Vote : ", "Quota : " + mQuota);
+        //       Log.i("Vote : ", "Quota : " + mQuota);
     }
 
-    private void removeCandidat(CCandidat pCand)
+    private void removeCandidat(int pIdCand)
     {
-        for(CListChoix choix : mChoix.keySet())
-            choix.removeCandidat(pCand);
+        for(List<Integer> choice : mChoice)
+            choice.remove((Integer) pIdCand);
     }
 }

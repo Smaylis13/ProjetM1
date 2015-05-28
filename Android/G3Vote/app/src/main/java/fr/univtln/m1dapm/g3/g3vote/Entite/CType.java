@@ -14,6 +14,11 @@ public class CType {
 
     public CType(){}
 
+    public CType(String pName, String pDescription) {
+        this.mName = pName;
+        this.mDescription = pDescription;
+    }
+
     public CType(int pidType, String pName, String pDescription) {
         this.mIdType = pidType;
         this.mName = pName;

@@ -65,7 +65,7 @@ public class CVoteConfKemenyYoung extends AppCompatActivity {
             View cde = test.getChildAt(i);
             EditText editText=(EditText)cde.findViewById(R.id.choiceName);
             String string=editText.getText().toString();
-            mListCandidat.get(i).setNom(string);
+            mListCandidat.get(i).setNomCandidat(string);
             Log.i("test", string);
         }
         Intent lIntent = new Intent(this,CTestActivity.class);

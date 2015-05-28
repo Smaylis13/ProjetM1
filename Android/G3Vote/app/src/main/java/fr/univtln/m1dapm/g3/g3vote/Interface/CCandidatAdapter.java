@@ -99,6 +99,16 @@ public class CCandidatAdapter extends BaseAdapter {
     }
 
     @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
+    @Override
+    public int getViewTypeCount() {
+        return 500;
+    }
+
+    @Override
     public void notifyDataSetChanged() {
         super.notifyDataSetChanged();
 

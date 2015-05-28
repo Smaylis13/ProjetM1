@@ -10,6 +10,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import fr.univtln.m1dapm.g3.g3vote.Communication.CCommunication;
+import fr.univtln.m1dapm.g3.g3vote.Communication.CRequestTypesEnum;
+import fr.univtln.m1dapm.g3.g3vote.Communication.CTaskParam;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CUser;
 import fr.univtln.m1dapm.g3.g3vote.R;
 
 public class CLoginActivity extends AppCompatActivity {
@@ -28,6 +32,7 @@ public class CLoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clogin);
+        sContext=getApplicationContext();
     }
 
     @Override
@@ -62,11 +67,10 @@ public class CLoginActivity extends AppCompatActivity {
     public void Log(View view) {
         //TODO: handle the connection of the user
         final EditText lET_Mail = (EditText)findViewById(R.id.mailInput);
-        /*final EditText lET_Password = (EditText)findViewById(R.id.passInput);
+        final EditText lET_Password = (EditText)findViewById(R.id.passInput);
         final String lMail = lET_Mail.getText().toString();
         final String lPassword = lET_Password.getText().toString();
-        sContext=getApplicationContext();
-        CTaskParam lParams=new CTaskParam(CRequestTypesEnum.log_user,new CUser(null,null,lMail,lPassword));
+       /* CTaskParam lParams=new CTaskParam(CRequestTypesEnum.log_user,new CUser(null,null,lMail,lPassword));
         CCommunication lCom=new CCommunication();
         lCom.execute(lParams);*/
         if (!(lET_Mail.getText().toString().isEmpty())){

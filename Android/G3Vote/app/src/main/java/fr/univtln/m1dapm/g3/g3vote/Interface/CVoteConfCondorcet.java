@@ -54,7 +54,7 @@ public class CVoteConfCondorcet extends AppCompatActivity {
             View cde = lTest.getChildAt(i);
             EditText lEditText=(EditText)cde.findViewById(R.id.choiceName);
             String lString=  lEditText.getText().toString();
-            mListCandidat.get(i).setNom(lString);
+            mListCandidat.get(i).setNomCandidat(lString);
             Log.i("test", lString);
         }
         Intent lIntent = new Intent(this,CTestActivity.class);

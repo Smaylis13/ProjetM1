@@ -35,6 +35,7 @@ public class CSubActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_csub);
+        sContext=getApplicationContext();
     }
 
     @Override
@@ -72,7 +73,7 @@ public class CSubActivity extends AppCompatActivity {
         if (!lFirstName.isEmpty() && !lName.isEmpty() && !lMail.isEmpty() && !lPassword.isEmpty()) {
             CUser lUser = new CUser(lFirstName, lName, lMail, lPassword);
             CTaskParam lParams=new CTaskParam(CRequestTypesEnum.add_new_user,lUser);
-            sContext=getApplicationContext();
+
             CCommunication lCom=new CCommunication();
             lCom.execute(lParams);
         }

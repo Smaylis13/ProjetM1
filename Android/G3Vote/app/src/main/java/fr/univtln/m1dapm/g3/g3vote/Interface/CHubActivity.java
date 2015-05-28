@@ -1,12 +1,33 @@
 package fr.univtln.m1dapm.g3.g3vote.Interface;
 
 import android.content.Context;
+
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStreamWriter;
+import java.lang.reflect.Type;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Locale;
+
+
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -32,6 +53,16 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import fr.univtln.m1dapm.g3.g3vote.Communication.CCommunication;
+import fr.univtln.m1dapm.g3.g3vote.Communication.CRequestTypesEnum;
+import fr.univtln.m1dapm.g3.g3vote.Communication.CTaskParam;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CUser;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
 import fr.univtln.m1dapm.g3.g3vote.R;
 import fr.univtln.m1dapm.g3.g3vote.Service.CGcmIntentService;
 
@@ -46,6 +77,7 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
     SectionsPagerAdapter mSectionsPagerAdapter;
+    private static CUser sLoggedUser;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -75,6 +107,11 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        Intent lIntent=getIntent();
+        /*sLoggedUser=(CUser)lIntent.getSerializableExtra(CCommunication.LOGGED_USER);
+        CTaskParam lParams=new CTaskParam(CRequestTypesEnum.get_votes,sLoggedUser.getUserId());
+        CVotesAsync lVotesAsc=new CVotesAsync();
+        lVotesAsc.execute(lParams);*/
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -450,5 +487,103 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
         lIntent.putExtra("END_DATE",lDateFin);
         startActivity(lIntent);
     }
+
+    public class CVotesAsync extends AsyncTask<Object, Void, Integer> {
+        public static final String SERVER_URL = "http://10.21.205.16:80/";
+        private final ProgressDialog mDialog = new ProgressDialog(CHubActivity.this);
+
+        @Override
+        protected Integer doInBackground(Object... pObject) {
+            URL lUrl = null;
+            OutputStreamWriter lOut=null;
+            HttpURLConnection lHttpCon = null;
+            InputStream lIn = null;
+            String lResponse=null;
+            int lCode;
+            CTaskParam lParams=(CTaskParam)pObject[0];
+
+            try {
+                switch (lParams.getRequestType()) {
+                    case get_votes:
+                        lUrl = new URL(SERVER_URL+"vote/all/"+Integer.toString((int)lParams.getObject()));
+                        lHttpCon = (HttpURLConnection) lUrl.openConnection();
+                        lHttpCon.setDoInput(true);
+                        lHttpCon.setRequestMethod("GET");
+                        lHttpCon.setRequestProperty("Accept", "application/json");
+                        lCode=lHttpCon.getResponseCode();
+                        Log.e("TEST CODE","CODE: "+lCode);
+                        if(lCode==200) {
+                            //lOut.close();
+                            lIn = new BufferedInputStream(lHttpCon.getInputStream());
+                            lResponse = readStream(lIn);
+                            Type listType = new TypeToken<ArrayList<CVote>>() {}.getType();
+                            //ArrayList<CVote> lVotes = new Gson().fromJson(lResponse, listType);
+                            ObjectMapper lMapper=new ObjectMapper();
+                            ArrayList<CVote> lVotes = lMapper.readValue(lResponse, new TypeReference<ArrayList<CVote>>(){});
+                            Message lMsg=new Message();
+                            lMsg.what=0;
+                            lMsg.obj=lVotes;
+                            mHandler.sendMessage(lMsg);
+
+                        /*Intent lIntent = new Intent(CSubActivity.getsContext(), CHubActivity.class);
+                        lIntent.putParcelableArrayListExtra("GOTTEN_VOTES", lVotes);
+                        lIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        CSubActivity.getsContext().startActivity(lIntent);*/
+                        }
+                        else
+                            return lCode;
+
+                        break;
+                }
+            }catch (ProtocolException e) {
+            Log.e("CCommunication", e.toString());
+        }catch (MalformedURLException e) {
+            Log.e("CCommunication", e.toString());
+        }catch (IOException e) {
+            Log.e("CCommunication", e.toString());
+        }
+        return null;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            mDialog.setMessage("Getting votes...");
+            mDialog.setCancelable(false);
+            mDialog.show();
+
+        }
+
+        public void onPostExecute(Integer pCode){
+            mDialog.cancel();
+        }
+
+        private String readStream(InputStream is) {
+            try {
+                ByteArrayOutputStream bo = new ByteArrayOutputStream();
+                int i = is.read();
+                while(i != -1) {
+                    bo.write(i);
+                    i = is.read();
+                }
+                return bo.toString();
+            } catch (IOException e) {
+                return "";
+            }
+        }
+    }
+
+    Handler mHandler = new Handler() {
+
+        @Override
+        public void handleMessage(Message pMsg) {
+            switch (pMsg.what) {
+                case 0:
+                    CHubMyVotesFragment.getInstance().setmVotes((List<CVote>)pMsg.obj);
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
 
 }
