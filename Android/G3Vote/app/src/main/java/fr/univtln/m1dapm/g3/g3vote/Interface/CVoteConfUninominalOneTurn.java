@@ -1,5 +1,7 @@
 package fr.univtln.m1dapm.g3.g3vote.Interface;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -23,10 +25,22 @@ public class CVoteConfUninominalOneTurn extends AppCompatActivity {
 
     private CCandidatAdapter mAdapter;
 
+    private String mVoteName;
+    private String mDateDebut;
+    private String mDateFin;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cvote_conf_uninominal_one_turn);
+        Bundle extras = getIntent().getExtras();
+        if (extras==null){
+            return;
+        }
+        mVoteName = (String) extras.get("VOTE_NAME");
+        mDateDebut = (String) extras.get("START_DATE");
+        mDateFin = (String) extras.get("END_DATE");
+
 
         //Récupération du composant ListView
         ListView list = (ListView)findViewById(R.id.lLVUninomialOneTurn);
@@ -62,9 +76,12 @@ public class CVoteConfUninominalOneTurn extends AppCompatActivity {
             mListCandidat.get(i).setNom(string);
             Log.i("test",string);
         }
-        Intent intent = new Intent(this,CTestActivity.class);
-        intent.putExtra("liste de Candidat", mListCandidat);
-        startActivity(intent);
+        Intent lIntent = new Intent(this,CTestActivity.class);
+        lIntent.putExtra("liste de Candidat", mListCandidat);
+        lIntent.putExtra("VOTE_NAME", mVoteName);
+        lIntent.putExtra("START_DATE", mDateFin);
+        lIntent.putExtra("END_DATE", mDateDebut);
+        startActivity(lIntent);
 
     }
 
@@ -81,5 +98,33 @@ public class CVoteConfUninominalOneTurn extends AppCompatActivity {
             mAdapter.notifyDataSetChanged();
         }
 
+    }
+    @Override
+    public void onBackPressed() {
+        // On crée le dialogue
+        AlertDialog.Builder lConfirmationDialog = new AlertDialog.Builder(CVoteConfUninominalOneTurn.this);
+        // On modifie le titre
+        lConfirmationDialog.setTitle("Arrêt création vote");
+        // On modifie le message
+        lConfirmationDialog.setMessage("Voulez-vous arrêter la création du vote ?");
+        // Bouton Oui
+        lConfirmationDialog.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                // On termine l'activité
+                finish();
+            }
+        });
+
+        // Bouton non: on ferme le dialogue
+        lConfirmationDialog.setNegativeButton("Non", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        // On affiche le message
+        lConfirmationDialog.show();
     }
 }
