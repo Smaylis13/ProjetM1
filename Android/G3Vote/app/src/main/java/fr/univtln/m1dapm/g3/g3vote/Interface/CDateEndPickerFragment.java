@@ -33,7 +33,8 @@ public class CDateEndPickerFragment extends DialogFragment
         // TODO: stock the date to be send to the server at the end of the vote creation
         //change the button so it shows the selected date
         final Button button = (Button) getActivity().findViewById(R.id.bVoteDateEnd);
-        String date = day+"/"+month+"/"+year;
+        //dans le calendrier les mois vont de 0 a 11 il faut ajouter 1 pour avoir le bon affichage
+        String date = day+"/"+(month+1)+"/"+year;
         button.setText(date);
     }
 
