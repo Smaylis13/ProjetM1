@@ -63,11 +63,13 @@ public class CCandidatAdapter extends BaseAdapter {
         }
 
         EditText lET_choice = (EditText)layoutItem.findViewById(R.id.choiceName);
+        EditText lET_Description = (EditText)layoutItem.findViewById(R.id.choiceDescription);
         //ImageButton lib_addChoiceButton = (ImageButton)layoutItem.findViewById(R.id.addChoiceButton);
         //ImageButton lib_removeChoiceButton = (ImageButton)layoutItem.findViewById(R.id.removeChoiceButton);
 
 
         lET_choice.setHint(R.string.lETChoiceHint);
+        lET_Description.setHint(R.string.lETDescriptionHint);
 
 
         //lib_addChoiceButton.setImageResource(R.mipmap.ic_add_button);

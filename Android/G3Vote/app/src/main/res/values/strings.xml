@@ -51,6 +51,7 @@
     <string name="title_activity_cvote_conf_uninominal_two_turn">Vote uninomial 2 tours</string>
     <string name="title_activity_cvote_conf_borda">Vote Borda</string>
     <string name="lETChoiceHint">Choix</string>
+    <string name="lETDescriptionHint">Description</string>
     <string name="title_activity_ctest">CTestActivity</string>
     <string name="title_activity_cvote_conf_condorcet">Vote Condorcet</string>
 </resources>
