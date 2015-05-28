@@ -24,7 +24,10 @@ import fr.univtln.m1dapm.g3.g3vote.R;
 public class CTestActivity extends AppCompatActivity {
 
     private static ArrayList<CCandidate> listCandidat = new ArrayList<CCandidate>();
-    private ArrayAdapter<String> adapter;
+    private CCandidatAffichageAdapter adapter;
+    private String mVoteName;
+    private String mDateDebut;
+    private String mDateFin;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,43 +36,33 @@ public class CTestActivity extends AppCompatActivity {
 
         ListView list = (ListView)findViewById(R.id.LVCandidat);
         List lListNomCandidat =new ArrayList();
-
+        adapter = new CCandidatAffichageAdapter(this, android.R.layout.simple_list_item_1);
+        list.setAdapter(adapter);
         Bundle extras = getIntent().getExtras();
         if (extras==null){
             return;
         }
         RelativeLayout rl = (RelativeLayout)findViewById(R.id.test);
         listCandidat=(ArrayList<CCandidate>)extras.get("liste de Candidat");
+        mVoteName = (String) extras.get("VOTE_NAME");
+        mDateDebut = (String) extras.get("START_DATE");
+        mDateFin = (String) extras.get("END_DATE");
+        TextView lTVVoteName = (TextView) findViewById(R.id.voteName);
+        TextView lTVDateDebut = (TextView) findViewById(R.id.recapDateDebut);
+        TextView lTVDateFin = (TextView) findViewById(R.id.recapDateFin);
+        lTVVoteName.setText(mVoteName);
+        lTVDateDebut.setText(mDateDebut);
+        lTVDateFin.setText(mDateFin);
+
 
         for (int i = 0; i <listCandidat.size() ; i++) {
             lListNomCandidat.add(listCandidat.get(i).getNom());
-
+            adapter.add(listCandidat.get(i));
         }
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, lListNomCandidat);
-        list.setAdapter(adapter);
 
 
-/* je sui perdu reprendre tuto http://tutos-android-france.com/listview-afficher-une-liste-delements/
-        View cellule = null;
 
-        CCandidatViewHolder viewHolder = (CCandidatViewHolder) cellule.getTag();
-//comme nos vues sont réutilisées, notre cellule possède déjà un ViewHolder
 
-        if(viewHolder == null){
-
-            //si elle n'avait pas encore de ViewHolder
-            viewHolder = new CCandidatViewHolder();
-
-            //récupérer nos sous vues
-            viewHolder.mNomCandidat = (TextView) cellule.findViewById(R.id.NomCandidat);
-            viewHolder.mDescriptionCandidat = (TextView) cellule.findViewById(R.id.DescriptionCandidat);
-            viewHolder.mImageCandidat = (ImageView) cellule.findViewById(R.id.imageCandidat);
-
-            //puis on sauvegarde le mini-controlleur dans la vue
-            cellule.setTag(viewHolder);
-
-        }
-*/
 
     }
 
