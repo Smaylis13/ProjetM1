@@ -30,6 +30,7 @@ public class CVoteConfSTV extends AppCompatActivity {
     private String mVoteName;
     private String mDateDebut;
     private String mDateFin;
+    private static final String TYPE_VOTE = "STV";
 
     @Override
     protected void onCreate(Bundle pSavedInstanceState) {
@@ -71,6 +72,7 @@ public class CVoteConfSTV extends AppCompatActivity {
         lIntent.putExtra("VOTE_NAME", mVoteName);
         lIntent.putExtra("START_DATE", mDateFin);
         lIntent.putExtra("END_DATE", mDateDebut);
+        lIntent.putExtra("VOTE_TYPE", TYPE_VOTE);
         startActivity(lIntent);
 
     }
