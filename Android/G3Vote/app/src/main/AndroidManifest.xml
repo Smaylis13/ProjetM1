@@ -47,7 +47,8 @@
 
         <activity
             android:name=".Interface.CVoteConfSTV"
-            android:label="@string/title_activity_cvote_conf_stv" >
+            android:label="@string/title_activity_cvote_conf_stv"
+            android:windowSoftInputMode="adjustPan">
         </activity>
         <activity
             android:name=".Interface.CVoteConfKemenyYoung"
