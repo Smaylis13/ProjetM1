@@ -1,6 +1,7 @@
 package fr.univtln.m1dapm.g3.g3vote.Interface;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -55,13 +57,20 @@ public class CVoteConfSTV extends AppCompatActivity {
 
 
     public void validateConfSTV(View pView) {
+        ListView lTest = (ListView)findViewById(R.id.lLVSTV);
+
+
+
         for (int i = 0; i <mListCandidat.size() ; i++) {
-            ListView lTest = (ListView)findViewById(R.id.lLVSTV);
             View lCde = lTest.getChildAt(i);
             EditText lEditText = (EditText) lCde.findViewById(R.id.choiceName);
             String lString = lEditText.getText().toString();
+            EditText lEditTextdescription = (EditText) lCde.findViewById(R.id.choiceDescription);
+            String lStringdescription = lEditTextdescription.getText().toString();
+
 
             mListCandidat.get(i).setNom(lString);
+            mListCandidat.get(i).setDescription(lStringdescription);
 
             Log.i("test", mListCandidat.get(i).getNom());
 
