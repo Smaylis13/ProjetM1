@@ -77,6 +77,10 @@
             android:name=".Interface.CVoteConfCondorcet"
             android:label="@string/title_activity_cvote_conf_condorcet" >
         </activity>
+        <activity
+            android:name=".Interface.CVoteConfBorda"
+            android:label="@string/title_activity_cvote_conf_borda" >
+        </activity>
     </application>
 
 </manifest>
