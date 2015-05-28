@@ -12,9 +12,9 @@ import android.util.Log;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
-import fr.univtln.m1dapm.g3.g3vote.Interface.CLoginActivity;
+import fr.univtln.m1dapm.g3.g3vote.Interface.CHubActivity;
 import fr.univtln.m1dapm.g3.g3vote.R;
-import fr.univtln.m1dapm.g3.g3vote.Receiver.GcmBroadcastReceiver;
+import fr.univtln.m1dapm.g3.g3vote.Receiver.CGcmBroadcastReceiver;
 
 /**
  * Created by lyamsi on 18/05/15.
@@ -29,7 +29,7 @@ public class CGcmIntentService extends IntentService {
 
     public CGcmIntentService()
     {
-        super("GcmIntentService");
+        super("CGcmIntentService");
     }
 
     @Override
@@ -57,18 +57,15 @@ public class CGcmIntentService extends IntentService {
                     clearNotification();
                 }
                 else{
-                    sendNotification("Received: " + message, extras);
+                    sendNotification(message, extras);
                 }
                 Log.i(TAG, "Received: " + message);
             }
         }
-        GcmBroadcastReceiver.completeWakefulIntent(intent);
+        CGcmBroadcastReceiver.completeWakefulIntent(intent);
     }
 
     /**
-     * Put the message into a notification and post it.
-     * This is just one simple example of what you might choose to do with
-     * a GCM message.
      * @param msg
      * @param extras
      */
@@ -76,9 +73,9 @@ public class CGcmIntentService extends IntentService {
     {
         mNotificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        Intent intent = new Intent(this, CLoginActivity.class).setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        // If this is a notification type message include the data from the message
-        // with the intent
+        Intent intent = new Intent(this, CHubActivity.class).setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+
         if (extras != null)
         {
             intent.putExtras(extras);
@@ -90,7 +87,7 @@ public class CGcmIntentService extends IntentService {
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
                         .setSmallIcon(R.mipmap.ic_launcher)
-                        .setContentTitle("GCM Notification")
+                        .setContentTitle("EVS")
                         .setStyle(new NotificationCompat.BigTextStyle().bigText(msg))
                         .setContentText(msg)
                         .setTicker(msg)
