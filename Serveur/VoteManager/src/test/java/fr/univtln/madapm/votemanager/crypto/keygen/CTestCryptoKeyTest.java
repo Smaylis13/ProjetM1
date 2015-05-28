@@ -1,7 +1,6 @@
-package fr.univtln.madapm.votemanager.crypto;
+package fr.univtln.madapm.votemanager.crypto.keygen;
 
 import fr.univtln.madapm.votemanager.crypto.aes.CAESCrypt;
-import fr.univtln.madapm.votemanager.crypto.keygen.CKeyGenerator;
 import junit.framework.TestCase;
 
 import javax.crypto.spec.SecretKeySpec;
@@ -32,8 +31,6 @@ public class CTestCryptoKeyTest extends TestCase {
         byte[] cyphertext = aesCrypt.encrypt(clef, str);
 
         System.out.println(aesCrypt.decrypt(clef, cyphertext));
-
-        System.out.println(keyGenerator.mClefInt);
 
 
         System.out.println("Fin du test");
