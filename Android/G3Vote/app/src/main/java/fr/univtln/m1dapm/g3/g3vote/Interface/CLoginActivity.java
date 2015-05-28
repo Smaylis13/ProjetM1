@@ -31,6 +31,7 @@ public class CLoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clogin);
+        sContext=getApplicationContext();
     }
 
     @Override
@@ -64,15 +65,14 @@ public class CLoginActivity extends AppCompatActivity {
     //gere le clic sur le bouton se connecter
     public void Log(View view) {
         //TODO: handle the connection of the user
-        /*final EditText lET_Mail = (EditText)findViewById(R.id.mailInput);
+        final EditText lET_Mail = (EditText)findViewById(R.id.mailInput);
         final EditText lET_Password = (EditText)findViewById(R.id.passInput);
         final String lMail = lET_Mail.getText().toString();
         final String lPassword = lET_Password.getText().toString();
-        sContext=getApplicationContext();
         CTaskParam lParams=new CTaskParam(CRequestTypesEnum.log_user,new CUser(null,null,lMail,lPassword));
         CCommunication lCom=new CCommunication();
-        lCom.execute(lParams);*/
-        Intent intent = new Intent(this,CHubActivity.class);
-        startActivity(intent);
+        lCom.execute(lParams);
+        /*Intent intent = new Intent(this,CHubActivity.class);
+        startActivity(intent);*/
     }
 }

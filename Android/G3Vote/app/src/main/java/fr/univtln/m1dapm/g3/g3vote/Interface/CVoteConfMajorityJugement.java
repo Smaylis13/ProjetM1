@@ -58,7 +58,7 @@ public class CVoteConfMajorityJugement extends AppCompatActivity {
             View lCde = lTest.getChildAt(i);
             EditText editText=(EditText) lCde.findViewById(R.id.choiceName);
             String lString = editText.getText().toString();
-            mListCandidat.get(i).setNom(lString);
+            mListCandidat.get(i).setNomCandidat(lString);
             Log.i("test", lString);
         }
         Intent lIntent = new Intent(this,CTestActivity.class);

@@ -54,7 +54,7 @@ public class CTestActivity extends AppCompatActivity {
         lTVDateFin.setText(mDateFin);
 
         for (int i = 0; i <listCandidat.size() ; i++) {
-            lListNomCandidat.add(listCandidat.get(i).getNom());
+            lListNomCandidat.add(listCandidat.get(i).getNomCandidat());
 
         }
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, lListNomCandidat);
