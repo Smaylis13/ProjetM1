@@ -35,7 +35,7 @@ public class CVote implements Serializable,Parcelable {
 
     private List<CResult> mResultVote=null;
 
-    private List<CType> mTypes;
+    private CType mTypes;
 
     private List<CRule> mRules;
 
@@ -50,7 +50,7 @@ public class CVote implements Serializable,Parcelable {
 
     public CVote(){};
 
-    public CVote(String pVoteName, String pDescriptionVote, boolean pStatusVote, Date pDateDebut, Date pDateFin, int pOrganisateur, List<CResult> pResultVote, List<CType> pType, List<CRule> pRules, List<CCandidate> pCandidate, List<CDeleguation> pDeleguations) {
+    public CVote(String pVoteName, String pDescriptionVote, boolean pStatusVote, Date pDateDebut, Date pDateFin, int pOrganisateur, List<CResult> pResultVote,CType pType, List<CRule> pRules, List<CCandidate> pCandidate, List<CDeleguation> pDeleguations) {
         this.mVoteName = pVoteName;
         this.mDescriptionVote = pDescriptionVote;
         this.mStatusVote = pStatusVote;
@@ -157,11 +157,11 @@ public class CVote implements Serializable,Parcelable {
         this.mRules=pRules;
     }
 
-    public List<CType> getTypes() {
+    public CType getTypes() {
         return mTypes;
     }
 
-    public void setTypes(List<CType> pTypes) {
+    public void setTypes(CType pTypes) {
         this.mTypes = pTypes;
     }
 
