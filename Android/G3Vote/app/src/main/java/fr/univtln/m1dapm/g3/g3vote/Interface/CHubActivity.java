@@ -112,11 +112,11 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        Intent lIntent=getIntent();
+        /*Intent lIntent=getIntent();
         sLoggedUser=(CUser)lIntent.getSerializableExtra(CCommunication.LOGGED_USER);
         CTaskParam lParams=new CTaskParam(CRequestTypesEnum.get_votes,sLoggedUser.getUserId());
         CVotesAsync lVotesAsc=new CVotesAsync();
-        lVotesAsc.execute(lParams);
+        lVotesAsc.execute(lParams);*/
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -149,8 +149,8 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
         }
 
         // issma
-        mMail=sLoggedUser.getEmail();
-
+        //mMail=sLoggedUser.getEmail();
+        
         mGcm = GoogleCloudMessaging.getInstance(this);
 
 		mContext = getApplicationContext();
