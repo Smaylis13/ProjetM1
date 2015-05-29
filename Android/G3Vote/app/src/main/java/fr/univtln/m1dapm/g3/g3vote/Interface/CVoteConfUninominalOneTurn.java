@@ -83,7 +83,6 @@ public class CVoteConfUninominalOneTurn extends AppCompatActivity {
         lIntent.putExtra("END_DATE", mDateDebut);
         lIntent.putExtra("VOTE_TYPE", TYPE_VOTE);
         startActivity(lIntent);
-
     }
 
     public void addChoiceButton(View view) {

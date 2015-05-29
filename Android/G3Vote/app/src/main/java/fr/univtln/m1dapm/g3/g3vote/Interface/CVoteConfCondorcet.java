@@ -54,7 +54,7 @@ public class CVoteConfCondorcet extends AppCompatActivity {
         InputMethodManager inputMethodManager = (InputMethodManager)  activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
     }
-    
+
     public void validateConfCondorcet(View pView) {
         hideSoftKeyboard(this);
         Intent lIntent = new Intent(this,CTestActivity.class);

@@ -55,6 +55,7 @@ public class CVoteConfMajorityJugement extends AppCompatActivity {
         inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
     }
 
+
     public void validateConfMajorityJugement(View pView){
         hideSoftKeyboard(this);
         Intent lIntent = new Intent(this,CTestActivity.class);
