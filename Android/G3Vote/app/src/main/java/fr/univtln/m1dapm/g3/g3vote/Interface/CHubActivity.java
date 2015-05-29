@@ -468,7 +468,7 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
         Date lDateDeDebut=new Date();
         Date lDateDeFin=new Date();
 
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy",Locale.FRANCE);
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         if (!lDateDebut.equals("Choix date")){
             lDateDeDebut = dateFormat.parse(lDateDebut);
         }
@@ -509,7 +509,7 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
         else if (lDateFin.equals("Choix date")){
             Toast.makeText(this,getString(R.string.dateEndEmpty),Toast.LENGTH_SHORT).show();
         }
-        else if(lDateDeDebut.after(lDateDeFin)) {
+        else if(lDateDeDebut.compareTo(lDateDeFin)>0) {
             Toast.makeText(this,getString(R.string.dateBeginAfterDateEnd),Toast.LENGTH_SHORT).show();
         }
         else{
