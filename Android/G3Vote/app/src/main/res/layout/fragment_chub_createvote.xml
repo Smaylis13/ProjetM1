@@ -32,7 +32,6 @@
     <!--TODO:add an icon to this button that looks like a calendar-->
     <Button
         android:id="@+id/bVoteDateBegin"
-        style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Choix date"
@@ -43,7 +42,7 @@
         android:id="@+id/voteDateEndText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="@string/voteDateEnd"
         android:layout_alignTop="@+id/voteDateBeginText"
         android:layout_alignParentRight="true"

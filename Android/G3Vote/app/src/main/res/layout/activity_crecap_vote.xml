@@ -98,7 +98,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Tout annuler"
+        android:text="@string/cancelVote"
         android:id="@+id/AnnulationVote"
         android:onClick="cancelVoteCreation"
         android:layout_alignParentRight="true"
