@@ -112,8 +112,8 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        Intent lIntent=getIntent();
-        /*sLoggedUser=(CUser)lIntent.getSerializableExtra(CCommunication.LOGGED_USER);
+        /*Intent lIntent=getIntent();
+        sLoggedUser=(CUser)lIntent.getSerializableExtra(CCommunication.LOGGED_USER);
         CTaskParam lParams=new CTaskParam(CRequestTypesEnum.get_votes,sLoggedUser.getUserId());
         CVotesAsync lVotesAsc=new CVotesAsync();
         lVotesAsc.execute(lParams);*/
@@ -149,12 +149,8 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
         }
 
         // issma
-        Intent lIntente = getIntent();
-        if (lIntente != null){
-            mMail = lIntente.getStringExtra(CLoginActivity.EXTRA_LOGIN);
-            Log.i(GCM_TAG,mMail);
-        }
-
+        //mMail=sLoggedUser.getEmail();
+        
         mGcm = GoogleCloudMessaging.getInstance(this);
 
 		mContext = getApplicationContext();

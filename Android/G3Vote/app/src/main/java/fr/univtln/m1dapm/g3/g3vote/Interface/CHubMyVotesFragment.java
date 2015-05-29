@@ -79,7 +79,7 @@ public class CHubMyVotesFragment extends Fragment {
 
         //Récupération de la liste des personnes
         //ArrayList<CVote> listVote = CVote.getAListOfVote();
-        sVotes = CVote.getAListOfVote();
+        //sVotes = CVote.getAListOfVote();
 
         //Création et initialisation de l'Adapter pour les personnes
         sAdapter = new CVoteAdapter(rootView.getContext(), sVotes);
