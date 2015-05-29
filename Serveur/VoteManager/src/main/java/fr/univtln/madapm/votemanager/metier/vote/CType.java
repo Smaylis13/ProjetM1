@@ -10,13 +10,12 @@ import java.util.List;
  * copyright Christian
  */
 @Entity
-@Table(name="type")
+@Table(name="type",uniqueConstraints =@UniqueConstraint(columnNames={"NOM_TYPE"}))
 public class CType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="ID_TYPE")
-    @JsonIgnore
     private int mIdType;
     @Column(name="NOM_TYPE",nullable = false)
     private String mName;
@@ -28,6 +27,9 @@ public class CType {
             inverseJoinColumns = {@JoinColumn(name="ID_REGLE",nullable = false,updatable = false)})
     private List<CRule> mListRulesAllowed;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="mType")
+    private List<CVote> mListVotes;
+
     public CType(){}
 
     public CType(int pidType, String pName, String pDescription) {
@@ -37,6 +39,9 @@ public class CType {
     }
 
 
+    public void setIdType(int pId){
+        this.mIdType=pId;
+    }
     public String getNom() {
         return mName;
     }

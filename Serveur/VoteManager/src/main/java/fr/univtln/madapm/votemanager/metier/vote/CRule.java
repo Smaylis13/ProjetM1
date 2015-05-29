@@ -16,7 +16,6 @@ public class CRule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="ID_REGLE")
-    @JsonIgnore
     private int mIdRegle;
     @Column(name="DESCRIPTION_REGLE")
     private String mDescription;

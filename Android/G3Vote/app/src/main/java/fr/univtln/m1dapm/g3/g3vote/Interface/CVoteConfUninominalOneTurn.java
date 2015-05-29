@@ -76,11 +76,13 @@ public class CVoteConfUninominalOneTurn extends AppCompatActivity {
     //send vote parameters to the participant selection
     public void validateConfUniOne(View view) {
         hideSoftKeyboard(this);
-        Intent lIntent = new Intent(this,CTestActivity.class);
+        mAdapter.notifyDataSetChanged();
+        Log.i("donner candida",mListCandidat.toString());
+        Intent lIntent = new Intent(this,CParticipantActivity.class);
         lIntent.putExtra("liste de Candidat", mListCandidat);
         lIntent.putExtra("VOTE_NAME", mVoteName);
-        lIntent.putExtra("START_DATE", mDateFin);
-        lIntent.putExtra("END_DATE", mDateDebut);
+        lIntent.putExtra("START_DATE", mDateDebut);
+        lIntent.putExtra("END_DATE", mDateFin);
         lIntent.putExtra("VOTE_TYPE", TYPE_VOTE);
         startActivity(lIntent);
     }

@@ -6,6 +6,7 @@ import fr.univtln.madapm.votemanager.metier.vote.CDeleguation;
 import fr.univtln.madapm.votemanager.metier.vote.CVote;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,7 +21,8 @@ import java.util.List;
 @Entity
 @Table(name="utilisateur",uniqueConstraints =@UniqueConstraint(columnNames={"MAIL"}))
 @NamedQueries({
-        @NamedQuery(name = "CUser.findAll", query = "SELECT c FROM CUser c where c.mEmail= :emailUser")
+        @NamedQuery(name = "CUser.findAll", query = "SELECT c FROM CUser c where c.mEmail= :emailUser"),
+        @NamedQuery(name = "CUser.findChoicesForVote", query = "SELECT c.mIdChoice FROM CChoice c where (c.mUser= :User) and (c.mVote= :Vote)")
 })
 public class CUser {
 
@@ -52,6 +54,11 @@ public class CUser {
     @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL, mappedBy="mOrganisateur")
     private List<CVote> mOrganisedVotes=null;
 
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name="invitation", joinColumns = {@JoinColumn(name="ID_UTILISATEUR",nullable = false,updatable = false)},
+            inverseJoinColumns = {@JoinColumn(name="ID_VOTE",nullable = false,updatable = false)})
+    private List<CVote> mParticipatingVotes;
+
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL, mappedBy="mUser")
     private List<CChoice> mParticipations;
@@ -73,7 +80,14 @@ public class CUser {
         this.mPassword = pPassword;
     }
 
-    public int getmUserId() {
+    public List<Integer> obtainParticipatingVotesIds() {
+        List<Integer> lIdVotes=new ArrayList<>();
+        for(CVote v:mParticipatingVotes)
+            lIdVotes.add(v.getIdVote());
+        return lIdVotes;
+    }
+
+    public int getUserId() {
         return mUserId;
     }
 
@@ -88,59 +102,67 @@ public class CUser {
 
         CUser user = (CUser) o;
 
-        if(this.getmEmail()!=user.getmEmail()) return false;
+        if(this.getEmail()!=user.getEmail()) return false;
 
-        if(this.getmUserId()!=user.getmUserId()) return false;
+        if(this.getUserId()!=user.getUserId()) return false;
 
-        if(this.getmName()!=user.getmName()) return false;
+        if(this.getName()!=user.getName()) return false;
 
-        if(this.getmFirstName()!=user.getmFirstName()) return false;
+        if(this.getFirstName()!=user.getFirstName()) return false;
 
-        if(this.getmPassword()!=user.getmPassword()) return false;
+        if(this.getPassword()!=user.getPassword()) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        return this.getmEmail()!=null?this.getmEmail().hashCode():0;
+        return this.getEmail()!=null?this.getEmail().hashCode():0;
     }
 
-    public String getmEmail() {
+    public String getEmail() {
         return mEmail;
     }
 
-    public void setmEmail(String pEmail) {
+    public void setEmail(String pEmail) {
         this.mEmail = pEmail;
     }
 
-    public String getmPassword() {
+    public String getPassword() {
         return mPassword;
     }
 
-    public void setmPassword(String pPassword) {
+    public void setPassword(String pPassword) {
         this.mPassword = pPassword;
     }
 
-    public String getmName() {
+    public String getName() {
         return mName;
     }
 
-    public void setmName(String pName) {
+    public void setName(String pName) {
         this.mName = pName;
     }
 
-    public String getmFirstName() {
+    public String getFirstName() {
         return mFirstName;
     }
 
-    public void setmFirstName(String pFirstName) {
+    public void setFirstName(String pFirstName) {
         this.mFirstName = pFirstName;
     }
 
     /* public List<CVote> getmOrganisedVotes() {
         return mOrganisedVotes;
     }*/
+
+    public void addContact(CUser pUser){
+        this.mListContacts.add(pUser);
+    }
+
+    public List<CUser> obtainContacts(){
+        return this.mListContacts;
+    }
 
     @Override
     public String toString() {

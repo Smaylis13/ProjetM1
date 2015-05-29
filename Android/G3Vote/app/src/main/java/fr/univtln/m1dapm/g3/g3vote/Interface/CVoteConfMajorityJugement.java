@@ -97,8 +97,8 @@ public class CVoteConfMajorityJugement extends AppCompatActivity {
         Intent lIntent = new Intent(this, CTestActivity.class);
         lIntent.putExtra("liste de Candidat", mListCandidat);
         lIntent.putExtra("VOTE_NAME", mVoteName);
-        lIntent.putExtra("START_DATE", mDateFin);
-        lIntent.putExtra("END_DATE", mDateDebut);
+        lIntent.putExtra("START_DATE", mDateDebut);
+        lIntent.putExtra("END_DATE", mDateFin);
         lIntent.putExtra("VOTE_TYPE", TYPE_VOTE);
         lIntent.putExtra("CALCULATIONMETHOD", mCalculationMethod);
         if (mCalculationMethod != -1){

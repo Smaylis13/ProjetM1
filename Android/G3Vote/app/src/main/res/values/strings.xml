@@ -68,4 +68,6 @@
     <string name="dateBeginEmpty">Vous n\'avez pas choisi de date de début</string>
     <string name="dateEndEmpty">Vous n\'avez pas choisi de date de fin</string>
     <string name="dateBeginAfterDateEnd">La date de début est avant la date de fin</string>
+    <string name="title_activity_cparticipant">CParticipantActivity</string>
+    <string name="title_activity_crecap_vote">CRecapVoteActivity</string>
 </resources>
