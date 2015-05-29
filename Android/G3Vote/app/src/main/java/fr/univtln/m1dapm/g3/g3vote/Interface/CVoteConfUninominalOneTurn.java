@@ -1,5 +1,6 @@
 package fr.univtln.m1dapm.g3.g3vote.Interface;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -8,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -67,16 +69,13 @@ public class CVoteConfUninominalOneTurn extends AppCompatActivity {
         return true;
     }
 
+    public static void hideSoftKeyboard(Activity activity) {
+        InputMethodManager inputMethodManager = (InputMethodManager)  activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
+    }
     //send vote parameters to the participant selection
     public void validateConfUniOne(View view) {
-        for (int i = 0; i < mListCandidat.size() ; i++) {
-            ListView test = (ListView)findViewById(R.id.lLVUninomialOneTurn);
-            View cde = test.getChildAt(i);
-            EditText editText=(EditText)cde.findViewById(R.id.choiceName);
-            String string=editText.getText().toString();
-            mListCandidat.get(i).setNomCandidat(string);
-            Log.i("test",string);
-        }
+        hideSoftKeyboard(this);
         Intent lIntent = new Intent(this,CTestActivity.class);
         lIntent.putExtra("liste de Candidat", mListCandidat);
         lIntent.putExtra("VOTE_NAME", mVoteName);
