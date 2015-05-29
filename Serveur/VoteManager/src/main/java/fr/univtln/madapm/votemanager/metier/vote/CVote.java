@@ -1,9 +1,11 @@
 package fr.univtln.madapm.votemanager.metier.vote;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import fr.univtln.madapm.votemanager.dao.CUserDAO;
 import fr.univtln.madapm.votemanager.metier.user.CUser;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -11,6 +13,10 @@ import java.util.List;
  * copyright Christian
  */
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "CVote.findAllFromUser", query = "SELECT c FROM CVote c where (c.mOrganisateur= :User) or c.mIdVote in :IdVotes"),
+        @NamedQuery(name = "CVote.findOrgaByUser", query = "SELECT c FROM CVote c where (c.mOrganisateur= :User)")
+})
 @Table(name="vote")
 public class CVote {
 
@@ -24,9 +30,9 @@ public class CVote {
     @Column(name="DESCRIPTION_VOTE")
     private String mDescriptionVote;
     @Column(name="DATE_DEBUT_VOTE")
-    private String mDateDebut;
+    private Date mDateDebut;
     @Column(name="DATE_FIN_VOTE")
-    private String mDateFin;
+    private Date mDateFin;
 
     @Column(name="STATUT_VOTE")
     private boolean mStatusVote;
@@ -38,10 +44,9 @@ public class CVote {
     @OneToMany(cascade = CascadeType.ALL, mappedBy="mVote")
     private List<CResult> mResultVote=null;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name="certifie", joinColumns = {@JoinColumn(name="ID_VOTE",nullable = false,updatable = false)},
-            inverseJoinColumns = {@JoinColumn(name="ID_TYPE",nullable = false,updatable = false)})
-    private List<CType> mType;
+    @JoinColumn(name="ID_TYPE")
+    @ManyToOne(fetch=FetchType.LAZY,optional = false,cascade = CascadeType.REFRESH)
+    private CType mType;
 
     @JoinTable(name="parametre", joinColumns = {@JoinColumn(name="ID_VOTE",nullable = false,updatable = false)},
             inverseJoinColumns = {@JoinColumn(name="ID_REGLE",nullable = false,updatable = false)})
@@ -59,10 +64,19 @@ public class CVote {
     @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL, mappedBy="mVote")
     private List<CDeleguation> mDeleguations;
 
+    @JsonIgnore
+    @JoinTable(name="invitation", joinColumns = {@JoinColumn(name="ID_VOTE",nullable = false,updatable = false)},
+            inverseJoinColumns = {@JoinColumn(name="ID_UTILISATEUR",nullable = false,updatable = false)})
+    @ManyToMany
+    private List<CUser> mParticipatingUsers;
+
+    @Transient
+    private boolean mVoted;
+
     public CVote(){}
 
-    public CVote(int pIdvote, String pNomvote, String pDescriptionvote, String pDatedebut, String pDatefin,
-                 List<CResult> pResultvote, List<CType> pType, List<CRule> pRegle, boolean pStatusvote,
+    public CVote(int pIdvote, String pNomvote, String pDescriptionvote, Date pDatedebut, Date pDatefin,
+                 List<CResult> pResultvote, CType pType, List<CRule> pRegle, boolean pStatusvote,
                  CUser pOrganisateur, List<CCandidate> pCandidate) {
         this.mIdVote = pIdvote;
         this.mVoteName = pNomvote;
@@ -77,8 +91,8 @@ public class CVote {
         this.mCandidate = pCandidate;
     }
 
-    public CVote(int pIdvote, String pNomvote, String pDescriptionvote, String pDatedebut, String pDatefin,
-                 List<CResult> pResultvote, List<CType> pType, List<CRule> pRegle, boolean pStatusvote,
+    public CVote(int pIdvote, String pNomvote, String pDescriptionvote, Date pDatedebut, Date pDatefin,
+                 List<CResult> pResultvote, CType pType, List<CRule> pRegle, boolean pStatusvote,
                  CUser pOrganisateur, List<CChoice> pChoices, List<CCandidate> pCandidate) {
         this.mIdVote = pIdvote;
         this.mVoteName = pNomvote;
@@ -95,36 +109,36 @@ public class CVote {
     }
 
 
-    public int getmIdVote(){return mIdVote;}
-    public String getmVoteName() {
+    public int getIdVote(){return mIdVote;}
+    public String getVoteName() {
         return mVoteName;
     }
 
-    public void setmVoteName(String pNomvote) {
+    public void setVoteName(String pNomvote) {
         this.mVoteName = pNomvote;
     }
 
-    public String getmDescriptionVote() {
+    public String getDescriptionVote() {
         return mDescriptionVote;
     }
 
-    public void setmDescriptionVote(String pDescriptionvote) {
+    public void setDescriptionVote(String pDescriptionvote) {
         this.mDescriptionVote = pDescriptionvote;
     }
 
-    public String getDateDebut() {
+    public Date getDateDebut() {
         return mDateDebut;
     }
 
-    public void setDateDebut(String pDatedebut) {
+    public void setDateDebut(Date pDatedebut) {
         this.mDateDebut = pDatedebut;
     }
 
-    public String getDateFin() {
+    public Date getDateFin() {
         return mDateFin;
     }
 
-    public void setDateFin(String pDatefin) {
+    public void setDateFin(Date pDatefin) {
         this.mDateFin = pDatefin;
     }
 
@@ -136,19 +150,19 @@ public class CVote {
         this.mResultVote = pResultvote;
     }*/
 
-    public List<CType> getType() {
+    public CType getTypes() {
         return mType;
     }
 
-    public void setType(List<CType> pType) {
+    public void setTypes(CType pType) {
         this.mType = pType;
     }
 
-    public List<CRule> getRegle() {
+    public List<CRule> getRegles() {
         return mRegle;
     }
 
-    public void setRegle(List<CRule> mRegle) {
+    public void setRegles(List<CRule> mRegle) {
         this.mRegle = mRegle;
     }
 
@@ -160,14 +174,22 @@ public class CVote {
         this.mStatusVote = pStatusvote;
     }
 
-    public CUser getOrganisateur() {
-        return mOrganisateur;
+    public int getOrganisateur() {
+        return mOrganisateur.getUserId();
     }
 
-    public void setOrganisateur(CUser pOrganisateur) {
-        this.mOrganisateur = pOrganisateur;
+    public void setOrganisateur(int pIdOrga) {
+        CUserDAO lUserDao=new CUserDAO();
+        this.mOrganisateur = lUserDao.findByID(pIdOrga);
     }
 
+    public boolean getVoted(){
+        return mVoted;
+    }
+
+    public void setterVoted(boolean pVoted){
+        this.mVoted=pVoted;
+    }
    /* public List<CChoice> getVotes() {
         return mChoices;
     }

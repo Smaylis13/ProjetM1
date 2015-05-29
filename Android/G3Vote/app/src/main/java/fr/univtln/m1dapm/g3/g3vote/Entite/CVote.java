@@ -85,6 +85,7 @@ public class CVote implements Serializable,Parcelable {
     }
     public void setIdVote(int pId){this.mIdVote=pId;}
 
+    @JsonIgnore
     public int getIdVote(){return this.mIdVote;}
 
     public void setVoted(boolean pVoted){
@@ -225,6 +226,7 @@ public class CVote implements Serializable,Parcelable {
                 '}';
     }
 
+    @JsonIgnore
     public boolean isVoted(){
         return mVoted;
     }

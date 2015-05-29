@@ -86,10 +86,12 @@ public class CCRUDServiceBean<T> implements ICRUDService<T> {
     public List findWithNamedQuery(String pNamedQueryName, Map pParameters, int pResultLimit) {
         Set<Map.Entry> lRawParameters = pParameters.entrySet();
         Query lQuery = this.mEM.createNamedQuery(pNamedQueryName);
+        //System.out.println(lQuery.toString());
         if(pResultLimit > 0)
             lQuery.setMaxResults(pResultLimit);
-        for(Map.Entry lEntry : lRawParameters)
+        for(Map.Entry lEntry : lRawParameters) {
             lQuery.setParameter((String) lEntry.getKey(), lEntry.getValue());
+        }
         return lQuery.getResultList();
     }
 
