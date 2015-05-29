@@ -29,18 +29,44 @@ public class CUserRest {
         return lUserDAO.findByID(pId);
     }
 
+    @GET
+    @Path("/contact/{pIdU}")
+    public Response getContacts(@PathParam("pIdU") int pIdU){
+        CUserDAO lUserDAO=new CUserDAO();
+        CUser lUser=lUserDAO.findByID(pIdU);
+        return Response.status(200).entity(lUser.obtainContacts()).build();
+    }
+
+    @PUT
+    @Path("/contact/{pIdU}/{emailC}")
+    public Response addContact(@PathParam("pIdU") int pIdU,@PathParam("emailC") String pEmailC){
+        CUserDAO lUserDAO=new CUserDAO();
+        CUser lUser=lUserDAO.findByID(pIdU);
+        Map<String,String> lParams = new HashMap<>();
+        lParams.put("emailUser",pEmailC);
+        List<CUser> lUsers=new ArrayList<>();
+        lUsers=lUserDAO.findWithNamedQuery("CUser.findAll",lParams);
+        if(lUsers.isEmpty()) {
+            //TODO treatment for a non-existing invited user
+            return Response.status(404).build();
+        }
+        lUser.addContact(lUserDAO.findByID(lUsers.get(0).getUserId()));
+        lUserDAO.update(lUser);
+        return Response.status(200).build();
+    }
+
 
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addUser(CUser pNewUser){
         Map<String,String> lParams = new HashMap<>();
-        lParams.put("emailUser",pNewUser.getmEmail());
+        lParams.put("emailUser",pNewUser.getEmail());
         CUserDAO lUserDAO=new CUserDAO();
         List<CUser> lUsers=new ArrayList<>();
         lUsers=lUserDAO.findWithNamedQuery("CUser.findAll",lParams);
         if(lUsers.isEmpty()) {
             lUserDAO.create(pNewUser);
-            return Response.status(201).entity(pNewUser.getmUserId()).build();
+            return Response.status(201).entity(pNewUser.getUserId()).build();
         }
         return Response.status(409).entity(0).build();
     }
@@ -51,13 +77,13 @@ public class CUserRest {
     @Path("/connect")
     public Response logUser(CUser pUser){
         Map<String,String> lParams = new HashMap<>();
-        lParams.put("emailUser",pUser.getmEmail());
+        lParams.put("emailUser",pUser.getEmail());
         CUserDAO lUserDAO=new CUserDAO();
         List<CUser> lUsers=new ArrayList<>();
         lUsers=lUserDAO.findWithNamedQuery("CUser.findAll",lParams);
         if(!lUsers.isEmpty()) {
             CUser lFindedUser = lUsers.get(0);
-            if ((pUser.getmEmail().equals(lFindedUser.getmEmail())) && (pUser.getmPassword().equals(lFindedUser.getmPassword())))
+            if ((pUser.getEmail().equals(lFindedUser.getEmail())) && (pUser.getPassword().equals(lFindedUser.getPassword())))
                 return Response.status(200).entity(lFindedUser).build();
 
         }

@@ -1,5 +1,7 @@
 package fr.univtln.m1dapm.g3.g3vote.Entite;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 /**
@@ -25,6 +27,9 @@ public class CType {
         this.mDescription = pDescription;
     }
 
+    public int getIdType(){
+        return this.mIdType;
+    }
 
     public String getNom() {
         return mName;

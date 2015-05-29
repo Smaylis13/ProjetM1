@@ -12,9 +12,9 @@
         android:id="@+id/addChoiceButton"
         android:src="@mipmap/ic_add_button"
         android:onClick="addChoiceButton"
+        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_above="@+id/lLVMajorityJugement" />
+        android:layout_alignParentStart="true" />
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -33,19 +33,29 @@
         android:text="@string/validationText"
         android:onClick="validateConfMajorityJugement"
         android:id="@+id/button"
-        android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/lLVMajorityJugement"
-        android:layout_alignEnd="@+id/lLVMajorityJugement" />
+        android:layout_below="@+id/calculationMethod"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <ListView
         android:id="@+id/lLVMajorityJugement"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
         android:descendantFocusability="afterDescendants"
         android:focusable="false"
-        android:layout_below="@+id/removeChoiceButton">
+        android:layout_below="@+id/button"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
     </ListView>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/calculationMethod"
+        android:id="@+id/calculationMethod"
+        android:onClick="calculationMethod"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

@@ -16,17 +16,18 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.sql.Array;
+import java.sql.Date;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import fr.univtln.m1dapm.g3.g3vote.Communication.CCommunication;
 import fr.univtln.m1dapm.g3.g3vote.Communication.CRequestTypesEnum;
 import fr.univtln.m1dapm.g3.g3vote.Communication.CTaskParam;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CType;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
 import fr.univtln.m1dapm.g3.g3vote.R;
 
@@ -58,6 +59,7 @@ public class CTestActivity extends AppCompatActivity {
         mVoteName = (String) extras.get("VOTE_NAME");
         mDateDebut = (String) extras.get("START_DATE");
         mDateFin = (String) extras.get("END_DATE");
+        mVoteType=(String) extras.get("VOTE_TYPE");
         TextView lTVVoteType = (TextView) findViewById((R.id.voteType));
         TextView lTVVoteName = (TextView) findViewById(R.id.voteName);
         TextView lTVDateDebut = (TextView) findViewById(R.id.recapDateDebut);
@@ -82,11 +84,12 @@ public class CTestActivity extends AppCompatActivity {
 
     public void validate (View view) throws ParseException {
 
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date lDateDeb = simpleDateFormat.parse(mDateDebut);
-        Date lDateFin = simpleDateFormat.parse(mDateFin);
+        DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-        CVote lVote = new CVote(mVoteType, "", true, lDateDeb, lDateFin, 1, null, null, null, listCandidat, null);
+        Date lDateDeb = new java.sql.Date(simpleDateFormat.parse(mDateDebut).getTime());
+        Date lDateFin = new java.sql.Date(simpleDateFormat.parse(mDateFin).getTime());
+
+        CVote lVote = new CVote(mVoteName, "", true, lDateDeb, lDateFin, 1, null, new CType(1,mVoteType,"test"), null, listCandidat, null);
         CTaskParam lParams = new CTaskParam(CRequestTypesEnum.add_new_vote, lVote);
         CCommunication lCom = new CCommunication();
         lCom.execute(lParams);

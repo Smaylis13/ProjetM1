@@ -220,6 +220,7 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                     lHttpCon = (HttpURLConnection) lUrl.openConnection();
                     CVote lNewVote = (CVote) lParams.getObject();
                     String lJsonStringNewVote=lMapper.writeValueAsString(lNewVote);
+                    Log.e("TEST",lJsonStringNewVote);
                     JSONObject lNewVoteOBJ = new JSONObject(lJsonStringNewVote);
                     lHttpCon.setDoOutput(true);
                     lHttpCon.setDoInput(true);
@@ -232,10 +233,11 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                     lOut.flush();
                     lCode=lHttpCon.getResponseCode();
                     if(lCode==201) {
+                        Log.e("TEST CODE VOTE:", "CODE:"+lCode);
                         //lOut.close();
-                        lIn = new BufferedInputStream(lHttpCon.getInputStream());
+                       /* lIn = new BufferedInputStream(lHttpCon.getInputStream());
                         lResponse = readStream(lIn);
-                        lNewVote.setIdVote(Integer.decode(lResponse));
+                        lNewVote.setIdVote(Integer.decode(lResponse));*/
                     }
                     else
                         return lCode;
