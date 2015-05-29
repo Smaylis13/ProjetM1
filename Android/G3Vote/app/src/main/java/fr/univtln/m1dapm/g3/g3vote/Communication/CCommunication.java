@@ -95,8 +95,7 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                         //lOut.close();
                         lIn = new BufferedInputStream(lHttpCon.getInputStream());
                         lResponse = readStream(lIn);
-                        Gson lGson = new Gson();
-                        CUser lLoggedUser=lGson.fromJson(lResponse, CUser.class);
+                        CUser lLoggedUser=lMapper.readValue(lResponse,CUser.class);
                         Intent lLogIntent=new Intent(CLoginActivity.getsContext(),CHubActivity.class);
                         lLogIntent.putExtra(LOGGED_USER, lLoggedUser);
                         lLogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

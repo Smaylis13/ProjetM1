@@ -2,6 +2,7 @@ package fr.univtln.m1dapm.g3.g3vote.Entite;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public class CUser implements Serializable{
         return mUserId;
     }
 
+    @JsonSetter("userId")
     public void setUserId(int pIdUser) {
         this.mUserId = pIdUser;
     }
