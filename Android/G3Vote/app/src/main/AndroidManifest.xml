@@ -34,7 +34,7 @@
         </activity>
         <activity
             android:name=".Interface.CHubActivity"
-            android:label="@string/title_activity_chub" 
+            android:label="@string/title_activity_chub"
             android:windowSoftInputMode="adjustPan">
         </activity>
         <activity
