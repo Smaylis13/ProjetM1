@@ -23,7 +23,7 @@ import fr.univtln.m1dapm.g3.g3vote.R;
  * Created by sebastien on 28/05/15.
  */
 public class CVoteConfBorda extends AppCompatActivity {
-    private static ArrayList<CCandidate> mListCandidat = new ArrayList<CCandidate>();
+    private ArrayList<CCandidate> mListCandidat = new ArrayList<CCandidate>();
 
     private CCandidatAdapter mAdapter;
 
