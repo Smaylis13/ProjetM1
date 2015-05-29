@@ -58,8 +58,8 @@ public class CCandidatAffichageAdapter extends ArrayAdapter<CCandidate> {
 
         CCandidate lCandidate = getItem(pposition);
         if (lCandidate != null) {
-            viewHolder.textViewName.setText(lCandidate.getNom());
-            viewHolder.textViewDesc.setText(lCandidate.getDescription());
+            viewHolder.textViewName.setText(lCandidate.getNomCandidat());
+            viewHolder.textViewDesc.setText(lCandidate.getDescriptionCandidat());
         }
         return pconvertView;
     }

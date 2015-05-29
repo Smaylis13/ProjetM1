@@ -1,6 +1,8 @@
 package fr.univtln.m1dapm.g3.g3vote.Interface;
 
 import android.content.Context;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,11 +64,44 @@ public class CCandidatAdapter extends BaseAdapter {
             layoutItem = (RelativeLayout) convertView;
         }
 
-        EditText lET_choice = (EditText)layoutItem.findViewById(R.id.choiceName);
-        EditText lET_Description = (EditText)layoutItem.findViewById(R.id.choiceDescription);
+        final EditText lET_choice = (EditText)layoutItem.findViewById(R.id.choiceName);
+        lET_choice.addTextChangedListener(new TextWatcher()
+        {
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2)
+            {
+
+            }
+
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2)
+            {
+                mListCandidat.get(position).setNomCandidat(lET_choice.getText().toString());
+            }
+
+            public void afterTextChanged(Editable editable)
+            {
+
+            }
+        });
+        final EditText lET_Description = (EditText)layoutItem.findViewById(R.id.choiceDescription);
         //ImageButton lib_addChoiceButton = (ImageButton)layoutItem.findViewById(R.id.addChoiceButton);
         //ImageButton lib_removeChoiceButton = (ImageButton)layoutItem.findViewById(R.id.removeChoiceButton);
+        lET_Description.addTextChangedListener(new TextWatcher()
+        {
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2)
+            {
 
+            }
+
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2)
+            {
+                mListCandidat.get(position).setDescriptionCandidat(lET_Description.getText().toString());
+            }
+
+            public void afterTextChanged(Editable editable)
+            {
+
+            }
+        });
 
         lET_choice.setHint(R.string.lETChoiceHint);
         lET_Description.setHint(R.string.lETDescriptionHint);
