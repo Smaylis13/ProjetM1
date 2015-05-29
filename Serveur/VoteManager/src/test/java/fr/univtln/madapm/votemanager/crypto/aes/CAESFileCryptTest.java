@@ -25,15 +25,15 @@ public class CAESFileCryptTest extends TestCase {
         System.out.println(keyGenerator.getClef());
 
         CAESCrypt aesCrypt = new CAESCrypt();
-        byte[] strc = aesCrypt.encrypt(keyGenerator.getClef(), str);
-        System.out.println(aesCrypt.decrypt(keyGenerator.getClef(), strc));
+        byte[] strc = aesCrypt.encrypt(keyGenerator.getPrivateKey(), str);
+        System.out.println(aesCrypt.decrypt(keyGenerator.getPrivateKey(), strc));
 
         System.out.println("Test fichier");
 
         CAESFileCrypt aesFileCrypt = new CAESFileCrypt();
         try {
-            aesFileCrypt.encrypterFichier(keyGenerator.getClef(), "/src/json/CVote.json", "/src/json/CVoteEncrypt.txt");
-            aesFileCrypt.decrypterFichier(keyGenerator.getClef(), "/src/json/CVoteEncrypt.txt", "/src/json/CVoteDecrypt.json");
+            aesFileCrypt.encrypterFichier(keyGenerator.getPrivateKey(), "/src/json/CVote.json", "/src/json/CVoteEncrypt.txt");
+            aesFileCrypt.decrypterFichier(keyGenerator.getPrivateKey(), "/src/json/CVoteEncrypt.txt", "/src/json/CVoteDecrypt.json");
             System.out.println("test");
         } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException e) {
             e.printStackTrace();

@@ -3,9 +3,12 @@ package fr.univtln.madapm.votemanager.crypto.keygen;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
+import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -22,19 +25,33 @@ public class CKeyGenerator extends Random {
     private static final int SIZE = 128;
     private static final int SIZES = 16;
 
-    private final SecretKey mClef;
+    private final SecretKey mPrivateKey;
 
-    private final byte[] mPublicKey = randByte(new byte[SIZES]); // 16 bytes = 128 bits
+    private final CKeyNumberGenerator mKeyNumberGenerator = new CKeyNumberGenerator();
+    private final BigInteger mPublicKey = mKeyNumberGenerator.getPublicKey();
+    //private final byte[] mPublicKey = randByte(new byte[SIZES]); // 16 bytes = 128 bits
+
+    //partie spécifique au serveur
+    private final Map<Integer, SecretKey> mClef = new HashMap<>();
+    //fin de la partie spécifique au serveur
 
     /**
      * Génère la clef privé automatiquement à sa construction
      */
     public CKeyGenerator() {
-        this.mClef = keyGen();
+        this.mPrivateKey = keyGen();
     }
 
-    public SecretKey getClef() {
-        return mClef;
+    public CKeyNumberGenerator getKeyNumberGenerator() {
+        return mKeyNumberGenerator;
+    }
+
+    public SecretKey getPrivateKey() {
+        return mPrivateKey;
+    }
+
+    public BigInteger getPublicKey() {
+        return mPublicKey;
     }
 
     /**
@@ -62,7 +79,6 @@ public class CKeyGenerator extends Random {
      * @return La clef calculé avec les deux paramètres
      */
     public SecretKeySpec specificKeyKeyGen(byte[] pG) {
-        System.out.println(Arrays.toString(mPublicKey));
         System.out.println(Arrays.toString(pG));
         byte[] lKey = pG;
         System.out.println(Arrays.toString(lKey));
@@ -78,6 +94,7 @@ public class CKeyGenerator extends Random {
         return null;
     }
 
+    /*
     public byte[] randByte(byte[] bytes) {
         for (int i = 0, len = bytes.length; i < len; )
             for (int rnd = nextInt(),
@@ -86,11 +103,18 @@ public class CKeyGenerator extends Random {
                 bytes[i++] = (byte)rnd;
         return bytes;
     }
+    */
+
+    public Map<Integer, SecretKey> getClef() {
+        return mClef;
+    }
 
     @Override
     public String toString() {
         return "CKeyGenerator{" +
-                "mclef=" + mClef +
+                "mPrivateKey=" + mPrivateKey +
+                ", mPublicKey=" + mPublicKey +
+                ", mClef=" + mClef +
                 '}';
     }
 }
