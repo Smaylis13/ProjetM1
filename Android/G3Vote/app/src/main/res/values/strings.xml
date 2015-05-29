@@ -70,4 +70,7 @@
     <string name="title_activity_cparticipant">CParticipantActivity</string>
     <string name="title_activity_crecap_vote">CRecapVoteActivity</string>
     <string name="cancelVote">Annuler tout</string>
+    <string name="vote">Voter !</string>
+    <string name="title_activity_uninominal_vote">CVoteUninominal</string>
+
 </resources>
