@@ -76,6 +76,8 @@ public class CVoteConfUninominalOneTurn extends AppCompatActivity {
     //send vote parameters to the participant selection
     public void validateConfUniOne(View view) {
         hideSoftKeyboard(this);
+        mAdapter.notifyDataSetChanged();
+        Log.i("donner candida",mListCandidat.toString());
         Intent lIntent = new Intent(this,CParticipantActivity.class);
         lIntent.putExtra("liste de Candidat", mListCandidat);
         lIntent.putExtra("VOTE_NAME", mVoteName);
