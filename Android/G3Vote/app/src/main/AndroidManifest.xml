@@ -15,7 +15,7 @@
         android:name="fr.univtln.m1dapm.g3.g3vote.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
 
-    <uses-permission android:name="fr.univtln.m1dapm.g3.g3vote.permission.C2D_MESSAGE" />
+
 
     <application
         android:allowBackup="true"
@@ -58,7 +58,7 @@
         </receiver>
 
         <service android:name=".Service.CGcmIntentService" />
-        <service android:name=".Service.CGcmIntentService" />
+
 
         <activity
             android:name=".Interface.CVoteConfSTV"
