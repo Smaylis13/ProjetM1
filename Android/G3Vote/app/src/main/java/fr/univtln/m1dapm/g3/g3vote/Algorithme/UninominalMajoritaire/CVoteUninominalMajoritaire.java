@@ -6,8 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 import fr.univtln.m1dapm.g3.g3vote.Algorithme.AAlgorithme;
-import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidat;
-import fr.univtln.m1dapm.g3.g3vote.Entite.CResultat;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CResult;
+
 import fr.univtln.m1dapm.g3.g3vote.Entite.CVoixCandidat;
 
 /**
@@ -46,13 +47,13 @@ public class CVoteUninominalMajoritaire extends AAlgorithme{
     private int mNbCandidatTour2;// nombre de candidat qui passe au deusiemme tour
 
 
-    @Override
+    //@Override
     protected void initVote() {
     initVote();
     }
 
-    @Override
-    protected CResultat CalculResultat() {
+    //@Override
+    protected CResult CalculResultat() {
         return null;
     }
 
@@ -77,7 +78,7 @@ public class CVoteUninominalMajoritaire extends AAlgorithme{
      *          le nombre de candidat quil restera au tour 2
      */
 
-    protected void initVote(List<CCandidat> pListeCandidat,int pNbtour,int pNbcandidattour2) {
+    protected void initVote(List<CCandidate> pListeCandidat,int pNbtour,int pNbcandidattour2) {
         /** initialise le vote avec pour argument la liste des candidat**/
         mListeCandidat=new ArrayList<CVoixCandidat>();
         mNbtour=pNbtour;
@@ -95,7 +96,7 @@ public class CVoteUninominalMajoritaire extends AAlgorithme{
      * @param pchoix
      *          candidat choisi par le votant
      */
-    public void nouveauVote(CCandidat pchoix){// ajoute un au nombre de vote pour le candidat
+    public void nouveauVote(CCandidate pchoix){// ajoute un au nombre de vote pour le candidat
         /** permet de valider le choix d'un votant avec pour argument le candidat choisi **/
         for (int i = 0; i <mListeCandidat.size() ; i++) {
             if (mListeCandidat.get(i).getMcandidat()==pchoix){
@@ -166,11 +167,11 @@ public class CVoteUninominalMajoritaire extends AAlgorithme{
      * <p>cherche dans la liste des candidat celui qui a le plus de voix , pui le renvoi </p>
      * @return le candidat qui a le plus de voix
      */
-    public CCandidat resultat(){// renvoi le candidat avec le plus de vote pour lui
+    public CCandidate resultat(){// renvoi le candidat avec le plus de vote pour lui
         /** donne le resultat du vote sans parametre avec pour retour le candidat avec le plus de vote pour lui  **/
         Integer pnbvotemax=0;
         Integer pnbvote;
-        CCandidat vainqueur = new CCandidat() ;
+        CCandidate vainqueur = new CCandidate() ;
 
         for (int i = 0; i < mListeCandidat.size(); i++) {
             if (mListeCandidat.get(i).getMvote() > pnbvotemax) {

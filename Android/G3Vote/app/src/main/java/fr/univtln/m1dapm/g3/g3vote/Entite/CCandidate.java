@@ -83,4 +83,9 @@ public class CCandidate implements Serializable{
     public void setId(int pId){
         this.mIdCandidat=pId;
     }
+
+    public int getIdCandidat() {
+        return mIdCandidat;
+    }
+
 }

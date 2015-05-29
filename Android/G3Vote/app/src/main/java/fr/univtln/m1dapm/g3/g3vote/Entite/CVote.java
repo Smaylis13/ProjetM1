@@ -76,6 +76,13 @@ public class CVote implements Serializable,Parcelable {
         this.mDateFin = pFin;
     }
 
+    public CVote(int pIdVote, String pNom, boolean pStatut,boolean mVoted, Date pDebut, Date pFin){
+        this(pIdVote,pNom);
+        this.mStatusVote =pStatut;
+        this.mDateDebut = pDebut;
+        this.mDateFin = pFin;
+        this.mVoted=mVoted;
+    }
     public void setIdVote(int pId){this.mIdVote=pId;}
 
     public int getIdVote(){return this.mIdVote;}
@@ -180,11 +187,11 @@ public class CVote implements Serializable,Parcelable {
 // representation of a date with the defined format.
 
 
-        listVote.add(new CVote(1,"elireToto",true,d1,d2));
-        listVote.add(new CVote(2,"elireTata",true,d3,d4));
-        listVote.add(new CVote(3,"elireTiti",false,d5,d6));
-        listVote.add(new CVote(4,"elireTete",true,d7,d8));
-        listVote.add(new CVote(5,"elireTutu",false,d9,d10));
+        listVote.add(new CVote(1,"elireToto",true,true,d1,d2));
+        listVote.add(new CVote(2,"elireTata",true,true,d3,d4));
+        listVote.add(new CVote(3,"elireTiti",false,true,d5,d6));
+        listVote.add(new CVote(4,"elireTete",true,false,d7,d8));
+        listVote.add(new CVote(5,"elireTutu",false,false,d9,d10));
         return listVote;
     }
 

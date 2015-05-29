@@ -62,20 +62,6 @@ public class CVoteConfSTV extends AppCompatActivity {
 
     public void validateConfSTV(View pView) {
         hideSoftKeyboard(this);
-        ListView lTest = (ListView)findViewById(R.id.lLVSTV);
-        for (int i = 0; i <mListCandidat.size() ; i++) {
-            View lCde = lTest.getChildAt(i);
-            EditText lEditText = (EditText) lCde.findViewById(R.id.choiceName);
-            String lString = lEditText.getText().toString();
-            EditText lEditTextdescription = (EditText) lCde.findViewById(R.id.choiceDescription);
-            String lStringdescription = lEditTextdescription.getText().toString();
-
-            mListCandidat.get(i).setNomCandidat(lString);            mListCandidat.get(i).setDescriptionCandidat(lStringdescription);
-
-            Log.i("test", mListCandidat.get(i).getNomCandidat());
-
-
-        }
         Intent lIntent = new Intent(this,CTestActivity.class);
         lIntent.putExtra("liste de Candidat",mListCandidat);
         lIntent.putExtra("VOTE_NAME", mVoteName);
@@ -83,7 +69,6 @@ public class CVoteConfSTV extends AppCompatActivity {
         lIntent.putExtra("END_DATE", mDateDebut);
         lIntent.putExtra("VOTE_TYPE", TYPE_VOTE);
         startActivity(lIntent);
-
     }
 
     public void addChoiceButton(View pView) {
