@@ -2,22 +2,18 @@ package fr.univtln.m1dapm.g3.g3vote.Interface;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.ListView;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.List;
 
 import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
 import fr.univtln.m1dapm.g3.g3vote.R;
@@ -25,7 +21,7 @@ import fr.univtln.m1dapm.g3.g3vote.R;
 public class CVoteConfSTV extends AppCompatActivity {
 
 
-    private static ArrayList<CCandidate> mListCandidat = new ArrayList<CCandidate>();
+    private ArrayList<CCandidate> mListCandidat = new ArrayList<CCandidate>();
     private CCandidate mCandidat;
 
     private CCandidatAdapter mAdapter;
@@ -34,6 +30,7 @@ public class CVoteConfSTV extends AppCompatActivity {
     private String mDateDebut;
     private String mDateFin;
     private static final String TYPE_VOTE = "STV";
+    private ListView mList;
 
     @Override
     protected void onCreate(Bundle pSavedInstanceState) {
@@ -62,19 +59,20 @@ public class CVoteConfSTV extends AppCompatActivity {
 
     public void validateConfSTV(View pView) {
         hideSoftKeyboard(this);
-        Intent lIntent = new Intent(this,CTestActivity.class);
+        Intent lIntent = new Intent(this,CParticipantActivity.class);
         lIntent.putExtra("liste de Candidat",mListCandidat);
         lIntent.putExtra("VOTE_NAME", mVoteName);
-        lIntent.putExtra("START_DATE", mDateFin);
-        lIntent.putExtra("END_DATE", mDateDebut);
+        lIntent.putExtra("START_DATE", mDateDebut);
+        lIntent.putExtra("END_DATE", mDateFin);
         lIntent.putExtra("VOTE_TYPE", TYPE_VOTE);
         startActivity(lIntent);
     }
 
     public void addChoiceButton(View pView) {
-
+        hideSoftKeyboard(this);
         mListCandidat.add(new CCandidate());
         mAdapter.notifyDataSetChanged();
+        scrollMyListViewToBottom();
     }
 
     public void removeChoiceButton(View pView) {
@@ -108,6 +106,15 @@ public class CVoteConfSTV extends AppCompatActivity {
         return super.onOptionsItemSelected(pItem);
     }
 
+    private void scrollMyListViewToBottom() {
+        mList.post(new Runnable() {
+            @Override
+            public void run() {
+                // Select the last row so it will scroll into view...
+                mList.setSelection(mListCandidat.size() - 1);
+            }
+        });
+    }
     @Override
     public void onBackPressed() {
         // On crée le dialogue

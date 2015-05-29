@@ -21,7 +21,6 @@ public class CCandidate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="ID_CANDIDAT")
-    @JsonIgnore
     private int mIdCandidat;
     @Column(name="NOM_CANDIDAT")
     private String mNomCandidat;

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,10 +16,19 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.sql.Array;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.univtln.m1dapm.g3.g3vote.Communication.CCommunication;
+import fr.univtln.m1dapm.g3.g3vote.Communication.CRequestTypesEnum;
+import fr.univtln.m1dapm.g3.g3vote.Communication.CTaskParam;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CType;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
 import fr.univtln.m1dapm.g3.g3vote.R;
 
 public class CTestActivity extends AppCompatActivity {
@@ -28,6 +38,8 @@ public class CTestActivity extends AppCompatActivity {
     private String mVoteName;
     private String mDateDebut;
     private String mDateFin;
+    private String mVoteType;
+;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,12 +59,15 @@ public class CTestActivity extends AppCompatActivity {
         mVoteName = (String) extras.get("VOTE_NAME");
         mDateDebut = (String) extras.get("START_DATE");
         mDateFin = (String) extras.get("END_DATE");
+        mVoteType=(String) extras.get("VOTE_TYPE");
+        TextView lTVVoteType = (TextView) findViewById((R.id.voteType));
         TextView lTVVoteName = (TextView) findViewById(R.id.voteName);
         TextView lTVDateDebut = (TextView) findViewById(R.id.recapDateDebut);
         TextView lTVDateFin = (TextView) findViewById(R.id.recapDateFin);
+        lTVVoteType.setText(mVoteType);
         lTVVoteName.setText(mVoteName);
-        lTVDateDebut.setText(mDateDebut);
-        lTVDateFin.setText(mDateFin);
+        lTVDateDebut.setText(mDateDebut.toString());
+        lTVDateFin.setText(mDateFin.toString());
 
 
         for (int i = 0; i <listCandidat.size() ; i++) {
@@ -67,11 +82,17 @@ public class CTestActivity extends AppCompatActivity {
     }
 
 
-    public void validate (View view){
+    public void validate (View view) throws ParseException {
 
-        //Intent intent = new Intent(this,/*A remplire*/.class);
-        //intent.putExtra("liste de Candidat",listCandidat);
-        //startActivity(intent);
+        DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        Date lDateDeb = new java.sql.Date(simpleDateFormat.parse(mDateDebut).getTime());
+        Date lDateFin = new java.sql.Date(simpleDateFormat.parse(mDateFin).getTime());
+
+        CVote lVote = new CVote(mVoteName, "", true, lDateDeb, lDateFin, 1, null, new CType(1,mVoteType,"test"), null, listCandidat, null);
+        CTaskParam lParams = new CTaskParam(CRequestTypesEnum.add_new_vote, lVote);
+        CCommunication lCom = new CCommunication();
+        lCom.execute(lParams);
 
     }
 

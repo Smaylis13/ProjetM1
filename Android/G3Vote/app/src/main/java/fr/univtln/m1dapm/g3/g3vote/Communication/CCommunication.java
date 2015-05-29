@@ -63,6 +63,7 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
         HttpURLConnection lHttpCon = null;
         InputStream lIn = null;
         String lResponse=null;
+        ObjectMapper lMapper=new ObjectMapper();
         int lCode;
         CTaskParam lParams=(CTaskParam)pObject[0];
 
@@ -76,7 +77,7 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                     lUserOBJ.put("mPassword", lUser.getPassword());
                     lUserOBJ.put("mFirstName", "unknown");
                     lUserOBJ.put("mName", "unknown");*/
-                    ObjectMapper lMapper=new ObjectMapper();
+
                     String lJsonString=lMapper.writeValueAsString(lUser);
                     JSONObject lUserOBJ = new JSONObject(lJsonString);
                     lHttpCon.setDoOutput(true);
@@ -94,8 +95,7 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                         //lOut.close();
                         lIn = new BufferedInputStream(lHttpCon.getInputStream());
                         lResponse = readStream(lIn);
-                        Gson lGson = new Gson();
-                        CUser lLoggedUser=lGson.fromJson(lResponse, CUser.class);
+                        CUser lLoggedUser=lMapper.readValue(lResponse,CUser.class);
                         Intent lLogIntent=new Intent(CLoginActivity.getsContext(),CHubActivity.class);
                         lLogIntent.putExtra(LOGGED_USER, lLoggedUser);
                         lLogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -127,12 +127,9 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                 case add_new_user:
                     lUrl = new URL(SERVER_URL+"user");
                     lHttpCon = (HttpURLConnection) lUrl.openConnection();
-                    JSONObject lNewUserOBJ = new JSONObject();
                     CUser lNewUser = (CUser) lParams.getObject();
-                    lNewUserOBJ.put("mEmail", lNewUser.getEmail());
-                    lNewUserOBJ.put("mPassword", lNewUser.getPassword());
-                    lNewUserOBJ.put("mFirstName", lNewUser.getFirstName());
-                    lNewUserOBJ.put("mName", lNewUser.getName());
+                    String lJsonStringNewUser=lMapper.writeValueAsString(lNewUser);
+                    JSONObject lNewUserOBJ = new JSONObject(lJsonStringNewUser);
                     lHttpCon.setDoOutput(true);
                     lHttpCon.setDoInput(true);
                     lHttpCon.setRequestMethod("PUT");
@@ -213,6 +210,34 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                         lIntent.putParcelableArrayListExtra("GOTTEN_VOTES", lVotes);
                         lIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         CSubActivity.getsContext().startActivity(lIntent);*/
+                    }
+                    else
+                        return lCode;
+
+                    break;
+                case add_new_vote:
+                    lUrl = new URL(SERVER_URL+"vote");
+                    lHttpCon = (HttpURLConnection) lUrl.openConnection();
+                    CVote lNewVote = (CVote) lParams.getObject();
+                    String lJsonStringNewVote=lMapper.writeValueAsString(lNewVote);
+                    Log.e("TEST",lJsonStringNewVote);
+                    JSONObject lNewVoteOBJ = new JSONObject(lJsonStringNewVote);
+                    lHttpCon.setDoOutput(true);
+                    lHttpCon.setDoInput(true);
+                    lHttpCon.setRequestMethod("PUT");
+                    lHttpCon.setRequestProperty("Content-Type", "application/json");
+                    lHttpCon.setRequestProperty("Accept", "application/json");
+                    lOut = new OutputStreamWriter(lHttpCon.getOutputStream());
+                    //lOut=lHttpCon.getOutputStream();
+                    lOut.write(lNewVoteOBJ.toString());
+                    lOut.flush();
+                    lCode=lHttpCon.getResponseCode();
+                    if(lCode==201) {
+                        Log.e("TEST CODE VOTE:", "CODE:"+lCode);
+                        //lOut.close();
+                       /* lIn = new BufferedInputStream(lHttpCon.getInputStream());
+                        lResponse = readStream(lIn);
+                        lNewVote.setIdVote(Integer.decode(lResponse));*/
                     }
                     else
                         return lCode;

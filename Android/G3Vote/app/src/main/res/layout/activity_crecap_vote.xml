@@ -1,0 +1,108 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="fr.univtln.m1dapm.g3.g3vote.Interface.CRecapVoteActivity">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="nomVote"
+        android:id="@+id/lTVNameVote"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="VoteType"
+        android:id="@+id/lTVTypeVote"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/lTVNameVote"
+        android:layout_toEndOf="@+id/lTVNameVote"
+        android:layout_marginLeft="6dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="DateDebut-"
+        android:id="@+id/lTVDateBegin"
+        android:layout_below="@+id/lTVNameVote"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="DateFin"
+        android:id="@+id/lTVDateEnd"
+        android:layout_below="@+id/lTVTypeVote"
+        android:layout_toRightOf="@+id/lTVDateBegin"
+        android:layout_toEndOf="@+id/lTVDateBegin" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Liste des Candidats"
+        android:id="@+id/lTVCandidateListTitle"
+        android:layout_below="@+id/ValidationRecap"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="27dp" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:id="@+id/lLVCandidateList"
+        android:layout_below="@id/lTVCandidateListTitle"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Liste des Participants"
+        android:id="@+id/lTVParticipantListTitle"
+        android:layout_below="@id/lLVCandidateList"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="27dp"/>
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:id="@+id/lLVParticipantList"
+        android:layout_below="@id/lTVParticipantListTitle"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/validationText"
+        android:id="@+id/ValidationRecap"
+        android:onClick="validate"
+        android:layout_below="@id/lTVDateBegin"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tout annuler"
+        android:id="@+id/AnnulationVote"
+        android:onClick="cancelVoteCreation"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/lTVDateBegin"
+        />
+
+</RelativeLayout>

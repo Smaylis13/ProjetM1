@@ -1,5 +1,6 @@
 package fr.univtln.m1dapm.g3.g3vote.Entite;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSetter;
 
 import java.io.Serializable;
@@ -9,6 +10,7 @@ import java.io.Serializable;
  */
 public class CCandidate implements Serializable{
 
+    @JsonIgnore
     private int mIdCandidat;
     private String mNom;
     private String mDescription;
@@ -70,6 +72,7 @@ public class CCandidate implements Serializable{
         this.mNom=pName;
     }
 
+
     public String getNomCandidat(){return this.mNom;}
 
     @JsonSetter("descriptionCandidat")
@@ -84,31 +87,9 @@ public class CCandidate implements Serializable{
         this.mIdCandidat=pId;
     }
 
-    public int getmIdCandidat() {
+    @JsonIgnore
+    public int getIdCandidat() {
         return mIdCandidat;
     }
 
-    public void setNom(String nom) {
-        this.mNom = nom;
-    }
-
-    public void setmIdCandidat(int mIdCandidat) {
-        this.mIdCandidat = mIdCandidat;
-    }
-
-    public String getmNom() {
-        return mNom;
-    }
-
-    public void setmNom(String mNom) {
-        this.mNom = mNom;
-    }
-
-    public String getmDescription() {
-        return mDescription;
-    }
-
-    public void setmDescription(String mDescription) {
-        this.mDescription = mDescription;
-    }
 }

@@ -40,7 +40,7 @@ public class CDateEndPickerFragment extends DialogFragment
         //dans le calendrier les mois vont de 0 a 11 il faut ajouter 1 pour avoir le bon affichage
         //String date = day+"/"+(month+1)+"/"+year;
         //button.setText(date);
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE);
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         GregorianCalendar cal=new GregorianCalendar();
         cal.set(year, month, day);
 

@@ -2,17 +2,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="fr.univtln.m1dapm.g3.g3vote" >
 
-    <!-- //issma <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />-->
+    <!--
+    //issma <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
+    <permission
+        android:name="fr.univtln.m1dapm.g3.g3vote.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
 
-    <uses-permission android:name="android.permission.USE_CREDENTIALS"/>
-    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
-
-    <permission android:name="fr.univtln.m1dapm.g3.g3vote.permission.C2D_MESSAGE" android:protectionLevel="signature"/>
-    <uses-permission android:name="fr.univtln.m1dapm.g3.g3vote.permission.C2D_MESSAGE"/>
 
 
     <application
@@ -34,45 +36,49 @@
         </activity>
         <activity
             android:name=".Interface.CHubActivity"
-            android:label="@string/title_activity_chub" >
+            android:label="@string/title_activity_chub"
+            android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
             android:name=".Interface.CVoteConfUninominalOneTurn"
             android:label="@string/title_activity_cvote_uninominal_one_turn"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustPan" >
         </activity>
 
         <!-- Service -->
-        <receiver   android:name=".Receiver.CGcmBroadcastReceiver"
-                    android:permission="com.google.android.c2dm.permission.SEND">
+        <receiver
+            android:name=".Receiver.CGcmBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
-                <action android:name="com.google.android.c2dm.intent.REGISTRATION"/>
-                <category android:name="fr.univtln.m1dapm.g3.g3vote"/>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+
+                <category android:name="fr.univtln.m1dapm.g3.g3vote" />
             </intent-filter>
         </receiver>
-        <service android:name=".Service.CGcmIntentService"></service>
+
+        <service android:name=".Service.CGcmIntentService" />
 
 
         <activity
             android:name=".Interface.CVoteConfSTV"
             android:label="@string/title_activity_cvote_conf_stv"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
             android:name=".Interface.CVoteConfKemenyYoung"
             android:label="@string/title_activity_cvote_conf_kemeny_young"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
             android:name=".Interface.CVoteConfMajorityJugement"
             android:label="@string/title_activity_cvote_conf_majority_jugement"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
             android:name=".Interface.CVoteConfUninominalTwoTurn"
             android:label="@string/title_activity_cvote_conf_uninominal_two_turn"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
             android:name=".Interface.CTestActivity"
@@ -81,12 +87,20 @@
         <activity
             android:name=".Interface.CVoteConfCondorcet"
             android:label="@string/title_activity_cvote_conf_condorcet"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
             android:name=".Interface.CVoteConfBorda"
             android:label="@string/title_activity_cvote_conf_borda"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustPan" >
+        </activity>
+        <activity
+            android:name=".Interface.CParticipantActivity"
+            android:label="@string/title_activity_cparticipant" >
+        </activity>
+        <activity
+            android:name=".Interface.CRecapVoteActivity"
+            android:label="@string/title_activity_crecap_vote" >
         </activity>
     </application>
 

@@ -116,8 +116,8 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
         /*sLoggedUser=(CUser)lIntent.getSerializableExtra(CCommunication.LOGGED_USER);
         CTaskParam lParams=new CTaskParam(CRequestTypesEnum.get_votes,sLoggedUser.getUserId());
         CVotesAsync lVotesAsc=new CVotesAsync();
-        lVotesAsc.execute(lParams);*/
-
+        lVotesAsc.execute(lParams);
+*/
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -149,11 +149,7 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
         }
 
         // issma
-        Intent lIntente = getIntent();
-        if (lIntente != null){
-            mMail = lIntente.getStringExtra(CLoginActivity.EXTRA_LOGIN);
-            Log.i(GCM_TAG,mMail);
-        }
+        //mMail=sLoggedUser.getEmail();
 
         mGcm = GoogleCloudMessaging.getInstance(this);
 
@@ -468,7 +464,7 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
         Date lDateDeDebut=new Date();
         Date lDateDeFin=new Date();
 
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy",Locale.FRANCE);
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         if (!lDateDebut.equals("Choix date")){
             lDateDeDebut = dateFormat.parse(lDateDebut);
         }
@@ -509,7 +505,7 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
         else if (lDateFin.equals("Choix date")){
             Toast.makeText(this,getString(R.string.dateEndEmpty),Toast.LENGTH_SHORT).show();
         }
-        else if(lDateDeDebut.after(lDateDeFin)) {
+        else if(lDateDeDebut.compareTo(lDateDeFin)>0) {
             Toast.makeText(this,getString(R.string.dateBeginAfterDateEnd),Toast.LENGTH_SHORT).show();
         }
         else{
@@ -550,6 +546,7 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
                             //lOut.close();
                             lIn = new BufferedInputStream(lHttpCon.getInputStream());
                             lResponse = readStream(lIn);
+                            Log.e("VOTE:",lResponse);
                             Type listType = new TypeToken<ArrayList<CVote>>() {}.getType();
                             //ArrayList<CVote> lVotes = new Gson().fromJson(lResponse, listType);
                             ObjectMapper lMapper=new ObjectMapper();

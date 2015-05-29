@@ -1,5 +1,6 @@
 package fr.univtln.m1dapm.g3.g3vote.Interface;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -21,7 +23,7 @@ import fr.univtln.m1dapm.g3.g3vote.R;
  * Created by sebastien on 28/05/15.
  */
 public class CVoteConfBorda extends AppCompatActivity {
-    private static ArrayList<CCandidate> mListCandidat = new ArrayList<CCandidate>();
+    private ArrayList<CCandidate> mListCandidat = new ArrayList<CCandidate>();
 
     private CCandidatAdapter mAdapter;
 
@@ -50,20 +52,18 @@ public class CVoteConfBorda extends AppCompatActivity {
         list.setAdapter(mAdapter);
     }
 
+    public static void hideSoftKeyboard(Activity activity) {
+        InputMethodManager inputMethodManager = (InputMethodManager)  activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
+    }
+
     public void validateConfBorda(View pView) {
-        for (int i = 0; i < mListCandidat.size() ; i++) {
-            ListView lTest = (ListView)findViewById(R.id.lLVBorda);
-            View cde = lTest.getChildAt(i);
-            EditText lEditText=(EditText)cde.findViewById(R.id.choiceName);
-            String lString=  lEditText.getText().toString();
-            mListCandidat.get(i).setNomCandidat(lString);
-            Log.i("test", lString);
-        }
-        Intent lIntent = new Intent(this,CTestActivity.class);
+        hideSoftKeyboard(this);
+        Intent lIntent = new Intent(this,CParticipantActivity.class);
         lIntent.putExtra("liste de Candidat",mListCandidat);
         lIntent.putExtra("VOTE_NAME", mVoteName);
-        lIntent.putExtra("START_DATE", mDateFin);
-        lIntent.putExtra("END_DATE", mDateDebut);
+        lIntent.putExtra("START_DATE", mDateDebut);
+        lIntent.putExtra("END_DATE", mDateFin);
         lIntent.putExtra("VOTE_TYPE", TYPE_VOTE);
         startActivity(lIntent);
 
