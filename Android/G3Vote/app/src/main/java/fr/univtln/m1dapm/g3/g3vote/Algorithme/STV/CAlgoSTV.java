@@ -50,14 +50,14 @@ public class CAlgoSTV extends AAlgorithme {
         for (CChoice choice : pChoices)
         {
             List<Integer> lCandList;
-            int lUserId = choice.getmUser().getUserId();
+            int lUserId = choice.getUser().getUserId();
 
             if (lChoices.get(lUserId) == null)
                 lCandList = new LinkedList<>();
             else
                 lCandList = lChoices.get(lUserId);
 
-            lCandList.set(choice.getmScore()-1, choice.getmCandidate().getmIdCandidat());
+            lCandList.set(choice.getScore()-1, choice.getCandidate().getIdCandidat());
             lChoices.set(lUserId,lCandList);
         }
 
