@@ -27,8 +27,8 @@ public class CVoteConfSTV extends AppCompatActivity {
     private CCandidatAdapter mAdapter;
 
     private String mVoteName;
-    private DateFormat mDateDebut;
-    private DateFormat mDateFin;
+    private String mDateDebut;
+    private String mDateFin;
     private static final String TYPE_VOTE = "STV";
     private ListView mList;
 
@@ -42,14 +42,14 @@ public class CVoteConfSTV extends AppCompatActivity {
             return;
         }
         mVoteName = (String) extras.get("VOTE_NAME");
-        mDateDebut = (DateFormat) extras.get("START_DATE");
-        mDateFin = (DateFormat) extras.get("END_DATE");
+        mDateDebut = (String) extras.get("START_DATE");
+        mDateFin = (String) extras.get("END_DATE");
         ListView lList = (ListView)findViewById(R.id.lLVSTV);
         mListCandidat.add(new CCandidate());
         mListCandidat.add(new CCandidate());
         mAdapter = new CCandidatAdapter(this, mListCandidat);
 
-        mList.setAdapter(mAdapter);
+        lList.setAdapter(mAdapter);
     }
 
     public static void hideSoftKeyboard(Activity activity) {
@@ -62,8 +62,8 @@ public class CVoteConfSTV extends AppCompatActivity {
         Intent lIntent = new Intent(this,CTestActivity.class);
         lIntent.putExtra("liste de Candidat",mListCandidat);
         lIntent.putExtra("VOTE_NAME", mVoteName);
-        lIntent.putExtra("START_DATE", mDateFin);
-        lIntent.putExtra("END_DATE", mDateDebut);
+        lIntent.putExtra("START_DATE", mDateDebut);
+        lIntent.putExtra("END_DATE", mDateFin);
         lIntent.putExtra("VOTE_TYPE", TYPE_VOTE);
         startActivity(lIntent);
     }

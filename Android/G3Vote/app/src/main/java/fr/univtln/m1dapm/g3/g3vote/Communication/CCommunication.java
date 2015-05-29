@@ -215,6 +215,32 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                         return lCode;
 
                     break;
+                case add_new_vote:
+                    lUrl = new URL(SERVER_URL+"vote");
+                    lHttpCon = (HttpURLConnection) lUrl.openConnection();
+                    CVote lNewVote = (CVote) lParams.getObject();
+                    String lJsonStringNewVote=lMapper.writeValueAsString(lNewVote);
+                    JSONObject lNewVoteOBJ = new JSONObject(lJsonStringNewVote);
+                    lHttpCon.setDoOutput(true);
+                    lHttpCon.setDoInput(true);
+                    lHttpCon.setRequestMethod("PUT");
+                    lHttpCon.setRequestProperty("Content-Type", "application/json");
+                    lHttpCon.setRequestProperty("Accept", "application/json");
+                    lOut = new OutputStreamWriter(lHttpCon.getOutputStream());
+                    //lOut=lHttpCon.getOutputStream();
+                    lOut.write(lNewVoteOBJ.toString());
+                    lOut.flush();
+                    lCode=lHttpCon.getResponseCode();
+                    if(lCode==201) {
+                        //lOut.close();
+                        lIn = new BufferedInputStream(lHttpCon.getInputStream());
+                        lResponse = readStream(lIn);
+                        lNewVote.setIdVote(Integer.decode(lResponse));
+                    }
+                    else
+                        return lCode;
+
+                    break;
 
             }
         }catch (ProtocolException e) {
