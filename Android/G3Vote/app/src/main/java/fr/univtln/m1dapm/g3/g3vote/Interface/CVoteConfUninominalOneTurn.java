@@ -23,7 +23,7 @@ import fr.univtln.m1dapm.g3.g3vote.R;
  */
 public class CVoteConfUninominalOneTurn extends AppCompatActivity {
 
-    private static ArrayList<CCandidate> mListCandidat = new ArrayList<CCandidate>();
+    private ArrayList<CCandidate> mListCandidat = new ArrayList<CCandidate>();
 
     private CCandidatAdapter mAdapter;
 
@@ -83,7 +83,6 @@ public class CVoteConfUninominalOneTurn extends AppCompatActivity {
         lIntent.putExtra("END_DATE", mDateDebut);
         lIntent.putExtra("VOTE_TYPE", TYPE_VOTE);
         startActivity(lIntent);
-
     }
 
     public void addChoiceButton(View view) {

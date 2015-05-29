@@ -63,6 +63,7 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
         HttpURLConnection lHttpCon = null;
         InputStream lIn = null;
         String lResponse=null;
+        ObjectMapper lMapper=new ObjectMapper();
         int lCode;
         CTaskParam lParams=(CTaskParam)pObject[0];
 
@@ -76,7 +77,7 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                     lUserOBJ.put("mPassword", lUser.getPassword());
                     lUserOBJ.put("mFirstName", "unknown");
                     lUserOBJ.put("mName", "unknown");*/
-                    ObjectMapper lMapper=new ObjectMapper();
+
                     String lJsonString=lMapper.writeValueAsString(lUser);
                     JSONObject lUserOBJ = new JSONObject(lJsonString);
                     lHttpCon.setDoOutput(true);
@@ -127,12 +128,9 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                 case add_new_user:
                     lUrl = new URL(SERVER_URL+"user");
                     lHttpCon = (HttpURLConnection) lUrl.openConnection();
-                    JSONObject lNewUserOBJ = new JSONObject();
                     CUser lNewUser = (CUser) lParams.getObject();
-                    lNewUserOBJ.put("mEmail", lNewUser.getEmail());
-                    lNewUserOBJ.put("mPassword", lNewUser.getPassword());
-                    lNewUserOBJ.put("mFirstName", lNewUser.getFirstName());
-                    lNewUserOBJ.put("mName", lNewUser.getName());
+                    String lJsonStringNewUser=lMapper.writeValueAsString(lNewUser);
+                    JSONObject lNewUserOBJ = new JSONObject(lJsonStringNewUser);
                     lHttpCon.setDoOutput(true);
                     lHttpCon.setDoInput(true);
                     lHttpCon.setRequestMethod("PUT");
