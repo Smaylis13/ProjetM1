@@ -84,31 +84,8 @@ public class CCandidate implements Serializable{
         this.mIdCandidat=pId;
     }
 
-    public int getmIdCandidat() {
+    public int getIdCandidat() {
         return mIdCandidat;
     }
 
-    public void setNom(String nom) {
-        this.mNom = nom;
-    }
-
-    public void setmIdCandidat(int mIdCandidat) {
-        this.mIdCandidat = mIdCandidat;
-    }
-
-    public String getmNom() {
-        return mNom;
-    }
-
-    public void setmNom(String mNom) {
-        this.mNom = mNom;
-    }
-
-    public String getmDescription() {
-        return mDescription;
-    }
-
-    public void setmDescription(String mDescription) {
-        this.mDescription = mDescription;
-    }
 }

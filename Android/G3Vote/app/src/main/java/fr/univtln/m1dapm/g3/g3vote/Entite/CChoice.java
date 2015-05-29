@@ -24,43 +24,43 @@ public class CChoice {
         this.mScore = pScore;
     }
 
-    public int getmIdChoice() {
+    public int getIdChoice() {
         return mIdChoice;
     }
 
-    public void setmIdChoice(int mIdChoice) {
-        this.mIdChoice = mIdChoice;
+    public void setIdChoice(int pIdChoice) {
+        this.mIdChoice = pIdChoice;
     }
 
-    public CVote getmVote() {
+    public CVote getVote() {
         return mVote;
     }
 
-    public void setmVote(CVote mVote) {
-        this.mVote = mVote;
+    public void setVote(CVote pVote) {
+        this.mVote = pVote;
     }
 
-    public void setmUser(CUser mUser) {
-        this.mUser = mUser;
+    public void setUser(CUser pUser) {
+        this.mUser = pUser;
     }
 
-    public CCandidate getmCandidate() {
+    public CCandidate getCandidate() {
         return mCandidate;
     }
 
-    public void setmCandidate(CCandidate mCandidate) {
-        this.mCandidate = mCandidate;
+    public void setCandidate(CCandidate pCandidate) {
+        this.mCandidate = pCandidate;
     }
 
-    public int getmScore() {
+    public int getScore() {
         return mScore;
     }
 
-    public void setmScore(int mScore) {
-        this.mScore = mScore;
+    public void setScore(int pScore) {
+        this.mScore = pScore;
     }
 
-    public CUser getmUser() {
+    public CUser getUser() {
         return mUser;
     }
 }
