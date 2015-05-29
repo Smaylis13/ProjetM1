@@ -15,10 +15,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.sql.Array;
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
 import fr.univtln.m1dapm.g3.g3vote.R;
 
 public class CTestActivity extends AppCompatActivity {
@@ -26,8 +29,10 @@ public class CTestActivity extends AppCompatActivity {
     private static ArrayList<CCandidate> listCandidat = new ArrayList<CCandidate>();
     private CCandidatAffichageAdapter adapter;
     private String mVoteName;
-    private String mDateDebut;
-    private String mDateFin;
+    private DateFormat mDateDebut;
+    private DateFormat mDateFin;
+    private String mVoteType;
+;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,14 +50,16 @@ public class CTestActivity extends AppCompatActivity {
         RelativeLayout rl = (RelativeLayout)findViewById(R.id.test);
         listCandidat=(ArrayList<CCandidate>)extras.get("liste de Candidat");
         mVoteName = (String) extras.get("VOTE_NAME");
-        mDateDebut = (String) extras.get("START_DATE");
-        mDateFin = (String) extras.get("END_DATE");
+        mDateDebut = (DateFormat) extras.get("START_DATE");
+        mDateFin = (DateFormat) extras.get("END_DATE");
+        TextView lTVVoteType = (TextView) findViewById((R.id.voteType));
         TextView lTVVoteName = (TextView) findViewById(R.id.voteName);
         TextView lTVDateDebut = (TextView) findViewById(R.id.recapDateDebut);
         TextView lTVDateFin = (TextView) findViewById(R.id.recapDateFin);
+        lTVVoteType.setText(mVoteType);
         lTVVoteName.setText(mVoteName);
-        lTVDateDebut.setText(mDateDebut);
-        lTVDateFin.setText(mDateFin);
+        lTVDateDebut.setText(mDateDebut.toString());
+        lTVDateFin.setText(mDateFin.toString());
 
 
         for (int i = 0; i <listCandidat.size() ; i++) {
@@ -68,6 +75,7 @@ public class CTestActivity extends AppCompatActivity {
 
 
     public void validate (View view){
+        //CVote lVote = new CVote(mVoteType, "", true, mDateDebut, mDateFin, 1, null, null, null, listCandidat, null);
 
         //Intent intent = new Intent(this,/*A remplire*/.class);
         //intent.putExtra("liste de Candidat",listCandidat);
