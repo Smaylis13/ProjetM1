@@ -1,19 +1,32 @@
 package fr.univtln.m1dapm.g3.g3vote.Interface;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.univtln.m1dapm.g3.g3vote.Communication.CCommunication;
+import fr.univtln.m1dapm.g3.g3vote.Communication.CRequestTypesEnum;
+import fr.univtln.m1dapm.g3.g3vote.Communication.CTaskParam;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CType;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CUser;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
 import fr.univtln.m1dapm.g3.g3vote.R;
 
 public class CRecapVoteActivity extends AppCompatActivity {
@@ -77,6 +90,54 @@ public class CRecapVoteActivity extends AppCompatActivity {
 
     }
 
+    public void validate (View pView) throws ParseException {
+
+        DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        Date lDateDeb = new java.sql.Date(simpleDateFormat.parse(mDateDebut).getTime());
+        Date lDateFin = new java.sql.Date(simpleDateFormat.parse(mDateFin).getTime());
+
+        CVote lVote = new CVote(mVoteName, "", true, lDateDeb, lDateFin, 1, null, new CType(1,mTypeVote,"test"), null, mListCandidat, null);
+        CTaskParam lParams = new CTaskParam(CRequestTypesEnum.add_new_vote, lVote);
+        CCommunication lCom = new CCommunication();
+        lCom.execute(lParams);
+
+        Intent intent = new Intent(this, CHubActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+
+    }
+
+    public void cancelVoteCreation(View pView){
+        // On crée le dialogue
+        AlertDialog.Builder lConfirmationDialog = new AlertDialog.Builder(CRecapVoteActivity.this);
+        // On modifie le titre
+        lConfirmationDialog.setTitle("Annulation création vote");
+        // On modifie le message
+        lConfirmationDialog.setMessage("Voulez-vous annuler la création du vote ?");
+        // Bouton Oui
+        lConfirmationDialog.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                // On termine l'activité et on retourne sur la page principale
+                Intent intent = new Intent(CRecapVoteActivity.this, CHubActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
+
+        // Bouton non: on ferme le dialogue
+        lConfirmationDialog.setNegativeButton("Non", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        // On affiche le message
+        lConfirmationDialog.show();
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -97,5 +158,34 @@ public class CRecapVoteActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        // On crée le dialogue
+        AlertDialog.Builder lConfirmationDialog = new AlertDialog.Builder(CRecapVoteActivity.this);
+        // On modifie le titre
+        lConfirmationDialog.setTitle("Retour page précédente");
+        // On modifie le message
+        lConfirmationDialog.setMessage("Voulez-vous retourner sur la page d'invitation ?");
+        // Bouton Oui
+        lConfirmationDialog.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                // On termine l'activité
+                finish();
+            }
+        });
+
+        // Bouton non: on ferme le dialogue
+        lConfirmationDialog.setNegativeButton("Non", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        // On affiche le message
+        lConfirmationDialog.show();
     }
 }

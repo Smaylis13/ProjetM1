@@ -1,5 +1,7 @@
 package fr.univtln.m1dapm.g3.g3vote.Interface;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -88,5 +90,34 @@ public class CParticipantActivity extends AppCompatActivity {
         lIntent.putExtra("END_DATE", mDateFin);
         lIntent.putExtra("VOTE_TYPE", mTypeVote);
         startActivity(lIntent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        // On crée le dialogue
+        AlertDialog.Builder lConfirmationDialog = new AlertDialog.Builder(CParticipantActivity.this);
+        // On modifie le titre
+        lConfirmationDialog.setTitle("Retour page précédente");
+        // On modifie le message
+        lConfirmationDialog.setMessage("Voulez-vous revenir à la page d'ajout des candidats ?");
+        // Bouton Oui
+        lConfirmationDialog.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                // On termine l'activité
+                finish();
+            }
+        });
+
+        // Bouton non: on ferme le dialogue
+        lConfirmationDialog.setNegativeButton("Non", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        // On affiche le message
+        lConfirmationDialog.show();
     }
 }

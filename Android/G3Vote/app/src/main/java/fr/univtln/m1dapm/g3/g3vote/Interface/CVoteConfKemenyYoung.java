@@ -67,7 +67,7 @@ public class CVoteConfKemenyYoung extends AppCompatActivity {
 
     public void validateConfKemenyYoung(View view) {
         hideSoftKeyboard(this);
-        Intent lIntent = new Intent(this,CTestActivity.class);
+        Intent lIntent = new Intent(this,CParticipantActivity.class);
         lIntent.putExtra("liste de Candidat", mListCandidat);
         lIntent.putExtra("VOTE_NAME", mVoteName);
         lIntent.putExtra("START_DATE", mDateDebut);
