@@ -44,6 +44,7 @@
         &#8226; À rejeter\n
 
     </string>
+    <string name="calculationMethod">Mode de calcul</string>
     <string name="CondorcetDescription">le vote de Condorcet sert à blablabla</string>
     <string name="BordaDescription">le vote Borda sert à blablabla</string>
     <string name="userFirstNameInputHint">Prénom</string>

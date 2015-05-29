@@ -1,17 +1,18 @@
 package fr.univtln.m1dapm.g3.g3vote.Interface;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -28,6 +29,7 @@ public class CVoteConfMajorityJugement extends AppCompatActivity {
     private String mDateFin;
     private CCandidatAdapter mAdapter;
     private static final String TYPE_VOTE = "MAJORITY";
+    private int mCalculationMethod = -1;// 0 : Meyenne, 1 : Médiane, 2 : Somme
 
     @Override
     protected void onCreate(Bundle pSavedInstanceState) {
@@ -55,17 +57,55 @@ public class CVoteConfMajorityJugement extends AppCompatActivity {
         inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
     }
 
+    public void calculationMethod(View view){
+        final CharSequence[] items = {" Moyenne "," Médiane "," Somme "};
 
-    public void validateConfMajorityJugement(View pView){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Selectionner le mode de calcul");
+        final Button lButton = (Button) findViewById(R.id.calculationMethod);
+        builder.setSingleChoiceItems(items, -1, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int item) {
+
+                //Intent i=new Intent(getApplicationContext(),SudokuActivity.class);;
+                mCalculationMethod = item;
+                switch (item)// when item  option seletced
+                {
+                    case 0:
+                        lButton.setText(" Moyenne ");
+                        break;
+                    case 1:
+                        lButton.setText(" Médiane ");
+                        break;
+                    case 2:
+                        lButton.setText(" Somme ");
+                        break;
+                }
+
+            }
+        });
+        final AlertDialog lDialog = builder.create();
+        lDialog.setButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        lDialog.dismiss();
+                    }
+                });
+        lDialog.show();
+    }
+    public void validateConfMajorityJugement(View pView) {
         hideSoftKeyboard(this);
-        Intent lIntent = new Intent(this,CTestActivity.class);
+        Intent lIntent = new Intent(this, CTestActivity.class);
         lIntent.putExtra("liste de Candidat", mListCandidat);
         lIntent.putExtra("VOTE_NAME", mVoteName);
         lIntent.putExtra("START_DATE", mDateFin);
         lIntent.putExtra("END_DATE", mDateDebut);
         lIntent.putExtra("VOTE_TYPE", TYPE_VOTE);
-        startActivity(lIntent);
-
+        lIntent.putExtra("CALCULATIONMETHOD", mCalculationMethod);
+        if (mCalculationMethod != -1){
+            startActivity(lIntent);
+        }else {
+            Toast.makeText(getApplicationContext(), "Veuillez renseigner le mode de calcul", Toast.LENGTH_LONG).show();
+        }
     }
 
     public void addChoiceButton(View pView) {
