@@ -1,22 +1,22 @@
 package fr.univtln.m1dapm.g3.g3vote.Interface;
 
-import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CUser;
 import fr.univtln.m1dapm.g3.g3vote.R;
 
-public class CParticipantActivity extends AppCompatActivity {
+public class CRecapVoteActivity extends AppCompatActivity {
 
     //variables pour la récupération des données de l'activité précédente
     private String mVoteName;
@@ -26,11 +26,11 @@ public class CParticipantActivity extends AppCompatActivity {
     private ArrayList<CUser> mListParticipant = new ArrayList<CUser>();
     private String mTypeVote;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cparticipant);
+        setContentView(R.layout.activity_crecap_vote);
+
         //stockage des données de l'activity precedente
         Bundle extras = getIntent().getExtras();
         if (extras==null){
@@ -40,26 +40,47 @@ public class CParticipantActivity extends AppCompatActivity {
         mDateDebut = (String) extras.get("START_DATE");
         mDateFin = (String) extras.get("END_DATE");
         mListCandidat = (ArrayList<CCandidate>)extras.get("liste de Candidat");
+        mListParticipant=(ArrayList<CUser>)extras.get("liste de participant");
         mTypeVote = (String) extras.get("VOTE_TYPE");
 
         Log.i("donner candida", mListCandidat.toString());
-        //Récupération du composant ListView
-        ListView list = (ListView)this.findViewById(R.id.lLVParticipantList);
+        //remplis la liste des participants
+        ListView lListParticipant = (ListView)this.findViewById(R.id.lLVParticipantList);
+        CUserAdapter cUserAdapter = new CUserAdapter(this,mListParticipant);
+        lListParticipant.setAdapter(cUserAdapter);
 
-        //Récupération de la liste des personnes
-        ArrayList<CUser> mListUser = CUser.getAListOfUser();
+        //remplis la liste des candidats
+        ListView lListCandidate = (ListView)this.findViewById(R.id.lLVCandidateList);
+        CCandidatAffichageAdapter cCandidatAdapter = new CCandidatAffichageAdapter(this,R.id.lLVCandidateList);
+        lListCandidate.setAdapter(cCandidatAdapter);
+        List lListNomCandidat =new ArrayList();
+        for (int i = 0; i <mListCandidat.size() ; i++) {
+            lListNomCandidat.add(mListCandidat.get(i).getNomCandidat());
+            cCandidatAdapter.add(mListCandidat.get(i));
+        }
 
-        //Création et initialisation de l'Adapter pour les personnes
-        CUserChoiceAdapter adapter = new CUserChoiceAdapter(this, mListUser);
+        //met le nom du vote
+        TextView lTVNameVote = (TextView)this.findViewById(R.id.lTVNameVote);
+        lTVNameVote.setText(mVoteName);
 
-        //Initialisation de la liste avec les données
-        list.setAdapter(adapter);
+        //met le type du vote
+        TextView lTVTypeVote = (TextView)this.findViewById(R.id.lTVTypeVote);
+        lTVTypeVote.setText(mTypeVote);
+
+        //met la date de début
+        TextView lTVDateBegin = (TextView)this.findViewById(R.id.lTVDateBegin);
+        lTVDateBegin.setText("duree : du "+mDateDebut+" au ");
+
+        //met la date de fin
+        TextView lTVDateEnd = (TextView)this.findViewById(R.id.lTVDateEnd);
+        lTVDateEnd.setText(mDateFin);
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_cparticipant, menu);
+        getMenuInflater().inflate(R.menu.menu_crecap_vote, menu);
         return true;
     }
 
@@ -76,17 +97,5 @@ public class CParticipantActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public void bValidateParticipantList(View view) {
-        Intent lIntent = new Intent(this,CRecapVoteActivity.class);
-        Log.i("donner candida",mListCandidat.toString());
-        lIntent.putExtra("liste de Candidat", mListCandidat);
-        lIntent.putExtra("liste de participant",mListParticipant);
-        lIntent.putExtra("VOTE_NAME", mVoteName);
-        lIntent.putExtra("START_DATE", mDateDebut);
-        lIntent.putExtra("END_DATE", mDateFin);
-        lIntent.putExtra("VOTE_TYPE", mTypeVote);
-        startActivity(lIntent);
     }
 }

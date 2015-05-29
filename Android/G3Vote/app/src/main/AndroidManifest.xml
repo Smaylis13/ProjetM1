@@ -56,8 +56,8 @@
                 <category android:name="fr.univtln.m1dapm.g3.g3vote" />
             </intent-filter>
         </receiver>
-        <service android:name=".Service.CGcmIntentService"></service>
 
+        <service android:name=".Service.CGcmIntentService" />
         <service android:name=".Service.CGcmIntentService" />
 
         <activity
@@ -97,6 +97,10 @@
         <activity
             android:name=".Interface.CParticipantActivity"
             android:label="@string/title_activity_cparticipant" >
+        </activity>
+        <activity
+            android:name=".Interface.CRecapVoteActivity"
+            android:label="@string/title_activity_crecap_vote" >
         </activity>
     </application>
 
