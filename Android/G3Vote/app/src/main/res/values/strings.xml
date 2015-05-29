@@ -34,7 +34,7 @@
     <string name="stvDescription">le vote STV sert à blablabla</string>
     <string name="kemenyYoungDescription">le vote KY sert à choisir un ordre gagnant parmi les candidats. Il est très couteux, donc il est impossible de le réaliser pour plus de 9 candidats.
         L\'électeur doit ordonner les candidats par ordre de préférence </string>
-    <string name="jugementMajorityDescription">le vote JM sert à blablabla</string>
+    <string name="jugementMajorityDescription">le vote JM sert à évaluer chaque candidats par une mention « Excellent », « Très bien », « Bien », « Assez bien », « Passable », « Insuffisant » ou « À rejeter ». </string>
     <string name="CondorcetDescription">le vote de Condorcet sert à blablabla</string>
     <string name="BordaDescription">le vote Borda sert à blablabla</string>
     <string name="userFirstNameInputHint">Prénom</string>

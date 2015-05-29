@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ListView;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 
 import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
@@ -26,8 +27,8 @@ public class CVoteConfSTV extends AppCompatActivity {
     private CCandidatAdapter mAdapter;
 
     private String mVoteName;
-    private String mDateDebut;
-    private String mDateFin;
+    private DateFormat mDateDebut;
+    private DateFormat mDateFin;
     private static final String TYPE_VOTE = "STV";
     private ListView mList;
 
@@ -41,9 +42,9 @@ public class CVoteConfSTV extends AppCompatActivity {
             return;
         }
         mVoteName = (String) extras.get("VOTE_NAME");
-        mDateDebut = (String) extras.get("START_DATE");
-        mDateFin = (String) extras.get("END_DATE");
-        mList = (ListView)findViewById(R.id.lLVSTV);
+        mDateDebut = (DateFormat) extras.get("START_DATE");
+        mDateFin = (DateFormat) extras.get("END_DATE");
+        ListView lList = (ListView)findViewById(R.id.lLVSTV);
         mListCandidat.add(new CCandidate());
         mListCandidat.add(new CCandidate());
         mAdapter = new CCandidatAdapter(this, mListCandidat);
