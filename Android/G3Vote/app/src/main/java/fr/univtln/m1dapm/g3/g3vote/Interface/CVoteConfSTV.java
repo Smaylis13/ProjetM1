@@ -25,7 +25,7 @@ import fr.univtln.m1dapm.g3.g3vote.R;
 public class CVoteConfSTV extends AppCompatActivity {
 
 
-    private static ArrayList<CCandidate> mListCandidat = new ArrayList<CCandidate>();
+    private ArrayList<CCandidate> mListCandidat = new ArrayList<CCandidate>();
     private CCandidate mCandidat;
 
     private CCandidatAdapter mAdapter;
