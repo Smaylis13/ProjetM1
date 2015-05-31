@@ -84,6 +84,10 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
     SectionsPagerAdapter mSectionsPagerAdapter;
     private static CUser sLoggedUser;
 
+    public static CUser getsLoggedUser() {
+        return sLoggedUser;
+    }
+
     /**
      * The {@link ViewPager} that will host the section contents.
      */
