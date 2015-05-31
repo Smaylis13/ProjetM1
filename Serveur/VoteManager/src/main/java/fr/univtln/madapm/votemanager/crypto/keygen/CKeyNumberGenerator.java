@@ -9,7 +9,7 @@ import java.util.Random;
  */
 
 /**
- * Gènère des clef spécifique via la librairy DH de crypto.spec
+ * Gènère des paramètres et clef spécifiques
  */
 public class CKeyNumberGenerator extends Random {
 
@@ -26,13 +26,35 @@ public class CKeyNumberGenerator extends Random {
     private final static int mPValue = (int)Math.pow(2, (Math.pow(2, 1024) - Math.pow(2, 960) - 1 +
                                            Math.pow(2, 64) * (  Math.PI * Math.pow(2, 894) + 129093 )));
     private final static int mGValue = 2;
-    private final static int mNumber = (int) (Math.random() * (0 - 100));
+    private final static int mab = (int) (Math.random() * (0 - 100));
 
-    private Random mrnd = new Random();
+    private final Random mrnd = new Random();
 
-    private BigInteger mP = BigInteger.probablePrime(SIZE, mrnd);
-    private BigInteger mG = BigInteger.probablePrime(SIZE, mrnd);
+    private final BigInteger mP = BigInteger.probablePrime(SIZE, mrnd);
+    private final BigInteger mG = BigInteger.probablePrime(SIZE, mrnd);
 
-    public final byte[] mPublicKey = BigInteger.valueOf((long) Math.pow(mGValue, mNumber) % mPValue).toByteArray();
+    private final BigInteger mA = BigInteger.valueOf((long) Math.pow(mGValue, mab) % mPValue);
 
+    public int getPValue() {
+        return mPValue;
+    }
+
+    public BigInteger getPublicKey() {
+        return mA;
+    }
+
+    public int getab() {
+        return mab;
+    }
+
+    @Override
+    public String toString() {
+        return "CKeyNumberGenerator{" +
+                "hexa=" + mKey +
+                "mrnd=" + mrnd +
+                ", mP=" + mP +
+                ", mG=" + mG +
+                ", mA=" + mA +
+                '}';
+    }
 }

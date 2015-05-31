@@ -496,6 +496,12 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
             case 4://uninominal à 2 tour
                 lIntent = new Intent(this, CVoteConfUninominalTwoTurn.class);
                 break;
+            case 5://Condorcet
+                lIntent = new Intent(this, CVoteConfCondorcet.class);
+                break;
+            case 6://Borda
+                lIntent = new Intent(this, CVoteConfBorda.class);
+                break;
             default:
                 break;
         }

@@ -102,6 +102,10 @@
             android:name=".Interface.CRecapVoteActivity"
             android:label="@string/title_activity_crecap_vote" >
         </activity>
+        <activity
+            android:name=".Interface.CVoteUninominal"
+            android:label="@string/title_activity_uninominal_vote" >
+        </activity>
     </application>
 
 </manifest>
