@@ -71,7 +71,7 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
     SectionsPagerAdapter mSectionsPagerAdapter;
-    private static CUser sLoggedUser=null;
+    private static CUser sLoggedUser;
 
     public static CUser getsLoggedUser() {
         return sLoggedUser;
@@ -106,13 +106,15 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         Intent lIntent=getIntent();
+        /*
         if(sLoggedUser==null) {
             sLoggedUser = (CUser) lIntent.getSerializableExtra(CCommunication.LOGGED_USER);
         }
         CTaskParam lParams=new CTaskParam(CRequestTypesEnum.get_votes,sLoggedUser.getUserId());
+
         CVotesAsync lVotesAsc=new CVotesAsync();
         lVotesAsc.execute(lParams);
-
+*/
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -146,7 +148,9 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
         // issma
         mMail="test@gmail.com";
 
->>>>>>> d3752de959600fca81b0f7012aa287a2d3934ac6
+        //mMail=sLoggedUser.getEmail();
+        mMail = "test@gmail.com";
+
         mGcm = GoogleCloudMessaging.getInstance(this);
 
 		mContext = getApplicationContext();
@@ -521,6 +525,11 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
         }
 
 
+    }
+
+    public void addContact(View view){
+        Intent lIntent = new Intent(this,CContactAjout.class);
+        startActivity(lIntent);
     }
 
     public class CVotesAsync extends AsyncTask<Object, Void, Integer> {

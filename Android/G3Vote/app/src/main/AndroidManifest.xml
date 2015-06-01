@@ -8,20 +8,19 @@
     -->
     <!-- GCM connects to Google Services. -->
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <!-- GCM requires a Google account. -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <!-- This app has permission to register and receive dataf message. -->
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
 
     <permission
         android:name="fr.univtln.m1dapm.g3.g3vote.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
-    <uses-permission android:name="fr.univtln.m1dapm.g3.g3vote.permission.C2D_MESSAGE" />
 
+    <uses-permission android:name="fr.univtln.m1dapm.g3.g3vote.permission.C2D_MESSAGE" />
 
     <application
         android:allowBackup="true"
@@ -64,7 +63,6 @@
         </receiver>
 
         <service android:name=".Service.CGcmIntentService" />
-
 
         <activity
             android:name=".Interface.CVoteConfSTV"
@@ -111,6 +109,14 @@
         <activity
             android:name=".Interface.CVoteUninominal"
             android:label="@string/title_activity_uninominal_vote" >
+        </activity>
+        <activity
+            android:name=".Interface.CContactAjout"
+            android:label="@string/title_activity_ccontact_ajout" >
+        </activity>
+        <activity
+            android:name=".Interface.CTestContactAjout"
+            android:label="@string/title_activity_ctest_contact_ajout" >
         </activity>
     </application>
 
