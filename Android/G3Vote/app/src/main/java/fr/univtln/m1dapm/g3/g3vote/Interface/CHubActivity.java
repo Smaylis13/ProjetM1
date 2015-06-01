@@ -236,7 +236,6 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
      */
     private SharedPreferences getGcmPreferences(Context context){
         // This sample app persists the registration ID in shared preferences,
-        // but how you store the regID in your app is up to you.
         return getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
     }
     /**
