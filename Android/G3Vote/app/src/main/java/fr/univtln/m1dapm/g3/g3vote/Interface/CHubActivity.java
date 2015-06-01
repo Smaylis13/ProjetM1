@@ -84,6 +84,10 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
     SectionsPagerAdapter mSectionsPagerAdapter;
     private static CUser sLoggedUser;
 
+    public static CUser getsLoggedUser() {
+        return sLoggedUser;
+    }
+
     /**
      * The {@link ViewPager} that will host the section contents.
      */
@@ -113,7 +117,7 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         Intent lIntent=getIntent();
-        /*sLoggedUser=(CUser)lIntent.getSerializableExtra(CCommunication.LOGGED_USER);
+  /*      sLoggedUser=(CUser)lIntent.getSerializableExtra(CCommunication.LOGGED_USER);
         CTaskParam lParams=new CTaskParam(CRequestTypesEnum.get_votes,sLoggedUser.getUserId());
         CVotesAsync lVotesAsc=new CVotesAsync();
         lVotesAsc.execute(lParams);
@@ -149,7 +153,7 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
         }
 
         // issma
-        //mMail=sLoggedUser.getEmail();
+       // mMail=sLoggedUser.getEmail();
 
         mGcm = GoogleCloudMessaging.getInstance(this);
 
@@ -546,12 +550,10 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
                         lHttpCon.setRequestMethod("GET");
                         lHttpCon.setRequestProperty("Accept", "application/json");
                         lCode=lHttpCon.getResponseCode();
-                        Log.e("TEST CODE","CODE: "+lCode);
                         if(lCode==200) {
                             //lOut.close();
                             lIn = new BufferedInputStream(lHttpCon.getInputStream());
                             lResponse = readStream(lIn);
-                            Log.e("VOTE:",lResponse);
                             Type listType = new TypeToken<ArrayList<CVote>>() {}.getType();
                             //ArrayList<CVote> lVotes = new Gson().fromJson(lResponse, listType);
                             ObjectMapper lMapper=new ObjectMapper();

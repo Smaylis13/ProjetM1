@@ -15,6 +15,7 @@ public class CCandidate implements Serializable{
     private int mIdCandidat;
     private String mNom;
     private String mDescription;
+    private  int mIdVote;
 
     @Override
     public String toString() {
@@ -104,6 +105,10 @@ public class CCandidate implements Serializable{
     @JsonIgnore
     public int getIdCandidat() {
         return mIdCandidat;
+    }
+
+    public void setVote(int pIdVote){
+        this.mIdVote=pIdVote;
     }
 
 }

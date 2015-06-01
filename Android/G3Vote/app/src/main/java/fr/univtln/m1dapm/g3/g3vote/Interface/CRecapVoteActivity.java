@@ -104,6 +104,7 @@ public class CRecapVoteActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, CHubActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra(CCommunication.LOGGED_USER,CHubActivity.getsLoggedUser());
         startActivity(intent);
 
     }
@@ -123,6 +124,7 @@ public class CRecapVoteActivity extends AppCompatActivity {
                 // On termine l'activité et on retourne sur la page principale
                 Intent intent = new Intent(CRecapVoteActivity.this, CHubActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.putExtra(CCommunication.LOGGED_USER,CHubActivity.getsLoggedUser());
                 startActivity(intent);
             }
         });
