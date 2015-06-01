@@ -90,6 +90,16 @@
     <string name="prenom_contact">Prenom</string>
     <string name="mail_contact">Mail</string>
     <string name="title_activity_ctest_contact_ajout">CTestContactAjout</string>
+    <string name="title_activity_csetting_account">CSettingAccount</string>
 
+
+    <string name="text_bouton_modifier_compte">Modifier compte</string>
+    <string name="text_bouton_deconecter_compte">Deconexion</string>
+    <string name="text_bouton_suprimer_compte">Suprimer compte</string>
+    <string name="title_activity_cmodif_compte">CModifCompte</string>
+    <string name="title_activity_csupression_compte">CSupressionCompte</string>
+
+    <string name="help_supression_de_compte">entrez le mail et le mots de passe de votre compte pour le suprimer </string>
+    <string name="supression_boutton">suprimer compte</string>
 
 </resources>

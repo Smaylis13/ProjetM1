@@ -118,6 +118,18 @@
             android:name=".Interface.CTestContactAjout"
             android:label="@string/title_activity_ctest_contact_ajout" >
         </activity>
+        <activity
+            android:name=".Interface.CSettingAccount"
+            android:label="@string/title_activity_csetting_account" >
+        </activity>
+        <activity
+            android:name=".Interface.CModifCompte"
+            android:label="@string/title_activity_cmodif_compte" >
+        </activity>
+        <activity
+            android:name=".Interface.CSupressionCompte"
+            android:label="@string/title_activity_csupression_compte" >
+        </activity>
     </application>
 
 </manifest>
