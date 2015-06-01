@@ -53,7 +53,7 @@ public class CSettingAccount extends ActionBarActivity {
 
     public void suprimercompte (View view){
         final Intent lIntent = new Intent(this,CSupressionCompte.class);
-        // On crée le dialogue
+        // On cree le dialogue
         AlertDialog.Builder lConfirmationDialog = new AlertDialog.Builder(CSettingAccount.this);
         // On modifie le titre
         lConfirmationDialog.setTitle("suprimer compte");

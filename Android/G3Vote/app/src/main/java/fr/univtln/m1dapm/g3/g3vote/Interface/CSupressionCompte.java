@@ -55,7 +55,7 @@ public class CSupressionCompte extends ActionBarActivity {
             final Intent lIntent = new Intent(this, CSupressionCompte.class);
             lIntent.putExtra("sup_mail",lET_Mail.getText().toString());
             lIntent.putExtra("sup_mdr",lET_Password.getText().toString());
-            // On crée le dialogue
+            // On cree le dialogue
             AlertDialog.Builder lConfirmationDialog = new AlertDialog.Builder(CSupressionCompte.this);
             // On modifie le titre
             lConfirmationDialog.setTitle("suprimer compte");

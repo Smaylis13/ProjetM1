@@ -10,7 +10,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckedTextView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -27,7 +30,7 @@ public class CParticipantActivity extends AppCompatActivity {
     private ArrayList<CCandidate> mListCandidat = new ArrayList<CCandidate>();
     private ArrayList<CUser> mListParticipant = new ArrayList<CUser>();
     private String mTypeVote;
-
+    private CUserChoiceAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,14 +51,18 @@ public class CParticipantActivity extends AppCompatActivity {
         //Récupération du composant ListView
         ListView list = (ListView)this.findViewById(R.id.lLVParticipantList);
 
+        //parametrage de la listView
+        list.setChoiceMode(list.CHOICE_MODE_MULTIPLE);
+
         //Récupération de la liste des personnes
         ArrayList<CUser> mListUser = CUser.getAListOfUser();
 
         //Création et initialisation de l'Adapter pour les personnes
-        CUserChoiceAdapter adapter = new CUserChoiceAdapter(this, mListUser);
+        adapter = new CUserChoiceAdapter(this, mListUser);
 
         //Initialisation de la liste avec les données
         list.setAdapter(adapter);
+
     }
 
     @Override
@@ -65,13 +72,18 @@ public class CParticipantActivity extends AppCompatActivity {
         return true;
     }
 
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
+        ListView list2 = (ListView)this.findViewById(R.id.lLVParticipantList);
+        Toast.makeText(this,
+                String.valueOf(list2.getCheckedItemPosition()),
+                Toast.LENGTH_LONG).show();
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
@@ -81,8 +93,27 @@ public class CParticipantActivity extends AppCompatActivity {
     }
 
     public void bValidateParticipantList(View view) {
+        ListView list = (ListView)this.findViewById(R.id.lLVParticipantList);
+        int tailleListView = list.getCount();
+        //RelativeLayout layout =(RelativeLayout) findViewById(R.id.RLuserChoice);
+
+  /*      for(int i = 0;i<list.getChildCount();i++)
+        {
+            View view = list.getChildAt(i);
+            CheckedTextView cv =(CheckedTextView)view.findViewById(R.id.checkList);
+            if(cv.isChecked())
+*/
+
+
+        for (int i = 0; i <tailleListView ; i++) {
+            View view2 = list.getChildAt(i);
+            CheckedTextView ctv = (CheckedTextView)view2.findViewById(R.id.participantChoiceCTV);
+            if (ctv.isChecked()){
+                mListParticipant.add((CUser)adapter.getItem(i));
+            }
+        }
         Intent lIntent = new Intent(this,CRecapVoteActivity.class);
-        Log.i("donner candida",mListCandidat.toString());
+        Log.i("donner participant",mListParticipant.toString());
         lIntent.putExtra("liste de Candidat", mListCandidat);
         lIntent.putExtra("liste de participant",mListParticipant);
         lIntent.putExtra("VOTE_NAME", mVoteName);

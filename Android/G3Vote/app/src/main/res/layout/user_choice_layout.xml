@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="wrap_content"
+    android:id="@+id/RLuserChoice">
+    <!--
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -57,6 +58,19 @@
             android:layout_height="wrap_content">
         </TextView>
 
-    </LinearLayout>
+    </LinearLayout> -->
+
+    <CheckedTextView
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:checked="false"
+        android:clickable="true"
+        android:text="testtest"
+        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+        android:id="@+id/participantChoiceCTV"
+        android:enabled="true"
+        android:focusable="true" />
+
+
 
 </RelativeLayout>

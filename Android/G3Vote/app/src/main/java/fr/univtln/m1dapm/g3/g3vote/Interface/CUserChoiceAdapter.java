@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckedTextView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -62,7 +63,7 @@ public class CUserChoiceAdapter extends BaseAdapter {
             layoutItem.setBackgroundColor(-7829368);//gris clair
         }
         //(2) : Récupération des TextView de notre layout
-        TextView tv_Nom = (TextView)layoutItem.findViewById(R.id.TV_Nom);
+        /*TextView tv_Nom = (TextView)layoutItem.findViewById(R.id.TV_Nom);
         TextView tv_Prenom = (TextView)layoutItem.findViewById(R.id.TV_Prenom);
         TextView tv_Mail = (TextView)layoutItem.findViewById(R.id.TV_Mail);
 
@@ -70,7 +71,21 @@ public class CUserChoiceAdapter extends BaseAdapter {
         tv_Nom.setText(mListUser.get(position).getName());
         tv_Prenom.setText(mListUser.get(position).getFirstName());
         tv_Mail.setText(mListUser.get(position).getEmail());
+        */
 
+        final CheckedTextView ctv_mail = (CheckedTextView)layoutItem.findViewById(R.id.participantChoiceCTV);
+        ctv_mail.setText(mListUser.get(position).getEmail());
+
+
+        ctv_mail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ctv_mail.isChecked())
+                    ctv_mail.setChecked(false);
+                else
+                    ctv_mail.setChecked(true);
+            }
+        });
         //On retourne l'item créé.
         return layoutItem;
     }
