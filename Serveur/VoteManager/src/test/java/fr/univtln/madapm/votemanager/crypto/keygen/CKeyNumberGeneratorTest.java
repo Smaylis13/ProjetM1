@@ -4,7 +4,6 @@ import fr.univtln.madapm.votemanager.crypto.CCrypto;
 import junit.framework.TestCase;
 
 import javax.crypto.spec.SecretKeySpec;
-import java.math.BigInteger;
 import java.util.Arrays;
 
 /**
@@ -16,30 +15,32 @@ public class CKeyNumberGeneratorTest extends TestCase {
 
         String str = "fhfhdijdrijiodyniognhtihvri,hieoeomhgvdril,hvioh";
 
-        System.out.println(str);
+        System.out.println(str + "\n" + Arrays.toString(str.getBytes()));
 
         //crypto
         CCrypto crypto = new CCrypto();
+        CCrypto cryptoAppli = new CCrypto();
 
 
         //Privé
         byte[] lv = crypto.encrypt(str);
         System.out.println(Arrays.toString(lv));
-        str = crypto.decrypt(lv);
-
-        System.out.println(str);
+        System.out.println(crypto.decrypt(lv));
 
         crypto.fileEncrypt("/src/json/CVote.json", "/src/json/CVoteEncrypt.txt");
         crypto.fileDecrypt("/src/json/CVoteEncrypt.txt", "/src/json/CVoteDecrypt.json");
 
         //Public
-        BigInteger lb = BigInteger.valueOf(1);
+        crypto.reciveA(cryptoAppli.sendA(), 1);//A
+        cryptoAppli.reciveA(crypto.sendA(), 1);//B
+        byte[] lvp1 = crypto.publicEncrypt(str, (SecretKeySpec) crypto.getKeyMap().get(1));
+        System.out.println(Arrays.toString(lvp1) + "\n" + crypto.getKeyMap().toString() +
+                crypto.getKeyMap().get(1).equals(cryptoAppli.getKeyMap().get(1)) + "\n" +
+                Arrays.toString(((SecretKeySpec) crypto.getKeyMap().get(1)).getEncoded()) +
+                "\n" + Arrays.toString(((SecretKeySpec) cryptoAppli.getKeyMap().get(1)).getEncoded()));
+        str = crypto.publicDecrypt((SecretKeySpec) cryptoAppli.getKeyMap().get(1), lvp1);
+        System.out.println(str);
 
-        crypto.reciveA(lb, 1);
-        byte[] lvp = crypto.publicEncrypt(str, (SecretKeySpec) crypto.getKeyMap().get(1));
-        System.out.println(Arrays.toString(lvp));
-        //str = crypto.publicDecrypt(crypto.)
-
-        System.out.println();
+        System.out.println("Test terminé.");
     }
 }
