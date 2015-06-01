@@ -1,12 +1,15 @@
 package fr.univtln.m1dapm.g3.g3vote.Interface;
 
 import android.app.AlertDialog;
+import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.RadioButton;
 
 import java.util.ArrayList;
 
@@ -17,6 +20,8 @@ import fr.univtln.m1dapm.g3.g3vote.R;
  * Created by sebastien on 29/05/15.
  */
 public class CVoteUninominal extends AppCompatActivity {
+    private CCandidateUniqueChoiceAdapter adapter;
+
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cvote_uninominal);
@@ -28,10 +33,12 @@ public class CVoteUninominal extends AppCompatActivity {
         ArrayList<CCandidate> lListCandidate = CCandidate.getAListOfCandidate();
 
         //Création et initialisation de l'Adapter pour les personnes
-        CCandidateUniqueChoiceAdapter adapter = new CCandidateUniqueChoiceAdapter(this, lListCandidate);
+        adapter = new CCandidateUniqueChoiceAdapter(this, lListCandidate);
 
         //Initialisation de la liste avec les données
         lList.setAdapter(adapter);
+
+        //lList.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
         //TODO:Recuperer les candidats sur le serveur et les afficher
 
@@ -69,4 +76,5 @@ public class CVoteUninominal extends AppCompatActivity {
         // On affiche le message
         lConfirmationDialog.show();
     }
+
 }
