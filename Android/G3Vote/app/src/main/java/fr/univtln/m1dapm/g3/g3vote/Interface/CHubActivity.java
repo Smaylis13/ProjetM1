@@ -1,6 +1,38 @@
 package fr.univtln.m1dapm.g3.g3vote.Interface;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Toast;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.google.gson.reflect.TypeToken;
+
+import org.java_websocket.client.WebSocketClient;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
@@ -20,51 +52,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
-
-import android.app.ProgressDialog;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.Toast;
-
-import com.google.android.gms.gcm.GoogleCloudMessaging;
-
-import org.java_websocket.client.WebSocketClient;
-
-import java.io.IOException;
-import java.util.Calendar;
-import java.util.Locale;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import fr.univtln.m1dapm.g3.g3vote.Communication.CCommunication;
-import fr.univtln.m1dapm.g3.g3vote.Communication.CRequestTypesEnum;
 import fr.univtln.m1dapm.g3.g3vote.Communication.CTaskParam;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CUser;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
@@ -155,8 +144,9 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
         }
 
         // issma
-        mMail=sLoggedUser.getEmail();
+        mMail="test@gmail.com";
 
+>>>>>>> d3752de959600fca81b0f7012aa287a2d3934ac6
         mGcm = GoogleCloudMessaging.getInstance(this);
 
 		mContext = getApplicationContext();
@@ -164,6 +154,7 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
 		if(mRegid.equals("")){
 			registerInBackground();
 		}
+        Log.i("GCM_TAG",mRegid);
 
 		// Handle possible notification intent if app was not running
 		handleNotification(getIntent().getExtras());
@@ -272,8 +263,11 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
                     if (mGcm == null){
                         mGcm = GoogleCloudMessaging.getInstance(mContext);
                     }
+
+                    Log.i(GCM_TAG, "GCM Registration Token: " + mRegid);
                     mRegid = mGcm.register(GCM_SENDER_ID);
                     msg = "Device registered, registration ID=" + mRegid;
+                    Log.i(GCM_TAG, "TOTO : "+msg);
                     // You should send the registration ID to your server over
                     // HTTP, so it can use GCM/HTTP or CCS to send messages to your app.
                     sendRegistrationIdToBackend();
