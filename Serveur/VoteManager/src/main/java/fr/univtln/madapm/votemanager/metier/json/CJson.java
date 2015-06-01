@@ -7,6 +7,7 @@ import fr.univtln.madapm.votemanager.metier.vote.CCandidate;
 import fr.univtln.madapm.votemanager.metier.vote.CVote;
 
 import java.io.*;
+import java.util.logging.Logger;
 
 /**
  * Created by civars169 on 12/05/15.
@@ -14,10 +15,12 @@ import java.io.*;
  */
 public class CJson {
 
-    private String mSlach = "\\";
+    private final String mSlach = "\\";
 
-    private String mPathFile=new File("").getAbsolutePath();
-    private String mPathFileLinux=mPathFile.replace(mSlach, "/");
+    private final String mPathFile=new File("").getAbsolutePath();
+    private final String mPathFileLinux=mPathFile.replace(mSlach, "/");
+
+    private static final Logger LOG = Logger.getLogger("CJson");
 
     /**
      * Méthode qui converti un objet en Json et le place dans
@@ -33,7 +36,9 @@ public class CJson {
 
         File lfile = new File(mPathFileLinux+lpathFileEnd+".json");
         try {
-            boolean newFile = lfile.createNewFile();
+            if (lfile.createNewFile()){
+                LOG.info("Cannot create file: " + lfile);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

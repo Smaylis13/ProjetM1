@@ -54,6 +54,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import fr.univtln.m1dapm.g3.g3vote.Communication.CCommunication;
+import fr.univtln.m1dapm.g3.g3vote.Communication.CRequestTypesEnum;
 import fr.univtln.m1dapm.g3.g3vote.Communication.CTaskParam;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CUser;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
@@ -106,14 +108,16 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         Intent lIntent=getIntent();
-        /*
-        if(sLoggedUser==null) {
+      /*  if(sLoggedUser==null) {
             sLoggedUser = (CUser) lIntent.getSerializableExtra(CCommunication.LOGGED_USER);
         }
         CTaskParam lParams=new CTaskParam(CRequestTypesEnum.get_votes,sLoggedUser.getUserId());
-
         CVotesAsync lVotesAsc=new CVotesAsync();
         lVotesAsc.execute(lParams);
+
+        lParams=new CTaskParam(CRequestTypesEnum.get_contacts);
+        CCommunication lCom=new CCommunication();
+        lCom.execute(lParams);
 */
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -146,10 +150,8 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
         }
 
         // issma
-        mMail="test@gmail.com";
-
         //mMail=sLoggedUser.getEmail();
-        mMail = "test@gmail.com";
+        mMail="test@gmail.com";
 
         mGcm = GoogleCloudMessaging.getInstance(this);
 

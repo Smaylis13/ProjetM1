@@ -1,4 +1,4 @@
-package fr.univtln.madapm.votemanager.crypto.aes;
+package fr.univtln.m1dapm.g3.g3vote.crypto.aes;
 
 import javax.crypto.Cipher;
 import javax.crypto.CipherInputStream;
@@ -12,7 +12,7 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * Created by civars169 on 20/05/15.
+ * Created by civars169 on 01/06/15.
  * copyright Christian
  */
 

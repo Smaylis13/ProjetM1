@@ -6,13 +6,12 @@ import junit.framework.TestCase;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
 
 import fr.univtln.m1dapm.g3.g3vote.Algorithme.STV.CAlgoSTV;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CChoice;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CUser;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
 
 /**
@@ -33,26 +32,32 @@ public class CAlgoSTVTest extends TestCase {
 
         List<CCandidate> lCands = genererCandidats(lNbCands);
 
+        lVote.setCandidates(lCands);
+
         //       Log.i("Vote : ", "Creation Vote");
-        CAlgoSTV lAlgo = new CAlgoSTV(lVote, 5);
+        CAlgoSTV lAlgo = new CAlgoSTV(lVote, 4);
 
         List<CChoice> lChoices = new ArrayList<>();
 
-        Random lRandom = new Random();
-        for(int i=0; i<500; i++)
+        for(int i=0; i<27; i++)
         {
             List<CCandidate> lList1 = new ArrayList<>(lCands);
             Collections.shuffle(lList1);
+            for(CCandidate cand : lList1)
+            {
+                CUser luser = new CUser(mNomsCands[i], mNomsCands[i], "", "");
+                luser.setUserId(i);
+                CChoice choice = new CChoice(lVote,luser, cand, lList1.indexOf(cand)+1);
+                lChoices.add(choice);
+            }
+
         }
-
-        Log.i("Vote : ", "Taille liste choix : " + lChoices.size());
-
 
         //       Log.i("Vote : ", "Initialisation Vote");
         lAlgo.initVote(lChoices);
 
         Log.i("Vote : ", "Demarrage Calcul Resultat");
-        List<Integer> lListRes = new LinkedList<>();
+        List<Integer> lListRes;
 
         double debut = (double) System.currentTimeMillis();
 
@@ -63,7 +68,7 @@ public class CAlgoSTVTest extends TestCase {
         Log.i("Vote : ", "Duree du calcul : " + (fin-debut) + "ms");
 
         for(Integer candId : lListRes)
-            Log.i("Vote : ", "Vainqueurs : " + lCands.get(candId).getNomCandidat());
+            Log.i("Vote : ", "Vainqueurs : ID : " + candId + " Nom : " + lCands.get(candId).getNomCandidat());
     }
 
     private List<CCandidate> genererCandidats(int pNbCand)

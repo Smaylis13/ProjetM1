@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Checkable;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -72,4 +74,5 @@ public class CCandidateUniqueChoiceAdapter extends BaseAdapter {
         //On retourne l'item créé.
         return layoutItem;
     }
+
 }

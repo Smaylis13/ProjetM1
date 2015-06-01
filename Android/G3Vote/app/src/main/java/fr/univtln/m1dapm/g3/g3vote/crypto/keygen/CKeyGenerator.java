@@ -1,18 +1,17 @@
-package fr.univtln.madapm.votemanager.crypto.keygen;
+package fr.univtln.m1dapm.g3.g3vote.crypto.keygen;
 
-import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
+
 /**
- * Created by civars169 on 20/05/15.
+ * Created by civars169 on 01/06/15.
  * copyright Christian
  */
 
@@ -32,7 +31,7 @@ public class CKeyGenerator extends Random {
     //private final byte[] mPublicKey = randByte(new byte[SIZES]); // 16 bytes = 128 bits
 
     //partie spécifique au serveur
-    private final Map<Integer, SecretKey> mClef = new HashMap<>();
+    private SecretKey mClef;
     //fin de la partie spécifique au serveur
 
     /**
@@ -104,8 +103,12 @@ public class CKeyGenerator extends Random {
     }
     */
 
-    public Map<Integer, SecretKey> getClef() {
+    public SecretKey getClef() {
         return mClef;
+    }
+
+    public void setClef(SecretKeySpec pK){
+        this.mClef = pK;
     }
 
     @Override

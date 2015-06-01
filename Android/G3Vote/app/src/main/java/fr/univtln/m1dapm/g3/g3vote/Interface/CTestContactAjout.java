@@ -6,6 +6,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import fr.univtln.m1dapm.g3.g3vote.Communication.CCommunication;
+import fr.univtln.m1dapm.g3.g3vote.Communication.CRequestTypesEnum;
+import fr.univtln.m1dapm.g3.g3vote.Communication.CTaskParam;
 import fr.univtln.m1dapm.g3.g3vote.R;
 
 public class CTestContactAjout extends ActionBarActivity {
@@ -29,6 +32,9 @@ public class CTestContactAjout extends ActionBarActivity {
         Log.i("contact", mNomContact);
         Log.i("contact",mPrenomContact);
         Log.i("contact",mMailContact);
+        CTaskParam lParams=new CTaskParam(CRequestTypesEnum.add_contact,mMailContact);
+        CCommunication lCom=new CCommunication();
+        lCom.execute(lParams);
     }
 
     @Override
