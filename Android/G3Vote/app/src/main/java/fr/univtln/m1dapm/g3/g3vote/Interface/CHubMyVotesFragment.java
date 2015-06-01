@@ -1,10 +1,7 @@
 package fr.univtln.m1dapm.g3.g3vote.Interface;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +37,6 @@ public class CHubMyVotesFragment extends Fragment {
         this.sVotes.clear();
         for (CVote lVote:pVotes) {
             this.sVotes.add(lVote);
-            Log.e("TEST",lVote.toString());
         }
         sAdapter.notifyDataSetChanged();
     }

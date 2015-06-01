@@ -221,7 +221,6 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                     lHttpCon = (HttpURLConnection) lUrl.openConnection();
                     CVote lNewVote = (CVote) lParams.getObject();
                     String lJsonStringNewVote=lMapper.writeValueAsString(lNewVote);
-                    Log.e("TEST",lJsonStringNewVote);
                     JSONObject lNewVoteOBJ = new JSONObject(lJsonStringNewVote);
                     lHttpCon.setDoOutput(true);
                     lHttpCon.setDoInput(true);
