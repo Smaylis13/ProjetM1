@@ -1,8 +1,11 @@
 package fr.univtln.madapm.votemanager.metier.vote;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -16,19 +19,21 @@ import java.util.List;
  */
 @Entity
 @Table(name="candidat")
-public class CCandidate {
+public class CCandidate implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="ID_CANDIDAT")
+    @JsonIgnore
     private int mIdCandidat;
     @Column(name="NOM_CANDIDAT")
     private String mNomCandidat;
     @Column(name="DESCRIPTION_CANDIDAT")
     private String mDescriptionCandidat;
 
-    @ManyToOne
+
     @JoinColumn(name = "ID_VOTE")
+    @ManyToOne(fetch=FetchType.LAZY,optional = false,cascade ={CascadeType.MERGE, CascadeType.PERSIST})
     private CVote mVote;
 
     @JsonIgnore
@@ -66,6 +71,14 @@ public class CCandidate {
         this.mDescriptionCandidat = pDescriptionCandidat;
     }
 
+    public void addVote(CVote pVote){
+        this.mVote=pVote;
+    }
+
+    public int getVote() {
+        return mVote.getIdVote();
+    }
+
     @Override
     public boolean equals(Object pObject) {
         if (this == pObject) return true;
@@ -92,10 +105,11 @@ public class CCandidate {
 
     @Override
     public String toString() {
-        return "CCandidat{" +
+        return "CCandidate{" +
                 "mIdCandidat=" + mIdCandidat +
                 ", mNomCandidat='" + mNomCandidat + '\'' +
                 ", mDescriptionCandidat='" + mDescriptionCandidat + '\'' +
+                ", mChoices=" + mChoices +
                 '}';
     }
 }

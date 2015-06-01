@@ -1,13 +1,12 @@
 package fr.univtln.m1dapm.g3.g3vote.Interface;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -20,7 +19,7 @@ import fr.univtln.m1dapm.g3.g3vote.R;
 /**
  * Created by chris on 15/05/15.
  */
-public class CHubMyVotesFragment extends Fragment {
+public class CHubMyVotesFragment extends Fragment implements AdapterView.OnItemClickListener {
     /**
      * The fragment argument representing the section number for this
      * fragment.
@@ -40,7 +39,6 @@ public class CHubMyVotesFragment extends Fragment {
         this.sVotes.clear();
         for (CVote lVote:pVotes) {
             this.sVotes.add(lVote);
-            Log.e("TEST",lVote.toString());
         }
         sAdapter.notifyDataSetChanged();
     }
@@ -76,7 +74,7 @@ public class CHubMyVotesFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_chub_myvote, container, false);
         //Récupération du composant ListView
         sList = (ListView)rootView.findViewById(R.id.lListViewMyVote);
-
+        sList.setOnItemClickListener(this);
         //Récupération de la liste des personnes
         //ArrayList<CVote> listVote = CVote.getAListOfVote();
         //sVotes = CVote.getAListOfVote();
@@ -86,6 +84,13 @@ public class CHubMyVotesFragment extends Fragment {
 
         //Initialisation de la liste avec les données
         sList.setAdapter(sAdapter);
+
         return rootView;
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent intent = new Intent(getActivity(), CVoteUninominal.class);
+        startActivity(intent);
     }
 }

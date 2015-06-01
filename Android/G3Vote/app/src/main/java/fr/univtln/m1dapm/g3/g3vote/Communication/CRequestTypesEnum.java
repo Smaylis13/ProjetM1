@@ -13,5 +13,6 @@ public enum CRequestTypesEnum implements Serializable {
     delete_user,
     add_new_vote,
     get_vote,
-    get_votes
+    get_votes,
+    get_candidates
 }

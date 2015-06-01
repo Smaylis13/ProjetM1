@@ -1,10 +1,13 @@
 package fr.univtln.madapm.votemanager.metier.vote;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import fr.univtln.madapm.votemanager.dao.CUserDAO;
 import fr.univtln.madapm.votemanager.metier.user.CUser;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
 
@@ -18,7 +21,7 @@ import java.util.List;
         @NamedQuery(name = "CVote.findOrgaByUser", query = "SELECT c FROM CVote c where (c.mOrganisateur= :User)")
 })
 @Table(name="vote")
-public class CVote {
+public class CVote implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,7 +60,7 @@ public class CVote {
     @OneToMany(cascade = CascadeType.ALL, mappedBy="mVote")
     private List<CChoice> mChoices=null;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="mVote")
+    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL, mappedBy="mVote")
     private List<CCandidate> mCandidate;
 
     @JsonIgnore
@@ -223,7 +226,6 @@ public class CVote {
      * @param pChois chois pour ce candidat
      */
     public void addChoice(CUser pUser, CCandidate pCandidate, int pChois){
-        CKeyChoice lKeyChoice = new CKeyChoice();
         CChoice lChoice = new CChoice(this, pUser, pCandidate, pChois);
     }
 

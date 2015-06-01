@@ -2,6 +2,21 @@
     <string name="app_name">EVS</string>
     <string name="title_activity_csub">EVS Inscription</string>
     <string name="title_activity_chub">EVS Accueil</string>
+    <string name="title_activity_ckyvote">Vote KemenyYoung</string>
+    <string name="title_activity_stvvote">Vote STV</string>
+    <string name="title_activity_majority_vote">Vote Majoritaire</string>
+    <string name="title_activity_gg">gg</string>
+    <string name="title_activity_cvote_uninominal_one_turn">Vote Uninominal 1 tour</string>
+    <string name="title_activity_cvote_conf_stv">Vote STV</string>
+    <string name="title_activity_cvote_conf_kemeny_young">Vote Kemeny-Young</string>
+    <string name="title_activity_cvote_conf_majority_jugement">Vote Jugement Majoritaire</string>
+    <string name="title_activity_uninominal_vote">Vote Uninominal 1 tour</string>
+    <string name="title_activity_cvote_conf_uninominal_two_turn">Vote Uninomial 2 tours</string>
+    <string name="title_activity_cvote_conf_borda">Vote Borda</string>
+    <string name="title_activity_ctest">CTestActivity</string>
+    <string name="title_activity_cvote_conf_condorcet">Vote Condorcet</string>
+    <string name="title_activity_cparticipant">Choix des participants</string>
+    <string name="title_activity_crecap_vote">Récapitulatif du vote</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
@@ -20,13 +35,11 @@
     <string name="hubText2">Mes Votes</string>
     <string name="hubText3">Contacts</string>
     <string name="hubText4">Create VOTES</string>
-    <string name="title_activity_ckyvote">Vote KemenyYoung</string>
-    <string name="title_activity_stvvote">Vote STV</string>
-    <string name="title_activity_majority_vote">Vote Majoritaire</string>
+
     <string name="voteNameHint">Nom du vote</string>
     <string name="voteDateBegin">Date de début</string>
     <string name="voteDateEnd">Date de fin</string>
-    <string name="title_activity_gg">gg</string>
+
     <string name="validationText">Valider</string>
 
     <string name="subValidateErrorMessage">Tous les champs ne sont pas remplis</string>
@@ -40,37 +53,43 @@
         &#8226; Bien\n
         &#8226; Assez bien\n
         &#8226; Insuffisant\n
-        &#8226; À rejeter\n
+        &#8226; À rejeter\n</string>
+    <string name="uninomialOneTurnVoteDescription">Dans ce vote l\'électeur doit choisir un candidat
+        parmi plusieurs. Celui qui recueille le plus de voix (majorité relative) remporte les élections.</string>
+    <string name="uninominalTwoTurnVoteDescription">Au premier tour, l\'électeur doit choisir un
+        candidat parmi plusieurs. Si un candidat recueille la majorité absolue (plus de 50 %),
+        il est élu. Sinon, on organise un second tour dans lequel le candidat qui recueille le plus
+        de voix est élu.</string>
 
-    </string>
+
+
     <string name="calculationMethod">Mode de calcul</string>
     <string name="CondorcetDescription">le vote de Condorcet sert à blablabla</string>
     <string name="BordaDescription">le vote Borda sert à blablabla</string>
     <string name="userFirstNameInputHint">Prénom</string>
     <string name="userLastNameInputHint">Nom de famille</string>
     <string name="lTVvoteNameLabel">Nom du vote :</string>
-    <string name="lTVHelpMessageLog">Si vous avez déjà un compte, veuillez renseigner votre mail et votre mot de passe et appuyer sur le bouton se connecter. Sinon veuillez appuyer sur le bouton s\'inscrire</string>
+    <string name="lTVHelpMessageLog">Si vous avez déjà un compte, veuillez renseigner votre mail et
+        votre mot de passe et appuyer sur le bouton se connecter. Sinon veuillez appuyer sur le bouton
+        s\'inscrire</string>
     <string name="lTVspinnerName">Type de Vote</string>
-    <string name="uninomialOneTurnVoteDescription">Dans ce vote l\'électeur doit choisir un candidat parmi plusieurs. Celui qui recueille le plus de voix (majorité relative) remporte les élections.</string>
-    <string name="uninominalTwoTurnVoteDescription">Au premier tour, l\'électeur doit choisir un candidat parmi plusieurs. Si un candidat recueille la majorité absolue (plus de 50 %), il est élu. Sinon, on organise un second tour dans lequel le candidat qui recueille le plus de voix est élu.</string>
-    <string name="title_activity_cvote_uninominal_one_turn">Vote Uninominal 1 tour</string>
-    <string name="title_activity_cvote_conf_stv">Vote STV</string>
-    <string name="title_activity_cvote_conf_kemeny_young">Vote Kemeny-Young</string>
-    <string name="title_activity_cvote_conf_majority_jugement">Vote Jugement Majoritaire</string>
-    <string name="title_activity_cvote_conf_uninominal_two_turn">Vote Uninomial 2 tours</string>
-    <string name="title_activity_cvote_conf_borda">Vote Borda</string>
+
     <string name="lETChoiceHint">Choix</string>
     <string name="lETDescriptionHint">Description</string>
-    <string name="title_activity_ctest">CTestActivity</string>
-    <string name="title_activity_cvote_conf_condorcet">Vote Condorcet</string>
+
+    <!-- messages d'erreur pour la création de vote-->
     <string name="validateVoteTypeETempty">Vous n\'avez pas rempli le nom du vote</string>
     <string name="dateBeginEmpty">Vous n\'avez pas choisi de date de début</string>
     <string name="dateEndEmpty">Vous n\'avez pas choisi de date de fin</string>
     <string name="dateBeginAfterDateEnd">La date de début est avant la date de fin</string>
-    <string name="title_activity_cparticipant">CParticipantActivity</string>
-    <string name="title_activity_crecap_vote">CRecapVoteActivity</string>
+
     <string name="cancelVote">Annuler tout</string>
     <string name="vote">Voter !</string>
-    <string name="title_activity_uninominal_vote">CVoteUninominal</string>
+    <string name="title_activity_ccontact_ajout">CContactAjout</string>
+    <string name="nom_contact">Nom</string>
+    <string name="prenom_contact">Prenom</string>
+    <string name="mail_contact">Mail</string>
+    <string name="title_activity_ctest_contact_ajout">CTestContactAjout</string>
+
 
 </resources>

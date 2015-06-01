@@ -1,5 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<fr.univtln.m1dapm.g3.g3vote.Interface.CheckableRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
-</RelativeLayout>
+    <fr.univtln.m1dapm.g3.g3vote.Interface.InertCheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/checkBoxCandidateChoice"
+        android:focusable="false"
+        android:clickable="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:id="@+id/LL_fond"
+        android:layout_toLeftOf="@id/checkBoxCandidateChoice"
+        android:layout_toStartOf="@id/checkBoxCandidateChoice">
+
+        <TextView
+            android:text="Nom"
+            android:id="@+id/TV_CandidateName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp">
+        </TextView>
+
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="1dp"
+        android:layout_below="@id/LL_fond"
+        android:layout_toLeftOf="@id/checkBoxCandidateChoice"
+        android:layout_toStartOf="@id/checkBoxCandidateChoice">
+
+        <TextView
+            android:text="Description"
+            android:id="@+id/TV_CandidateDesctiption"
+            android:layout_marginLeft="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </TextView>
+
+    </LinearLayout>
+
+</fr.univtln.m1dapm.g3.g3vote.Interface.CheckableRelativeLayout>
