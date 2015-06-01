@@ -3,6 +3,7 @@ package fr.univtln.m1dapm.g3.g3vote.Interface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -90,7 +91,10 @@ public class CHubMyVotesFragment extends Fragment implements AdapterView.OnItemC
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent intent = new Intent(getActivity(), CVoteUninominal.class);
-        startActivity(intent);
+        Intent lIntent = new Intent(getActivity(), CVoteUninominal.class);
+        CVote lVote = (CVote) sList.getItemAtPosition(position);
+        lIntent.putExtra("ID_VOTE", lVote.getIdVote());
+        lIntent.putExtra("TYPE_VOTE", lVote.getTypes().getNom());
+        startActivity(lIntent);
     }
 }
