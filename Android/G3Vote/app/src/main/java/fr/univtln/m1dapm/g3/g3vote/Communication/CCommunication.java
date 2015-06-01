@@ -15,6 +15,7 @@ import org.apache.oltu.oauth2.common.OAuth;
 import org.apache.oltu.oauth2.common.exception.OAuthProblemException;
 import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
 import org.apache.oltu.oauth2.common.message.types.GrantType;*/
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -46,6 +47,7 @@ import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CUser;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CHubActivity;
+import fr.univtln.m1dapm.g3.g3vote.Interface.CHubContactFragment;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CHubMyVotesFragment;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CLoginActivity;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CSubActivity;
@@ -256,7 +258,42 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                         lResponse = readStream(lIn);
                         Type listType = new TypeToken<ArrayList<CCandidate>>() {}.getType();
                         ArrayList<CCandidate> lCandidates = new Gson().fromJson(lResponse, listType);
-                        Log.e("Test",lCandidates.toString());
+                    }
+                    else
+                        return lCode;
+
+                    break;
+
+                case add_contact:
+                    lUrl = new URL(SERVER_URL+"user/contact/"+CHubActivity.getsLoggedUser().getUserId()+"/"+lParams.getObject());
+                    lHttpCon = (HttpURLConnection) lUrl.openConnection();
+                    lHttpCon.setRequestMethod("PUT");
+                    lHttpCon.setRequestProperty("Content-Type", "application/json");
+                    lHttpCon.setRequestProperty("Accept", "application/json");
+                    lCode=lHttpCon.getResponseCode();
+                    if(lCode==200) {
+                        //lOut.close();
+                       /* lIn = new BufferedInputStream(lHttpCon.getInputStream());
+                        lResponse = readStream(lIn);
+                        lNewVote.setIdVote(Integer.decode(lResponse));*/
+                    }
+                    else
+                        return lCode;
+
+                    break;
+                case get_contacts:
+                    lUrl = new URL(SERVER_URL+"user/contact/"+CHubActivity.getsLoggedUser().getUserId());
+                    lHttpCon = (HttpURLConnection) lUrl.openConnection();
+                    lHttpCon.setDoInput(true);
+                    lHttpCon.setRequestMethod("GET");
+                    lHttpCon.setRequestProperty("Accept", "application/json");
+                    lCode=lHttpCon.getResponseCode();
+                    if(lCode==200) {
+                        //lOut.close();
+                        lIn = new BufferedInputStream(lHttpCon.getInputStream());
+                        lResponse = readStream(lIn);
+                        ArrayList<CUser> lContacts = lMapper.readValue(lResponse, new TypeReference<ArrayList<CUser>>(){});
+                        CHubContactFragment.setsContacts(lContacts);
 
                     }
                     else

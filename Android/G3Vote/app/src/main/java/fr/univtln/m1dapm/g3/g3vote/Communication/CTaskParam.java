@@ -15,6 +15,10 @@ public class CTaskParam {
         return mObject;
     }
 
+    public CTaskParam(CRequestTypesEnum pRequestType){
+        mRequestType=pRequestType;
+    }
+
     public CTaskParam(CRequestTypesEnum pRequestType, Object pObject) {
         mRequestType=pRequestType;
         mObject=pObject;
