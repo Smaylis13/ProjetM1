@@ -9,9 +9,11 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CUser;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
 import fr.univtln.m1dapm.g3.g3vote.R;
 
 /**
@@ -23,6 +25,14 @@ public class CHubContactFragment extends Fragment {
      * fragment.
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
+    private static List<CUser> sContacts=new ArrayList<>();
+
+    public static void setsContacts(List<CUser> pUsers) {
+        sContacts.clear();
+        for (CUser lUser:pUsers) {
+            sContacts.add(lUser);
+        }
+    }
 
     /**
      * Returns a new instance of this fragment for the given section
@@ -48,10 +58,10 @@ public class CHubContactFragment extends Fragment {
         ListView list = (ListView)rootView.findViewById(R.id.ListContact);
 
         //Récupération de la liste des personnes
-        ArrayList<CUser> listP = CUser.getAListOfUser();
+        ArrayList<CUser> lContacts = CUser.getAListOfUser();
 
         //Création et initialisation de l'Adapter pour les personnes
-        CUserAdapter adapter = new CUserAdapter(rootView.getContext(), listP);
+        CUserAdapter adapter = new CUserAdapter(rootView.getContext(), sContacts);
 
         //Initialisation de la liste avec les données
         list.setAdapter(adapter);

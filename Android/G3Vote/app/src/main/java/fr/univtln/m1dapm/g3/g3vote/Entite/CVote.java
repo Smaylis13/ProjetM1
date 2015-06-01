@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * Created by ludo on 06/05/15.
  */
-public class CVote implements Serializable,Parcelable {
+public class CVote implements Serializable {
 
 
     private int mIdVote;
@@ -196,15 +196,6 @@ public class CVote implements Serializable,Parcelable {
         return listVote;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-
-    }
 
     @Override
     public String toString() {

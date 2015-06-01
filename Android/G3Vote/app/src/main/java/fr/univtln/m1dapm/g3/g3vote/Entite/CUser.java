@@ -1,5 +1,8 @@
 package fr.univtln.m1dapm.g3.g3vote.Entite;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
@@ -96,4 +99,5 @@ public class CUser implements Serializable{
                 ", mPassword='" + mPassword + '\'' +
                 '}';
     }
+
 }
