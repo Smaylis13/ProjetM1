@@ -15,7 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * Created by lyamsi on 01/06/15.
  */
 public class CPost2Gcm {
-	public static void post(String apiKey, Content content) {
+	public static void post(String apiKey, CContent content) {
 		try {
 
 			URL url = new URL("https://android.googleapis.com/gcm/send");
