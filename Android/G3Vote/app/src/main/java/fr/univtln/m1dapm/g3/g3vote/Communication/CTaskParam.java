@@ -6,6 +6,7 @@ package fr.univtln.m1dapm.g3.g3vote.Communication;
 public class CTaskParam {
     private CRequestTypesEnum mRequestType;
     private Object mObject;
+    private Object mType;
 
     public CRequestTypesEnum getRequestType() {
         return mRequestType;
@@ -15,6 +16,10 @@ public class CTaskParam {
         return mObject;
     }
 
+    public Object getType() {
+        return mType;
+    }
+
     public CTaskParam(CRequestTypesEnum pRequestType){
         mRequestType=pRequestType;
     }
@@ -22,5 +27,11 @@ public class CTaskParam {
     public CTaskParam(CRequestTypesEnum pRequestType, Object pObject) {
         mRequestType=pRequestType;
         mObject=pObject;
+    }
+
+    public CTaskParam(CRequestTypesEnum pRequestType, Object pObject,Object pType) {
+        mRequestType=pRequestType;
+        mObject=pObject;
+        mType=pType;
     }
 }
