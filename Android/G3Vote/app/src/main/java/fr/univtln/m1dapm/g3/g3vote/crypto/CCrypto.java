@@ -1,15 +1,16 @@
 package fr.univtln.m1dapm.g3.g3vote.crypto;
 
-import fr.univtln.m1dapm.g3.g3vote.crypto.aes.CAESCrypt;
-import fr.univtln.m1dapm.g3.g3vote.crypto.aes.CAESFileCrypt;
-import fr.univtln.m1dapm.g3.g3vote.crypto.keygen.CKeyGenerator;
-
-import javax.crypto.NoSuchPaddingException;
-import javax.crypto.spec.SecretKeySpec;
 import java.math.BigInteger;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.util.Map;
+
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
+
+import fr.univtln.m1dapm.g3.g3vote.crypto.aes.CAESCrypt;
+import fr.univtln.m1dapm.g3.g3vote.crypto.aes.CAESFileCrypt;
+import fr.univtln.m1dapm.g3.g3vote.crypto.keygen.CKeyGenerator;
 
 /**
  * Created by civars169 on 01/06/15.

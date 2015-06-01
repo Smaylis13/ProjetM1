@@ -1,15 +1,14 @@
 package fr.univtln.m1dapm.g3.g3vote.crypto.keygen;
 
-import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
+
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 
 /**
  * Created by civars169 on 01/06/15.
@@ -108,7 +107,7 @@ public class CKeyGenerator extends Random {
         return mClef;
     }
 
-    public void setClef(SercretKey pK){
+    public void setClef(SecretKeySpec pK){
         this.mClef = pK;
     }
 
