@@ -256,8 +256,8 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                         lIn = new BufferedInputStream(lHttpCon.getInputStream());
                         lResponse = readStream(lIn);
                         Type listType = new TypeToken<ArrayList<CCandidate>>() {}.getType();
-                        ArrayList<CCandidate> lVotes = new Gson().fromJson(lResponse, listType);
-                        Log.e("Test",lVotes.toString());
+                        ArrayList<CCandidate> lCandidates = new Gson().fromJson(lResponse, listType);
+                        Log.e("Test",lCandidates.toString());
 
                     }
                     else
