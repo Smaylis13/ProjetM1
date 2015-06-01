@@ -8,6 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+
+import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
 import fr.univtln.m1dapm.g3.g3vote.R;
 
 /**
@@ -18,7 +21,17 @@ public class CVoteUninominal extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cvote_uninominal);
         //Récupération du composant ListView
-        ListView Llist = (ListView)findViewById(R.id.LVChoixCandidatUninominal);
+        ListView lList = (ListView)findViewById(R.id.LVChoixCandidatUninominal);
+
+
+        //Récupération de la liste des personnes
+        ArrayList<CCandidate> lListCandidate = CCandidate.getAListOfCandidate();
+
+        //Création et initialisation de l'Adapter pour les personnes
+        CCandidateUniqueChoiceAdapter adapter = new CCandidateUniqueChoiceAdapter(this, lListCandidate);
+
+        //Initialisation de la liste avec les données
+        lList.setAdapter(adapter);
 
         //TODO:Recuperer les candidats sur le serveur et les afficher
 

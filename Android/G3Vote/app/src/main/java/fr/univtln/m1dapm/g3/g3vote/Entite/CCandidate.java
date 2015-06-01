@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSetter;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Created by ludo on 06/05/15.
@@ -41,6 +42,19 @@ public class CCandidate implements Serializable{
     }
 
     public CCandidate() {
+    }
+
+    public static ArrayList<CCandidate> getAListOfCandidate(){
+
+        ArrayList<CCandidate> listCandidate = new ArrayList<CCandidate>();
+
+        listCandidate.add(new CCandidate(0, "Banane", "Fruit 0"));
+        listCandidate.add(new CCandidate(1, "Orange", "Fruit 1"));
+        listCandidate.add(new CCandidate(2, "Pomme", "Fruit 2"));
+        listCandidate.add(new CCandidate(3, "Poire", "Fruit 3"));
+        listCandidate.add(new CCandidate(4, "Abricot", "Fruit 4"));
+
+        return listCandidate;
     }
 
 
