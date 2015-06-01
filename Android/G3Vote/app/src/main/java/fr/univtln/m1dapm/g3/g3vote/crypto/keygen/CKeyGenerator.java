@@ -7,8 +7,6 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 /**
@@ -108,7 +106,7 @@ public class CKeyGenerator extends Random {
         return mClef;
     }
 
-    public void setClef(SercretKey pK){
+    public void setClef(SecretKey pK){
         this.mClef = pK;
     }
 
