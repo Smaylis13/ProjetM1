@@ -101,4 +101,14 @@ public class CVoteAdapter extends BaseAdapter {
         //On retourne l'item créé.
         return layoutItem;
     }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
+    @Override
+    public int getViewTypeCount() {
+        return 500;
+    }
 }
