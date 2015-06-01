@@ -42,6 +42,7 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
 
+import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CUser;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CHubActivity;
@@ -173,7 +174,7 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                     lHttpCon.setRequestMethod("GET");
                     lHttpCon.setRequestProperty("Accept", "application/json");
                     lCode=lHttpCon.getResponseCode();
-                    if(lCode==201) {
+                    if(lCode==200) {
                         //lOut.close();
                         lIn = new BufferedInputStream(lHttpCon.getInputStream());
                         lResponse = readStream(lIn);
@@ -196,7 +197,7 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                     lHttpCon.setRequestMethod("GET");
                     lHttpCon.setRequestProperty("Accept", "application/json");
                     lCode=lHttpCon.getResponseCode();
-                    if(lCode==201) {
+                    if(lCode==200) {
                         //lOut.close();
                         lIn = new BufferedInputStream(lHttpCon.getInputStream());
                         lResponse = readStream(lIn);
@@ -232,12 +233,32 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                     lOut.write(lNewVoteOBJ.toString());
                     lOut.flush();
                     lCode=lHttpCon.getResponseCode();
-                    if(lCode==201) {
-                        Log.e("TEST CODE VOTE:", "CODE:"+lCode);
+                    if(lCode==200) {
                         //lOut.close();
                        /* lIn = new BufferedInputStream(lHttpCon.getInputStream());
                         lResponse = readStream(lIn);
                         lNewVote.setIdVote(Integer.decode(lResponse));*/
+                    }
+                    else
+                        return lCode;
+
+                    break;
+
+                case get_candidates:
+                    lUrl = new URL(SERVER_URL+"vote/"+Integer.toString((int)lParams.getObject())+"/candidats");
+                    lHttpCon = (HttpURLConnection) lUrl.openConnection();
+                    lHttpCon.setDoInput(true);
+                    lHttpCon.setRequestMethod("GET");
+                    lHttpCon.setRequestProperty("Accept", "application/json");
+                    lCode=lHttpCon.getResponseCode();
+                    if(lCode==200) {
+                        //lOut.close();
+                        lIn = new BufferedInputStream(lHttpCon.getInputStream());
+                        lResponse = readStream(lIn);
+                        Type listType = new TypeToken<ArrayList<CCandidate>>() {}.getType();
+                        ArrayList<CCandidate> lVotes = new Gson().fromJson(lResponse, listType);
+                        Log.e("Test",lVotes.toString());
+
                     }
                     else
                         return lCode;

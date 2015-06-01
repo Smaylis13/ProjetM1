@@ -550,12 +550,10 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
                         lHttpCon.setRequestMethod("GET");
                         lHttpCon.setRequestProperty("Accept", "application/json");
                         lCode=lHttpCon.getResponseCode();
-                        Log.e("TEST CODE","CODE: "+lCode);
                         if(lCode==200) {
                             //lOut.close();
                             lIn = new BufferedInputStream(lHttpCon.getInputStream());
                             lResponse = readStream(lIn);
-                            Log.e("VOTE:",lResponse);
                             Type listType = new TypeToken<ArrayList<CVote>>() {}.getType();
                             //ArrayList<CVote> lVotes = new Gson().fromJson(lResponse, listType);
                             ObjectMapper lMapper=new ObjectMapper();

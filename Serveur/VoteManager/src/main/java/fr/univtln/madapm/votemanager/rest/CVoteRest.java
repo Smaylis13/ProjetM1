@@ -91,6 +91,6 @@ public class CVoteRest {
         for(CCandidate lCandidate:lCandidates)
             lCandidate.addVote(lNewVote);
         lNewVote.setCandidates(lCandidates);
-        return Response.status(201).build();
+        return Response.status(200).build();
     }
 }
