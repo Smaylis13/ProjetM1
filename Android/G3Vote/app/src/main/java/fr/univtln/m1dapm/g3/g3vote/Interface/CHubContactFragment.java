@@ -1,5 +1,6 @@
 package fr.univtln.m1dapm.g3.g3vote.Interface;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
+import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CUser;
 import fr.univtln.m1dapm.g3.g3vote.R;
 
@@ -36,7 +38,6 @@ public class CHubContactFragment extends Fragment {
 
     public CHubContactFragment() {
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -44,7 +45,7 @@ public class CHubContactFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_chub_contact, container, false);
 
         //Récupération du composant ListView
-        ListView list = (ListView)rootView.findViewById(R.id.ListView01);
+        ListView list = (ListView)rootView.findViewById(R.id.ListContact);
 
         //Récupération de la liste des personnes
         ArrayList<CUser> listP = CUser.getAListOfUser();
@@ -56,5 +57,6 @@ public class CHubContactFragment extends Fragment {
         list.setAdapter(adapter);
         return rootView;
     }
+
 
 }

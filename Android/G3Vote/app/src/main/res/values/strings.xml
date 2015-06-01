@@ -1,5 +1,4 @@
 <resources>
-    <!-- titre des activity -->
     <string name="app_name">EVS</string>
     <string name="title_activity_csub">EVS Inscription</string>
     <string name="title_activity_chub">EVS Accueil</string>
@@ -44,8 +43,6 @@
     <string name="validationText">Valider</string>
 
     <string name="subValidateErrorMessage">Tous les champs ne sont pas remplis</string>
-
-
     <!-- description des votes -->
     <string name="stvDescription">le vote STV sert à blablabla</string>
     <string name="kemenyYoungDescription">le vote KY sert à choisir un ordre gagnant parmi les candidats. Il est très couteux, donc il est impossible de le réaliser pour plus de 9 candidats.
@@ -88,6 +85,11 @@
 
     <string name="cancelVote">Annuler tout</string>
     <string name="vote">Voter !</string>
+    <string name="title_activity_ccontact_ajout">CContactAjout</string>
+    <string name="nom_contact">Nom</string>
+    <string name="prenom_contact">Prenom</string>
+    <string name="mail_contact">Mail</string>
+    <string name="title_activity_ctest_contact_ajout">CTestContactAjout</string>
 
 
 </resources>

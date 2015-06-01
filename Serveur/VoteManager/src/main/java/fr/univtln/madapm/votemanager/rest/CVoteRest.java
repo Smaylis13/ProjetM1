@@ -9,6 +9,8 @@ import fr.univtln.madapm.votemanager.metier.vote.CVote;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -49,6 +51,18 @@ public class CVoteRest {
     public Response getVotesOfUser(@PathParam("pIdUser") int pId){
         SimpleDateFormat lSdf = new SimpleDateFormat("yyyy-MM-dd");
         Date lToday=new Date();
+        Calendar lCalendar = Calendar.getInstance();
+        lCalendar.setTime(lToday);
+        lCalendar.set(Calendar.MILLISECOND, 0);
+        lCalendar.set(Calendar.SECOND, 59);
+        lCalendar.set(Calendar.MINUTE, 59);
+        lCalendar.set(Calendar.HOUR_OF_DAY, 23);
+        lToday=lCalendar.getTime();
+        try {
+            lToday=lSdf.parse(lSdf.format(lToday));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         CUserDAO lUserDAO=new CUserDAO();
         CUser lUser=lUserDAO.findByID(pId);
         List<Integer> lIdVotes=lUser.obtainParticipatingVotesIds();
@@ -74,8 +88,9 @@ public class CVoteRest {
             else
                 lVote.setterVoted(true);
             if(lVote.getStatusVote())
-                 /*if(lVote.getDateFin().compareTo(lSdf.(lToday))<0)
-                    lVote.setStatusVote(false);*/
+                 if(lVote.getDateFin().compareTo(lToday)<0) {
+                     lVote.setStatusVote(false);
+                 }
             lVoteDAO.update(lVote);
         }
         return Response.status(200).entity(lVotes).build();

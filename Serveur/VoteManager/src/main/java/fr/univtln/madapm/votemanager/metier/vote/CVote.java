@@ -226,7 +226,6 @@ public class CVote implements Serializable {
      * @param pChois chois pour ce candidat
      */
     public void addChoice(CUser pUser, CCandidate pCandidate, int pChois){
-        CKeyChoice lKeyChoice = new CKeyChoice();
         CChoice lChoice = new CChoice(this, pUser, pCandidate, pChois);
     }
 

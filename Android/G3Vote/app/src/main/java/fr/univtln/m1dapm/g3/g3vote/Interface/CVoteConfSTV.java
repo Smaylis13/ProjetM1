@@ -115,6 +115,8 @@ public class CVoteConfSTV extends AppCompatActivity {
             }
         });
     }
+
+
     @Override
     public void onBackPressed() {
         // On crée le dialogue
