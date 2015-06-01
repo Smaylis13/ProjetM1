@@ -32,6 +32,18 @@ public class CVoteRest {
    }
 
     @GET
+    @Path("/{pIdVote}/candidats")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getCandidates(@PathParam("pIdVote") int pId){
+        CVoteDAO lVoteDAO=new CVoteDAO();
+        CVote lVote=lVoteDAO.findById(pId);
+        List<CCandidate> lCandidates=lVote.getCandidates();
+        if(lCandidates!=null)
+            return Response.status(200).entity(lCandidates).build();
+        return Response.status(409).build();
+    }
+
+    @GET
     @Path("/all/{pIdUser}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getVotesOfUser(@PathParam("pIdUser") int pId){
@@ -62,7 +74,6 @@ public class CVoteRest {
             else
                 lVote.setterVoted(true);
             if(lVote.getStatusVote())
-                System.out.println(lVote.getDateFin());
                  /*if(lVote.getDateFin().compareTo(lSdf.(lToday))<0)
                     lVote.setStatusVote(false);*/
             lVoteDAO.update(lVote);
@@ -73,11 +84,13 @@ public class CVoteRest {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addVote(CVote pNewVote){
-        System.out.println(pNewVote);
+        List<CCandidate> lCandidates=pNewVote.getCandidates();
+
         CVoteDAO lVoteDao=new CVoteDAO();
-        //List<CCandidate> lCandidats=pNewVote.getCandidates();
-        //pNewVote.setCandidates(null);
-        lVoteDao.create(pNewVote);
+        CVote lNewVote= lVoteDao.create(pNewVote);
+        for(CCandidate lCandidate:lCandidates)
+            lCandidate.addVote(lNewVote);
+        lNewVote.setCandidates(lCandidates);
         return Response.status(201).build();
     }
 }
