@@ -211,6 +211,7 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                         //lOut.close();
                         lIn = new BufferedInputStream(lHttpCon.getInputStream());
                         lResponse = readStream(lIn);
+
                         Type listType = new TypeToken<ArrayList<CVote>>() {}.getType();
                         ArrayList<CVote> lVotes = new Gson().fromJson(lResponse, listType);
                         CHubMyVotesFragment.getInstance().setmVotes(lVotes);
