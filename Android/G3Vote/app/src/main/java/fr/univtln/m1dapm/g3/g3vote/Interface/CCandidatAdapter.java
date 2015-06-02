@@ -58,7 +58,7 @@ public class CCandidatAdapter extends BaseAdapter {
         RelativeLayout layoutItem;
         //re-use of layout
         if (convertView == null) {
-            //Initialisation de notre item à partir du  layout XML "personne_layout.xml"
+            //Initialisation de notre item à partir du  layout XML
             layoutItem = (RelativeLayout) mInflater.inflate(R.layout.choice_layout, parent, false);
         } else {
             layoutItem = (RelativeLayout) convertView;
