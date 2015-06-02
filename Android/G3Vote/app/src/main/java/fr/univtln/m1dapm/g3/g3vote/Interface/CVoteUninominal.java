@@ -20,6 +20,7 @@ import fr.univtln.m1dapm.g3.g3vote.Communication.CCommunication;
 import fr.univtln.m1dapm.g3.g3vote.Communication.CRequestTypesEnum;
 import fr.univtln.m1dapm.g3.g3vote.Communication.CTaskParam;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
 import fr.univtln.m1dapm.g3.g3vote.R;
 
 /**
@@ -27,17 +28,14 @@ import fr.univtln.m1dapm.g3.g3vote.R;
  */
 public class CVoteUninominal extends AppCompatActivity {
 
-    private int mIdVote;
-    private String mTypeVote;
+    private CVote mVote;
     private static CCandidateUniqueChoiceAdapter sAdapter;
     private ListView lList;
-    private static List<CCandidate> sListCandidat = new ArrayList<>();
+    private static List<CCandidate> sListCandidat;
 
     public static void setlList(List<CCandidate> pList) {
-        sListCandidat.clear();
-        for (CCandidate lCandidate:pList) {
-            sListCandidat.add(lCandidate);
-        }
+        sListCandidat = new ArrayList<>(pList);
+
         sAdapter.notifyDataSetChanged();
     }
 
@@ -51,21 +49,19 @@ public class CVoteUninominal extends AppCompatActivity {
         if (extras==null){
             return;
         }
-        mIdVote = (Integer) extras.get("ID_VOTE");
-        mTypeVote = (String) extras.get("TYPE_VOTE");
-
-        Log.i("ID VOTE : ", "" + mIdVote);
+        mVote = (CVote) extras.get("VOTE");
+        /*
 
         CTaskParam lParams = new CTaskParam(CRequestTypesEnum.get_candidates, mIdVote, mTypeVote);
         CCommunication lCom = new CCommunication();
         lCom.execute(lParams);
-
+*/
 
 
         //Récupération du composant ListView
         lList = (ListView)findViewById(R.id.LVChoixCandidatUninominal);
 
-
+        sListCandidat = mVote.getCandidates();
         //Récupération de la liste des personnes
         //ArrayList<CCandidate> lListCandidate = CCandidate.getAListOfCandidate();
 
