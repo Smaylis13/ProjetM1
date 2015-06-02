@@ -93,6 +93,7 @@ public class CVoteRest {
                  }
             lVoteDAO.update(lVote);
         }
+        //System.out.println(lVotes);
         return Response.status(200).entity(lVotes).build();
     }
 
@@ -100,12 +101,14 @@ public class CVoteRest {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addVote(CVote pNewVote){
         List<CCandidate> lCandidates=pNewVote.getCandidates();
-
         CVoteDAO lVoteDao=new CVoteDAO();
         CVote lNewVote= lVoteDao.create(pNewVote);
-        for(CCandidate lCandidate:lCandidates)
+        for(CCandidate lCandidate:lCandidates) {
+            System.out.println(lCandidate.toString());
             lCandidate.addVote(lNewVote);
+        }
         lNewVote.setCandidates(lCandidates);
+        lVoteDao.update(lNewVote);
         return Response.status(200).build();
     }
 }

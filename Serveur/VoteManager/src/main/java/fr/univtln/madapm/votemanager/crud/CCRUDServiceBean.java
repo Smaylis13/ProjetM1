@@ -30,11 +30,8 @@ public class CCRUDServiceBean<T> implements ICRUDService<T> {
         return pT;
     }
 
-    public T detach(T pT){
-        mET.begin();
+    public void detach(T pT){
         this.mEM.detach(pT);
-        mET.commit();
-        return pT;
     }
 
 
@@ -66,12 +63,16 @@ public class CCRUDServiceBean<T> implements ICRUDService<T> {
 
     @Override
     public void startTransac() {
-
+        this.mET.begin();
     }
 
     @Override
+    public void rollBackTransac(){
+        this.mET.rollback();
+    }
+    @Override
     public void finishTransac() {
-
+        this.mET.commit();
     }
 
     @Override

@@ -32,21 +32,26 @@ public class CUserRest {
     @GET
     @Path("/contact/{pIdU}")
     public Response getContacts(@PathParam("pIdU") int pIdU){
+        System.out.println("getContact");
         CUserDAO lUserDAO=new CUserDAO();
         CUser lUser=lUserDAO.findByID(pIdU);
-        List<CUser> lContacts=lUser.obtainContacts();
-        for(CUser lContact:lContacts) {
-            lUserDAO.detach(lContact);
+
+        List<CUser> lContactsUser=lUser.obtainContacts();
+        lUserDAO.startTransac();
+        for(CUser lContact:lContactsUser) {
             lContact.setPassword("");
         }
+        List<CUser> lContacts=new ArrayList<>();
+        lContacts.addAll(lContactsUser);
+        lUserDAO.rollBackTransac();
+        lUserDAO.update(lUser);
         return Response.status(200).entity(lContacts).build();
     }
 
     @PUT
     @Path("/contact/{pIdU}/{emailC}")
     public Response addContact(@PathParam("pIdU") int pIdU,@PathParam("emailC") String pEmailC){
-        System.out.println(pIdU);
-        System.out.println(pEmailC);
+        System.out.println("addContact");
         CUserDAO lUserDAO=new CUserDAO();
         CUser lUser=lUserDAO.findByID(pIdU);
         Map<String,String> lParams = new HashMap<>();
@@ -59,7 +64,6 @@ public class CUserRest {
         }
 
         lUser.addContact(lUserDAO.findByID(lUsers.get(0).getUserId()));
-        System.out.println(lUser);
         lUserDAO.update(lUser);
         return Response.status(200).build();
     }
@@ -68,6 +72,7 @@ public class CUserRest {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addUser(CUser pNewUser){
+        System.out.println("addUser");
         Map<String,String> lParams = new HashMap<>();
         lParams.put("emailUser",pNewUser.getEmail());
         CUserDAO lUserDAO=new CUserDAO();
@@ -93,6 +98,7 @@ public class CUserRest {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/connect")
     public Response logUser(CUser pUser){
+        System.out.println("logUser");
         Map<String,String> lParams = new HashMap<>();
         lParams.put("emailUser",pUser.getEmail());
         CUserDAO lUserDAO=new CUserDAO();
@@ -111,6 +117,7 @@ public class CUserRest {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/{emailC}/{password}")
     public Response removeUser(@PathParam("emailC") String pEmail,@PathParam("password") String pPassword){
+        System.out.println("removeUser");
         Map<String,String> lParams = new HashMap<>();
         lParams.put("emailUser",pEmail);
         CUserDAO lUserDAO=new CUserDAO();
@@ -124,8 +131,20 @@ public class CUserRest {
             }
         }
 
-        System.out.println("here");
         return Response.status(401).header("WWW-Authenticate", "xBasic realm=\"fake\"").build();
+    }
+
+    @DELETE
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/contact/{idU}/{idC}")
+    public Response removeContact(@PathParam("idU") int pIdU,@PathParam("idC") int pIdC){
+        System.out.println("removeContact");
+
+        CUserDAO lUserDAO=new CUserDAO();
+        CUser lUser =lUserDAO.findByID(pIdU);
+        lUser.obtainContacts().remove(lUserDAO.findByID(pIdC));
+        lUserDAO.update(lUser);
+        return Response.status(Response.Status.OK).entity("Contact has been removed").build();
     }
 
 }

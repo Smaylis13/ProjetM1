@@ -10,10 +10,13 @@ public interface ICRUDService<T> {
     public T create(T pT);
     public T find(Class pType, Object pId);
     public T update(T pT);
-    public T detach(T pT);
+    public void detach(T pT);
     public void delete(Class pType, Object pId);
     public void closeEM();
     public void startTransac();
+
+    public void rollBackTransac();
+
     public void finishTransac();
 
     public List findWithNamedQuery(String pQueryName);

@@ -1,14 +1,13 @@
 package fr.univtln.madapm.votemanager.metier.vote;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 import fr.univtln.madapm.votemanager.dao.CUserDAO;
 import fr.univtln.madapm.votemanager.metier.user.CUser;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -70,7 +69,7 @@ public class CVote implements Serializable {
     @JsonIgnore
     @JoinTable(name="invitation", joinColumns = {@JoinColumn(name="ID_VOTE",nullable = false,updatable = false)},
             inverseJoinColumns = {@JoinColumn(name="ID_UTILISATEUR",nullable = false,updatable = false)})
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.REFRESH)
     private List<CUser> mParticipatingUsers;
 
     @Transient
@@ -111,6 +110,28 @@ public class CVote implements Serializable {
         this.mCandidate = pCandidate;
     }
 
+    @JsonGetter("participants")
+    public List<CUser> getParticipatingUsers() {
+        /*List<Integer> lIdUsers=new ArrayList<>();
+        for(CUser lUser:this.mParticipatingUsers){
+            lIdUsers.add(lUser.getUserId());
+        }
+
+        return lIdUsers;*/
+        for(CUser lUser:this.mParticipatingUsers){
+            lUser.setPassword("");
+        }
+        return this.mParticipatingUsers;
+    }
+
+    @JsonSetter("participants")
+    public void setParticipatingUsers(List<Integer> pParticipatingUsersId) {
+        this.mParticipatingUsers=new ArrayList<>();
+        CUserDAO lUserDAO=new CUserDAO();
+        for(int lId:pParticipatingUsersId){
+            mParticipatingUsers.add(lUserDAO.findByID(lId));
+        }
+    }
 
     public int getIdVote(){return mIdVote;}
     public String getVoteName() {

@@ -45,7 +45,7 @@ public class CUser {
             inverseJoinColumns = {@JoinColumn(name="ID_GROUPE",nullable = false,updatable = false)})
     private List<CGroup> mListGroups;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade ={ })
     @JoinTable(name="a_contact", joinColumns = {@JoinColumn(name="ID_UTILISATEUR",nullable = false,updatable = false)},
             inverseJoinColumns = {@JoinColumn(name="ID_CONTACT",nullable = false,updatable = false)})
     private List<CUser> mListContacts;
@@ -54,7 +54,7 @@ public class CUser {
     @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL, mappedBy="mOrganisateur")
     private List<CVote> mOrganisedVotes=null;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
     @JoinTable(name="invitation", joinColumns = {@JoinColumn(name="ID_UTILISATEUR",nullable = false,updatable = false)},
             inverseJoinColumns = {@JoinColumn(name="ID_VOTE",nullable = false,updatable = false)})
     private List<CVote> mParticipatingVotes;

@@ -22,9 +22,10 @@ public class CChoiceRest {
 
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
-    public CChoice addChoice(CChoice pChoice){
+    public Response addChoice(CChoice pChoice){
         CChoiceDAO lChoiceDAO = new CChoiceDAO();
-        return lChoiceDAO.createChoice(pChoice);
+        lChoiceDAO.createChoice(pChoice);
+        return Response.status(200).build();
     }
 
     @DELETE
