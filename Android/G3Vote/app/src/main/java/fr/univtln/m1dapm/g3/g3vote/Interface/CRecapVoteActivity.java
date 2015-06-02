@@ -37,7 +37,7 @@ public class CRecapVoteActivity extends AppCompatActivity {
     private String mDateFin;
     private ArrayList<CCandidate> mListCandidat = new ArrayList<CCandidate>();
     private ArrayList<CUser> mListParticipant = new ArrayList<CUser>();
-    private String mTypeVote;
+    private CType mTypeVote;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +54,7 @@ public class CRecapVoteActivity extends AppCompatActivity {
         mDateFin = (String) extras.get("END_DATE");
         mListCandidat = (ArrayList<CCandidate>)extras.get("liste de Candidat");
         mListParticipant=(ArrayList<CUser>)extras.get("liste de participant");
-        mTypeVote = (String) extras.get("VOTE_TYPE");
+        mTypeVote = (CType) extras.getSerializable("VOTE_TYPE");
 
         Log.i("donner candida", mListCandidat.toString());
         //remplis la liste des participants
@@ -78,7 +78,7 @@ public class CRecapVoteActivity extends AppCompatActivity {
 
         //met le type du vote
         TextView lTVTypeVote = (TextView)this.findViewById(R.id.lTVTypeVote);
-        lTVTypeVote.setText(mTypeVote);
+        lTVTypeVote.setText(mTypeVote.getNom());
 
         //met la date de début
         TextView lTVDateBegin = (TextView)this.findViewById(R.id.lTVDateBegin);
@@ -97,7 +97,7 @@ public class CRecapVoteActivity extends AppCompatActivity {
         Date lDateDeb = new java.sql.Date(simpleDateFormat.parse(mDateDebut).getTime());
         Date lDateFin = new java.sql.Date(simpleDateFormat.parse(mDateFin).getTime());
 
-        CVote lVote = new CVote(mVoteName, "", true, lDateDeb, lDateFin, 1, null, new CType(1,mTypeVote,"test"), null, mListCandidat, null);
+        CVote lVote = new CVote(mVoteName, "", true, lDateDeb, lDateFin, CHubActivity.getsLoggedUser().getUserId(), null, mTypeVote, null, mListCandidat, null);
         CTaskParam lParams = new CTaskParam(CRequestTypesEnum.add_new_vote, lVote);
         CCommunication lCom = new CCommunication();
         lCom.execute(lParams);
