@@ -73,12 +73,12 @@ public class CLoginActivity extends AppCompatActivity {
         final String lPassword = lET_Password.getText().toString();
 
         if (!(lET_Mail.getText().toString().isEmpty())){
-            /*CTaskParam lParams=new CTaskParam(CRequestTypesEnum.log_user,new CUser(null,null,lMail,lPassword));
+            CTaskParam lParams=new CTaskParam(CRequestTypesEnum.log_user,new CUser(null,null,lMail,lPassword));
             CCommunication lCom=new CCommunication();
-            lCom.execute(lParams);*/
-            Intent lIntent = new Intent(this,CHubActivity.class);
+            lCom.execute(lParams);
+            /*Intent lIntent = new Intent(this,CHubActivity.class);
             lIntent.putExtra(EXTRA_LOGIN,lET_Mail.getText().toString());
-            startActivity(lIntent);
+            startActivity(lIntent);*/
         }else{
             Toast.makeText(getApplicationContext(),"Entrez un mail!",Toast.LENGTH_LONG).show();
         }
