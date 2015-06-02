@@ -50,6 +50,7 @@ import fr.univtln.m1dapm.g3.g3vote.Interface.CHubActivity;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CHubContactFragment;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CHubMyVotesFragment;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CLoginActivity;
+import fr.univtln.m1dapm.g3.g3vote.Interface.CParticipantActivity;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CSubActivity;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CVoteUninominal;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CSupressionCompte;
@@ -212,6 +213,7 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                         //lOut.close();
                         lIn = new BufferedInputStream(lHttpCon.getInputStream());
                         lResponse = readStream(lIn);
+
                         Type listType = new TypeToken<ArrayList<CVote>>() {}.getType();
                         ArrayList<CVote> lVotes = new Gson().fromJson(lResponse, listType);
                         CHubMyVotesFragment.getInstance().setmVotes(lVotes);
@@ -303,6 +305,7 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                         lResponse = readStream(lIn);
                         ArrayList<CUser> lContacts = lMapper.readValue(lResponse, new TypeReference<ArrayList<CUser>>(){});
                         CHubContactFragment.setsContacts(lContacts);
+
 
                     }
                     else

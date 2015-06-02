@@ -21,7 +21,7 @@ import fr.univtln.m1dapm.g3.g3vote.crypto.keygen.CKeyGenerator;
  * Classe regroupant toute les opérations de cryptage.
  *
  * Côté appli.
- * Envoyer le paramètre de l'appli (sendA) au serveur et attendre la valeur de retour de serveur (reciveA).
+ * Envoyer le paramètre de l'appli (sendA) au serveur et attendre la valeur de retour de serveur (receiveA).
  * Crypter et décrypter pour les messages avec le téléphone via la SecretKey qui
  * aura été placée dans la variable et récupérable via la méthode getKey du téléphone.
  * /!/ Faire attention que la SecretKey avec le téléphone n'ait pas déjà été établi.
@@ -31,10 +31,10 @@ import fr.univtln.m1dapm.g3.g3vote.crypto.keygen.CKeyGenerator;
  */
 public class CCrypto {
 
-    private static final CAESCrypt mAesCrypt = new CAESCrypt();
-    private static final CAESFileCrypt mAesFileCrypt = new CAESFileCrypt();
+    private static final CAESCrypt AESCRYPT = new CAESCrypt();
+    private static final CAESFileCrypt AESFILECRYPT = new CAESFileCrypt();
 
-    private static final CKeyGenerator mKeyGenerator = new CKeyGenerator();
+    private static final CKeyGenerator KEYGENERATOR = new CKeyGenerator();
 
 
     /**
@@ -42,7 +42,7 @@ public class CCrypto {
      * @param pstr Données à crypter
      */
     public byte[] encrypt(String pstr){
-        return mAesCrypt.encrypt(mKeyGenerator.getPrivateKey(), pstr);
+        return AESCRYPT.encrypt(KEYGENERATOR.getPrivateKey(), pstr);
     }
 
     /**
@@ -50,7 +50,7 @@ public class CCrypto {
      * @param pBytes Données à décrypter
      */
     public String decrypt(byte[] pBytes){
-        return mAesCrypt.decrypt(mKeyGenerator.getPrivateKey(), pBytes);
+        return AESCRYPT.decrypt(KEYGENERATOR.getPrivateKey(), pBytes);
     }
 
     /**
@@ -59,7 +59,7 @@ public class CCrypto {
      * @param pSecretKeySpec clef public commune avec le téléphone
      */
     public byte[] publicEncrypt(String pstr, SecretKeySpec pSecretKeySpec){
-        return mAesCrypt.encrypt(pSecretKeySpec, pstr);
+        return AESCRYPT.encrypt(pSecretKeySpec, pstr);
     }
 
     /**
@@ -68,7 +68,7 @@ public class CCrypto {
      * @param pBytes Données à décrypter
      */
     public String publicDecrypt(SecretKeySpec pSecretKeySpec, byte[] pBytes){
-        return mAesCrypt.decrypt(pSecretKeySpec, pBytes);
+        return AESCRYPT.decrypt(pSecretKeySpec, pBytes);
     }
 
     /**
@@ -78,7 +78,7 @@ public class CCrypto {
      */
     public void fileEncrypt(String pPath, String pCible){
         try {
-            mAesFileCrypt.encrypterFichier(mKeyGenerator.getPrivateKey(), pPath, pCible);
+            AESFILECRYPT.encrypterFichier(KEYGENERATOR.getPrivateKey(), pPath, pCible);
         } catch (NoSuchAlgorithmException | InvalidKeyException | NoSuchPaddingException e) {
             e.printStackTrace();
         }
@@ -91,7 +91,7 @@ public class CCrypto {
      */
     public void fileDecrypt(String pPath, String pCible){
         try {
-            mAesFileCrypt.decrypterFichier(mKeyGenerator.getPrivateKey(), pPath, pCible);
+            AESFILECRYPT.decrypterFichier(KEYGENERATOR.getPrivateKey(), pPath, pCible);
         } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException e) {
             e.printStackTrace();
         }
@@ -100,13 +100,13 @@ public class CCrypto {
     /**
      * Méthode qui clacule la clef de cryptage spécifique après réception du paramètre du serveur.
      * Elle sera stocké dans la Map avec l'identifiant reçu.
-     * @param pB Paramètre reçu pour générer la clef de chiffrement commune
+     * @param pA Paramètre reçu pour générer la clef de chiffrement commune
      */
-    public void reciveA(BigInteger pB){
-        SecretKeySpec lK = mKeyGenerator.specificKeyKeyGen(BigInteger.valueOf((long)
-                (Math.pow(pB.doubleValue(), mKeyGenerator.getKeyNumberGenerator().getab())
-                        %mKeyGenerator.getKeyNumberGenerator().getPValue())).toByteArray());
-        mKeyGenerator.setClef(lK); //La conserve en mémoire
+    public void receiveA(BigInteger pA){
+        SecretKeySpec lK = KEYGENERATOR.specificKeyKeyGen(BigInteger.valueOf((long)
+                (Math.pow(pA.doubleValue(), KEYGENERATOR.getKeyNumberGenerator().getab())
+                        % KEYGENERATOR.getKeyNumberGenerator().getPValue())).toByteArray());
+        KEYGENERATOR.setClef(lK); //La conserve en mémoire
     }
 
     /**
@@ -114,7 +114,7 @@ public class CCrypto {
      * @return Paramètre à envoyer
      */
     public static BigInteger sendA(){
-        return mKeyGenerator.getPublicKey();
+        return KEYGENERATOR.getPublicKey();
     }
 
     /**
@@ -122,6 +122,6 @@ public class CCrypto {
      * @return Map des clef public correspondant aux identifiants
      */
     public SecretKey getKey(){
-        return mKeyGenerator.getClef();
+        return KEYGENERATOR.getClef();
     }
 }
