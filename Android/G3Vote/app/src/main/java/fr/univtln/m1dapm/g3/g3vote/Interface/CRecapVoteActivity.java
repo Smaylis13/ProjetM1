@@ -77,7 +77,7 @@ public class CRecapVoteActivity extends AppCompatActivity {
 
         //met le type du vote
         TextView lTVTypeVote = (TextView)this.findViewById(R.id.lTVTypeVote);
-        lTVTypeVote.setText(mTypeVote.getNom());
+        lTVTypeVote.setText(mTypeVote);
 
         //met la date de début
         TextView lTVDateBegin = (TextView)this.findViewById(R.id.lTVDateBegin);
