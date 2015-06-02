@@ -537,6 +537,18 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
         startActivity(lIntent);
     }
 
+
+    public void removeContact(View view){
+
+        ArrayList<CUser> lContacts = CUser.getAListOfUser();
+        lContacts=(ArrayList)CHubContactFragment.getsContacts();
+        Intent lIntent = new Intent(this,CContactSupression.class);
+
+        lIntent.putExtra("listecontact",lContacts);
+
+        startActivity(lIntent);
+    }
+
     public class CVotesAsync extends AsyncTask<Object, Void, Integer> {
         public static final String SERVER_URL = "http://10.21.205.16:80/";
         private final ProgressDialog mDialog = new ProgressDialog(CHubActivity.this);

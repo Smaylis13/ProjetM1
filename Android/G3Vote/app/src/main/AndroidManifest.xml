@@ -148,6 +148,10 @@
             android:name=".Interface.CSupressionCompte"
             android:label="@string/title_activity_csupression_compte" >
         </activity>
+        <activity
+            android:name=".Interface.CContactSupression"
+            android:label="@string/title_activity_ccontact_supression" >
+        </activity>
     </application>
 
 </manifest>

@@ -101,5 +101,6 @@
 
     <string name="help_supression_de_compte">entrez le mail et le mots de passe de votre compte pour le suprimer </string>
     <string name="supression_boutton">suprimer compte</string>
+    <string name="title_activity_ccontact_supression">CContactSupression</string>
 
 </resources>
