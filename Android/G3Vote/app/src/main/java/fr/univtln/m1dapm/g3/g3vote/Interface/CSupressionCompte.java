@@ -63,14 +63,10 @@ public class CSupressionCompte extends ActionBarActivity {
         final String lMail = lET_Mail.getText().toString();
         final String lPassword = lET_Password.getText().toString();
         if (lMail.isEmpty()) {
-
         }else{
-
             CTaskParam lParam=new CTaskParam(CRequestTypesEnum.delete_user,lMail+"/"+lPassword);
             CCommunication lCom=new CCommunication();
             lCom.execute(lParam);
-
-
         }
     }
 }

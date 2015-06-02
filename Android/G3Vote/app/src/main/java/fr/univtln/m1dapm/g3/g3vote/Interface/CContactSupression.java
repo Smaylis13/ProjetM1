@@ -15,6 +15,9 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.univtln.m1dapm.g3.g3vote.Communication.CCommunication;
+import fr.univtln.m1dapm.g3.g3vote.Communication.CRequestTypesEnum;
+import fr.univtln.m1dapm.g3.g3vote.Communication.CTaskParam;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CUser;
 import fr.univtln.m1dapm.g3.g3vote.R;
@@ -50,7 +53,11 @@ public class CContactSupression extends ActionBarActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        Log.i("test", "id = " + mListContactView.getItemAtPosition(position));
+                        CUser lContact=(CUser)mListContactView.getItemAtPosition(position);
+                        CTaskParam lParams=new CTaskParam(CRequestTypesEnum.delete_contact,CHubActivity.getsLoggedUser().getUserId()+"/"+lContact.getUserId());
+                        CCommunication lCom=new CCommunication();
+                        lCom.execute(lParams);
+                        //Log.i("test", "id = " + mListContactView.getItemAtPosition(position));
 
                     }
                 });
