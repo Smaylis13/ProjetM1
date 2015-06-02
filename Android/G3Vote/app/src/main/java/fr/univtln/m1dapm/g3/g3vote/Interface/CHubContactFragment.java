@@ -69,4 +69,7 @@ public class CHubContactFragment extends Fragment {
     }
 
 
+    public static List<CUser> getsContacts() {
+        return sContacts;
+    }
 }
