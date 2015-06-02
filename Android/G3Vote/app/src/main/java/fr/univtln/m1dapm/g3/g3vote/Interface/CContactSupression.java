@@ -37,7 +37,7 @@ public class CContactSupression extends ActionBarActivity {
         mListContact = (List<CUser>) extras.get("listecontact");
 
         mListContactView = (ListView)this.findViewById(R.id.ListContact);
-        CUserAdapter cUserAdapter = new CUserAdapter(this,mListContact);
+        final CUserAdapter cUserAdapter = new CUserAdapter(this,mListContact);
         mListContactView.setAdapter(cUserAdapter);
         mListContactView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -57,6 +57,8 @@ public class CContactSupression extends ActionBarActivity {
                         CTaskParam lParams=new CTaskParam(CRequestTypesEnum.delete_contact,CHubActivity.getsLoggedUser().getUserId()+"/"+lContact.getUserId());
                         CCommunication lCom=new CCommunication();
                         lCom.execute(lParams);
+                        mListContact.remove(position);
+                        cUserAdapter.notifyDataSetChanged();
                         //Log.i("test", "id = " + mListContactView.getItemAtPosition(position));
 
                     }
