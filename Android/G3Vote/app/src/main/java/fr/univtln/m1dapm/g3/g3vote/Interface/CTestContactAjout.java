@@ -35,6 +35,11 @@ public class CTestContactAjout extends ActionBarActivity {
         CTaskParam lParams=new CTaskParam(CRequestTypesEnum.add_contact,mMailContact);
         CCommunication lCom=new CCommunication();
         lCom.execute(lParams);
+
+        CTaskParam lParams2=new CTaskParam(CRequestTypesEnum.get_contacts);
+        CCommunication lCom2=new CCommunication();
+        lCom2.execute(lParams2);
+
     }
 
     @Override

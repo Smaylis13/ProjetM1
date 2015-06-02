@@ -26,6 +26,7 @@ public class CHubContactFragment extends Fragment {
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
     private static List<CUser> sContacts=new ArrayList<>();
+    private CUserAdapter adapter;
 
     public static List<CUser> getsContacts() {
         return sContacts;
@@ -65,13 +66,16 @@ public class CHubContactFragment extends Fragment {
         ArrayList<CUser> lContacts = CUser.getAListOfUser();
 
         //Création et initialisation de l'Adapter pour les personnes
-        CUserAdapter adapter = new CUserAdapter(rootView.getContext(), sContacts);
+        adapter = new CUserAdapter(rootView.getContext(), sContacts);
 
         //Initialisation de la liste avec les données
         list.setAdapter(adapter);
         return rootView;
     }
 
-
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        adapter.notifyDataSetChanged();
+    }
 }
