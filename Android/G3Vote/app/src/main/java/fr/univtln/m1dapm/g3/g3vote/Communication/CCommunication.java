@@ -51,6 +51,7 @@ import fr.univtln.m1dapm.g3.g3vote.Interface.CHubContactFragment;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CHubMyVotesFragment;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CLoginActivity;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CSubActivity;
+import fr.univtln.m1dapm.g3.g3vote.Interface.CVoteUninominal;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CSupressionCompte;
 
 /**
@@ -265,6 +266,7 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                         lResponse = readStream(lIn);
                         Type listType = new TypeToken<ArrayList<CCandidate>>() {}.getType();
                         ArrayList<CCandidate> lCandidates = new Gson().fromJson(lResponse, listType);
+                        CVoteUninominal.setlList(lCandidates);
                     }
                     else
                         return lCode;
