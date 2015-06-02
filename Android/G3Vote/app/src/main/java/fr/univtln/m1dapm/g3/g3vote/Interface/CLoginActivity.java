@@ -3,6 +3,7 @@ package fr.univtln.m1dapm.g3.g3vote.Interface;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;

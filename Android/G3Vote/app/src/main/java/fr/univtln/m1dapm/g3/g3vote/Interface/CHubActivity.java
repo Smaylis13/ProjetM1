@@ -108,6 +108,7 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         Intent lIntent=getIntent();
+        //recupere l'utilisateur connecté et va cherché les votes de l'utilisateur
         if(sLoggedUser==null) {
             sLoggedUser = (CUser) lIntent.getSerializableExtra(CCommunication.LOGGED_USER);
         }
