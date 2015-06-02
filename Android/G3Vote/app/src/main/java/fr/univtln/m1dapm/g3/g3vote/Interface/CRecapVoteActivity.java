@@ -3,7 +3,6 @@ package fr.univtln.m1dapm.g3.g3vote.Interface;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -38,6 +37,8 @@ public class CRecapVoteActivity extends AppCompatActivity {
     private ArrayList<CCandidate> mListCandidat = new ArrayList<CCandidate>();
     private ArrayList<CUser> mListParticipant = new ArrayList<CUser>();
     private String mTypeVote;
+    //Majority
+    private int mCalculationMethod;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +56,7 @@ public class CRecapVoteActivity extends AppCompatActivity {
         mListCandidat = (ArrayList<CCandidate>)extras.get("liste de Candidat");
         mListParticipant=(ArrayList<CUser>)extras.get("liste de participant");
         mTypeVote = (String) extras.get("VOTE_TYPE");
+        mCalculationMethod = (int) extras.get("CALCULATIONMETHOD");
 
         Log.i("donner candida", mListCandidat.toString());
         //remplis la liste des participants

@@ -106,6 +106,7 @@ public class CVoteConfMajorityJugement extends AppCompatActivity {
         }
         if (mCalculationMethod == -1){
             j++;
+            Toast.makeText(getApplicationContext(), "Veuillez renseigner le mode de calcul", Toast.LENGTH_LONG).show();
         }
 
         if (j==0){
