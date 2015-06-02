@@ -59,7 +59,7 @@ import fr.univtln.m1dapm.g3.g3vote.Interface.CSupressionCompte;
  * Created by ludo on 05/05/15.
  */
 public class CCommunication extends AsyncTask<Object, Void, Integer> {
-    public static final String SERVER_URL="http://10.21.205.16:80/";
+    public static final String SERVER_URL="http://192.168.1.92:80/";
     public final static String LOGGED_USER = "fr.univtln.m1dapm.g3.g3vote.LOGGED_USER";
 
     @Override
@@ -334,7 +334,6 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                     JSONObject lCryptoJSON=new JSONObject();
                     lCryptoJSON.put("mPublicKey", CLoginActivity.getPublicKey());
                     lCryptoJSON.put("mUniqueKey", CLoginActivity.getUniqueKey());
-                    Log.e("TEST",lCryptoJSON.toString());
                     lHttpCon = (HttpURLConnection) lUrl.openConnection();
                     lHttpCon.setDoOutput(true);
                     lHttpCon.setDoInput(true);
@@ -350,7 +349,6 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                         //lOut.close();
                         lIn = new BufferedInputStream(lHttpCon.getInputStream());
                         lResponse = readStream(lIn);
-                        Log.e("TEST",lResponse);
                     }
                     else
                         return lCode;

@@ -89,7 +89,7 @@ public class CTestActivity extends AppCompatActivity {
         Date lDateDeb = new java.sql.Date(simpleDateFormat.parse(mDateDebut).getTime());
         Date lDateFin = new java.sql.Date(simpleDateFormat.parse(mDateFin).getTime());
 
-        CVote lVote = new CVote(mVoteName, "", true, lDateDeb, lDateFin, 1, null, new CType(1,mVoteType,"test"), null, listCandidat, null);
+        CVote lVote = new CVote(mVoteName, "", true, lDateDeb, lDateFin, 1, null, new CType(1,mVoteType,"test"), null, listCandidat, null,null);
         CTaskParam lParams = new CTaskParam(CRequestTypesEnum.add_new_vote, lVote);
         CCommunication lCom = new CCommunication();
         lCom.execute(lParams);
