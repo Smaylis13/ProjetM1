@@ -54,7 +54,8 @@ public class CParticipantActivity extends AppCompatActivity {
         mListCandidat = (ArrayList<CCandidate>)extras.get("liste de Candidat");
         mTypeVote = (CType) extras.getSerializable("VOTE_TYPE");
         //Majority
-        mCalculationMethod = (int) extras.get("CALCULATIONMETHOD");
+        if(mTypeVote.getIdType()==5)
+            mCalculationMethod = (int) extras.get("CALCULATIONMETHOD");
 
 
         Log.i("donner candida", mListCandidat.toString());
