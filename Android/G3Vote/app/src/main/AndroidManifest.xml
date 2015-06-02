@@ -152,6 +152,10 @@
             android:name=".Interface.CContactSupression"
             android:label="@string/title_activity_ccontact_supression" >
         </activity>
+        <activity
+            android:name=".Interface.CRankingVote"
+            android:label="@string/title_activity_cranking_vote" >
+        </activity>
     </application>
 
 </manifest>
