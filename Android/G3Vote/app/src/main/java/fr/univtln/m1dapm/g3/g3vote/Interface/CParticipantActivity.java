@@ -3,7 +3,6 @@ package fr.univtln.m1dapm.g3.g3vote.Interface;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -12,7 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckedTextView;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -31,6 +29,8 @@ public class CParticipantActivity extends AppCompatActivity {
     private ArrayList<CUser> mListParticipant = new ArrayList<CUser>();
     private String mTypeVote;
     private CUserChoiceAdapter adapter;
+    //Majority
+    private int mCalculationMethod;//
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +46,9 @@ public class CParticipantActivity extends AppCompatActivity {
         mDateFin = (String) extras.get("END_DATE");
         mListCandidat = (ArrayList<CCandidate>)extras.get("liste de Candidat");
         mTypeVote = (String) extras.get("VOTE_TYPE");
+        //Majority
+        mCalculationMethod = (int) extras.get("CALCULATIONMETHOD");
+
 
         Log.i("donner candida", mListCandidat.toString());
         //Récupération du composant ListView
@@ -120,6 +123,7 @@ public class CParticipantActivity extends AppCompatActivity {
         lIntent.putExtra("START_DATE", mDateDebut);
         lIntent.putExtra("END_DATE", mDateFin);
         lIntent.putExtra("VOTE_TYPE", mTypeVote);
+        lIntent.putExtra("CALCULATIONMETHOD", mCalculationMethod);
         startActivity(lIntent);
     }
 
