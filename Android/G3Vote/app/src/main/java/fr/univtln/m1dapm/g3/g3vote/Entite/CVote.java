@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSetter;
 
 import java.io.Serializable;
 import java.text.DateFormat;
@@ -50,6 +51,21 @@ public class CVote implements Serializable {
 
     public CVote(){};
 
+    public CVote(int pIdVote, String pVoteName, String pDescriptionVote, boolean pStatusVote, Date pDateDebut, Date pDateFin, int pOrganisateur, List<CResult> pResultVote,CType pType, List<CRule> pRules, List<CCandidate> pCandidate, List<CDeleguation> pDeleguations) {
+        this.mIdVote=pIdVote;
+        this.mVoteName = pVoteName;
+        this.mDescriptionVote = pDescriptionVote;
+        this.mStatusVote = pStatusVote;
+        this.mDateDebut = pDateDebut;
+        this.mDateFin = pDateFin;
+        this.mIdOrganisateur = pOrganisateur;
+        this.mResultVote = pResultVote;
+        this.mTypes = pType;
+        this.mRules = pRules;
+        this.mCandidates = pCandidate;
+        this.mDeleguations = pDeleguations;
+    }
+
     public CVote(String pVoteName, String pDescriptionVote, boolean pStatusVote, Date pDateDebut, Date pDateFin, int pOrganisateur, List<CResult> pResultVote,CType pType, List<CRule> pRules, List<CCandidate> pCandidate, List<CDeleguation> pDeleguations) {
         this.mVoteName = pVoteName;
         this.mDescriptionVote = pDescriptionVote;
@@ -83,6 +99,8 @@ public class CVote implements Serializable {
         this.mDateFin = pFin;
         this.mVoted=mVoted;
     }
+
+    @JsonSetter("idVote")
     public void setIdVote(int pId){this.mIdVote=pId;}
 
     @JsonIgnore

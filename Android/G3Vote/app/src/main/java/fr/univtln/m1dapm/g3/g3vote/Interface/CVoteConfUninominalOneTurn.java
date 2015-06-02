@@ -17,6 +17,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CType;
 import fr.univtln.m1dapm.g3.g3vote.R;
 
 /**
@@ -32,10 +33,12 @@ public class CVoteConfUninominalOneTurn extends AppCompatActivity {
     private String mDateDebut;
     private String mDateFin;
     private static final String TYPE_VOTE = "Uninominal à 1 tour";
+    private CType mTypeVote ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mTypeVote = new CType(6,"Uninominal à 1 tour",getResources().getString(R.string.uninomialOneTurnVoteDescription));
         setContentView(R.layout.activity_cvote_conf_uninominal_one_turn);
         Bundle extras = getIntent().getExtras();
         if (extras==null){
@@ -93,7 +96,7 @@ public class CVoteConfUninominalOneTurn extends AppCompatActivity {
             lIntent.putExtra("VOTE_NAME", mVoteName);
             lIntent.putExtra("START_DATE", mDateDebut);
             lIntent.putExtra("END_DATE", mDateFin);
-            lIntent.putExtra("VOTE_TYPE", TYPE_VOTE);
+            lIntent.putExtra("VOTE_TYPE", mTypeVote);
             startActivity(lIntent);
         }
     }

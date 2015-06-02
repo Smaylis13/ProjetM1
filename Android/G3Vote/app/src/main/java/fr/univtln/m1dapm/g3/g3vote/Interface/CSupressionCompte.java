@@ -1,6 +1,7 @@
 package fr.univtln.m1dapm.g3.g3vote.Interface;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
@@ -11,13 +12,23 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
+import fr.univtln.m1dapm.g3.g3vote.Communication.CCommunication;
+import fr.univtln.m1dapm.g3.g3vote.Communication.CRequestTypesEnum;
+import fr.univtln.m1dapm.g3.g3vote.Communication.CTaskParam;
 import fr.univtln.m1dapm.g3.g3vote.R;
 
 public class CSupressionCompte extends ActionBarActivity {
 
+    private static Context sContext;
+
+    public static Context getContext() {
+        return sContext;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sContext=getApplicationContext();
         setContentView(R.layout.activity_csupression_compte);
     }
 
@@ -55,12 +66,10 @@ public class CSupressionCompte extends ActionBarActivity {
 
         }else{
 
+            CTaskParam lParam=new CTaskParam(CRequestTypesEnum.delete_user,lMail+"/"+lPassword);
+            CCommunication lCom=new CCommunication();
+            lCom.execute(lParam);
 
-
-            final Intent lIntent = new Intent(this, CLoginActivity.class);
-            lIntent.putExtra("sup_mail",lET_Mail.getText().toString());
-            lIntent.putExtra("sup_mdp",lET_Password.getText().toString());
-            startActivity(lIntent);
 
         }
     }

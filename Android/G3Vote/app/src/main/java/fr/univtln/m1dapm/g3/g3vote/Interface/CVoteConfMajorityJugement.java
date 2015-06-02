@@ -17,6 +17,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CType;
 import fr.univtln.m1dapm.g3.g3vote.R;
 
 public class CVoteConfMajorityJugement extends AppCompatActivity {
@@ -29,11 +30,13 @@ public class CVoteConfMajorityJugement extends AppCompatActivity {
     private String mDateFin;
     private CCandidatAdapter mAdapter;
     private static final String TYPE_VOTE = "MAJORITY";
+    private CType mTypeVote ;
     private int mCalculationMethod = -1;// 0 : Meyenne, 1 : Médiane, 2 : Somme
 
     @Override
     protected void onCreate(Bundle pSavedInstanceState) {
         super.onCreate(pSavedInstanceState);
+        mTypeVote = new CType(5,"MAJORITY",getResources().getString(R.string.jugementMajorityDescription));
         setContentView(R.layout.activity_cvote_conf_majority_jugement);
 
         Bundle extras = getIntent().getExtras();
@@ -115,7 +118,7 @@ public class CVoteConfMajorityJugement extends AppCompatActivity {
             lIntent.putExtra("VOTE_NAME", mVoteName);
             lIntent.putExtra("START_DATE", mDateDebut);
             lIntent.putExtra("END_DATE", mDateFin);
-            lIntent.putExtra("VOTE_TYPE", TYPE_VOTE);
+            lIntent.putExtra("VOTE_TYPE", mTypeVote);
             lIntent.putExtra("CALCULATIONMETHOD", mCalculationMethod);
             startActivity(lIntent);
         }

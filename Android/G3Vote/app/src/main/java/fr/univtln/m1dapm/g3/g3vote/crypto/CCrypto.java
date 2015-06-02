@@ -113,7 +113,7 @@ public class CCrypto {
      * Méthode qui retourne le paramètre à envoyer à l'autre machine
      * @return Paramètre à envoyer
      */
-    public BigInteger sendA(){
+    public static BigInteger sendA(){
         return mKeyGenerator.getPublicKey();
     }
 

@@ -34,12 +34,19 @@ public class CUserRest {
     public Response getContacts(@PathParam("pIdU") int pIdU){
         CUserDAO lUserDAO=new CUserDAO();
         CUser lUser=lUserDAO.findByID(pIdU);
-        return Response.status(200).entity(lUser.obtainContacts()).build();
+        List<CUser> lContacts=lUser.obtainContacts();
+        for(CUser lContact:lContacts) {
+            lUserDAO.detach(lContact);
+            lContact.setPassword("");
+        }
+        return Response.status(200).entity(lContacts).build();
     }
 
     @PUT
     @Path("/contact/{pIdU}/{emailC}")
     public Response addContact(@PathParam("pIdU") int pIdU,@PathParam("emailC") String pEmailC){
+        System.out.println(pIdU);
+        System.out.println(pEmailC);
         CUserDAO lUserDAO=new CUserDAO();
         CUser lUser=lUserDAO.findByID(pIdU);
         Map<String,String> lParams = new HashMap<>();
@@ -50,7 +57,9 @@ public class CUserRest {
             //TODO treatment for a non-existing invited user
             return Response.status(404).build();
         }
+
         lUser.addContact(lUserDAO.findByID(lUsers.get(0).getUserId()));
+        System.out.println(lUser);
         lUserDAO.update(lUser);
         return Response.status(200).build();
     }
@@ -67,6 +76,14 @@ public class CUserRest {
         if(lUsers.isEmpty()) {
             lUserDAO.create(pNewUser);
             return Response.status(201).entity(pNewUser.getUserId()).build();
+        }
+        else if(lUsers.get(0).getPassword()==("attente")){
+            CUser lExistingUser=lUsers.get(0);
+            lExistingUser.setFirstName(pNewUser.getFirstName());
+            lExistingUser.setName(pNewUser.getName());
+            lExistingUser.setPassword(pNewUser.getPassword());
+            lUserDAO.update(lExistingUser);
+            return Response.status(201).entity(lExistingUser.getUserId()).build();
         }
         return Response.status(409).entity(0).build();
     }
@@ -91,13 +108,24 @@ public class CUserRest {
     }
 
     @DELETE
-    @Path("/{pId}")
-    public Response removeUser(@PathParam("pId") int pId){
-        System.out.println(pId);
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/{emailC}/{password}")
+    public Response removeUser(@PathParam("emailC") String pEmail,@PathParam("password") String pPassword){
+        Map<String,String> lParams = new HashMap<>();
+        lParams.put("emailUser",pEmail);
         CUserDAO lUserDAO=new CUserDAO();
-        lUserDAO.deleteUser(pId);
-        return Response.status(Response.Status.NO_CONTENT)// 204
-                .entity("User has been removed").build();
+        List<CUser> lUsers=lUserDAO.findWithNamedQuery("CUser.findAll",lParams);
+        if(!lUsers.isEmpty()){
+            CUser lUser=lUsers.get(0);
+            if(lUser.getPassword().equals(pPassword)) {
+                lUserDAO.deleteUser(lUser.getUserId());
+
+                return Response.status(Response.Status.OK).entity("User has been removed").build();
+            }
+        }
+
+        System.out.println("here");
+        return Response.status(401).header("WWW-Authenticate", "xBasic realm=\"fake\"").build();
     }
 
 }
