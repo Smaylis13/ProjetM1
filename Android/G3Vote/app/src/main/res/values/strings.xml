@@ -17,6 +17,7 @@
     <string name="title_activity_cvote_conf_condorcet">Vote Condorcet</string>
     <string name="title_activity_cparticipant">Choix des participants</string>
     <string name="title_activity_crecap_vote">Récapitulatif du vote</string>
+    <string name="title_activity_cranking_vote">Vote par classement</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>

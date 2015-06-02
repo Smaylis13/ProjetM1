@@ -91,7 +91,7 @@ public class CHubMyVotesFragment extends Fragment implements AdapterView.OnItemC
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent lIntent = new Intent(getActivity(), CVoteUninominal.class);
+        Intent lIntent = new Intent(getActivity(), CRankingVote.class);
         CVote lVote = (CVote) sList.getItemAtPosition(position);
         lIntent.putExtra("VOTE", lVote);
         startActivity(lIntent);
