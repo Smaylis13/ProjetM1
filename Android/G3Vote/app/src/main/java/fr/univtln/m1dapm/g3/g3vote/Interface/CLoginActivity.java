@@ -33,13 +33,6 @@ public class CLoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clogin);
-            //empeche l'application de passer en mode paysage
-            if  (android.provider.Settings.System.getInt(getContentResolver(), Settings.System.ACCELEROMETER_ROTATION, 0) == 1){
-                android.provider.Settings.System.putInt(getContentResolver(),Settings.System.ACCELEROMETER_ROTATION, 0);
-            }
-
-
-
         sContext=getApplicationContext();
     }
 

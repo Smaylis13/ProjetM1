@@ -16,9 +16,6 @@
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
 
-    <!-- This app has permission to access phone settings-->
-    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
-
     <permission
         android:name="fr.univtln.m1dapm.g3.g3vote.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
@@ -26,10 +23,12 @@
     <uses-permission android:name="fr.univtln.m1dapm.g3.g3vote.permission.C2D_MESSAGE" />
 
     <application
+        android:screenOrientation="portrait"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
         <activity
+            android:screenOrientation="portrait"
             android:name=".Interface.CLoginActivity"
             android:label="@string/app_name" >
             <intent-filter>
@@ -39,15 +38,18 @@
             </intent-filter>
         </activity>
         <activity
+            android:screenOrientation="portrait"
             android:name=".Interface.CSubActivity"
             android:label="@string/title_activity_csub" >
         </activity>
         <activity
+            android:screenOrientation="portrait"
             android:name=".Interface.CHubActivity"
             android:label="@string/title_activity_chub"
             android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
+            android:screenOrientation="portrait"
             android:name=".Interface.CVoteConfUninominalOneTurn"
             android:label="@string/title_activity_cvote_uninominal_one_turn"
             android:windowSoftInputMode="adjustPan" >
@@ -68,11 +70,13 @@
         <service android:name=".Service.CGcmIntentService" />
 
         <activity
+            android:screenOrientation="portrait"
             android:name=".Interface.CVoteConfSTV"
             android:label="@string/title_activity_cvote_conf_stv"
             android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
+            android:screenOrientation="portrait"
             android:name=".Interface.CVoteConfKemenyYoung"
             android:label="@string/title_activity_cvote_conf_kemeny_young"
             android:windowSoftInputMode="adjustPan" >
@@ -83,45 +87,55 @@
             android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
+            android:screenOrientation="portrait"
             android:name=".Interface.CVoteConfUninominalTwoTurn"
             android:label="@string/title_activity_cvote_conf_uninominal_two_turn"
             android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
+            android:screenOrientation="portrait"
             android:name=".Interface.CTestActivity"
             android:label="@string/title_activity_ctest" >
         </activity>
         <activity
+            android:screenOrientation="portrait"
             android:name=".Interface.CVoteConfCondorcet"
             android:label="@string/title_activity_cvote_conf_condorcet"
             android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
+            android:screenOrientation="portrait"
             android:name=".Interface.CVoteConfBorda"
             android:label="@string/title_activity_cvote_conf_borda"
             android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
+            android:screenOrientation="portrait"
             android:name=".Interface.CParticipantActivity"
             android:label="@string/title_activity_cparticipant" >
         </activity>
         <activity
+            android:screenOrientation="portrait"
             android:name=".Interface.CRecapVoteActivity"
             android:label="@string/title_activity_crecap_vote" >
         </activity>
         <activity
+            android:screenOrientation="portrait"
             android:name=".Interface.CVoteUninominal"
             android:label="@string/title_activity_uninominal_vote" >
         </activity>
         <activity
+            android:screenOrientation="portrait"
             android:name=".Interface.CContactAjout"
             android:label="@string/title_activity_ccontact_ajout" >
         </activity>
         <activity
+            android:screenOrientation="portrait"
             android:name=".Interface.CTestContactAjout"
             android:label="@string/title_activity_ctest_contact_ajout" >
         </activity>
         <activity
+            android:screenOrientation="portrait"
             android:name=".Interface.CSettingAccount"
             android:label="@string/title_activity_csetting_account" >
         </activity>
@@ -130,6 +144,7 @@
             android:label="@string/title_activity_cmodif_compte" >
         </activity>
         <activity
+            android:screenOrientation="portrait"
             android:name=".Interface.CSupressionCompte"
             android:label="@string/title_activity_csupression_compte" >
         </activity>
