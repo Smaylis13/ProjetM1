@@ -14,7 +14,11 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import fr.univtln.m1dapm.g3.g3vote.Communication.CCommunication;
+import fr.univtln.m1dapm.g3.g3vote.Communication.CRequestTypesEnum;
+import fr.univtln.m1dapm.g3.g3vote.Communication.CTaskParam;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CUser;
 import fr.univtln.m1dapm.g3.g3vote.R;
@@ -31,6 +35,8 @@ public class CParticipantActivity extends AppCompatActivity {
     private CUserChoiceAdapter adapter;
     //Majority
     private int mCalculationMethod;//
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,10 +64,12 @@ public class CParticipantActivity extends AppCompatActivity {
         list.setChoiceMode(list.CHOICE_MODE_MULTIPLE);
 
         //Récupération de la liste des personnes
-        ArrayList<CUser> mListUser = CUser.getAListOfUser();
-
+        //ArrayList<CUser> mListUser = CUser.getAListOfUser();
+        /*CTaskParam lParams=new CTaskParam(CRequestTypesEnum.get_contacts);
+        CCommunication lCom=new CCommunication();
+        lCom.execute(lParams);*/
         //Création et initialisation de l'Adapter pour les personnes
-        adapter = new CUserChoiceAdapter(this, mListUser);
+        adapter = new CUserChoiceAdapter(this, CHubContactFragment.getsContacts());
 
         //Initialisation de la liste avec les données
         list.setAdapter(adapter);

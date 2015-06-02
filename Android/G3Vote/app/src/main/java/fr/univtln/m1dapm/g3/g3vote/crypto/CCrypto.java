@@ -114,7 +114,7 @@ public class CCrypto {
      * @return Paramètre à envoyer
      */
     public static BigInteger sendA(){
-        return KEYGENERATOR.getPublicKey();
+        return mKeyGenerator.getPublicKey();
     }
 
     /**
