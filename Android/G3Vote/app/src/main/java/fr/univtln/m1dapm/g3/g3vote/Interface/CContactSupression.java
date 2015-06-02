@@ -39,7 +39,7 @@ public class CContactSupression extends ActionBarActivity {
         mListContactView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, final long id) {
-                // On crée le dialogue
+                // On cree le dialogue
                 AlertDialog.Builder lConfirmationDialog = new AlertDialog.Builder(CContactSupression.this);
                 // On modifie le titre
                 lConfirmationDialog.setTitle("supprimer contact");

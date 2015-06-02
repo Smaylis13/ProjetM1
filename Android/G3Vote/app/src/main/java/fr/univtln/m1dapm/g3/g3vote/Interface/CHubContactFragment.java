@@ -27,6 +27,10 @@ public class CHubContactFragment extends Fragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
     private static List<CUser> sContacts=new ArrayList<>();
 
+    public static List<CUser> getsContacts() {
+        return sContacts;
+    }
+
     public static void setsContacts(List<CUser> pUsers) {
         sContacts.clear();
         for (CUser lUser:pUsers) {
@@ -69,7 +73,5 @@ public class CHubContactFragment extends Fragment {
     }
 
 
-    public static List<CUser> getsContacts() {
-        return sContacts;
-    }
+
 }
