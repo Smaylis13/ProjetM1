@@ -16,6 +16,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CType;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CUser;
 import fr.univtln.m1dapm.g3.g3vote.R;
 
@@ -27,7 +28,7 @@ public class CParticipantActivity extends AppCompatActivity {
     private String mDateFin;
     private ArrayList<CCandidate> mListCandidat = new ArrayList<CCandidate>();
     private ArrayList<CUser> mListParticipant = new ArrayList<CUser>();
-    private String mTypeVote;
+    private CType mTypeVote;
     private CUserChoiceAdapter adapter;
     //Majority
     private int mCalculationMethod;//
@@ -45,7 +46,7 @@ public class CParticipantActivity extends AppCompatActivity {
         mDateDebut = (String) extras.get("START_DATE");
         mDateFin = (String) extras.get("END_DATE");
         mListCandidat = (ArrayList<CCandidate>)extras.get("liste de Candidat");
-        mTypeVote = (String) extras.get("VOTE_TYPE");
+        mTypeVote = (CType) extras.getSerializable("VOTE_TYPE");
         //Majority
         mCalculationMethod = (int) extras.get("CALCULATIONMETHOD");
 
