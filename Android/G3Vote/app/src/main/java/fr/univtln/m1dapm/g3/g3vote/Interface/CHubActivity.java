@@ -84,6 +84,17 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
      */
     ViewPager mViewPager;
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();  // Always call the superclass method first
+
+        // Activity being restarted from stopped state
+    }
     // issma
     public static final String PREFS_PROPERTY_REG_ID = "registration_id";
     public static final String GCM_TAG = "GCM_TAG";
@@ -645,5 +656,8 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
             }
         }
     };
+
+
+
 
 }
