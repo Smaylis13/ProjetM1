@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -50,27 +51,17 @@ public class CSupressionCompte extends ActionBarActivity {
         final EditText lET_Password = (EditText)findViewById(R.id.passInputsupression);
         final String lMail = lET_Mail.getText().toString();
         final String lPassword = lET_Password.getText().toString();
-        if (!(lET_Mail.getText().toString().isEmpty())) {
+        if (lMail.isEmpty()) {
 
-            final Intent lIntent = new Intent(this, CSupressionCompte.class);
+        }else{
+
+
+
+            final Intent lIntent = new Intent(this, CLoginActivity.class);
             lIntent.putExtra("sup_mail",lET_Mail.getText().toString());
-            lIntent.putExtra("sup_mdr",lET_Password.getText().toString());
-            // On cree le dialogue
-            AlertDialog.Builder lConfirmationDialog = new AlertDialog.Builder(CSupressionCompte.this);
-            // On modifie le titre
-            lConfirmationDialog.setTitle("suprimer compte");
-            // On modifie le message
-            lConfirmationDialog.setMessage("Voulez-vous suprimez votre compte ?");
-            // Bouton Oui
-            lConfirmationDialog.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    //supression du compte
+            lIntent.putExtra("sup_mdp",lET_Password.getText().toString());
+            startActivity(lIntent);
 
-                    startActivity(lIntent);
-
-                }
-            });
         }
     }
 }
