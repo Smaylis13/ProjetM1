@@ -292,6 +292,23 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                         return lCode;
 
                     break;
+                case delete_contact:
+                    lUrl = new URL(SERVER_URL+"user/contact/"+lParams.getObject());
+                    lHttpCon = (HttpURLConnection) lUrl.openConnection();
+                    lHttpCon.setRequestMethod("DELETE");
+                    lHttpCon.setRequestProperty("Content-Type", "application/json");
+                    lHttpCon.setRequestProperty("Accept", "application/json");
+                    lCode=lHttpCon.getResponseCode();
+                    if(lCode==200) {
+                        //lOut.close();
+                       /* lIn = new BufferedInputStream(lHttpCon.getInputStream());
+                        lResponse = readStream(lIn);
+                        lNewVote.setIdVote(Integer.decode(lResponse));*/
+                    }
+                    else
+                        return lCode;
+
+                    break;
                 case get_contacts:
                     lUrl = new URL(SERVER_URL+"user/contact/"+CHubActivity.getsLoggedUser().getUserId());
                     lHttpCon = (HttpURLConnection) lUrl.openConnection();
