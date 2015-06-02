@@ -4,21 +4,36 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.math.BigInteger;
+import java.util.UUID;
+
 import fr.univtln.m1dapm.g3.g3vote.Communication.CCommunication;
 import fr.univtln.m1dapm.g3.g3vote.Communication.CRequestTypesEnum;
 import fr.univtln.m1dapm.g3.g3vote.Communication.CTaskParam;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CUser;
 import fr.univtln.m1dapm.g3.g3vote.R;
+import fr.univtln.m1dapm.g3.g3vote.crypto.CCrypto;
 
 public class CLoginActivity extends AppCompatActivity {
     private static Context sContext;
+    private static final UUID UNIQUE_KEY = UUID.randomUUID();
     public final static String EXTRA_LOGIN = "USER_LOGIN";
+    private final static BigInteger PUBLIC_KEY=CCrypto.sendA();
+
+    public static UUID getUniqueKey() {
+        return UNIQUE_KEY;
+    }
+
+    public static BigInteger getPublicKey() {
+        return PUBLIC_KEY;
+    }
 
     public static Context getsContext() {
         return sContext;
@@ -33,6 +48,12 @@ public class CLoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clogin);
         sContext=getApplicationContext();
+      /*  CCrypto lt=new CCrypto();
+        Log.e("TEST","pk: "+lt.sendA());
+        CTaskParam lParams=new CTaskParam(CRequestTypesEnum.generate_keys);
+        CCommunication lCom=new CCommunication();
+        lCom.execute(lParams);*/
+
     }
 
     @Override
@@ -72,12 +93,12 @@ public class CLoginActivity extends AppCompatActivity {
         final String lPassword = lET_Password.getText().toString();
 
         if (!(lET_Mail.getText().toString().isEmpty())){
-            /*CTaskParam lParams=new CTaskParam(CRequestTypesEnum.log_user,new CUser(null,null,lMail,lPassword));
+            CTaskParam lParams=new CTaskParam(CRequestTypesEnum.log_user,new CUser(null,null,lMail,lPassword));
             CCommunication lCom=new CCommunication();
-            lCom.execute(lParams);*/
-            Intent lIntent = new Intent(this,CHubActivity.class);
+            lCom.execute(lParams);
+            /*Intent lIntent = new Intent(this,CHubActivity.class);
             lIntent.putExtra(EXTRA_LOGIN,lET_Mail.getText().toString());
-            startActivity(lIntent);
+            startActivity(lIntent);*/
         }else{
             Toast.makeText(getApplicationContext(),"Entrez un mail!",Toast.LENGTH_LONG).show();
         }
