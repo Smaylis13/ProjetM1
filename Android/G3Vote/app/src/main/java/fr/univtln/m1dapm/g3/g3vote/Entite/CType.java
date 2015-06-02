@@ -2,12 +2,13 @@ package fr.univtln.m1dapm.g3.g3vote.Entite;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Ookami on 27/05/2015.
  */
-public class CType {
+public class CType implements Serializable {
     private int mIdType;
     private String mName;
     private String mDescription;

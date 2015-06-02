@@ -12,10 +12,12 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CType;
 import fr.univtln.m1dapm.g3.g3vote.R;
 
 /**
@@ -31,10 +33,12 @@ public class CVoteConfUninominalOneTurn extends AppCompatActivity {
     private String mDateDebut;
     private String mDateFin;
     private static final String TYPE_VOTE = "Uninominal à 1 tour";
+    private CType mTypeVote ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mTypeVote = new CType(6,"Uninominal à 1 tour",getResources().getString(R.string.uninomialOneTurnVoteDescription));
         setContentView(R.layout.activity_cvote_conf_uninominal_one_turn);
         Bundle extras = getIntent().getExtras();
         if (extras==null){
@@ -76,15 +80,25 @@ public class CVoteConfUninominalOneTurn extends AppCompatActivity {
     //send vote parameters to the participant selection
     public void validateConfUniOne(View view) {
         hideSoftKeyboard(this);
+        int j=0;
         mAdapter.notifyDataSetChanged();
-        Log.i("donner candida",mListCandidat.toString());
-        Intent lIntent = new Intent(this,CParticipantActivity.class);
-        lIntent.putExtra("liste de Candidat", mListCandidat);
-        lIntent.putExtra("VOTE_NAME", mVoteName);
-        lIntent.putExtra("START_DATE", mDateDebut);
-        lIntent.putExtra("END_DATE", mDateFin);
-        lIntent.putExtra("VOTE_TYPE", TYPE_VOTE);
-        startActivity(lIntent);
+
+        // on verifie que tous les champs sont bien remplis
+        for (int i = 0; i < mListCandidat.size() ; i++) {
+            if ((mListCandidat.get(i).getNomCandidat()==null) || (mListCandidat.get(i).getDescriptionCandidat()==null )){
+                Toast.makeText(getApplicationContext(), "vous n'avez pas remplis tous les champs", Toast.LENGTH_LONG).show();
+                j++;
+            }
+        }
+        if (j==0){
+            Intent lIntent = new Intent(this,CParticipantActivity.class);
+            lIntent.putExtra("liste de Candidat", mListCandidat);
+            lIntent.putExtra("VOTE_NAME", mVoteName);
+            lIntent.putExtra("START_DATE", mDateDebut);
+            lIntent.putExtra("END_DATE", mDateFin);
+            lIntent.putExtra("VOTE_TYPE", mTypeVote);
+            startActivity(lIntent);
+        }
     }
 
     public void addChoiceButton(View view) {

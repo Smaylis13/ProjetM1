@@ -11,11 +11,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
 
 import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CType;
 import fr.univtln.m1dapm.g3.g3vote.R;
 
 public class CVoteConfSTV extends AppCompatActivity {
@@ -30,12 +32,14 @@ public class CVoteConfSTV extends AppCompatActivity {
     private String mDateDebut;
     private String mDateFin;
     private static final String TYPE_VOTE = "STV";
+    private CType mTypeVote ;
     private ListView mList;
 
     @Override
     protected void onCreate(Bundle pSavedInstanceState) {
         super.onCreate(pSavedInstanceState);
         setContentView(R.layout.activity_cvote_conf_stv);
+        mTypeVote = new CType(1,"STV",this.getString(R.string.stvDescription));
 
         Bundle extras = getIntent().getExtras();
         if (extras==null){
@@ -59,13 +63,25 @@ public class CVoteConfSTV extends AppCompatActivity {
 
     public void validateConfSTV(View pView) {
         hideSoftKeyboard(this);
-        Intent lIntent = new Intent(this,CParticipantActivity.class);
-        lIntent.putExtra("liste de Candidat",mListCandidat);
-        lIntent.putExtra("VOTE_NAME", mVoteName);
-        lIntent.putExtra("START_DATE", mDateDebut);
-        lIntent.putExtra("END_DATE", mDateFin);
-        lIntent.putExtra("VOTE_TYPE", TYPE_VOTE);
-        startActivity(lIntent);
+        int j=0;
+        mAdapter.notifyDataSetChanged();
+
+        // on verifie que tous les champs sont bien remplis
+        for (int i = 0; i < mListCandidat.size() ; i++) {
+            if ((mListCandidat.get(i).getNomCandidat()==null) || (mListCandidat.get(i).getDescriptionCandidat()==null )){
+                Toast.makeText(getApplicationContext(), "vous n'avez pas remplis tous les champs", Toast.LENGTH_LONG).show();
+                j++;
+            }
+        }
+        if (j==0){
+            Intent lIntent = new Intent(this,CParticipantActivity.class);
+            lIntent.putExtra("liste de Candidat", mListCandidat);
+            lIntent.putExtra("VOTE_NAME", mVoteName);
+            lIntent.putExtra("START_DATE", mDateDebut);
+            lIntent.putExtra("END_DATE", mDateFin);
+            lIntent.putExtra("VOTE_TYPE", mTypeVote);
+            startActivity(lIntent);
+        }
     }
 
     public void addChoiceButton(View pView) {

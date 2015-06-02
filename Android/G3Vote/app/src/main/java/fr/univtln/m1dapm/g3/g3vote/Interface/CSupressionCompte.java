@@ -1,22 +1,34 @@
 package fr.univtln.m1dapm.g3.g3vote.Interface;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
+import fr.univtln.m1dapm.g3.g3vote.Communication.CCommunication;
+import fr.univtln.m1dapm.g3.g3vote.Communication.CRequestTypesEnum;
+import fr.univtln.m1dapm.g3.g3vote.Communication.CTaskParam;
 import fr.univtln.m1dapm.g3.g3vote.R;
 
 public class CSupressionCompte extends ActionBarActivity {
 
+    private static Context sContext;
+
+    public static Context getContext() {
+        return sContext;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sContext=getApplicationContext();
         setContentView(R.layout.activity_csupression_compte);
     }
 
@@ -50,27 +62,15 @@ public class CSupressionCompte extends ActionBarActivity {
         final EditText lET_Password = (EditText)findViewById(R.id.passInputsupression);
         final String lMail = lET_Mail.getText().toString();
         final String lPassword = lET_Password.getText().toString();
-        if (!(lET_Mail.getText().toString().isEmpty())) {
+        if (lMail.isEmpty()) {
 
-            final Intent lIntent = new Intent(this, CSupressionCompte.class);
-            lIntent.putExtra("sup_mail",lET_Mail.getText().toString());
-            lIntent.putExtra("sup_mdr",lET_Password.getText().toString());
-            // On cree le dialogue
-            AlertDialog.Builder lConfirmationDialog = new AlertDialog.Builder(CSupressionCompte.this);
-            // On modifie le titre
-            lConfirmationDialog.setTitle("suprimer compte");
-            // On modifie le message
-            lConfirmationDialog.setMessage("Voulez-vous suprimez votre compte ?");
-            // Bouton Oui
-            lConfirmationDialog.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    //supression du compte
+        }else{
 
-                    startActivity(lIntent);
+            CTaskParam lParam=new CTaskParam(CRequestTypesEnum.delete_user,lMail+"/"+lPassword);
+            CCommunication lCom=new CCommunication();
+            lCom.execute(lParam);
 
-                }
-            });
+
         }
     }
 }

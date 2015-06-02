@@ -30,6 +30,13 @@ public class CCRUDServiceBean<T> implements ICRUDService<T> {
         return pT;
     }
 
+    public T detach(T pT){
+        mET.begin();
+        this.mEM.detach(pT);
+        mET.commit();
+        return pT;
+    }
+
 
     @Override
     public T find(Class pType, Object pId) {

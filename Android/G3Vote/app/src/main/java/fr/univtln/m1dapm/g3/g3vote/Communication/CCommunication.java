@@ -52,6 +52,7 @@ import fr.univtln.m1dapm.g3.g3vote.Interface.CHubMyVotesFragment;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CLoginActivity;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CSubActivity;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CVoteUninominal;
+import fr.univtln.m1dapm.g3.g3vote.Interface.CSupressionCompte;
 
 /**
  * Created by ludo on 05/05/15.
@@ -160,15 +161,22 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                 break;
 
                 case delete_user:
-                    //lUrl = new URL(SERVER_URL+"user/"+USER_ID);
+                    lUrl = new URL(SERVER_URL+"user/"+lParams.getObject());
                     lHttpCon = (HttpURLConnection) lUrl.openConnection();
                     lHttpCon.setDoInput(true);
                     lHttpCon.setRequestMethod("DELETE");
                     //lOut.close();
-                    lIn = new BufferedInputStream(lHttpCon.getInputStream());
-                    lResponse = readStream(lIn);
                     //CSubActivity.getIntentCSubActivity().putExtra(LOGGED_USER,lNewUser);
-                    int lReponse = lHttpCon.getResponseCode();
+                    lCode = lHttpCon.getResponseCode();
+
+                    if(lCode==200){
+                        Intent lIntent = new Intent(CSupressionCompte.getContext(), CLoginActivity.class);
+                        lIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        CSupressionCompte.getContext().startActivity(lIntent);
+                    }
+                    else if(lCode==401){
+                        return lCode;
+                    }
                 break;
                 case get_vote:
                     lUrl = new URL(SERVER_URL+"vote/"+Integer.toString((int)lParams.getObject()));
@@ -254,7 +262,6 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                     lHttpCon.setRequestProperty("Accept", "application/json");
                     lCode=lHttpCon.getResponseCode();
                     if(lCode==200) {
-                        //lOut.close();
                         lIn = new BufferedInputStream(lHttpCon.getInputStream());
                         lResponse = readStream(lIn);
                         Type listType = new TypeToken<ArrayList<CCandidate>>() {}.getType();
@@ -302,6 +309,33 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                         return lCode;
 
                     break;
+                case generate_keys:
+                    lUrl = new URL(SERVER_URL+"crypto");
+                    JSONObject lCryptoJSON=new JSONObject();
+                    lCryptoJSON.put("mPublicKey", CLoginActivity.getPublicKey());
+                    lCryptoJSON.put("mUniqueKey", CLoginActivity.getUniqueKey());
+                    Log.e("TEST",lCryptoJSON.toString());
+                    lHttpCon = (HttpURLConnection) lUrl.openConnection();
+                    lHttpCon.setDoOutput(true);
+                    lHttpCon.setDoInput(true);
+                    lHttpCon.setRequestMethod("PUT");
+                    lHttpCon.setRequestProperty("Content-Type", "application/json");
+                    lHttpCon.setRequestProperty("Accept", "application/json");
+                    lOut = new OutputStreamWriter(lHttpCon.getOutputStream());
+                    //lOut=lHttpCon.getOutputStream();
+                    lOut.write(lCryptoJSON.toString());
+                    lOut.flush();
+                    lCode=lHttpCon.getResponseCode();
+                    if(lCode==200) {
+                        //lOut.close();
+                        lIn = new BufferedInputStream(lHttpCon.getInputStream());
+                        lResponse = readStream(lIn);
+                        Log.e("TEST",lResponse);
+                    }
+                    else
+                        return lCode;
+
+                    break;
 
             }
         }catch (ProtocolException e) {
@@ -323,6 +357,7 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
 
 
     public void onPostExecute(Integer pCode){
+        Log.e("TEST",""+pCode);
         if(pCode!=null) {
             if (pCode == 401)
                 Toast.makeText(CLoginActivity.getsContext(), "Mauvais login/mot de passe", Toast.LENGTH_SHORT).show();

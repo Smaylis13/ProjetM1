@@ -17,6 +17,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CType;
 import fr.univtln.m1dapm.g3.g3vote.R;
 
 public class CVoteConfMajorityJugement extends AppCompatActivity {
@@ -29,11 +30,13 @@ public class CVoteConfMajorityJugement extends AppCompatActivity {
     private String mDateFin;
     private CCandidatAdapter mAdapter;
     private static final String TYPE_VOTE = "MAJORITY";
+    private CType mTypeVote ;
     private int mCalculationMethod = -1;// 0 : Meyenne, 1 : Médiane, 2 : Somme
 
     @Override
     protected void onCreate(Bundle pSavedInstanceState) {
         super.onCreate(pSavedInstanceState);
+        mTypeVote = new CType(5,"MAJORITY",getResources().getString(R.string.jugementMajorityDescription));
         setContentView(R.layout.activity_cvote_conf_majority_jugement);
 
         Bundle extras = getIntent().getExtras();
@@ -94,6 +97,32 @@ public class CVoteConfMajorityJugement extends AppCompatActivity {
     }
     public void validateConfMajorityJugement(View pView) {
         hideSoftKeyboard(this);
+        int j=0;
+        mAdapter.notifyDataSetChanged();
+
+        // on verifie que tous les champs sont bien remplis
+        for (int i = 0; i < mListCandidat.size() ; i++) {
+            if ((mListCandidat.get(i).getNomCandidat()==null) || (mListCandidat.get(i).getDescriptionCandidat()==null )){
+                Toast.makeText(getApplicationContext(), "vous n'avez pas remplis tous les champs", Toast.LENGTH_LONG).show();
+                j++;
+            }
+        }
+        if (mCalculationMethod == -1){
+            j++;
+        }
+
+        if (j==0){
+            Intent lIntent = new Intent(this,CParticipantActivity.class);
+            lIntent.putExtra("liste de Candidat", mListCandidat);
+            lIntent.putExtra("VOTE_NAME", mVoteName);
+            lIntent.putExtra("START_DATE", mDateDebut);
+            lIntent.putExtra("END_DATE", mDateFin);
+            lIntent.putExtra("VOTE_TYPE", mTypeVote);
+            lIntent.putExtra("CALCULATIONMETHOD", mCalculationMethod);
+            startActivity(lIntent);
+        }
+
+        /*hideSoftKeyboard(this);
         Intent lIntent = new Intent(this, CParticipantActivity.class);
         lIntent.putExtra("liste de Candidat", mListCandidat);
         lIntent.putExtra("VOTE_NAME", mVoteName);
@@ -105,7 +134,7 @@ public class CVoteConfMajorityJugement extends AppCompatActivity {
             startActivity(lIntent);
         }else {
             Toast.makeText(getApplicationContext(), "Veuillez renseigner le mode de calcul", Toast.LENGTH_LONG).show();
-        }
+        }*/
     }
 
     public void addChoiceButton(View pView) {

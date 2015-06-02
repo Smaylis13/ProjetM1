@@ -20,7 +20,8 @@ public class TestGCM {
     public static CContent createContent() {
         CContent c = new CContent();
 
-        c.addRegId("APA91bGT289J49BhVlN-zfGFsv2GDWXpzspObigCflVmgh9q0MNT9pWrFcCuIPZSpJFU1Go7m0L51DfLJbpbDOXQw1w3UDYQXTyByfq0m3FVI28-6VY5hmUWvMGmYlNtEPnxeCvtasECXFwhlpAzAfZeU3nmwo8hPA");
+        //c.addRegId("APA91bGT289J49BhVlN-zfGFsv2GDWXpzspObigCflVmgh9q0MNT9pWrFcCuIPZSpJFU1Go7m0L51DfLJbpbDOXQw1w3UDYQXTyByfq0m3FVI28-6VY5hmUWvMGmYlNtEPnxeCvtasECXFwhlpAzAfZeU3nmwo8hPA");
+        c.addRegId("APA91bFFA_pFxZ0RCfipuuAQCfWy3nJcDNrpu14-uwqzRwmMmSrNCmz2P5pbUtp7huokUnoVmxF_JxAcQRcd8_DYqePorYHGKhbFx8cs7ykGM0-KZbgtJ1-inq7O1uCRWdHu_4Msz5D0XCaaFJkLTfLf9G2qURAwWg");
 
         c.createData("Test title", "Test message");
 
