@@ -1,6 +1,10 @@
 package fr.univtln.madapm.votemanager.metier.vote;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import fr.univtln.madapm.votemanager.dao.CCandidateDAO;
+import fr.univtln.madapm.votemanager.dao.CUserDAO;
+import fr.univtln.madapm.votemanager.dao.CVoteDAO;
 import fr.univtln.madapm.votemanager.metier.user.CUser;
 
 import javax.persistence.*;
@@ -53,6 +57,46 @@ public class CChoice {
                 ", mCandidate=" + mCandidate +
                 ", mScore=" + mScore +
                 '}';
+    }
+
+    public int getVote() {
+        return mVote.getIdVote();
+    }
+
+    @JsonSetter("idVote")
+    public void setVote(int pIdVote) {
+        CVoteDAO lVoteDAO=new CVoteDAO();
+        this.mVote = lVoteDAO.findById(pIdVote);
+    }
+
+    public int getUser() {
+        return mUser.getUserId();
+    }
+
+    @JsonSetter("idUser")
+    public void setUser(int pIdUser) {
+        CUserDAO lUserDAO=new CUserDAO();
+        this.mUser = lUserDAO.findByID(pIdUser);
+    }
+
+    public int getCandidate() {
+        return mCandidate.getIdCandidat();
+    }
+
+    @JsonSetter("idCandidate")
+    public void setCandidate(int pIdCandidate) {
+        CCandidateDAO lCandidateDAO=new CCandidateDAO();
+        this.mCandidate = lCandidateDAO.findById(pIdCandidate);
+    }
+
+
+    public int getScore() {
+        return mScore;
+    }
+
+    @JsonSetter("score")
+    public void setScore(int mScore) {
+        this.mScore = mScore;
     }
 }
 

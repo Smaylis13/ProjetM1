@@ -110,6 +110,7 @@ public class CVote implements Serializable {
     @JsonIgnore
     public int getIdVote(){return this.mIdVote;}
 
+    @JsonSetter("voted")
     public void setVoted(boolean pVoted){
         this.mVoted=pVoted;
     }
@@ -259,4 +260,5 @@ public class CVote implements Serializable {
     public boolean isVoted(){
         return mVoted;
     }
+
 }

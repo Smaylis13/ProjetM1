@@ -92,7 +92,7 @@ public class CAlgoSTV extends AAlgorithme {
         /// Initialisation de la liste des réponses par utilisateur
         for(int i=0; i<(pChoices.size()/mVote.getCandidates().size()); i++)
         {
-            lUserList.add(i, pChoices.get(i*mVote.getCandidates().size()).getUser().getUserId());
+            lUserList.add(i, pChoices.get(i*mVote.getCandidates().size()).getIdUser());
             Integer[] lDefaultValue = new Integer[mVote.getCandidates().size()];
             Arrays.fill(lDefaultValue, new Integer(0));
             lChoices.add(Arrays.asList(lDefaultValue));
@@ -101,10 +101,10 @@ public class CAlgoSTV extends AAlgorithme {
         /// Remplissage de la liste des réponses par utilisateur
         for (CChoice choice : pChoices)
         {
-            int lUserId = lUserList.indexOf(choice.getUser().getUserId());
+            int lUserId = lUserList.indexOf(choice.getIdUser());
             List<Integer> lCandList = lChoices.get(lUserId);
 
-            lCandList.set(choice.getScore()-1, choice.getCandidate().getIdCandidat());
+            lCandList.set(choice.getScore()-1, choice.getIdCandidate());
             lChoices.set(lUserId, lCandList);
         }
 

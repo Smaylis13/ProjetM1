@@ -18,6 +18,7 @@ import org.apache.oltu.oauth2.common.OAuth;
 import org.apache.oltu.oauth2.common.exception.OAuthProblemException;
 import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
 import org.apache.oltu.oauth2.common.message.types.GrantType;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -32,8 +33,10 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CChoice;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CUser;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CHubActivity;
@@ -41,6 +44,7 @@ import fr.univtln.m1dapm.g3.g3vote.Interface.CHubContactFragment;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CHubMyVotesFragment;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CLoginActivity;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CModifCompte;
+import fr.univtln.m1dapm.g3.g3vote.Interface.CRankingVote;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CSubActivity;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CSuppressionCompte;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CVoteUninominal;
@@ -277,6 +281,38 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                     lOut.flush();
                     lCode=lHttpCon.getResponseCode();
                     if(lCode==200) {
+                        //lOut.close();
+                       /* lIn = new BufferedInputStream(lHttpCon.getInputStream());
+                        lResponse = readStream(lIn);
+                        lNewVote.setIdVote(Integer.decode(lResponse));*/
+                    }
+                    else
+                        return lCode;
+
+                    break;
+                case add_choices:
+                    lUrl = new URL(SERVER_URL+"choice/multiples");
+                    List<CChoice> lListChoices=(List<CChoice>)lParams.getObject();
+                    lHttpCon = (HttpURLConnection) lUrl.openConnection();
+                    lHttpCon.setDoOutput(true);
+                    lHttpCon.setDoInput(true);
+                    lHttpCon.setRequestMethod("PUT");
+                    lHttpCon.setRequestProperty("Content-Type", "application/json");
+                    lHttpCon.setRequestProperty("Accept", "application/json");
+                    String lChoicesToString=lMapper.writeValueAsString(lListChoices);
+                    Log.e("ADDCHOICE",lChoicesToString);
+                    lOut = new OutputStreamWriter(lHttpCon.getOutputStream());
+                    JSONArray lChoicesJson=new JSONArray(lChoicesToString);
+                    //JSONObject lChoicesJson=new JSONObject(lChoicesToString);
+                    //lOut=lHttpCon.getOutputStream();
+                    lOut.write(lChoicesJson.toString());
+                    lOut.flush();
+                    lCode=lHttpCon.getResponseCode();
+                    if(lCode==200) {
+                        Intent lIntent = new Intent(CRankingVote.getsContext(), CHubActivity.class);
+                        lIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        lIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        CRankingVote.getsContext().startActivity(lIntent);
                         //lOut.close();
                        /* lIn = new BufferedInputStream(lHttpCon.getInputStream());
                         lResponse = readStream(lIn);

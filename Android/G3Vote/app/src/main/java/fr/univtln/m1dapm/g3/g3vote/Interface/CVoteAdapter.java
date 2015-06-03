@@ -2,6 +2,7 @@ package fr.univtln.m1dapm.g3.g3vote.Interface;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

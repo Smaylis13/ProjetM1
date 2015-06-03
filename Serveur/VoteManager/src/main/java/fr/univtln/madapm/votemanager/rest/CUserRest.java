@@ -60,7 +60,7 @@ public class CUserRest {
         lUsers=lUserDAO.findWithNamedQuery("CUser.findAll",lParams);
         if(lUsers.isEmpty()) {
             //TODO treatment for a non-existing invited user
-            return Response.status(404).build();
+            return Response.status(456).build();
         }
 
         lUser.addContact(lUserDAO.findByID(lUsers.get(0).getUserId()));
