@@ -50,6 +50,7 @@ import fr.univtln.m1dapm.g3.g3vote.Interface.CHubActivity;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CHubContactFragment;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CHubMyVotesFragment;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CLoginActivity;
+import fr.univtln.m1dapm.g3.g3vote.Interface.CModifCompte;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CParticipantActivity;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CSubActivity;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CVoteUninominal;
@@ -101,6 +102,7 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                         //lOut.close();
                         lIn = new BufferedInputStream(lHttpCon.getInputStream());
                         lResponse = readStream(lIn);
+                        Log.e("LogUser",lResponse);
                         CUser lLoggedUser=lMapper.readValue(lResponse,CUser.class);
                         Intent lLogIntent=new Intent(CLoginActivity.getsContext(),CHubActivity.class);
                         lLogIntent.putExtra(LOGGED_USER, lLoggedUser);
@@ -160,6 +162,40 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                     else
                         return lCode;
                 break;
+                case update_user:
+                    lUser=(CUser)lParams.getObject();
+                    String lJsonStringUser=lMapper.writeValueAsString(lUser);
+                    JSONObject lUserJsonObj = new JSONObject(lJsonStringUser);
+                    lUrl = new URL(SERVER_URL+"user/"+lUser.getUserId());
+                    lHttpCon = (HttpURLConnection) lUrl.openConnection();
+                    lHttpCon.setRequestMethod("POST");
+                    lHttpCon.setDoOutput(true);
+                    lHttpCon.setDoInput(true);
+                    lHttpCon.setRequestProperty("Content-Type", "application/json");
+                    lHttpCon.setRequestProperty("Accept", "application/json");
+                    lOut = new OutputStreamWriter(lHttpCon.getOutputStream());
+
+                    lOut.write(lUserJsonObj.toString());
+                    lOut.flush();
+                    lCode=lHttpCon.getResponseCode();
+                    if(lCode==200) {
+                        CHubActivity.getsLoggedUser().setEmail(lUser.getEmail());
+                        CHubActivity.getsLoggedUser().setFirstName(lUser.getFirstName());
+                        CHubActivity.getsLoggedUser().setName(lUser.getName());
+                        CHubActivity.getsLoggedUser().setPassword(lUser.getPassword());
+                        Intent lIntent = new Intent(CModifCompte.getsContext(), CHubActivity.class);
+                        lIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        CModifCompte.getsContext().startActivity(lIntent);
+
+                        //lOut.close();
+                       /* lIn = new BufferedInputStream(lHttpCon.getInputStream());
+                        lResponse = readStream(lIn);
+                        lNewVote.setIdVote(Integer.decode(lResponse));*/
+                    }
+                    else
+                        return lCode;
+
+                    break;
 
                 case delete_user:
                     lUrl = new URL(SERVER_URL+"user/"+lParams.getObject());
@@ -376,6 +412,8 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
     public void onPostExecute(Integer pCode){
         Log.e("TEST",""+pCode);
         if(pCode!=null) {
+            if(pCode==200)
+                Toast.makeText(CLoginActivity.getsContext(), "L'opération s'est bien passée", Toast.LENGTH_SHORT).show();
             if (pCode == 401)
                 Toast.makeText(CLoginActivity.getsContext(), "Mauvais login/mot de passe", Toast.LENGTH_SHORT).show();
             if(pCode==409)
