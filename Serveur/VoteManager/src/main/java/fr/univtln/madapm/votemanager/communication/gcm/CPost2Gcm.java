@@ -8,16 +8,10 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-<<<<<<< HEAD
 import java.net.*;
 
-import com.fasterxml.jackson.annotation.PropertyAccessor;
-import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
-import com.fasterxml.jackson.databind.ObjectMapper;
-=======
 import java.net.HttpURLConnection;
 import java.net.URL;
->>>>>>> e215319fc9e25fb7579b4c732dd202f8d2352a34
 /**
  * Created by lyamsi on 01/06/15.
  */
