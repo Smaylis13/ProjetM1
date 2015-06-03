@@ -591,6 +591,7 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
                             //ArrayList<CVote> lVotes = new Gson().fromJson(lResponse, listType);
                             ObjectMapper lMapper=new ObjectMapper();
                             ArrayList<CVote> lVotes = lMapper.readValue(lResponse, new TypeReference<ArrayList<CVote>>(){});
+                            Log.e("TEST",lVotes.get(lVotes.size()-1).toString());
                             Message lMsg=new Message();
                             lMsg.what=0;
                             lMsg.obj=lVotes;

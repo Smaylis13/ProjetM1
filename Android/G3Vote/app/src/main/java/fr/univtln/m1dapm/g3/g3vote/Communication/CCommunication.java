@@ -192,7 +192,6 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                         lResponse = readStream(lIn);
                         Gson lGson = new Gson();
                         CVote lGottenVote=lGson.fromJson(lResponse, CVote.class);
-                        //TODO change the intent
                         Intent lIntent = new Intent(CSubActivity.getsContext(), CHubActivity.class);
                         lIntent.putExtra("GOTTEN_VOTE", (java.io.Serializable) lGottenVote);
                         lIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

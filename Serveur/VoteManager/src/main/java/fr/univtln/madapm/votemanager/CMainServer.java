@@ -68,20 +68,10 @@ public class CMainServer extends Application {
     protected static HttpServer startServer() throws IOException {
 
         final ResourceConfig lrc = new ResourceConfig().packages("fr.univtln.madapm.votemanager");
-        /*final HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
-        lrc.register(new AbstractBinder() {
-            @Override
-            protected void configure() {
-                bind(request).to(HttpServletRequest.class);
-            }
-        });*/
         lrc.register(JacksonFeature.class);
 
         // create and start a new instance of grizzly http server
         // exposing the Jersey application at BASE_URI
-        //final Map<String,String> initParams=new HashMap<String,String>();
-        //initParams.put("com.sun.jersey.config.property.packages","fr.univtln.madapm.votemanager");
-        //return GrizzlyWebContainerFactory.create(BASE_URI,initParams);
        return GrizzlyHttpServerFactory.createHttpServer(BASE_URI, lrc);
         //return GrizzlyWebContainerFactory.create(BASE_URI);
     }
