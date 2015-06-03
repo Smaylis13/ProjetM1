@@ -49,6 +49,7 @@ public class CVoteRest {
     @Path("/all/{pIdUser}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getVotesOfUser(@PathParam("pIdUser") int pId){
+        System.out.println(pId);
         SimpleDateFormat lSdf = new SimpleDateFormat("yyyy-MM-dd");
         Date lToday=new Date();
         Calendar lCalendar = Calendar.getInstance();
@@ -66,6 +67,7 @@ public class CVoteRest {
         CUserDAO lUserDAO=new CUserDAO();
         CUser lUser=lUserDAO.findByID(pId);
         List<Integer> lIdVotes=lUser.obtainParticipatingVotesIds();
+        System.out.println(lIdVotes.toString());
         Map<String,Object> lParams = new HashMap<>();
         CVoteDAO lVoteDAO = new CVoteDAO();
         List<CVote> lVotes=null;

@@ -35,17 +35,17 @@ public class CUserRest {
         System.out.println("getContact");
         CUserDAO lUserDAO=new CUserDAO();
         CUser lUser=lUserDAO.findByID(pIdU);
-
+        lUserDAO.detach(lUser);
         List<CUser> lContactsUser=lUser.obtainContacts();
-        lUserDAO.startTransac();
+        /*lUserDAO.startTransac();
         for(CUser lContact:lContactsUser) {
             lContact.setPassword("");
         }
         List<CUser> lContacts=new ArrayList<>();
         lContacts.addAll(lContactsUser);
         lUserDAO.rollBackTransac();
-        lUserDAO.update(lUser);
-        return Response.status(200).entity(lContacts).build();
+        lUserDAO.update(lUser);*/
+        return Response.status(200).entity(lContactsUser).build();
     }
 
     @PUT
@@ -138,13 +138,40 @@ public class CUserRest {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/contact/{idU}/{idC}")
     public Response removeContact(@PathParam("idU") int pIdU,@PathParam("idC") int pIdC){
-        System.out.println("removeContact");
-
         CUserDAO lUserDAO=new CUserDAO();
         CUser lUser =lUserDAO.findByID(pIdU);
         lUser.obtainContacts().remove(lUserDAO.findByID(pIdC));
         lUserDAO.update(lUser);
         return Response.status(Response.Status.OK).entity("Contact has been removed").build();
+    }
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updateUser(CUser pNewUserParams){
+        CUserDAO lUserDAO=new CUserDAO();
+        Map<String,String> lParams = new HashMap<>();
+        lParams.put("emailUser",pNewUserParams.getEmail());
+        CUser lUser=lUserDAO.findByID(pNewUserParams.getUserId());
+        if(!lUser.getEmail().equals(pNewUserParams.getEmail())) {
+            List<CUser> lUsers = lUserDAO.findWithNamedQuery("CUser.findAll", lParams);
+            if (lUsers.isEmpty()) {
+                lUser.setName(pNewUserParams.getName());
+                lUser.setFirstName(pNewUserParams.getFirstName());
+                lUser.setPassword(pNewUserParams.getPassword());
+                lUser.setEmail(pNewUserParams.getEmail());
+                return Response.status(200).build();
+            }
+            else{
+                return Response.status(455).entity("L'email existe déjà").build();
+            }
+        }
+        else{
+            lUser.setName(pNewUserParams.getName());
+            lUser.setFirstName(pNewUserParams.getFirstName());
+            lUser.setPassword(pNewUserParams.getPassword());
+            return Response.status(200).build();
+        }
+
     }
 
 }

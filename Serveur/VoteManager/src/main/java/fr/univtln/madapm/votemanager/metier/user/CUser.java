@@ -1,6 +1,8 @@
 package fr.univtln.madapm.votemanager.metier.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import fr.univtln.madapm.votemanager.dao.CUserDAO;
 import fr.univtln.madapm.votemanager.metier.vote.CChoice;
 import fr.univtln.madapm.votemanager.metier.vote.CDeleguation;
 import fr.univtln.madapm.votemanager.metier.vote.CVote;
@@ -91,9 +93,10 @@ public class CUser {
         return mUserId;
     }
 
-  /*  public void setId(int pId) {
+    @JsonSetter("userId")
+    public void setId(int pId) {
         this.mUserId = pId;
-    }*/
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -161,6 +164,11 @@ public class CUser {
     }
 
     public List<CUser> obtainContacts(){
+        CUserDAO lUserDAO=new CUserDAO();
+        for(CUser lUser:this.mListContacts) {
+            lUserDAO.detach(lUser);
+            lUser.setPassword("contact");
+        }
         return this.mListContacts;
     }
 

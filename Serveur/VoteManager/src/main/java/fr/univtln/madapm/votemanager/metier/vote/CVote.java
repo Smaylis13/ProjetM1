@@ -118,8 +118,10 @@ public class CVote implements Serializable {
         }
 
         return lIdUsers;*/
+        CUserDAO lUserDAO=new CUserDAO();
         for(CUser lUser:this.mParticipatingUsers){
-            lUser.setPassword("");
+            lUserDAO.detach(lUser);
+            lUser.setPassword("participe");
         }
         return this.mParticipatingUsers;
     }
