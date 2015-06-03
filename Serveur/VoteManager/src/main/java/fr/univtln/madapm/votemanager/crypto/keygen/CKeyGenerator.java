@@ -74,12 +74,12 @@ public class CKeyGenerator extends Random {
 
     /**
      * Fonction qui calcule une clef en fonction de paramètre spécifique
-     * @param pG paramètre reçu
+     * @param pParam paramètre reçu
      * @return La clef calculé avec les deux paramètres
      */
-    public SecretKeySpec specificKeyKeyGen(byte[] pG) {
-        //System.out.println(Arrays.toString(pG));
-        byte[] lKey = pG;
+    public SecretKeySpec specificKeyKeyGen(byte[] pParam) {
+        //System.out.println(Arrays.toString(pParam));
+        byte[] lKey = pParam;
         //System.out.println(Arrays.toString(lKey));
         MessageDigest lSha;
         try {

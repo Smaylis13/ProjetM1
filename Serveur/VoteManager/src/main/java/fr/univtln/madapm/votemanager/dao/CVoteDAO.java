@@ -1,7 +1,6 @@
 package fr.univtln.madapm.votemanager.dao;
 
 import fr.univtln.madapm.votemanager.crud.CCRUDServiceBean;
-import fr.univtln.madapm.votemanager.metier.user.CUser;
 import fr.univtln.madapm.votemanager.metier.vote.CVote;
 
 /**

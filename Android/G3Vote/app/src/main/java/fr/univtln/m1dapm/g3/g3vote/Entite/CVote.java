@@ -46,12 +46,14 @@ public class CVote implements Serializable {
 
     private List<CDeleguation> mDeleguations;
 
+    private List<CUser> mParticipants;
+
     @JsonIgnore
     private boolean mVoted;
 
     public CVote(){};
 
-    public CVote(int pIdVote, String pVoteName, String pDescriptionVote, boolean pStatusVote, Date pDateDebut, Date pDateFin, int pOrganisateur, List<CResult> pResultVote,CType pType, List<CRule> pRules, List<CCandidate> pCandidate, List<CDeleguation> pDeleguations) {
+    public CVote(int pIdVote, String pVoteName, String pDescriptionVote, boolean pStatusVote, Date pDateDebut, Date pDateFin, int pOrganisateur, List<CResult> pResultVote,CType pType, List<CRule> pRules, List<CCandidate> pCandidate, List<CDeleguation> pDeleguations, List<CUser> pParticipants) {
         this.mIdVote=pIdVote;
         this.mVoteName = pVoteName;
         this.mDescriptionVote = pDescriptionVote;
@@ -64,9 +66,10 @@ public class CVote implements Serializable {
         this.mRules = pRules;
         this.mCandidates = pCandidate;
         this.mDeleguations = pDeleguations;
+        this.mParticipants=pParticipants;
     }
 
-    public CVote(String pVoteName, String pDescriptionVote, boolean pStatusVote, Date pDateDebut, Date pDateFin, int pOrganisateur, List<CResult> pResultVote,CType pType, List<CRule> pRules, List<CCandidate> pCandidate, List<CDeleguation> pDeleguations) {
+    public CVote(String pVoteName, String pDescriptionVote, boolean pStatusVote, Date pDateDebut, Date pDateFin, int pOrganisateur, List<CResult> pResultVote,CType pType, List<CRule> pRules, List<CCandidate> pCandidate, List<CDeleguation> pDeleguations, List<CUser> pParticipants) {
         this.mVoteName = pVoteName;
         this.mDescriptionVote = pDescriptionVote;
         this.mStatusVote = pStatusVote;
@@ -78,6 +81,7 @@ public class CVote implements Serializable {
         this.mRules = pRules;
         this.mCandidates = pCandidate;
         this.mDeleguations = pDeleguations;
+        this.mParticipants=pParticipants;
     }
 
     public CVote(int pIdVote, String pNom) {
@@ -106,6 +110,7 @@ public class CVote implements Serializable {
     @JsonIgnore
     public int getIdVote(){return this.mIdVote;}
 
+    @JsonSetter("voted")
     public void setVoted(boolean pVoted){
         this.mVoted=pVoted;
     }
@@ -184,6 +189,21 @@ public class CVote implements Serializable {
         this.mTypes = pTypes;
     }
 
+    public List<Integer> getParticipants() {
+        List<Integer> lIdUsers=new ArrayList<>();
+        for(CUser lUser:this.mParticipants){
+            lIdUsers.add(lUser.getUserId());
+        }
+
+        return lIdUsers;
+    }
+
+
+    public void setParticipants(List<CUser> pParticipants) {
+
+        this.mParticipants = pParticipants;
+    }
+
     public static ArrayList<CVote> getAListOfVote() {
         ArrayList<CVote> listVote = new ArrayList<CVote>();//GregorianCalendar (int year, int month, int day)
 
@@ -231,6 +251,7 @@ public class CVote implements Serializable {
                 ", mCandidate=" + mCandidates +
                 ", mDeleguations=" + mDeleguations +
                 ", mOrganisateur=" + mIdOrganisateur +
+                ", mParticipants=" + mParticipants +
                 ", mVoted="+mVoted+
                 '}';
     }
@@ -239,4 +260,5 @@ public class CVote implements Serializable {
     public boolean isVoted(){
         return mVoted;
     }
+
 }

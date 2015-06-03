@@ -21,16 +21,16 @@ public class CTestCryptoKeyTest extends TestCase {
         System.out.println("Test de clef à échanger avec l'appli");
 
 
-        String str = "eafusfgigfyugfrdi+-*/)àé'(çà-èçà&²<!:;,*ùù$";
+        String lData = "eafusfgigfyugfrdi+-*/)àé'(çà-èçà&²<!:;,*ùù$";
 
         CKeyGenerator keyGenerator = new CKeyGenerator();
         System.out.println(keyGenerator);
-        SecretKeySpec clef = keyGenerator.specificKeyKeyGen(BigInteger.probablePrime(128, new SecureRandom()).toByteArray());
+        SecretKeySpec lClef = keyGenerator.specificKeyKeyGen(BigInteger.probablePrime(128, new SecureRandom()).toByteArray());
 
         CAESCrypt aesCrypt = new CAESCrypt();
-        byte[] cyphertext = aesCrypt.encrypt(clef, str);
+        byte[] lCryptData = aesCrypt.encrypt(lClef, lData);
 
-        System.out.println(aesCrypt.decrypt(clef, cyphertext));
+        System.out.println(aesCrypt.decrypt(lClef, lCryptData));
 
 
         System.out.println("Fin du test");

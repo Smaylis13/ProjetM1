@@ -4,38 +4,27 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context=".CHubActivity$ContactFragment">
-
-
-    <ImageButton
+    tools:context="fr.univtln.m1dapm.g3.g3vote.Interface.CContactSuppression">
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/addChoiceButton"
-        android:src="@mipmap/ic_add_button"
-        android:onClick="addContact"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_above="@+id/ListContact" />
-
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/removeChoiceButton"
-        android:src="@mipmap/ic_remove_button"
-        android:onClick="removeContact"
+        android:text="@string/validationText"
+        android:id="@+id/retoursupprimercontact"
+        android:onClick="retour"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/addChoiceButton"
-        android:layout_toEndOf="@+id/addChoiceButton" />
-
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <ListView android:id="@+id/ListContact"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
+        android:layout_below="@id/retoursupprimercontact"
         android:descendantFocusability="afterDescendants"
-        android:focusable="false"
-        android:layout_below="@+id/removeChoiceButton">
+        android:focusable="false">
     </ListView>
+
+
 
 </RelativeLayout>

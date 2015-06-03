@@ -145,8 +145,16 @@
         </activity>
         <activity
             android:screenOrientation="portrait"
-            android:name=".Interface.CSupressionCompte"
-            android:label="@string/title_activity_csupression_compte" >
+            android:name=".Interface.CSuppressionCompte"
+            android:label="@string/title_activity_csuppression_compte" >
+        </activity>
+        <activity
+            android:name=".Interface.CContactSuppression"
+            android:label="@string/title_activity_ccontact_supression" >
+        </activity>
+        <activity
+            android:name=".Interface.CRankingVote"
+            android:label="@string/title_activity_cranking_vote" >
         </activity>
     </application>
 

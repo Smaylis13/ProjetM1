@@ -17,7 +17,7 @@ public class TestGCM {
         CPost2Gcm.post(apiKey, content);
     }
 
-    public static CContent createContent() {
+    private static CContent createContent() {
         CContent c = new CContent();
 
 

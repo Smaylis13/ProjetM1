@@ -84,6 +84,21 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
      */
     ViewPager mViewPager;
 
+    public static void setsLoggedUser(CUser pLoggedUser) {
+        CHubActivity.sLoggedUser = pLoggedUser;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();  // Always call the superclass method first
+
+        // Activity being restarted from stopped state
+    }
     // issma
     public static final String PREFS_PROPERTY_REG_ID = "registration_id";
     public static final String GCM_TAG = "GCM_TAG";
@@ -155,6 +170,12 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
         mMail="test@gmail.com";
 
         mGcm = GoogleCloudMessaging.getInstance(this);
+
+        if(getIntent().getAction()!=null){
+            if(getIntent().getAction().equals("OPEN_TAB_CONTACT")) {
+             mViewPager.setCurrentItem(2);
+            }
+        }
 
 		mContext = getApplicationContext();
 		mRegid = getRegistrationId();
@@ -537,6 +558,18 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
         startActivity(lIntent);
     }
 
+
+    public void removeContact(View view){
+
+        ArrayList<CUser> lContacts = CUser.getAListOfUser();
+        lContacts=(ArrayList)CHubContactFragment.getsContacts();
+        Intent lIntent = new Intent(this,CContactSuppression.class);
+
+        lIntent.putExtra("listecontact",lContacts);
+
+        startActivity(lIntent);
+    }
+
     public class CVotesAsync extends AsyncTask<Object, Void, Integer> {
         public static final String SERVER_URL = "http://10.21.205.16:80/";
         private final ProgressDialog mDialog = new ProgressDialog(CHubActivity.this);
@@ -568,6 +601,7 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
                             //ArrayList<CVote> lVotes = new Gson().fromJson(lResponse, listType);
                             ObjectMapper lMapper=new ObjectMapper();
                             ArrayList<CVote> lVotes = lMapper.readValue(lResponse, new TypeReference<ArrayList<CVote>>(){});
+
                             Message lMsg=new Message();
                             lMsg.what=0;
                             lMsg.obj=lVotes;
@@ -633,5 +667,8 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
             }
         }
     };
+
+
+
 
 }

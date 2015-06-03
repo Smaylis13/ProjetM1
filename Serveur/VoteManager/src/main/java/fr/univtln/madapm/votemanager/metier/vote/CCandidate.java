@@ -1,8 +1,7 @@
 package fr.univtln.madapm.votemanager.metier.vote;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -55,6 +54,16 @@ public class CCandidate implements Serializable {
     }
 
 
+    @JsonGetter("id")
+    public int getIdCandidat() {
+        return mIdCandidat;
+    }
+
+    @JsonIgnore
+    public void setIdCandidat(int mIdCandidat) {
+        this.mIdCandidat = mIdCandidat;
+    }
+
     public String getNomCandidat() {
         return mNomCandidat;
     }
@@ -86,13 +95,10 @@ public class CCandidate implements Serializable {
 
         CCandidate cCandidat = (CCandidate) pObject;
 
-        if (mIdCandidat != cCandidat.mIdCandidat) return false;
-        if (mDescriptionCandidat != null ? !mDescriptionCandidat.equals(cCandidat.mDescriptionCandidat)
-                : cCandidat.mDescriptionCandidat != null)
-            return false;
-        if (!mNomCandidat.equals(cCandidat.mNomCandidat)) return false;
+        return mIdCandidat == cCandidat.mIdCandidat && !(mDescriptionCandidat != null ?
+                !mDescriptionCandidat.equals(cCandidat.mDescriptionCandidat) : cCandidat.mDescriptionCandidat != null)
+                && mNomCandidat.equals(cCandidat.mNomCandidat);
 
-        return true;
     }
 
     @Override

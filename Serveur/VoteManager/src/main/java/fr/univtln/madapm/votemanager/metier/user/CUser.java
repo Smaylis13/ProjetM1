@@ -1,13 +1,15 @@
 package fr.univtln.madapm.votemanager.metier.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import fr.univtln.madapm.votemanager.dao.CUserDAO;
 import fr.univtln.madapm.votemanager.metier.vote.CChoice;
 import fr.univtln.madapm.votemanager.metier.vote.CDeleguation;
 import fr.univtln.madapm.votemanager.metier.vote.CVote;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by civars169 on 05/05/15.
@@ -30,7 +32,7 @@ public class CUser {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="ID_UTILISATEUR")
     @JsonIgnore
-    public int mUserId;
+    private int mUserId;
     @Column(name="MAIL", nullable = false,unique = true)
     private String mEmail;
     @Column(name="MOT_DE_PASSE",nullable = false)
@@ -45,7 +47,7 @@ public class CUser {
             inverseJoinColumns = {@JoinColumn(name="ID_GROUPE",nullable = false,updatable = false)})
     private List<CGroup> mListGroups;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade ={ })
     @JoinTable(name="a_contact", joinColumns = {@JoinColumn(name="ID_UTILISATEUR",nullable = false,updatable = false)},
             inverseJoinColumns = {@JoinColumn(name="ID_CONTACT",nullable = false,updatable = false)})
     private List<CUser> mListContacts;
@@ -54,7 +56,7 @@ public class CUser {
     @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL, mappedBy="mOrganisateur")
     private List<CVote> mOrganisedVotes=null;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
     @JoinTable(name="invitation", joinColumns = {@JoinColumn(name="ID_UTILISATEUR",nullable = false,updatable = false)},
             inverseJoinColumns = {@JoinColumn(name="ID_VOTE",nullable = false,updatable = false)})
     private List<CVote> mParticipatingVotes;
@@ -81,19 +83,17 @@ public class CUser {
     }
 
     public List<Integer> obtainParticipatingVotesIds() {
-        List<Integer> lIdVotes=new ArrayList<>();
-        for(CVote v:mParticipatingVotes)
-            lIdVotes.add(v.getIdVote());
-        return lIdVotes;
+        return mParticipatingVotes.stream().map(CVote::getIdVote).collect(Collectors.toList());
     }
 
     public int getUserId() {
         return mUserId;
     }
 
-  /*  public void setId(int pId) {
+    @JsonSetter("userId")
+    public void setId(int pId) {
         this.mUserId = pId;
-    }*/
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -102,17 +102,10 @@ public class CUser {
 
         CUser user = (CUser) o;
 
-        if(this.getEmail()!=user.getEmail()) return false;
+        return this.getEmail().equals(user.getEmail()) && this.getUserId() == user.getUserId() &&
+                this.getName().equals(user.getName()) && this.getFirstName().equals(user.getFirstName()) &&
+                this.getPassword().equals(user.getPassword());
 
-        if(this.getUserId()!=user.getUserId()) return false;
-
-        if(this.getName()!=user.getName()) return false;
-
-        if(this.getFirstName()!=user.getFirstName()) return false;
-
-        if(this.getPassword()!=user.getPassword()) return false;
-
-        return true;
     }
 
     @Override
@@ -161,6 +154,11 @@ public class CUser {
     }
 
     public List<CUser> obtainContacts(){
+        CUserDAO lUserDAO=new CUserDAO();
+        for(CUser lUser:this.mListContacts) {
+            lUserDAO.detach(lUser);
+            lUser.setPassword("contact");
+        }
         return this.mListContacts;
     }
 

@@ -3,7 +3,6 @@ package fr.univtln.m1dapm.g3.g3vote.Interface;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -12,12 +11,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckedTextView;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import fr.univtln.m1dapm.g3.g3vote.Communication.CCommunication;
+import fr.univtln.m1dapm.g3.g3vote.Communication.CRequestTypesEnum;
+import fr.univtln.m1dapm.g3.g3vote.Communication.CTaskParam;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CType;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CUser;
 import fr.univtln.m1dapm.g3.g3vote.R;
 
@@ -29,8 +32,12 @@ public class CParticipantActivity extends AppCompatActivity {
     private String mDateFin;
     private ArrayList<CCandidate> mListCandidat = new ArrayList<CCandidate>();
     private ArrayList<CUser> mListParticipant = new ArrayList<CUser>();
-    private String mTypeVote;
+    private CType mTypeVote;
     private CUserChoiceAdapter adapter;
+    //Majority
+    private int mCalculationMethod;//
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +52,11 @@ public class CParticipantActivity extends AppCompatActivity {
         mDateDebut = (String) extras.get("START_DATE");
         mDateFin = (String) extras.get("END_DATE");
         mListCandidat = (ArrayList<CCandidate>)extras.get("liste de Candidat");
-        mTypeVote = (String) extras.get("VOTE_TYPE");
+        mTypeVote = (CType) extras.getSerializable("VOTE_TYPE");
+        //Majority
+        if(mTypeVote.getIdType()==5)
+            mCalculationMethod = (int) extras.get("CALCULATIONMETHOD");
+
 
         Log.i("donner candida", mListCandidat.toString());
         //Récupération du composant ListView
@@ -55,10 +66,12 @@ public class CParticipantActivity extends AppCompatActivity {
         list.setChoiceMode(list.CHOICE_MODE_MULTIPLE);
 
         //Récupération de la liste des personnes
-        ArrayList<CUser> mListUser = CUser.getAListOfUser();
-
+        //ArrayList<CUser> mListUser = CUser.getAListOfUser();
+        /*CTaskParam lParams=new CTaskParam(CRequestTypesEnum.get_contacts);
+        CCommunication lCom=new CCommunication();
+        lCom.execute(lParams);*/
         //Création et initialisation de l'Adapter pour les personnes
-        adapter = new CUserChoiceAdapter(this, mListUser);
+        adapter = new CUserChoiceAdapter(this, CHubContactFragment.getsContacts());
 
         //Initialisation de la liste avec les données
         list.setAdapter(adapter);
@@ -120,6 +133,7 @@ public class CParticipantActivity extends AppCompatActivity {
         lIntent.putExtra("START_DATE", mDateDebut);
         lIntent.putExtra("END_DATE", mDateFin);
         lIntent.putExtra("VOTE_TYPE", mTypeVote);
+        lIntent.putExtra("CALCULATIONMETHOD", mCalculationMethod);
         startActivity(lIntent);
     }
 

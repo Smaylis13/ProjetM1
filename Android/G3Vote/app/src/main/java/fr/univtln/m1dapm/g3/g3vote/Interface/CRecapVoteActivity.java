@@ -3,7 +3,6 @@ package fr.univtln.m1dapm.g3.g3vote.Interface;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -54,7 +53,7 @@ public class CRecapVoteActivity extends AppCompatActivity {
         mDateFin = (String) extras.get("END_DATE");
         mListCandidat = (ArrayList<CCandidate>)extras.get("liste de Candidat");
         mListParticipant=(ArrayList<CUser>)extras.get("liste de participant");
-        mTypeVote = (CType) extras.getSerializable("VOTE_TYPE");
+        mTypeVote = (CType) extras.get("VOTE_TYPE");
 
         Log.i("donner candida", mListCandidat.toString());
         //remplis la liste des participants
@@ -97,7 +96,7 @@ public class CRecapVoteActivity extends AppCompatActivity {
         Date lDateDeb = new java.sql.Date(simpleDateFormat.parse(mDateDebut).getTime());
         Date lDateFin = new java.sql.Date(simpleDateFormat.parse(mDateFin).getTime());
 
-        CVote lVote = new CVote(mVoteName, "", true, lDateDeb, lDateFin, CHubActivity.getsLoggedUser().getUserId(), null, mTypeVote, null, mListCandidat, null);
+        CVote lVote = new CVote(mVoteName, "", true, lDateDeb, lDateFin, CHubActivity.getsLoggedUser().getUserId(), null, mTypeVote, null, mListCandidat, null,mListParticipant);
         CTaskParam lParams = new CTaskParam(CRequestTypesEnum.add_new_vote, lVote);
         CCommunication lCom = new CCommunication();
         lCom.execute(lParams);

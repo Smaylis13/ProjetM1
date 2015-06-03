@@ -1,22 +1,25 @@
 package fr.univtln.m1dapm.g3.g3vote.Interface;
 
 import android.app.AlertDialog;
-import android.app.ListActivity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.RadioButton;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import fr.univtln.m1dapm.g3.g3vote.Communication.CCommunication;
 import fr.univtln.m1dapm.g3.g3vote.Communication.CRequestTypesEnum;
 import fr.univtln.m1dapm.g3.g3vote.Communication.CTaskParam;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CChoice;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CUser;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
 import fr.univtln.m1dapm.g3.g3vote.R;
 
 /**
@@ -24,75 +27,123 @@ import fr.univtln.m1dapm.g3.g3vote.R;
  */
 public class CVoteUninominal extends AppCompatActivity {
 
-    private int mIdVote;
-    private String mTypeVote;
-    private CCandidateUniqueChoiceAdapter adapter;
+    private CVote mVote;
+    private static CCandidateUniqueChoiceAdapter sAdapter;
+    private ListView mList;
+    private static List<CCandidate> sListCandidat;
+    private static Context sContext;
+
+    public static Context getsContext() {
+        return sContext;
+    }
+
+    public static void setlList(List<CCandidate> pList) {
+        sListCandidat = new ArrayList<>(pList);
+
+        sAdapter.notifyDataSetChanged();
+    }
+
+    public CVoteUninominal(){}
 
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        sContext=getApplicationContext();
         setContentView(R.layout.activity_cvote_uninominal);
 
         Bundle extras = getIntent().getExtras();
         if (extras==null){
             return;
         }
-        mIdVote = (Integer) extras.get("ID_VOTE");
-        mTypeVote = (String) extras.get("TYPE_VOTE");
+        mVote = (CVote) extras.get("VOTE");
+        /*
 
-        CTaskParam lParams = new CTaskParam(CRequestTypesEnum.get_candidates, mIdVote);
+        CTaskParam lParams = new CTaskParam(CRequestTypesEnum.get_candidates, mIdVote, mTypeVote);
         CCommunication lCom = new CCommunication();
         lCom.execute(lParams);
-
+*/
 
 
         //Récupération du composant ListView
-        ListView lList = (ListView)findViewById(R.id.LVChoixCandidatUninominal);
+        mList = (ListView)findViewById(R.id.LVChoixCandidatUninominal);
 
-
+        sListCandidat = mVote.getCandidates();
         //Récupération de la liste des personnes
-        ArrayList<CCandidate> lListCandidate = CCandidate.getAListOfCandidate();
+        //ArrayList<CCandidate> lListCandidate = CCandidate.getAListOfCandidate();
 
         //Création et initialisation de l'Adapter pour les personnes
-        adapter = new CCandidateUniqueChoiceAdapter(this, lListCandidate);
+        sAdapter = new CCandidateUniqueChoiceAdapter(this, sListCandidat);
 
         //Initialisation de la liste avec les données
-        lList.setAdapter(adapter);
-
-        //TODO:Recuperer les candidats sur le serveur et les afficher
+        mList.setAdapter(sAdapter);
 
     }
 
     public void vote(View pView){
-        //TODO:Vérifier qu'un candidat est bien selectionné
-        // On crée le dialogue
-        AlertDialog.Builder lConfirmationDialog = new AlertDialog.Builder(CVoteUninominal.this);
-        // On modifie le titre
-        lConfirmationDialog.setTitle("Confirmation de vote");
-        // On modifie le message
-        lConfirmationDialog.setMessage("Êtes-vous sûr de vouloir voter pour ce candidat ?");
-        // Bouton Oui
-        lConfirmationDialog.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
+        int position = mList.getCheckedItemPosition();
+        if(position != -1){
+            // On crée le dialogue
+            AlertDialog.Builder lConfirmationDialog = new AlertDialog.Builder(CVoteUninominal.this);
+            // On modifie le titre
+            lConfirmationDialog.setTitle("Confirmation de vote");
+            // On modifie le message
+            lConfirmationDialog.setMessage("Êtes-vous sûr de vouloir voter pour ce candidat ?");
+            // Bouton Oui
+            lConfirmationDialog.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
 
-                //TODO:Envoyer le vote au serveur et afficher un toast pour confirmer le vote
+                    int position = mList.getCheckedItemPosition();
 
-                // On termine l'activité et on retourne sur la page principale
-                Intent intent = new Intent(CVoteUninominal.this, CHubActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-            }
-        });
+                    CCandidate lCandidat  = (CCandidate) mList.getItemAtPosition(position);
 
-        // Bouton non: on ferme le dialogue
-        lConfirmationDialog.setNegativeButton("Non", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-        // On affiche le message
-        lConfirmationDialog.show();
+
+                    Log.i("Candidat voté : ", lCandidat.toString());
+
+                    CChoice lUniqueChoice = new CChoice(mVote.getIdVote(), CHubActivity.getsLoggedUser().getUserId(), lCandidat.getIdCandidat(), 1);
+                    //TODO:Envoyer le vote au serveur et afficher un toast pour confirmer le vote
+
+                    CTaskParam lParams = new CTaskParam(CRequestTypesEnum.add_choice,lUniqueChoice);
+                    CCommunication lCom = new CCommunication();
+                    lCom.execute(lParams);
+
+                    /*
+                    // On termine l'activité et on retourne sur la page principale
+                    Intent lIntent = new Intent(CVoteUninominal.this, CHubActivity.class);
+                    lIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(lIntent);
+                    */
+                }
+            });
+
+            // Bouton non: on ferme le dialogue
+            lConfirmationDialog.setNegativeButton("Non", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+            // On affiche le message
+            lConfirmationDialog.show();
+        }
+        else {
+            // On crée le dialogue
+            AlertDialog.Builder lConfirmationDialog = new AlertDialog.Builder(CVoteUninominal.this);
+            // On modifie le titre
+            lConfirmationDialog.setTitle("Aucun candidat selectionné");
+            // On modifie le message
+            lConfirmationDialog.setMessage("Vous n'avez selectionné aucun candidat");
+            // Bouton OK: on ferme le dialogue
+            lConfirmationDialog.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+
+                }
+            });
+            // On affiche le message
+            lConfirmationDialog.show();
+        }
+
     }
 
     @Override

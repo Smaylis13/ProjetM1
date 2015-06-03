@@ -91,10 +91,23 @@ public class CHubMyVotesFragment extends Fragment implements AdapterView.OnItemC
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent lIntent = new Intent(getActivity(), CVoteUninominal.class);
         CVote lVote = (CVote) sList.getItemAtPosition(position);
-        lIntent.putExtra("ID_VOTE", lVote.getIdVote());
-        lIntent.putExtra("TYPE_VOTE", lVote.getTypes().getNom());
-        startActivity(lIntent);
+        // Si le vote est actif, on envoie sur la page de vote
+        if(lVote.getStatusVote()) {
+            Intent lIntent;
+            if (lVote.getTypes().getNom().equals("STV") || lVote.getTypes().getNom().equals("Kemeny-Young")) {
+                lIntent = new Intent(getActivity(), CRankingVote.class);
+            } else {
+                lIntent = new Intent(getActivity(), CVoteUninominal.class);
+            }
+
+
+            lIntent.putExtra("VOTE", lVote);
+            startActivity(lIntent);
+        }
+        // Sinon, on envoie sur la page des résultats
+        else {
+            //TODO:Creer la page des resultats et envoyer dessus
+        }
     }
 }

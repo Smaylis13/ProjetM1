@@ -11,27 +11,27 @@ import javax.persistence.Persistence;
  */
 public class CEntityManager {
 
-    EntityManagerFactory emf = Persistence
+    private EntityManagerFactory mEmf = Persistence
             .createEntityManagerFactory("votemanager");
-    EntityManager em = emf.createEntityManager();
+    private EntityManager mEm = mEmf.createEntityManager();
 
-    EntityTransaction transac = em.getTransaction();
+    private EntityTransaction mTransac = mEm.getTransaction();
 
     void persist(Object o){
-        transac.begin();
-        em.persist(o);
-        transac.commit();
+        mTransac.begin();
+        mEm.persist(o);
+        mTransac.commit();
     }
 
     void merge(Object o){
-        transac.begin();
-        em.merge(o);
-        transac.commit();
+        mTransac.begin();
+        mEm.merge(o);
+        mTransac.commit();
     }
 
     void remove(Object o){
-        transac.begin();
-        em.remove(o);
-        transac.commit();
+        mTransac.begin();
+        mEm.remove(o);
+        mTransac.commit();
     }
 }

@@ -1,15 +1,15 @@
 package fr.univtln.madapm.votemanager.metier.vote;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 import fr.univtln.madapm.votemanager.dao.CUserDAO;
 import fr.univtln.madapm.votemanager.metier.user.CUser;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by civars169 on 05/05/15.
@@ -70,7 +70,7 @@ public class CVote implements Serializable {
     @JsonIgnore
     @JoinTable(name="invitation", joinColumns = {@JoinColumn(name="ID_VOTE",nullable = false,updatable = false)},
             inverseJoinColumns = {@JoinColumn(name="ID_UTILISATEUR",nullable = false,updatable = false)})
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.REFRESH)
     private List<CUser> mParticipatingUsers;
 
     @Transient
@@ -111,6 +111,28 @@ public class CVote implements Serializable {
         this.mCandidate = pCandidate;
     }
 
+    @JsonGetter("participants")
+    public List<CUser> getParticipatingUsers() {
+        /*List<Integer> lIdUsers=new ArrayList<>();
+        for(CUser lUser:this.mParticipatingUsers){
+            lIdUsers.add(lUser.getUserId());
+        }
+
+        return lIdUsers;*/
+        CUserDAO lUserDAO=new CUserDAO();
+        for(CUser lUser:this.mParticipatingUsers){
+            lUserDAO.detach(lUser);
+            lUser.setPassword("participe");
+        }
+        return this.mParticipatingUsers;
+    }
+
+    @JsonSetter("participants")
+    public void setParticipatingUsers(List<Integer> pParticipatingUsersId) {
+        this.mParticipatingUsers=new ArrayList<>();
+        CUserDAO lUserDAO=new CUserDAO();
+        mParticipatingUsers.addAll(pParticipatingUsersId.stream().map(lUserDAO::findByID).collect(Collectors.toList()));
+    }
 
     public int getIdVote(){return mIdVote;}
     public String getVoteName() {
@@ -212,7 +234,7 @@ public class CVote implements Serializable {
     /**
      * Ajoute une sélection pour le vote
      *
-     * @param pChoix
+     * @param pChoix Choix à ajouter
      */
     public void addParticipant(CChoice pChoix){
         this.mChoices.add(pChoix);
@@ -232,18 +254,20 @@ public class CVote implements Serializable {
     @Override
     public String toString() {
         return "CVote{" +
-                "mIdvote=" + mIdVote +
-                ", mNomvote='" + mVoteName + '\'' +
-                ", mDescriptionvote='" + mDescriptionVote + '\'' +
-                ", mDatedebut='" + mDateDebut + '\'' +
-                ", mDatefin='" + mDateFin + '\'' +
-                ", mResultvote='" + mResultVote + '\'' +
-                ", mType='" + mType + '\'' +
-                ", mRegle='" + mRegle + '\'' +
-                ", mStatusvote='" + mStatusVote + '\'' +
+                "mIdVote=" + mIdVote +
+                ", mVoteName='" + mVoteName + '\'' +
+                ", mDescriptionVote='" + mDescriptionVote + '\'' +
+                ", mDateDebut=" + mDateDebut +
+                ", mDateFin=" + mDateFin +
+                ", mStatusVote=" + mStatusVote +
                 ", mOrganisateur=" + mOrganisateur +
+                ", mResultVote=" + mResultVote +
+                ", mType=" + mType +
+                ", mRegle=" + mRegle +
                 ", mChoices=" + mChoices +
                 ", mCandidate=" + mCandidate +
+                ", mDeleguations=" + mDeleguations +
+                ", mVoted=" + mVoted +
                 '}';
     }
 }

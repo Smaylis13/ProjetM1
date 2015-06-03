@@ -6,6 +6,7 @@ import fr.univtln.madapm.votemanager.metier.vote.CChoice;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.List;
 
 /**
  * Created by sebastien on 18/05/15.
@@ -22,9 +23,20 @@ public class CChoiceRest {
 
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
-    public CChoice addChoice(CChoice pChoice){
+    public Response addChoice(CChoice pChoice){
         CChoiceDAO lChoiceDAO = new CChoiceDAO();
-        return lChoiceDAO.createChoice(pChoice);
+        lChoiceDAO.createChoice(pChoice);
+        return Response.status(200).build();
+    }
+
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/multiples")
+    public Response addChoices(List<CChoice> pChoices){
+        CChoiceDAO lChoiceDAO = new CChoiceDAO();
+        for(CChoice lChoice:pChoices)
+            lChoiceDAO.createChoice(lChoice);
+        return Response.status(200).build();
     }
 
     @DELETE

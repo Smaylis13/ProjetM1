@@ -1,22 +1,34 @@
 package fr.univtln.m1dapm.g3.g3vote.Interface;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import fr.univtln.m1dapm.g3.g3vote.Communication.CCommunication;
+import fr.univtln.m1dapm.g3.g3vote.Communication.CRequestTypesEnum;
+import fr.univtln.m1dapm.g3.g3vote.Communication.CTaskParam;
 import fr.univtln.m1dapm.g3.g3vote.R;
 
-public class CContactAjout extends ActionBarActivity {
+public class CContactAjout extends AppCompatActivity {
+
+    private static Context sContext;
+
+    public static Context getsContext() {
+        return sContext;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ccontact_ajout);
+        sContext=getApplicationContext();
     }
 
     @Override
@@ -50,13 +62,24 @@ public class CContactAjout extends ActionBarActivity {
 
         if (!(lNomContactString.isEmpty()&&lPrenomContactString.isEmpty()&&lMailContactString.isEmpty())){
 
-            Intent lIntent = new Intent(this,CTestContactAjout.class);
+
+
+            /*Intent lIntent = new Intent(this,CTestContactAjout.class);
             lIntent.putExtra("NomContact",lNomContactString);
             lIntent.putExtra("PrenomContact",lPrenomContactString);
-            lIntent.putExtra("MailContact",lMailContactString);
+            lIntent.putExtra("MailContact",lMailContactString);*/
+            CTaskParam lParams=new CTaskParam(CRequestTypesEnum.add_contact,lMailContactString);
+            CCommunication lCom=new CCommunication();
+            lCom.execute(lParams);
+
+            CTaskParam lParams2=new CTaskParam(CRequestTypesEnum.get_contacts);
+            CCommunication lCom2=new CCommunication();
+            lCom2.execute(lParams2);
 
 
-            startActivity(lIntent);
+
+
+
         } else{
             Toast.makeText(getApplicationContext(), "Entrez tout les champ!", Toast.LENGTH_LONG).show();
         }

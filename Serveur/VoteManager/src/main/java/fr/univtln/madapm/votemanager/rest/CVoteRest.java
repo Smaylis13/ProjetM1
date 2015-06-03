@@ -9,7 +9,6 @@ import fr.univtln.madapm.votemanager.metier.vote.CVote;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -49,6 +48,7 @@ public class CVoteRest {
     @Path("/all/{pIdUser}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getVotesOfUser(@PathParam("pIdUser") int pId){
+        System.out.println(pId);
         SimpleDateFormat lSdf = new SimpleDateFormat("yyyy-MM-dd");
         Date lToday=new Date();
         Calendar lCalendar = Calendar.getInstance();
@@ -66,9 +66,10 @@ public class CVoteRest {
         CUserDAO lUserDAO=new CUserDAO();
         CUser lUser=lUserDAO.findByID(pId);
         List<Integer> lIdVotes=lUser.obtainParticipatingVotesIds();
+        System.out.println(lIdVotes.toString());
         Map<String,Object> lParams = new HashMap<>();
         CVoteDAO lVoteDAO = new CVoteDAO();
-        List<CVote> lVotes=null;
+        List<CVote> lVotes;
         if(!lIdVotes.isEmpty()) {
             lParams.put("User", lUser);
             lParams.put("IdVotes", lIdVotes);
@@ -93,6 +94,7 @@ public class CVoteRest {
                  }
             lVoteDAO.update(lVote);
         }
+        //System.out.println(lVotes);
         return Response.status(200).entity(lVotes).build();
     }
 
@@ -100,12 +102,14 @@ public class CVoteRest {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addVote(CVote pNewVote){
         List<CCandidate> lCandidates=pNewVote.getCandidates();
-
         CVoteDAO lVoteDao=new CVoteDAO();
         CVote lNewVote= lVoteDao.create(pNewVote);
-        for(CCandidate lCandidate:lCandidates)
+        for(CCandidate lCandidate:lCandidates) {
+            System.out.println(lCandidate.toString());
             lCandidate.addVote(lNewVote);
+        }
         lNewVote.setCandidates(lCandidates);
+        lVoteDao.update(lNewVote);
         return Response.status(200).build();
     }
 }
