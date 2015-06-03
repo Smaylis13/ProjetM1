@@ -41,7 +41,9 @@ public class CKeyNumberGeneratorTest extends TestCase {
         lData = lCryptoServeur.publicDecrypt((SecretKeySpec) lCryptoAppli.getKeyMap().get(1), lCryptData2);
         System.out.println(lData);
 
-        System.out.println(Arrays.toString(((SecretKeySpec) lCryptoAppli.getKeyMap().get(1)).getEncoded()));
+        CKeyNumberGenerator cKeyNumberGenerator = new CKeyNumberGenerator();
+
+        System.out.println(cKeyNumberGenerator.getPValue());
 
         System.out.println("Test terminé.");
     }
