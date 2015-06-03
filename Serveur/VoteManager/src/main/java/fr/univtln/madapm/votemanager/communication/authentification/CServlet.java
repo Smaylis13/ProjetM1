@@ -5,7 +5,6 @@ import fr.univtln.madapm.votemanager.CMainServer;
 import org.apache.oltu.oauth2.as.issuer.MD5Generator;
 import org.apache.oltu.oauth2.as.issuer.OAuthIssuer;
 import org.apache.oltu.oauth2.as.issuer.OAuthIssuerImpl;
-import org.apache.oltu.oauth2.as.request.OAuthAuthzRequest;
 import org.apache.oltu.oauth2.as.request.OAuthTokenRequest;
 import org.apache.oltu.oauth2.as.response.OAuthASResponse;
 import org.apache.oltu.oauth2.common.OAuth;
@@ -14,25 +13,12 @@ import org.apache.oltu.oauth2.common.exception.OAuthProblemException;
 import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
 import org.apache.oltu.oauth2.common.message.OAuthResponse;
 import org.apache.oltu.oauth2.common.message.types.GrantType;
-import org.apache.oltu.oauth2.common.message.types.ParameterStyle;
-import org.apache.oltu.oauth2.common.message.types.ResponseType;
-import org.apache.oltu.oauth2.rs.request.OAuthAccessResourceRequest;
-import org.glassfish.jersey.message.internal.ReaderWriter;
-import org.json.JSONObject;
 
-
-import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.URL;
-import java.text.ParseException;
 
 /**
  * Created by Ookami on 21/05/2015.
@@ -105,6 +91,7 @@ public class CServlet extends HttpServlet {
                     e1.printStackTrace();
                 }
                 lResponse.setStatus(200); //Response.status(res.getResponseStatus()).entity(res.getBody()).build();
+                assert res != null;
                 lResponse.getWriter().write(res.getBody());
                 lResponse.getWriter().flush();
                 lResponse.getWriter().close();

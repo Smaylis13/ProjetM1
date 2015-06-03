@@ -16,15 +16,15 @@ public class CContent implements Serializable {
 
     public void addRegId(String regId) {
         if(registration_ids == null) {
-            registration_ids = new LinkedList<String>();
+            registration_ids = new LinkedList<>();
         }
 
-        registration_ids.add(regId);
+        registration_ids.add("APA91bFFA_pFxZ0RCfipuuAQCfWy3nJcDNrpu14-uwqzRwmMmSrNCmz2P5pbUtp7huokUnoVmxF_JxAcQRcd8_DYqePorYHGKhbFx8cs7ykGM0-KZbgtJ1-inq7O1uCRWdHu_4Msz5D0XCaaFJkLTfLf9G2qURAwWg");
     }
 
     public void createData(String title, String message) {
         if(data == null) {
-            data = new HashMap<String, String>();
+            data = new HashMap<>();
         }
 
         data.put("title", title);

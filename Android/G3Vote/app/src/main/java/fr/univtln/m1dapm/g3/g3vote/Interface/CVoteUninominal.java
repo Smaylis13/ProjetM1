@@ -1,6 +1,7 @@
 package fr.univtln.m1dapm.g3.g3vote.Interface;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +13,12 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.univtln.m1dapm.g3.g3vote.Communication.CCommunication;
+import fr.univtln.m1dapm.g3.g3vote.Communication.CRequestTypesEnum;
+import fr.univtln.m1dapm.g3.g3vote.Communication.CTaskParam;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CChoice;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CUser;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
 import fr.univtln.m1dapm.g3.g3vote.R;
 
@@ -25,6 +31,11 @@ public class CVoteUninominal extends AppCompatActivity {
     private static CCandidateUniqueChoiceAdapter sAdapter;
     private ListView mList;
     private static List<CCandidate> sListCandidat;
+    private static Context sContext;
+
+    public static Context getsContext() {
+        return sContext;
+    }
 
     public static void setlList(List<CCandidate> pList) {
         sListCandidat = new ArrayList<>(pList);
@@ -36,6 +47,7 @@ public class CVoteUninominal extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        sContext=getApplicationContext();
         setContentView(R.layout.activity_cvote_uninominal);
 
         Bundle extras = getIntent().getExtras();
@@ -86,12 +98,20 @@ public class CVoteUninominal extends AppCompatActivity {
 
 
                     Log.i("Candidat voté : ", lCandidat.toString());
+
+                    CChoice lUniqueChoice = new CChoice(mVote.getIdVote(), CHubActivity.getsLoggedUser().getUserId(), lCandidat.getIdCandidat(), 1);
                     //TODO:Envoyer le vote au serveur et afficher un toast pour confirmer le vote
 
+                    CTaskParam lParams = new CTaskParam(CRequestTypesEnum.add_choice,lUniqueChoice);
+                    CCommunication lCom = new CCommunication();
+                    lCom.execute(lParams);
+
+                    /*
                     // On termine l'activité et on retourne sur la page principale
                     Intent lIntent = new Intent(CVoteUninominal.this, CHubActivity.class);
                     lIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(lIntent);
+                    */
                 }
             });
 

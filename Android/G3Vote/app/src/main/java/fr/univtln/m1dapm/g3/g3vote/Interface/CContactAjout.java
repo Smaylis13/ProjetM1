@@ -1,5 +1,6 @@
 package fr.univtln.m1dapm.g3.g3vote.Interface;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -17,10 +18,17 @@ import fr.univtln.m1dapm.g3.g3vote.R;
 
 public class CContactAjout extends AppCompatActivity {
 
+    private static Context sContext;
+
+    public static Context getsContext() {
+        return sContext;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ccontact_ajout);
+        sContext=getApplicationContext();
     }
 
     @Override
@@ -54,7 +62,7 @@ public class CContactAjout extends AppCompatActivity {
 
         if (!(lNomContactString.isEmpty()&&lPrenomContactString.isEmpty()&&lMailContactString.isEmpty())){
 
-            Intent lIntent = new Intent(this,CHubActivity.class);
+
 
             /*Intent lIntent = new Intent(this,CTestContactAjout.class);
             lIntent.putExtra("NomContact",lNomContactString);
@@ -69,7 +77,7 @@ public class CContactAjout extends AppCompatActivity {
             lCom2.execute(lParams2);
 
 
-            startActivity(lIntent);
+
 
 
         } else{

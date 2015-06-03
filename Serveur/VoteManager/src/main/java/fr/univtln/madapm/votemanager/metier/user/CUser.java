@@ -8,8 +8,8 @@ import fr.univtln.madapm.votemanager.metier.vote.CDeleguation;
 import fr.univtln.madapm.votemanager.metier.vote.CVote;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by civars169 on 05/05/15.
@@ -32,7 +32,7 @@ public class CUser {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="ID_UTILISATEUR")
     @JsonIgnore
-    public int mUserId;
+    private int mUserId;
     @Column(name="MAIL", nullable = false,unique = true)
     private String mEmail;
     @Column(name="MOT_DE_PASSE",nullable = false)
@@ -83,10 +83,7 @@ public class CUser {
     }
 
     public List<Integer> obtainParticipatingVotesIds() {
-        List<Integer> lIdVotes=new ArrayList<>();
-        for(CVote v:mParticipatingVotes)
-            lIdVotes.add(v.getIdVote());
-        return lIdVotes;
+        return mParticipatingVotes.stream().map(CVote::getIdVote).collect(Collectors.toList());
     }
 
     public int getUserId() {
@@ -105,17 +102,10 @@ public class CUser {
 
         CUser user = (CUser) o;
 
-        if(this.getEmail()!=user.getEmail()) return false;
+        return this.getEmail().equals(user.getEmail()) && this.getUserId() == user.getUserId() &&
+                this.getName().equals(user.getName()) && this.getFirstName().equals(user.getFirstName()) &&
+                this.getPassword().equals(user.getPassword());
 
-        if(this.getUserId()!=user.getUserId()) return false;
-
-        if(this.getName()!=user.getName()) return false;
-
-        if(this.getFirstName()!=user.getFirstName()) return false;
-
-        if(this.getPassword()!=user.getPassword()) return false;
-
-        return true;
     }
 
     @Override

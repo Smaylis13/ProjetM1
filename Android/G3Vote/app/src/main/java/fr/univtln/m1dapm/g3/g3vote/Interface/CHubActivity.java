@@ -171,6 +171,12 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
 
         mGcm = GoogleCloudMessaging.getInstance(this);
 
+        if(getIntent().getAction()!=null){
+            if(getIntent().getAction().equals("OPEN_TAB_CONTACT")) {
+             mViewPager.setCurrentItem(2);
+            }
+        }
+
 		mContext = getApplicationContext();
 		mRegid = getRegistrationId();
 		if(mRegid.equals("")){
@@ -595,6 +601,7 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
                             //ArrayList<CVote> lVotes = new Gson().fromJson(lResponse, listType);
                             ObjectMapper lMapper=new ObjectMapper();
                             ArrayList<CVote> lVotes = lMapper.readValue(lResponse, new TypeReference<ArrayList<CVote>>(){});
+
                             Message lMsg=new Message();
                             lMsg.what=0;
                             lMsg.obj=lVotes;
