@@ -4,9 +4,7 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.*;
 
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
@@ -20,7 +18,10 @@ public class CPost2Gcm {
 
 			URL url = new URL("https://android.googleapis.com/gcm/send");
 
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("proxy.univ-tln.fr", 3128));
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection(proxy);
+
+			//HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
 			conn.setRequestMethod("POST");
 

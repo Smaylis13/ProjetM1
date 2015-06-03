@@ -20,6 +20,7 @@ import java.util.Map;
 @Path("/user")
 public class CUserRest {
 
+    public static Map<String,String> sIdDevice = new HashMap<>();
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -86,6 +87,17 @@ public class CUserRest {
             return Response.status(201).entity(lExistingUser.getUserId()).build();
         }
         return Response.status(409).entity(0).build();
+    }
+
+        @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/regId/{emailC}/{regId}")
+    public Response registerId(@PathParam("emailC") String pEmail,@PathParam("regId") String pRegId){
+            sIdDevice.put(pEmail,pRegId);
+            System.out.println(pRegId);
+            return Response.status(Response.Status.OK).entity("Device registred.").build();
+
     }
 
     @POST
