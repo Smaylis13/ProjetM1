@@ -1,15 +1,10 @@
 package fr.univtln.madapm.votemanager.crud;
 
-import org.eclipse.persistence.exceptions.DatabaseException;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
-import javax.persistence.PersistenceException;
 import javax.persistence.Query;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Set;
 
 /**

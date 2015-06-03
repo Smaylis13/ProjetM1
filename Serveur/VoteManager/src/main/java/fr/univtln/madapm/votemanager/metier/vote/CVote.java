@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by civars169 on 05/05/15.
@@ -130,9 +131,7 @@ public class CVote implements Serializable {
     public void setParticipatingUsers(List<Integer> pParticipatingUsersId) {
         this.mParticipatingUsers=new ArrayList<>();
         CUserDAO lUserDAO=new CUserDAO();
-        for(int lId:pParticipatingUsersId){
-            mParticipatingUsers.add(lUserDAO.findByID(lId));
-        }
+        mParticipatingUsers.addAll(pParticipatingUsersId.stream().map(lUserDAO::findByID).collect(Collectors.toList()));
     }
 
     public int getIdVote(){return mIdVote;}
@@ -235,7 +234,7 @@ public class CVote implements Serializable {
     /**
      * Ajoute une sélection pour le vote
      *
-     * @param pChoix
+     * @param pChoix Choix à ajouter
      */
     public void addParticipant(CChoice pChoix){
         this.mChoices.add(pChoix);

@@ -39,6 +39,7 @@ import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CChoice;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CUser;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
+import fr.univtln.m1dapm.g3.g3vote.Interface.CContactAjout;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CHubActivity;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CHubContactFragment;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CHubMyVotesFragment;
@@ -382,9 +383,10 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                     lCode=lHttpCon.getResponseCode();
                     if(lCode==200) {
                         //lOut.close();
-                       /* lIn = new BufferedInputStream(lHttpCon.getInputStream());
-                        lResponse = readStream(lIn);
-                        lNewVote.setIdVote(Integer.decode(lResponse));*/
+                        Intent lIntent = new Intent(CContactAjout.getsContext(),CHubActivity.class);
+                        lIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        lIntent.setAction("OPEN_TAB_CONTACT");
+                        CContactAjout.getsContext().startActivity(lIntent);
                     }
                     else
                         return lCode;
@@ -480,6 +482,8 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                 Toast.makeText(CSubActivity.getsContext(), "L'élément existe déjà", Toast.LENGTH_SHORT).show();
             if(pCode==455)
                 Toast.makeText(CModifCompte.getsContext(), "L'élément existe déjà", Toast.LENGTH_SHORT).show();
+            if(pCode==456)
+                Toast.makeText(CContactAjout.getsContext(), "Ce contact n'existe pas dans la BDD", Toast.LENGTH_SHORT).show();
         }
     }
     //startActivity(mIntent);
