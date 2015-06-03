@@ -11,14 +11,14 @@ public class CResult {
 
     private CVote mVote;
 
-    private CCandidate mCandidate;
+    private int mIdCandidate;
 
     public CResult(){}
-    public CResult(int pIdResultat, int pOrder, CVote pVote, CCandidate pCandidate) {
+    public CResult(int pIdResultat, int pOrder, CVote pVote, int pIdCandidate) {
         this.mIdResultat = pIdResultat;
         this.mOrder = pOrder;
         this.mVote = pVote;
-        this.mCandidate = pCandidate;
+        this.mIdCandidate = pIdCandidate;
     }
 
 
@@ -38,12 +38,12 @@ public class CResult {
         this.mVote = pVote;
     }
 
-    public CCandidate getCandidat() {
-        return mCandidate;
+    public int getCandidat() {
+        return mIdCandidate;
     }
 
-    public void setCandidat(CCandidate pCandidate) {
-        this.mCandidate = pCandidate;
+    public void setCandidat(int pIdCandidate) {
+        this.mIdCandidate = pIdCandidate;
     }
 
 }
