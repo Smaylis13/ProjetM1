@@ -48,7 +48,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/help_supression_de_compte"
+        android:text="@string/help_suppression_de_compte"
         android:id="@+id/lHelpMessageLog"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
