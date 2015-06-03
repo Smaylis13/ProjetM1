@@ -80,10 +80,7 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                     lUrl = new URL(SERVER_URL+"user/connect");
                     lHttpCon = (HttpURLConnection) lUrl.openConnection();
                     CUser lUser = (CUser) lParams.getObject();
-                   /* lUserOBJ.put("mEmail", lUser.getEmail());
-                    lUserOBJ.put("mPassword", lUser.getPassword());
-                    lUserOBJ.put("mFirstName", "unknown");
-                    lUserOBJ.put("mName", "unknown");*/
+
 
                     String lJsonString=lMapper.writeValueAsString(lUser);
                     JSONObject lUserOBJ = new JSONObject(lJsonString);
@@ -102,7 +99,6 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                         //lOut.close();
                         lIn = new BufferedInputStream(lHttpCon.getInputStream());
                         lResponse = readStream(lIn);
-                        Log.e("LogUser",lResponse);
                         CUser lLoggedUser=lMapper.readValue(lResponse,CUser.class);
                         Intent lLogIntent=new Intent(CLoginActivity.getsContext(),CHubActivity.class);
                         lLogIntent.putExtra(LOGGED_USER, lLoggedUser);
@@ -166,13 +162,13 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                     lUser=(CUser)lParams.getObject();
                     String lJsonStringUser=lMapper.writeValueAsString(lUser);
                     JSONObject lUserJsonObj = new JSONObject(lJsonStringUser);
-                    lUrl = new URL(SERVER_URL+"user/"+lUser.getUserId());
+                    lUrl = new URL(SERVER_URL+"user/");
                     lHttpCon = (HttpURLConnection) lUrl.openConnection();
                     lHttpCon.setRequestMethod("POST");
                     lHttpCon.setDoOutput(true);
                     lHttpCon.setDoInput(true);
                     lHttpCon.setRequestProperty("Content-Type", "application/json");
-                    lHttpCon.setRequestProperty("Accept", "application/json");
+                    //lHttpCon.setRequestProperty("Accept", "application/json");
                     lOut = new OutputStreamWriter(lHttpCon.getOutputStream());
 
                     lOut.write(lUserJsonObj.toString());
@@ -410,14 +406,13 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
 
 
     public void onPostExecute(Integer pCode){
-        Log.e("TEST",""+pCode);
         if(pCode!=null) {
-            if(pCode==200)
-                Toast.makeText(CLoginActivity.getsContext(), "L'opération s'est bien passée", Toast.LENGTH_SHORT).show();
             if (pCode == 401)
                 Toast.makeText(CLoginActivity.getsContext(), "Mauvais login/mot de passe", Toast.LENGTH_SHORT).show();
             if(pCode==409)
                 Toast.makeText(CSubActivity.getsContext(), "L'élément existe déjà", Toast.LENGTH_SHORT).show();
+            if(pCode==455)
+                Toast.makeText(CModifCompte.getsContext(), "L'élément existe déjà", Toast.LENGTH_SHORT).show();
         }
     }
     //startActivity(mIntent);
