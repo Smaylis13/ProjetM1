@@ -3,9 +3,7 @@ package fr.univtln.m1dapm.g3.g3vote.Interface;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,7 +24,7 @@ public class CLoginActivity extends AppCompatActivity {
     private static Context sContext;
     private static final UUID UNIQUE_KEY = UUID.randomUUID();
     public final static String EXTRA_LOGIN = "USER_LOGIN";
-    private final static BigInteger PUBLIC_KEY=CCrypto.sendA();
+    private final static BigInteger PUBLIC_KEY=CCrypto.sendKeyParam();
 
     public static UUID getUniqueKey() {
         return UNIQUE_KEY;
@@ -55,7 +53,7 @@ public class CLoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_clogin);
         sContext=getApplicationContext();
       /*  CCrypto lt=new CCrypto();
-        Log.e("TEST","pk: "+lt.sendA());
+        Log.e("TEST","pk: "+lt.sendKeyParam());
         CTaskParam lParams=new CTaskParam(CRequestTypesEnum.generate_keys);
         CCommunication lCom=new CCommunication();
         lCom.execute(lParams);*/
