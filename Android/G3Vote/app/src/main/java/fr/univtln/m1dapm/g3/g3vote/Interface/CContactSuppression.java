@@ -3,9 +3,8 @@ package fr.univtln.m1dapm.g3.g3vote.Interface;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,17 +17,16 @@ import java.util.List;
 import fr.univtln.m1dapm.g3.g3vote.Communication.CCommunication;
 import fr.univtln.m1dapm.g3.g3vote.Communication.CRequestTypesEnum;
 import fr.univtln.m1dapm.g3.g3vote.Communication.CTaskParam;
-import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CUser;
 import fr.univtln.m1dapm.g3.g3vote.R;
 
-public class CContactSupression extends ActionBarActivity {
+public class CContactSuppression extends ActionBarActivity {
     private List<CUser> mListContact = new ArrayList<CUser>();
     ListView mListContactView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ccontact_supression);
+        setContentView(R.layout.activity_ccontact_suppression);
 
         Bundle extras = getIntent().getExtras();
         if (extras==null){
@@ -43,7 +41,7 @@ public class CContactSupression extends ActionBarActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, final long id) {
                 // On cree le dialogue
-                AlertDialog.Builder lConfirmationDialog = new AlertDialog.Builder(CContactSupression.this);
+                AlertDialog.Builder lConfirmationDialog = new AlertDialog.Builder(CContactSuppression.this);
                 // On modifie le titre
                 lConfirmationDialog.setTitle("supprimer contact");
                 // On modifie le message
@@ -91,7 +89,7 @@ public class CContactSupression extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_ccontact_supression, menu);
+        getMenuInflater().inflate(R.menu.menu_ccontact_suppression, menu);
 
 
         return true;

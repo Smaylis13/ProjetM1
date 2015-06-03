@@ -3,8 +3,8 @@ package fr.univtln.m1dapm.g3.g3vote.Interface;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -46,19 +46,19 @@ public class CSettingAccount extends ActionBarActivity {
         startActivity(lIntent);
     }
 
-    public void deconexion (View view){
-        Intent lIntent = new Intent(this,CContactAjout.class);
+    public void deconnexion(View view){
+        Intent lIntent = new Intent(this,CLoginActivity.class);
         startActivity(lIntent);
     }
 
-    public void suprimercompte (View view){
-        final Intent lIntent = new Intent(this,CSupressionCompte.class);
+    public void supprimercompte(View view){
+        final Intent lIntent = new Intent(this,CSuppressionCompte.class);
         // On cree le dialogue
         AlertDialog.Builder lConfirmationDialog = new AlertDialog.Builder(CSettingAccount.this);
         // On modifie le titre
-        lConfirmationDialog.setTitle("suprimer compte");
+        lConfirmationDialog.setTitle("supprimer compte");
         // On modifie le message
-        lConfirmationDialog.setMessage("Voulez-vous suprimez votre compte ?");
+        lConfirmationDialog.setMessage("Voulez-vous supprimer votre compte ?");
         // Bouton Oui
         lConfirmationDialog.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
             @Override

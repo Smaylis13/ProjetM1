@@ -5,16 +5,6 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
-/*import com.google.gson.Gson;
-
-import org.apache.oltu.oauth2.client.OAuthClient;
-import org.apache.oltu.oauth2.client.URLConnectionClient;
-import org.apache.oltu.oauth2.client.request.OAuthClientRequest;
-import org.apache.oltu.oauth2.client.response.OAuthAccessTokenResponse;
-import org.apache.oltu.oauth2.common.OAuth;
-import org.apache.oltu.oauth2.common.exception.OAuthProblemException;
-import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
-import org.apache.oltu.oauth2.common.message.types.GrantType;*/
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
@@ -51,10 +41,20 @@ import fr.univtln.m1dapm.g3.g3vote.Interface.CHubContactFragment;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CHubMyVotesFragment;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CLoginActivity;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CModifCompte;
-import fr.univtln.m1dapm.g3.g3vote.Interface.CParticipantActivity;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CSubActivity;
+import fr.univtln.m1dapm.g3.g3vote.Interface.CSuppressionCompte;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CVoteUninominal;
-import fr.univtln.m1dapm.g3.g3vote.Interface.CSupressionCompte;
+
+/*import com.google.gson.Gson;
+
+import org.apache.oltu.oauth2.client.OAuthClient;
+import org.apache.oltu.oauth2.client.URLConnectionClient;
+import org.apache.oltu.oauth2.client.request.OAuthClientRequest;
+import org.apache.oltu.oauth2.client.response.OAuthAccessTokenResponse;
+import org.apache.oltu.oauth2.common.OAuth;
+import org.apache.oltu.oauth2.common.exception.OAuthProblemException;
+import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
+import org.apache.oltu.oauth2.common.message.types.GrantType;*/
 
 /**
  * Created by ludo on 05/05/15.
@@ -203,9 +203,9 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                     lCode = lHttpCon.getResponseCode();
 
                     if(lCode==200){
-                        Intent lIntent = new Intent(CSupressionCompte.getContext(), CLoginActivity.class);
+                        Intent lIntent = new Intent(CSuppressionCompte.getContext(), CLoginActivity.class);
                         lIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        CSupressionCompte.getContext().startActivity(lIntent);
+                        CSuppressionCompte.getContext().startActivity(lIntent);
                     }
                     else if(lCode==401){
                         return lCode;
