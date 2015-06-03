@@ -52,7 +52,7 @@ public class CVoteUninominalMajoritaireTest {
         }
 
         vote.affiche();
-        vote.toursuivant();
+        vote.tourSuivant();
         System.out.println("tour suivant");
         vote.affiche();
 
