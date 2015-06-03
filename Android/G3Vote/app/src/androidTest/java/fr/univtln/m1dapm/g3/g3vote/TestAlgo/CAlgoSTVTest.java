@@ -19,11 +19,18 @@ import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
  */
 public class CAlgoSTVTest extends TestCase {
 
+    /**
+     * Tableau de nom de candidat
+     */
     private final String[] mNomsCands = {"Jack", "Paul", "Laurent", "Bernard", "Bob", "Momo", "Georges",
             "Carlos", "Leon", "Theo", "John", "Hector", "Lea", "Sophie", "Bea", "Jeanne", "Toto",
             "Eli", "Will", "Brad", "Chris", "Jacques", "Lou", "Lola", "Phil", "Grant", "Val", "Lee",
             "Bruce", "Clark", "Didier", "Emma", "Joey", "Monique", "Ted"};
 
+    /**
+     * Test de calcul du resultat de l'algorithme STV
+     * @throws Exception
+     */
     public void testCalculResultat() throws Exception {
 
         //    Log.i("Vote : ", "Demarrage");
@@ -50,13 +57,12 @@ public class CAlgoSTVTest extends TestCase {
                 CChoice choice = new CChoice(lVote,luser, cand, lList1.indexOf(cand)+1);
                 lChoices.add(choice);
             }
-
         }
 
-        //       Log.i("Vote : ", "Initialisation Vote");
+        /// Log.i("Vote : ", "Initialisation Vote");
         lAlgo.initVote(lChoices);
 
-        Log.i("Vote : ", "Demarrage Calcul Resultat");
+         Log.i("Vote : ", "Demarrage Calcul Resultat");
         List<Integer> lListRes;
 
         double debut = (double) System.currentTimeMillis();
@@ -69,8 +75,14 @@ public class CAlgoSTVTest extends TestCase {
 
         for(Integer candId : lListRes)
             Log.i("Vote : ", "Vainqueurs : ID : " + candId + " Nom : " + lCands.get(candId).getNomCandidat());
+
     }
 
+    /**
+     * Generation d'une liste de candidat
+     * @param pNbCand   Nombre de candidat a generer
+     * @return  Liste de candidat
+     */
     private List<CCandidate> genererCandidats(int pNbCand)
     {
         List<CCandidate> lCands = new ArrayList<>();
@@ -79,10 +91,4 @@ public class CAlgoSTVTest extends TestCase {
 
         return lCands;
     }
-
-    public void setUp() throws Exception {
-        super.setUp();
-
-    }
-
 }

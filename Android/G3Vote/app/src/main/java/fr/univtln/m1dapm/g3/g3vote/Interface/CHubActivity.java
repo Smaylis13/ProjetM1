@@ -84,6 +84,10 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
      */
     ViewPager mViewPager;
 
+    public static void setsLoggedUser(CUser pLoggedUser) {
+        CHubActivity.sLoggedUser = pLoggedUser;
+    }
+
     @Override
     protected void onResume() {
         super.onResume();

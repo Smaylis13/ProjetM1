@@ -20,7 +20,7 @@ import java.util.Map;
  * Classe regroupant toute les opérations de cryptage.
  *
  * Côté serveur.
- * Attendre le paramètre envoyé par l'appli (reciveA) et renvoyer la valeur de retour à l'appli.
+ * Attendre le paramètre envoyé par l'appli (receiveKeyParam) et renvoyer la valeur de retour à l'appli.
  * Crypter et décrypter pour les messages avec le téléphone via la SecretKey qui
  * aura été placée dans la Map via l'identifiant du téléphone reçu avec le paramètre.
  * /!/ Faire attention que la SecretKey avec le téléphone n'ait pas déjà été établi.
@@ -38,36 +38,36 @@ public class CCrypto {
 
     /**
      * Cryptage de données via la clef privé
-     * @param pstr Données à crypter
+     * @param pData Données à crypter
      */
-    public byte[] encrypt(String pstr){
-        return mAesCrypt.encrypt(mKeyGenerator.getPrivateKey(), pstr);
+    public byte[] encrypt(String pData){
+        return mAesCrypt.encrypt(mKeyGenerator.getPrivateKey(), pData);
     }
 
     /**
      * Décryptage de données via la clef privé
-     * @param pBytes Données à décrypter
+     * @param pCryptData Données à décrypter
      */
-    public String decrypt(byte[] pBytes){
-        return mAesCrypt.decrypt(mKeyGenerator.getPrivateKey(), pBytes);
+    public String decrypt(byte[] pCryptData){
+        return mAesCrypt.decrypt(mKeyGenerator.getPrivateKey(), pCryptData);
     }
 
     /**
      * Cryptage de donnée via la clef public générer avec le paramètre recu
-     * @param pstr Données à crypter
+     * @param pData Données à crypter
      * @param pSecretKeySpec clef public commune avec le téléphone
      */
-    public byte[] publicEncrypt(String pstr, SecretKeySpec pSecretKeySpec){
-        return mAesCrypt.encrypt(pSecretKeySpec, pstr);
+    public byte[] publicEncrypt(String pData, SecretKeySpec pSecretKeySpec){
+        return mAesCrypt.encrypt(pSecretKeySpec, pData);
     }
 
     /**
      * Décryptage de donnée via la clef public générer avec le paramètre recu
      * @param pSecretKeySpec clef public commune avec le téléphone
-     * @param pBytes Données à décrypter
+     * @param pCryptData Données à décrypter
      */
-    public String publicDecrypt(SecretKeySpec pSecretKeySpec, byte[] pBytes){
-        return mAesCrypt.decrypt(pSecretKeySpec, pBytes);
+    public String publicDecrypt(SecretKeySpec pSecretKeySpec, byte[] pCryptData){
+        return mAesCrypt.decrypt(pSecretKeySpec, pCryptData);
     }
 
     /**
@@ -100,13 +100,13 @@ public class CCrypto {
      * Méthode qui clacule la clef de cryptage spécifique après réception du paramètre de l'apppli
      * en renvoyant son paramètre pour que l'aplli puisse elle aussi optenir la même.
      * Elle sera stocké dans la Map avec l'identifiant reçu.
-     * @param pB Paramètre reçu pour générer la clef de chiffrement commune
+     * @param pParam Paramètre reçu pour générer la clef de chiffrement commune
      * @param pId Identifiant de l'appli
      * @return Paramètre à envoyer à l'appli
      */
-    public BigInteger reciveA(BigInteger pB, int pId){
+    public BigInteger receiveKeyParam(BigInteger pParam, int pId){
         SecretKeySpec lK = mKeyGenerator.specificKeyKeyGen(BigInteger.valueOf((long)
-                (Math.pow(pB.doubleValue(), mKeyGenerator.getKeyNumberGenerator().getab())
+                (Math.pow(pParam.doubleValue(), mKeyGenerator.getKeyNumberGenerator().getab())
                         %mKeyGenerator.getKeyNumberGenerator().getPValue())).toByteArray());
         mKeyGenerator.getClef().put(pId, lK); //La conserve en mémoire dans une Map
         return mKeyGenerator.getPublicKey();
@@ -116,7 +116,7 @@ public class CCrypto {
      * Méthode qui retourne le paramètre à envoyer à l'autre machine
      * @return Paramètre à envoyer
      */
-    public BigInteger sendA(){
+    public BigInteger sendKeyParam(){
         return mKeyGenerator.getPublicKey();
     }
 

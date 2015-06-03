@@ -67,6 +67,15 @@ public class CUser implements Serializable{
 
     }
 
+    public CUser (int pID, String firstName, String lastName, String mail, String password ){
+        super();
+        this.mUserId=pID;
+        this.mFirstName = firstName;
+        this.mName = lastName;
+        this.mEmail = mail;
+        this.mPassword = password;
+    }
+
     public CUser (String firstName, String lastName, String mail, String password ){
         super();
         this.mFirstName = firstName;
