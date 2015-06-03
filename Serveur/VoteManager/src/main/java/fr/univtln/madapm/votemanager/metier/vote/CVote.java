@@ -254,18 +254,20 @@ public class CVote implements Serializable {
     @Override
     public String toString() {
         return "CVote{" +
-                "mIdvote=" + mIdVote +
-                ", mNomvote='" + mVoteName + '\'' +
-                ", mDescriptionvote='" + mDescriptionVote + '\'' +
-                ", mDatedebut='" + mDateDebut + '\'' +
-                ", mDatefin='" + mDateFin + '\'' +
-                ", mResultvote='" + mResultVote + '\'' +
-                ", mType='" + mType + '\'' +
-                ", mRegle='" + mRegle + '\'' +
-                ", mStatusvote='" + mStatusVote + '\'' +
+                "mIdVote=" + mIdVote +
+                ", mVoteName='" + mVoteName + '\'' +
+                ", mDescriptionVote='" + mDescriptionVote + '\'' +
+                ", mDateDebut=" + mDateDebut +
+                ", mDateFin=" + mDateFin +
+                ", mStatusVote=" + mStatusVote +
                 ", mOrganisateur=" + mOrganisateur +
+                ", mResultVote=" + mResultVote +
+                ", mType=" + mType +
+                ", mRegle=" + mRegle +
                 ", mChoices=" + mChoices +
                 ", mCandidate=" + mCandidate +
+                ", mDeleguations=" + mDeleguations +
+                ", mVoted=" + mVoted +
                 '}';
     }
 }

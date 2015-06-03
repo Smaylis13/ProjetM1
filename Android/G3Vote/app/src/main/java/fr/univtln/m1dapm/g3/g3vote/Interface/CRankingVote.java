@@ -1,6 +1,7 @@
 package fr.univtln.m1dapm.g3.g3vote.Interface;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +12,9 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.univtln.m1dapm.g3.g3vote.Communication.CCommunication;
+import fr.univtln.m1dapm.g3.g3vote.Communication.CRequestTypesEnum;
+import fr.univtln.m1dapm.g3.g3vote.Communication.CTaskParam;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CChoice;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CUser;
@@ -25,11 +29,16 @@ public class CRankingVote extends AppCompatActivity {
     private CStableArrayAdapter mAdapter;
     private CDynamicListView mListView;
     private ArrayList<CCandidate> mListCandidats;
+    private static Context sContext;
 
+    public static Context getsContext() {
+        return sContext;
+    }
 
     @Override
     protected void onCreate(Bundle pSavedInstanceState) {
         super.onCreate(pSavedInstanceState);
+        sContext=getApplicationContext();
         setContentView(R.layout.activity_crankvote);
 
         Bundle lExtras = getIntent().getExtras();
@@ -71,17 +80,19 @@ public class CRankingVote extends AppCompatActivity {
                 Log.i("Score max : ", "" + lScore);
                 for(int i = 0; i < mListView.getCount(); ++i){
                     CCandidate lCandidate = (CCandidate) mListView.getItemAtPosition(i);
-                    CChoice lChoice = new CChoice(mVote, new CUser("","","",""), lCandidate, lScore);
+                    CChoice lChoice = new CChoice(mVote.getIdVote(), CHubActivity.getsLoggedUser().getUserId(), lCandidate.getIdCandidat(), lScore);
                     lChoiceList.add(lChoice);
                     --lScore;
                 }
                 Log.i("Choix : ", lChoiceList.toString());
                 //TODO:Envoyer le vote au serveur et afficher un toast pour confirmer le vote
-
+                CTaskParam lParams=new CTaskParam(CRequestTypesEnum.add_choices,lChoiceList);
+                CCommunication lCom=new CCommunication();
+                lCom.execute(lParams);
                 // On termine l'activité et on retourne sur la page principale
-                Intent lIntent = new Intent(CRankingVote.this, CHubActivity.class);
+                /*Intent lIntent = new Intent(CRankingVote.this, CHubActivity.class);
                 lIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(lIntent);
+                startActivity(lIntent);*/
             }
         });
 
