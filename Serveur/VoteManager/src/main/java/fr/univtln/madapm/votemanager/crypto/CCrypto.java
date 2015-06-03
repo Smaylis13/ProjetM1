@@ -30,10 +30,10 @@ import java.util.Map;
  */
 public class CCrypto {
 
-    private static final CAESCrypt mAesCrypt = new CAESCrypt();
-    private static final CAESFileCrypt mAesFileCrypt = new CAESFileCrypt();
+    private static final CAESCrypt sAesCrypt = new CAESCrypt();
+    private static final CAESFileCrypt sAesFileCrypt = new CAESFileCrypt();
 
-    private static final CKeyGenerator mKeyGenerator = new CKeyGenerator();
+    private static final CKeyGenerator sKeyGenerator = new CKeyGenerator();
 
 
     /**
@@ -41,7 +41,7 @@ public class CCrypto {
      * @param pData Données à crypter
      */
     public byte[] encrypt(String pData){
-        return mAesCrypt.encrypt(mKeyGenerator.getPrivateKey(), pData);
+        return sAesCrypt.encrypt(sKeyGenerator.getPrivateKey(), pData);
     }
 
     /**
@@ -49,7 +49,7 @@ public class CCrypto {
      * @param pCryptData Données à décrypter
      */
     public String decrypt(byte[] pCryptData){
-        return mAesCrypt.decrypt(mKeyGenerator.getPrivateKey(), pCryptData);
+        return sAesCrypt.decrypt(sKeyGenerator.getPrivateKey(), pCryptData);
     }
 
     /**
@@ -58,7 +58,7 @@ public class CCrypto {
      * @param pSecretKeySpec clef public commune avec le téléphone
      */
     public byte[] publicEncrypt(String pData, SecretKeySpec pSecretKeySpec){
-        return mAesCrypt.encrypt(pSecretKeySpec, pData);
+        return sAesCrypt.encrypt(pSecretKeySpec, pData);
     }
 
     /**
@@ -67,7 +67,7 @@ public class CCrypto {
      * @param pCryptData Données à décrypter
      */
     public String publicDecrypt(SecretKeySpec pSecretKeySpec, byte[] pCryptData){
-        return mAesCrypt.decrypt(pSecretKeySpec, pCryptData);
+        return sAesCrypt.decrypt(pSecretKeySpec, pCryptData);
     }
 
     /**
@@ -77,7 +77,7 @@ public class CCrypto {
      */
     public void fileEncrypt(String pPath, String pCible){
         try {
-            mAesFileCrypt.encrypterFichier(mKeyGenerator.getPrivateKey(), pPath, pCible);
+            sAesFileCrypt.encrypterFichier(sKeyGenerator.getPrivateKey(), pPath, pCible);
         } catch (NoSuchAlgorithmException | InvalidKeyException | NoSuchPaddingException e) {
             e.printStackTrace();
         }
@@ -90,7 +90,7 @@ public class CCrypto {
      */
     public void fileDecrypt(String pPath, String pCible){
         try {
-            mAesFileCrypt.decrypterFichier(mKeyGenerator.getPrivateKey(), pPath, pCible);
+            sAesFileCrypt.decrypterFichier(sKeyGenerator.getPrivateKey(), pPath, pCible);
         } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException e) {
             e.printStackTrace();
         }
@@ -105,11 +105,11 @@ public class CCrypto {
      * @return Paramètre à envoyer à l'appli
      */
     public BigInteger receiveKeyParam(BigInteger pParam, int pId){
-        SecretKeySpec lK = mKeyGenerator.specificKeyKeyGen(BigInteger.valueOf((long)
-                (Math.pow(pParam.doubleValue(), mKeyGenerator.getKeyNumberGenerator().getab())
-                        %mKeyGenerator.getKeyNumberGenerator().getPValue())).toByteArray());
-        mKeyGenerator.getClef().put(pId, lK); //La conserve en mémoire dans une Map
-        return mKeyGenerator.getPublicKey();
+        SecretKeySpec lK = sKeyGenerator.specificKeyKeyGen(BigInteger.valueOf((long)
+                (Math.pow(pParam.doubleValue(), sKeyGenerator.getKeyNumberGenerator().getab())
+                        % sKeyGenerator.getKeyNumberGenerator().getPValue())).toByteArray());
+        sKeyGenerator.getClef().put(pId, lK); //La conserve en mémoire dans une Map
+        return sKeyGenerator.getPublicKey();
     }
 
     /**
@@ -117,7 +117,7 @@ public class CCrypto {
      * @return Paramètre à envoyer
      */
     public BigInteger sendKeyParam(){
-        return mKeyGenerator.getPublicKey();
+        return sKeyGenerator.getPublicKey();
     }
 
     /**
@@ -125,6 +125,6 @@ public class CCrypto {
      * @return Map des clef public correspondant aux identifiants
      */
     public Map getKeyMap(){
-        return mKeyGenerator.getClef();
+        return sKeyGenerator.getClef();
     }
 }
