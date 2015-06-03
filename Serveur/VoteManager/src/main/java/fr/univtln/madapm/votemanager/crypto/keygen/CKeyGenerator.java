@@ -6,10 +6,7 @@ import javax.crypto.spec.SecretKeySpec;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Created by civars169 on 20/05/15.
@@ -32,7 +29,7 @@ public class CKeyGenerator extends Random {
     //private final byte[] mPublicKey = randByte(new byte[SIZES]); // 16 bytes = 128 bits
 
     //partie spécifique au serveur
-    private final Map<Integer, SecretKey> mClef = new HashMap<>();
+    private final Map<UUID, SecretKey> mClef = new HashMap<>();
     //fin de la partie spécifique au serveur
 
     /**
@@ -104,7 +101,7 @@ public class CKeyGenerator extends Random {
     }
     */
 
-    public Map<Integer, SecretKey> getClef() {
+    public Map<UUID, SecretKey> getClef() {
         return mClef;
     }
 

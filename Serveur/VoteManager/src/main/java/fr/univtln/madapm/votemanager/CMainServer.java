@@ -3,20 +3,34 @@ package fr.univtln.madapm.votemanager;
 
 import fr.univtln.madapm.votemanager.communication.authentification.CDatabase;
 import fr.univtln.madapm.votemanager.communication.authentification.CServlet;
+
+import org.glassfish.grizzly.http.server.HttpHandler;
 import org.glassfish.grizzly.http.server.HttpServer;
+import org.glassfish.grizzly.http.server.Request;
+import org.glassfish.grizzly.http.server.Response;
 import org.glassfish.grizzly.servlet.ServletRegistration;
 import org.glassfish.grizzly.servlet.WebappContext;
+import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
+import org.glassfish.jersey.grizzly2.servlet.GrizzlyWebContainerFactory;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
+import org.glassfish.jersey.servlet.ServletContainer;
+import org.mockito.Mockito;
 
+import javax.servlet.*;
+import javax.servlet.http.*;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.UriBuilder;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
+import java.security.Principal;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.*;
 import java.util.concurrent.CountDownLatch;
 
 /**
@@ -38,28 +52,27 @@ public class CMainServer extends Application {
             try {
                 return Integer.parseInt(httpPort);
             } catch (NumberFormatException e) {
-                e.printStackTrace();
             }
         }
         return defaultPort;
     }
 
     private static URI getBaseURI() {
-        return UriBuilder.fromUri("http://10.21.205.16/").port(getPort(80)).build();
+        return UriBuilder.fromUri("http://37.59.104.200/").port(getPort(80)).build();
     }
 
     public static final URI BASE_URI = getBaseURI();
 
 
 
-    protected static HttpServer startServer() {
+    protected static HttpServer startServer() throws IOException {
 
         final ResourceConfig lrc = new ResourceConfig().packages("fr.univtln.madapm.votemanager");
         lrc.register(JacksonFeature.class);
 
         // create and start a new instance of grizzly http server
         // exposing the Jersey application at BASE_URI
-       return GrizzlyHttpServerFactory.createHttpServer(BASE_URI, lrc);
+        return GrizzlyHttpServerFactory.createHttpServer(BASE_URI, lrc);
         //return GrizzlyWebContainerFactory.create(BASE_URI);
     }
 

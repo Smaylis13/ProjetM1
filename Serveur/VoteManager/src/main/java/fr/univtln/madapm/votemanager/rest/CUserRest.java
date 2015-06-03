@@ -75,6 +75,7 @@ public class CUserRest {
         System.out.println("addUser");
         Map<String,String> lParams = new HashMap<>();
         lParams.put("emailUser",pNewUser.getEmail());
+
         CUserDAO lUserDAO=new CUserDAO();
         List<CUser> lUsers;
         lUsers=lUserDAO.findWithNamedQuery("CUser.findAll",lParams);
@@ -93,7 +94,7 @@ public class CUserRest {
         return Response.status(409).entity(0).build();
     }
 
-        @POST
+    @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/regId/{emailC}/{regId}")
