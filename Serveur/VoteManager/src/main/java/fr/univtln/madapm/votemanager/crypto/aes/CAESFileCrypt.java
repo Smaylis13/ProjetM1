@@ -73,40 +73,42 @@ public class CAESFileCrypt {
         Cipher lCipher = Cipher.getInstance(TRANSFORMATION_STRING);
         lCipher.init(pMode, pClef);
 
-        FileInputStream lFilleInput = null;
-        FileOutputStream lFilleOutput = null;
+        FileInputStream lFileInput = null;
+        FileOutputStream lFileOutput = null;
         CipherInputStream lCipherInput;
 
         try {
             //System.out.println("Fichier "+mPathFile+pSource);
             //System.out.println("Résultat "+mPathFile+pCible);
-            lFilleInput = new FileInputStream(mPathFile+pSource);
-            lCipherInput = new CipherInputStream(lFilleInput, lCipher);
-            lFilleOutput = new FileOutputStream(mPathFile+pCible);
-            byte[] lb = new byte[8];
-            int li = lCipherInput.read(lb);
-            while (li != -1) {
-                lFilleOutput.write(lb, 0, li);
-                li = lCipherInput.read(lb);
+            lFileInput = new FileInputStream(mPathFile+pSource);
+            lCipherInput = new CipherInputStream(lFileInput, lCipher);
+            lFileOutput = new FileOutputStream(mPathFile+pCible);
+            byte[] lByte = new byte[8];
+            int i = lCipherInput.read(lByte);
+            while (i != -1) {
+                lFileOutput.write(lByte, 0, i);
+                i = lCipherInput.read(lByte);
             }
+
             return 1;
+
         } catch (IOException ioe) {
-            if (lFilleInput != null) {
+            if (lFileInput != null) {
                 try {
-                    lFilleInput.close();
+                    lFileInput.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
-            if (lFilleOutput != null) {
+            if (lFileOutput != null) {
                 try {
-                    lFilleOutput.close();
+                    lFileOutput.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         }
+
     return 0;
     }
-
 }

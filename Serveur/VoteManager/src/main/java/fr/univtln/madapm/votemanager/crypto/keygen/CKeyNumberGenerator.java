@@ -23,38 +23,38 @@ public class CKeyNumberGenerator extends Random {
                                           " FFFFFFFF FFFFFFFF";
 
     private static final BigInteger mKey = new BigInteger(mKeyHexa.replace(" ",""), 16);
-    private final static int mPValue = (int)Math.pow(2, (Math.pow(2, 1024) - Math.pow(2, 960) - 1 +
+    private final static int mPrimeValue = (int)Math.pow(2, (Math.pow(2, 1024) - Math.pow(2, 960) - 1 +
                                            Math.pow(2, 64) * (  Math.PI * Math.pow(2, 894) + 129093 )));
-    private final static int mGValue = 2;
-    private final static int mab = (int) (Math.random() * (0 - 100));
+    private final static int mGeneratorValue = 2;
+    private final static int mPetitParametre = (int) (Math.random() * 100);
 
-    private final Random mrnd = new Random();
+    private final Random mRandomParam = new Random();
 
-    private final BigInteger mP = BigInteger.probablePrime(SIZE, mrnd);
-    private final BigInteger mG = BigInteger.probablePrime(SIZE, mrnd);
+    private final BigInteger mPrime = BigInteger.probablePrime(SIZE, mRandomParam);
+    private final BigInteger mGenerator = BigInteger.probablePrime(SIZE, mRandomParam);
 
-    private final BigInteger mA = BigInteger.valueOf((long) Math.pow(mGValue, mab) % mPValue);
+    private final BigInteger mKeyParam = BigInteger.valueOf((long) Math.pow(mGeneratorValue, mPetitParametre) % mPrimeValue);
 
     public int getPValue() {
-        return mPValue;
+        return mPrimeValue;
     }
 
     public BigInteger getPublicKey() {
-        return mA;
+        return mKeyParam;
     }
 
     public int getab() {
-        return mab;
+        return mPetitParametre;
     }
 
     @Override
     public String toString() {
         return "CKeyNumberGenerator{" +
                 "hexa=" + mKey +
-                "mrnd=" + mrnd +
-                ", mP=" + mP +
-                ", mG=" + mG +
-                ", mA=" + mA +
+                "mRandomParam=" + mRandomParam +
+                ", mPrime=" + mPrime +
+                ", mGenerator=" + mGenerator +
+                ", mKeyParam=" + mKeyParam +
                 '}';
     }
 }
