@@ -1,5 +1,6 @@
 package fr.univtln.madapm.votemanager.metier.vote;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -54,6 +55,16 @@ public class CCandidate implements Serializable {
     public CCandidate() {
     }
 
+
+    @JsonGetter("id")
+    public int getIdCandidat() {
+        return mIdCandidat;
+    }
+
+    @JsonIgnore
+    public void setIdCandidat(int mIdCandidat) {
+        this.mIdCandidat = mIdCandidat;
+    }
 
     public String getNomCandidat() {
         return mNomCandidat;
