@@ -290,6 +290,37 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                         return lCode;
 
                     break;
+                case add_choice:
+                    lUrl = new URL(SERVER_URL+"choice");
+                    CChoice lChoice = (CChoice)lParams.getObject();
+                    lHttpCon = (HttpURLConnection) lUrl.openConnection();
+                    lHttpCon.setDoOutput(true);
+                    lHttpCon.setDoInput(true);
+                    lHttpCon.setRequestMethod("PUT");
+                    lHttpCon.setRequestProperty("Content-Type", "application/json");
+                    lHttpCon.setRequestProperty("Accept", "application/json");
+                    String lJSONStringChoice=lMapper.writeValueAsString(lChoice);
+                    Log.e("ADDCHOICEUNIQUE",lJSONStringChoice);
+                    lOut = new OutputStreamWriter(lHttpCon.getOutputStream());
+                    JSONObject lChoiceJson=new JSONObject(lJSONStringChoice);
+                    //lOut=lHttpCon.getOutputStream();
+                    lOut.write(lChoiceJson.toString());
+                    lOut.flush();
+                    lCode=lHttpCon.getResponseCode();
+                    if(lCode==200) {
+                        Intent lIntent = new Intent(CVoteUninominal.getsContext(), CHubActivity.class);
+                        lIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        lIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        CRankingVote.getsContext().startActivity(lIntent);
+                        //lOut.close();
+                       /* lIn = new BufferedInputStream(lHttpCon.getInputStream());
+                        lResponse = readStream(lIn);
+                        lNewVote.setIdVote(Integer.decode(lResponse));*/
+                    }
+                    else
+                        return lCode;
+
+                    break;
                 case add_choices:
                     lUrl = new URL(SERVER_URL+"choice/multiples");
                     List<CChoice> lListChoices=(List<CChoice>)lParams.getObject();
