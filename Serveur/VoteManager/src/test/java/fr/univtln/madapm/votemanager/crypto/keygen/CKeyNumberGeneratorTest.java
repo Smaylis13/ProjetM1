@@ -31,8 +31,8 @@ public class CKeyNumberGeneratorTest extends TestCase {
         crypto.fileDecrypt("/src/json/CVoteEncrypt.txt", "/src/json/CVoteDecrypt.json");
 
         //Public
-        crypto.reciveA(cryptoAppli.sendA(), 1);//A
-        cryptoAppli.reciveA(crypto.sendA(), 1);//B
+        crypto.receiveA(cryptoAppli.sendA(), 1);//A
+        cryptoAppli.receiveA(crypto.sendA(), 1);//B
         byte[] lvp1 = crypto.publicEncrypt(str, (SecretKeySpec) crypto.getKeyMap().get(1));
         System.out.println(Arrays.toString(lvp1) + "\n" + crypto.getKeyMap().toString() +
                 crypto.getKeyMap().get(1).equals(cryptoAppli.getKeyMap().get(1)) + "\n" +
