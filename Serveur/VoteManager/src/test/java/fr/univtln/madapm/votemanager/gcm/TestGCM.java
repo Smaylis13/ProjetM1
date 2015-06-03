@@ -17,7 +17,7 @@ public class TestGCM {
         CPost2Gcm.post(apiKey, content);
     }
 
-    public static CContent createContent() {
+    private static CContent createContent() {
         CContent c = new CContent();
 
         //c.addRegId("APA91bGT289J49BhVlN-zfGFsv2GDWXpzspObigCflVmgh9q0MNT9pWrFcCuIPZSpJFU1Go7m0L51DfLJbpbDOXQw1w3UDYQXTyByfq0m3FVI28-6VY5hmUWvMGmYlNtEPnxeCvtasECXFwhlpAzAfZeU3nmwo8hPA");

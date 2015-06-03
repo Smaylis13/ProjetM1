@@ -6,7 +6,6 @@ import fr.univtln.madapm.votemanager.metier.user.CUser;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,7 +55,7 @@ public class CUserRest {
         CUser lUser=lUserDAO.findByID(pIdU);
         Map<String,String> lParams = new HashMap<>();
         lParams.put("emailUser",pEmailC);
-        List<CUser> lUsers=new ArrayList<>();
+        List<CUser> lUsers;
         lUsers=lUserDAO.findWithNamedQuery("CUser.findAll",lParams);
         if(lUsers.isEmpty()) {
             //TODO treatment for a non-existing invited user
@@ -76,13 +75,13 @@ public class CUserRest {
         Map<String,String> lParams = new HashMap<>();
         lParams.put("emailUser",pNewUser.getEmail());
         CUserDAO lUserDAO=new CUserDAO();
-        List<CUser> lUsers=new ArrayList<>();
+        List<CUser> lUsers;
         lUsers=lUserDAO.findWithNamedQuery("CUser.findAll",lParams);
         if(lUsers.isEmpty()) {
             lUserDAO.create(pNewUser);
             return Response.status(201).entity(pNewUser.getUserId()).build();
         }
-        else if(lUsers.get(0).getPassword()==("attente")){
+        else if(lUsers.get(0).getPassword().equals("attente")){
             CUser lExistingUser=lUsers.get(0);
             lExistingUser.setFirstName(pNewUser.getFirstName());
             lExistingUser.setName(pNewUser.getName());
@@ -102,7 +101,7 @@ public class CUserRest {
         Map<String,String> lParams = new HashMap<>();
         lParams.put("emailUser",pUser.getEmail());
         CUserDAO lUserDAO=new CUserDAO();
-        List<CUser> lUsers=new ArrayList<>();
+        List<CUser> lUsers;
         lUsers=lUserDAO.findWithNamedQuery("CUser.findAll",lParams);
         if(!lUsers.isEmpty()) {
             CUser lFindedUser = lUsers.get(0);

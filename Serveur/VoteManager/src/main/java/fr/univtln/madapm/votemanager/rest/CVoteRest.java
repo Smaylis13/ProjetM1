@@ -9,7 +9,6 @@ import fr.univtln.madapm.votemanager.metier.vote.CVote;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -70,7 +69,7 @@ public class CVoteRest {
         System.out.println(lIdVotes.toString());
         Map<String,Object> lParams = new HashMap<>();
         CVoteDAO lVoteDAO = new CVoteDAO();
-        List<CVote> lVotes=null;
+        List<CVote> lVotes;
         if(!lIdVotes.isEmpty()) {
             lParams.put("User", lUser);
             lParams.put("IdVotes", lIdVotes);
