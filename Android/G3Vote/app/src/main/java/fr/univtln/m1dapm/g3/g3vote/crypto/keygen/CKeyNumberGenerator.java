@@ -1,7 +1,5 @@
 package fr.univtln.m1dapm.g3.g3vote.crypto.keygen;
 
-import android.util.Log;
-
 import java.math.BigInteger;
 import java.util.Random;
 
@@ -24,39 +22,39 @@ public class CKeyNumberGenerator extends Random {
                                           " EE386BFB 5A899FA5 AE9F2411 7C4B1FE6 49286651 ECE65381" +
                                           " FFFFFFFF FFFFFFFF";
 
-    private static final BigInteger KEY = new BigInteger(KEYHEXA.replace(" ",""), 16);
-    private final static int PVALUE = (int)Math.pow(2, (Math.pow(2, 1024) - Math.pow(2, 960) - 1 +
+    private final static BigInteger sKEY = new BigInteger(KEYHEXA.replace(" ",""), 16);
+    private final static int sPrimeVALUE = (int)Math.pow(2, (Math.pow(2, 1024) - Math.pow(2, 960) - 1 +
                                            Math.pow(2, 64) * (  Math.PI * Math.pow(2, 894) + 129093 )));
-    private final static int GVALUE = 2;
-    private final static int AB = (int) (Math.random() * (0 - 100));
+    private final static int sGeneratorVALUE = 2;
+    private final static int sPetitParam = (int) (Math.random() * 100);
 
-    private final Random mRnd = new Random();
+    private final Random mRandomPram = new Random();
 
-    private final BigInteger mP = BigInteger.probablePrime(SIZE, mRnd);
-    private final BigInteger mG = BigInteger.probablePrime(SIZE, mRnd);
+    private final BigInteger mPrime = BigInteger.probablePrime(SIZE, mRandomPram);
+    private final BigInteger mGenerator = BigInteger.probablePrime(SIZE, mRandomPram);
 
-    private final BigInteger mA = BigInteger.valueOf((long) Math.pow(GVALUE, AB) % PVALUE);
+    private final BigInteger mKeyParam = BigInteger.valueOf((long) Math.pow(sGeneratorVALUE, sPetitParam) % sPrimeVALUE);
 
     public int getPValue() {
-        return PVALUE;
+        return sPrimeVALUE;
     }
 
     public BigInteger getPublicKey() {
-        return mA;
+        return mKeyParam;
     }
 
     public int getab() {
-        return AB;
+        return sPetitParam;
     }
 
     @Override
     public String toString() {
         return "CKeyNumberGenerator{" +
-                "hexa=" + KEY +
-                "mRnd=" + mRnd +
-                ", mP=" + mP +
-                ", mG=" + mG +
-                ", mA=" + mA +
+                "hexa=" + sKEY +
+                "mRandomPram=" + mRandomPram +
+                ", mPrime=" + mPrime +
+                ", mGenerator=" + mGenerator +
+                ", mKeyParam=" + mKeyParam +
                 '}';
     }
 }
