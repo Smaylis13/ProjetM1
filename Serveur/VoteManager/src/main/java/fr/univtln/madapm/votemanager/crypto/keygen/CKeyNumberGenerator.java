@@ -33,7 +33,8 @@ public class CKeyNumberGenerator extends Random {
     private final BigInteger mPrime = BigInteger.probablePrime(SIZE, mRandomParam);
     private final BigInteger mGenerator = BigInteger.probablePrime(SIZE, mRandomParam);
 
-    private final BigInteger mKeyParam = BigInteger.valueOf((long) Math.pow(mGeneratorValue, mPetitParametre) % mPrimeValue);
+    private final BigInteger mKeyParam = BigInteger.valueOf((long) Math.pow(mGeneratorValue, mPetitParametre)
+            % mPrimeValue);
 
     public int getPValue() {
         return mPrimeValue;
