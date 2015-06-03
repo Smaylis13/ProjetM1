@@ -1,9 +1,11 @@
 package fr.univtln.madapm.votemanager.communication;
 
 import org.eclipse.persistence.oxm.MediaType;
+import org.glassfish.grizzly.http.server.Request;
 
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
@@ -18,9 +20,9 @@ import java.util.Map;
  */
 @Provider
 public class CInterceptorHTTPRequest implements ContainerRequestFilter {
+
     @Override
     public void filter(ContainerRequestContext pContainerRequestContext) throws IOException {
-
         InputStream lEntityStream = pContainerRequestContext.getEntityStream();
         ByteArrayOutputStream lBaos = new ByteArrayOutputStream();
         byte[] lBuffer = new byte[4096];
@@ -31,6 +33,7 @@ public class CInterceptorHTTPRequest implements ContainerRequestFilter {
         lBaos.flush();
         String lMsg=lBaos.toString();
         //DECODER lMsg
+
 
         pContainerRequestContext.setEntityStream(new ByteArrayInputStream(lMsg.getBytes()));
     }

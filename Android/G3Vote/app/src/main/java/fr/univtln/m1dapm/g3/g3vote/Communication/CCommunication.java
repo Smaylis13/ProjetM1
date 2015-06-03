@@ -37,6 +37,7 @@ import java.util.List;
 
 import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CChoice;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CCryptoBean;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CUser;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CHubActivity;
@@ -398,9 +399,9 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                     break;
                 case generate_keys:
                     lUrl = new URL(SERVER_URL+"crypto");
-                    JSONObject lCryptoJSON=new JSONObject();
-                    lCryptoJSON.put("mPublicKey", CLoginActivity.getPublicKey());
-                    lCryptoJSON.put("mUniqueKey", CLoginActivity.getUniqueKey());
+                    CCryptoBean lCryptoBean=(CCryptoBean)lParams.getObject();
+                    String lCryptoString=lMapper.writeValueAsString(lCryptoBean);
+                    JSONObject lCryptoJson=new JSONObject(lCryptoString);
                     lHttpCon = (HttpURLConnection) lUrl.openConnection();
                     lHttpCon.setDoOutput(true);
                     lHttpCon.setDoInput(true);
@@ -409,13 +410,14 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                     lHttpCon.setRequestProperty("Accept", "application/json");
                     lOut = new OutputStreamWriter(lHttpCon.getOutputStream());
                     //lOut=lHttpCon.getOutputStream();
-                    lOut.write(lCryptoJSON.toString());
+                    lOut.write(lCryptoJson.toString());
                     lOut.flush();
                     lCode=lHttpCon.getResponseCode();
                     if(lCode==200) {
                         //lOut.close();
                         lIn = new BufferedInputStream(lHttpCon.getInputStream());
                         lResponse = readStream(lIn);
+                        Log.e("TEST",lResponse);
                     }
                     else
                         return lCode;
