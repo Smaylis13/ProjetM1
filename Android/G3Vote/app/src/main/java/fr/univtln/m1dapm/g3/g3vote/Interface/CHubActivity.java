@@ -557,7 +557,7 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
 
         ArrayList<CUser> lContacts = CUser.getAListOfUser();
         lContacts=(ArrayList)CHubContactFragment.getsContacts();
-        Intent lIntent = new Intent(this,CContactSupression.class);
+        Intent lIntent = new Intent(this,CContactSuppression.class);
 
         lIntent.putExtra("listecontact",lContacts);
 

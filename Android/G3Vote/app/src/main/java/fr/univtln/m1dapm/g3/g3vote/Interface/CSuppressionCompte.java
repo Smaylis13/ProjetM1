@@ -1,12 +1,8 @@
 package fr.univtln.m1dapm.g3.g3vote.Interface;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,7 +13,7 @@ import fr.univtln.m1dapm.g3.g3vote.Communication.CRequestTypesEnum;
 import fr.univtln.m1dapm.g3.g3vote.Communication.CTaskParam;
 import fr.univtln.m1dapm.g3.g3vote.R;
 
-public class CSupressionCompte extends ActionBarActivity {
+public class CSuppressionCompte extends ActionBarActivity {
 
     private static Context sContext;
 
@@ -35,7 +31,7 @@ public class CSupressionCompte extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_csupression_compte, menu);
+        getMenuInflater().inflate(R.menu.menu_csuppression_compte, menu);
         return true;
     }
 
