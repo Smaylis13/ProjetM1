@@ -3,7 +3,6 @@ package fr.univtln.m1dapm.g3.g3vote.Interface;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -17,7 +16,6 @@ import fr.univtln.m1dapm.g3.g3vote.Communication.CRequestTypesEnum;
 import fr.univtln.m1dapm.g3.g3vote.Communication.CTaskParam;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CChoice;
-import fr.univtln.m1dapm.g3.g3vote.Entite.CUser;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
 import fr.univtln.m1dapm.g3.g3vote.R;
 
@@ -76,13 +74,10 @@ public class CRankingVote extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 List<CChoice> lChoiceList = new ArrayList<CChoice>();
-                int lScore = mListView.getCount();
-                Log.i("Score max : ", "" + lScore);
                 for(int i = 0; i < mListView.getCount(); ++i){
                     CCandidate lCandidate = (CCandidate) mListView.getItemAtPosition(i);
-                    CChoice lChoice = new CChoice(mVote.getIdVote(), CHubActivity.getsLoggedUser().getUserId(), lCandidate.getIdCandidat(), lScore);
+                    CChoice lChoice = new CChoice(mVote.getIdVote(), CHubActivity.getsLoggedUser().getUserId(), lCandidate.getIdCandidat(), i+1);
                     lChoiceList.add(lChoice);
-                    --lScore;
                 }
                 Log.i("Choix : ", lChoiceList.toString());
                 //TODO:Envoyer le vote au serveur et afficher un toast pour confirmer le vote

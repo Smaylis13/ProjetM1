@@ -18,22 +18,22 @@ public class CAlgoSTV extends AAlgorithme {
     /**
      * Quota nécessaire à l'élection d'un candidat
      */
-    protected double mQuota;
+    private double mQuota;
 
     /**
      * Nombre d'élu voulu
      */
-    protected int mNbElu;
+    private final int mNbElu;
 
     /**
      * Nombre de vote effectué
      */
-    protected int mNbVote;
+    private int mNbVote;
 
     /**
      * Liste des différents votes effectués
      */
-    protected List<List<Integer>> mChoice;
+    private List<List<Integer>> mChoice;
 
     /**
      * Liste des quantités de chaque vote différents
@@ -94,7 +94,7 @@ public class CAlgoSTV extends AAlgorithme {
         {
             lUserList.add(i, pChoices.get(i*mVote.getCandidates().size()).getIdUser());
             Integer[] lDefaultValue = new Integer[mVote.getCandidates().size()];
-            Arrays.fill(lDefaultValue, new Integer(0));
+            Arrays.fill(lDefaultValue, 0);
             lChoices.add(Arrays.asList(lDefaultValue));
         }
 
@@ -158,7 +158,7 @@ public class CAlgoSTV extends AAlgorithme {
             for(Double candValue : lCandNbVote)
             {
                 /// Presence d'une majoritee
-                if(candValue.doubleValue() >= mQuota && mCheckCands.get(lCandNbVote.indexOf(candValue)))
+                if(candValue >= mQuota && mCheckCands.get(lCandNbVote.indexOf(candValue)))
                 {
                     lNewElu = true;
                     /// Log.i("Vote : ", "Elu : " + ((CCandidat) cand.getKey()).getNom() + " avec " + cand.getValue() + " voix");
@@ -302,11 +302,11 @@ public class CAlgoSTV extends AAlgorithme {
         mIdCands = new LinkedList<>();
 
         Double[] lDefaultValue = new Double[mVote.getCandidates().size()];
-        Arrays.fill(lDefaultValue, new Double(0.0));
+        Arrays.fill(lDefaultValue, 0.0);
         lCandNbVote = Arrays.asList(lDefaultValue);
 
         Boolean[] lInitValue = new Boolean[mVote.getCandidates().size()];
-        Arrays.fill(lInitValue, new Boolean(true));
+        Arrays.fill(lInitValue, true);
         mCheckCands = Arrays.asList(lInitValue);
 
         /// Initialisation de la liste de réference des candidats
