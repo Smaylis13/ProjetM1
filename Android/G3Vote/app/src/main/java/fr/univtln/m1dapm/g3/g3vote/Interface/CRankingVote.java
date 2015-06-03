@@ -1,13 +1,19 @@
 package fr.univtln.m1dapm.g3.g3vote.Interface;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.ListView;
+import android.util.Log;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CChoice;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CUser;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
 import fr.univtln.m1dapm.g3.g3vote.R;
 
@@ -16,28 +22,79 @@ import fr.univtln.m1dapm.g3.g3vote.R;
  */
 public class CRankingVote extends AppCompatActivity {
     private CVote mVote;
+    private CStableArrayAdapter mAdapter;
+    private CDynamicListView mListView;
+    private ArrayList<CCandidate> mListCandidats;
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onCreate(Bundle pSavedInstanceState) {
+        super.onCreate(pSavedInstanceState);
         setContentView(R.layout.activity_crankvote);
 
-        Bundle extras = getIntent().getExtras();
-        if (extras==null){
+        Bundle lExtras = getIntent().getExtras();
+        if (lExtras==null){
             return;
         }
-        mVote = (CVote) extras.get("VOTE");
+        mVote = (CVote) lExtras.get("VOTE");
 
-        ArrayList<CCandidate> lListCandidats = (ArrayList) mVote.getCandidates();
-        //ArrayList<CCandidate> lListCandidats = (ArrayList) CCandidate.getAListOfCandidate();
+        mListCandidats = (ArrayList) mVote.getCandidates();
+        /*mListCandidats.get(1).setId(1);
+        ArrayList<CCandidate> lListCandidats2 = (ArrayList) CCandidate.getAListOfCandidate();
 
-        CStableArrayAdapter adapter = new CStableArrayAdapter(this, lListCandidats);
-        CDynamicListView listView = (CDynamicListView) findViewById(R.id.dynamicListView);
+        Log.i("ListCandidatServeur : ", mListCandidats.toString());
+        Log.i("ListCandidatAppli : ", lListCandidats2.toString());*/
 
-        listView.setCandidateList(lListCandidats);
-        listView.setAdapter(adapter);
-        listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+
+
+        mAdapter = new CStableArrayAdapter(this, mListCandidats);
+        mListView = (CDynamicListView) findViewById(R.id.dynamicListView);
+
+        mListView.setCandidateList(mListCandidats);
+        mListView.setAdapter(mAdapter);
+        //mListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+    }
+
+    public void sendRankingVote(View pView){
+        // On crée le dialogue
+        AlertDialog.Builder lConfirmationDialog = new AlertDialog.Builder(CRankingVote.this);
+        // On modifie le titre
+        lConfirmationDialog.setTitle("Confirmation de vote");
+        // On modifie le message
+        lConfirmationDialog.setMessage("Êtes-vous sûr de votre classement ?");
+        // Bouton Oui
+        lConfirmationDialog.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                List<CChoice> lChoiceList = new ArrayList<CChoice>();
+                int lScore = mListView.getCount();
+                Log.i("Score max : ", "" + lScore);
+                for(int i = 0; i < mListView.getCount(); ++i){
+                    CCandidate lCandidate = (CCandidate) mListView.getItemAtPosition(i);
+                    CChoice lChoice = new CChoice(mVote, new CUser("","","",""), lCandidate, lScore);
+                    lChoiceList.add(lChoice);
+                    --lScore;
+                }
+                Log.i("Choix : ", lChoiceList.toString());
+                //TODO:Envoyer le vote au serveur et afficher un toast pour confirmer le vote
+
+                // On termine l'activité et on retourne sur la page principale
+                Intent lIntent = new Intent(CRankingVote.this, CHubActivity.class);
+                lIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(lIntent);
+            }
+        });
+
+        // Bouton non: on ferme le dialogue
+        lConfirmationDialog.setNegativeButton("Non", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        // On affiche le message
+        lConfirmationDialog.show();
+
     }
 }
 

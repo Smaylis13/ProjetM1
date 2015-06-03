@@ -1,24 +1,17 @@
 package fr.univtln.m1dapm.g3.g3vote.Interface;
 
 import android.app.AlertDialog;
-import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.ListView;
-import android.widget.RadioButton;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.univtln.m1dapm.g3.g3vote.Communication.CCommunication;
-import fr.univtln.m1dapm.g3.g3vote.Communication.CRequestTypesEnum;
-import fr.univtln.m1dapm.g3.g3vote.Communication.CTaskParam;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
 import fr.univtln.m1dapm.g3.g3vote.R;
@@ -30,7 +23,7 @@ public class CVoteUninominal extends AppCompatActivity {
 
     private CVote mVote;
     private static CCandidateUniqueChoiceAdapter sAdapter;
-    private ListView lList;
+    private ListView mList;
     private static List<CCandidate> sListCandidat;
 
     public static void setlList(List<CCandidate> pList) {
@@ -59,7 +52,7 @@ public class CVoteUninominal extends AppCompatActivity {
 
 
         //Récupération du composant ListView
-        lList = (ListView)findViewById(R.id.LVChoixCandidatUninominal);
+        mList = (ListView)findViewById(R.id.LVChoixCandidatUninominal);
 
         sListCandidat = mVote.getCandidates();
         //Récupération de la liste des personnes
@@ -69,14 +62,12 @@ public class CVoteUninominal extends AppCompatActivity {
         sAdapter = new CCandidateUniqueChoiceAdapter(this, sListCandidat);
 
         //Initialisation de la liste avec les données
-        lList.setAdapter(sAdapter);
-
-        //TODO:Recuperer les candidats sur le serveur et les afficher
+        mList.setAdapter(sAdapter);
 
     }
 
     public void vote(View pView){
-        int position = lList.getCheckedItemPosition();
+        int position = mList.getCheckedItemPosition();
         if(position != -1){
             // On crée le dialogue
             AlertDialog.Builder lConfirmationDialog = new AlertDialog.Builder(CVoteUninominal.this);
@@ -89,18 +80,18 @@ public class CVoteUninominal extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
 
-                    int position = lList.getCheckedItemPosition();
+                    int position = mList.getCheckedItemPosition();
 
-                    CCandidate lCandidat  = (CCandidate) lList.getItemAtPosition(position);
+                    CCandidate lCandidat  = (CCandidate) mList.getItemAtPosition(position);
 
 
                     Log.i("Candidat voté : ", lCandidat.toString());
                     //TODO:Envoyer le vote au serveur et afficher un toast pour confirmer le vote
 
                     // On termine l'activité et on retourne sur la page principale
-                    Intent intent = new Intent(CVoteUninominal.this, CHubActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
+                    Intent lIntent = new Intent(CVoteUninominal.this, CHubActivity.class);
+                    lIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(lIntent);
                 }
             });
 

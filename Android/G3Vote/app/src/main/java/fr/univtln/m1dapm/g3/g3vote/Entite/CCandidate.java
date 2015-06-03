@@ -51,9 +51,9 @@ public class CCandidate implements Serializable{
 
         listCandidate.add(new CCandidate(0, "Banane", "Fruit 0"));
         listCandidate.add(new CCandidate(1, "Orange", "Fruit 1"));
-        listCandidate.add(new CCandidate(2, "Pomme", "Fruit 2"));
-        listCandidate.add(new CCandidate(3, "Poire", "Fruit 3"));
-        listCandidate.add(new CCandidate(4, "Abricot", "Fruit 4"));
+        //listCandidate.add(new CCandidate(2, "Pomme", "Fruit 2"));
+        //listCandidate.add(new CCandidate(3, "Poire", "Fruit 3"));
+        //listCandidate.add(new CCandidate(4, "Abricot", "Fruit 4"));
 
         return listCandidate;
     }

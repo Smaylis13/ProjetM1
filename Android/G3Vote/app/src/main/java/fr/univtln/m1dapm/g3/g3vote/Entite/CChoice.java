@@ -63,5 +63,10 @@ public class CChoice {
     public CUser getUser() {
         return mUser;
     }
+
+    @Override
+    public String toString() {
+        return mVote.toString() + mUser.toString() + "\n" + mCandidate.toString() + "Score = " + mScore + "\n";
+    }
 }
 
