@@ -1,6 +1,7 @@
 package fr.univtln.m1dapm.g3.g3vote.Entite;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSetter;
 
 import java.io.Serializable;
@@ -17,6 +18,7 @@ public class CUser implements Serializable{
     private String mEmail;
     private String mPassword;
 
+    @JsonIgnore
     private String mIdDevice;
 
     @JsonGetter("userId")

@@ -22,11 +22,20 @@ public class CCRUDServiceBean<T> implements ICRUDService<T> {
 
     @Override
     public T create(T pT){
+
+        System.out.println(pT);
+        System.out.println("em"+mEM);
+        System.out.println("et"+mET);
         mET.begin();
+        System.out.println("ICI1");
         this.mEM.persist(pT);
-        this.mEM.flush();
-        this.mEM.refresh(pT);
+        System.out.println("ICI2");
+        //this.mEM.flush();
+        System.out.println("ICI3");
+        //this.mEM.refresh(pT);
+        System.out.println("ICI4");
         mET.commit();
+        System.out.println("ICI5");
         return pT;
     }
 

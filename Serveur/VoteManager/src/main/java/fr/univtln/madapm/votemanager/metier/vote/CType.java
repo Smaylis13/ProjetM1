@@ -27,7 +27,7 @@ public class CType {
             inverseJoinColumns = {@JoinColumn(name="ID_REGLE",nullable = false,updatable = false)})
     private List<CRule> mListRulesAllowed;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="mType")
+    @OneToMany(cascade = CascadeType.DETACH, mappedBy="mType")
     private List<CVote> mListVotes;
 
     public CType(){}

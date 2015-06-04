@@ -92,6 +92,7 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                     String lJsonString=lMapper.writeValueAsString(lUser);
                     JSONObject lUserOBJ = new JSONObject(lJsonString);
                     Log.e("TEST",lUserOBJ.toString());
+                    Log.e("TEST", lUrl.toString());
                     lHttpCon.setDoOutput(true);
                     lHttpCon.setDoInput(true);
                     lHttpCon.setRequestMethod("POST");

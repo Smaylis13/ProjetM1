@@ -66,10 +66,9 @@ public class CVoteRest {
         CUserDAO lUserDAO=new CUserDAO();
         CUser lUser=lUserDAO.findByID(pId);
         List<Integer> lIdVotes=lUser.obtainParticipatingVotesIds();
-        System.out.println(lIdVotes.toString());
         Map<String,Object> lParams = new HashMap<>();
         CVoteDAO lVoteDAO = new CVoteDAO();
-        List<CVote> lVotes;
+        List<CVote> lVotes=null;
         if(!lIdVotes.isEmpty()) {
             lParams.put("User", lUser);
             lParams.put("IdVotes", lIdVotes);
@@ -92,8 +91,9 @@ public class CVoteRest {
                  if(lVote.getDateFin().compareTo(lToday)<0) {
                      lVote.setStatusVote(false);
                  }
-            lVoteDAO.update(lVote);
+            //lVoteDAO.update(lVote);
         }
+        System.out.println("ICI Votes"+lVotes);
         //System.out.println(lVotes);
         return Response.status(200).entity(lVotes).build();
     }
@@ -101,15 +101,22 @@ public class CVoteRest {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addVote(CVote pNewVote){
+        System.out.println("TEST");
         List<CCandidate> lCandidates=pNewVote.getCandidates();
+        System.out.println("TEST2");
         CVoteDAO lVoteDao=new CVoteDAO();
+        System.out.println("TEST3");
         CVote lNewVote= lVoteDao.create(pNewVote);
+        System.out.println("TEST4");
         for(CCandidate lCandidate:lCandidates) {
             System.out.println(lCandidate.toString());
             lCandidate.addVote(lNewVote);
         }
+        System.out.println("TEST5");
         lNewVote.setCandidates(lCandidates);
-        lVoteDao.update(lNewVote);
+        System.out.println("TEST6");
+        //lVoteDao.update(lNewVote);
+        System.out.println("TEST7");
         return Response.status(200).build();
     }
 }

@@ -85,7 +85,7 @@ public class CSubActivity extends AppCompatActivity {
         final String lPassword = lET_Password.getText().toString();
         if (!lFirstName.isEmpty() && !lName.isEmpty() && !lMail.isEmpty() && !lPassword.isEmpty()) {
 
-            sDialog = ProgressDialog.show(view.getContext(),"eeeeeeeeeee","eeeeeeeeeeeeeeee",true);
+            //sDialog = ProgressDialog.show(view.getContext(),"eeeeeeeeeee","eeeeeeeeeeeeeeee",true);
             CUser lUser = new CUser(lFirstName, lName, lMail, lPassword);
             CTaskParam lParams=new CTaskParam(CRequestTypesEnum.add_new_user,lUser);
 

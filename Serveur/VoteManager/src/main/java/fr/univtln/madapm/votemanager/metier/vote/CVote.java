@@ -40,14 +40,14 @@ public class CVote implements Serializable {
     private boolean mStatusVote;
 
     @JoinColumn(name = "ID_UTILISATEUR")
-    @ManyToOne(fetch= FetchType.LAZY,optional=false,cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch= FetchType.LAZY,optional=false,cascade = CascadeType.DETACH)
     private CUser mOrganisateur;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy="mVote")
     private List<CResult> mResultVote=null;
 
     @JoinColumn(name="ID_TYPE")
-    @ManyToOne(fetch=FetchType.LAZY,optional = false,cascade = CascadeType.REFRESH)
+    @ManyToOne(fetch=FetchType.LAZY,optional = false,cascade = CascadeType.DETACH)
     private CType mType;
 
     @JoinTable(name="parametre", joinColumns = {@JoinColumn(name="ID_VOTE",nullable = false,updatable = false)},
