@@ -6,10 +6,7 @@ import javax.crypto.spec.SecretKeySpec;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Created by civars169 on 20/05/15.
@@ -22,6 +19,7 @@ import java.util.Random;
 public class CKeyGenerator extends Random {
 
     private static final String TRANSFORMATION_STRING = "AES";
+    private static final String HASH = "SHA-256";
     private static final int SIZE = 128;
     private static final int SIZES = 16;
 
@@ -29,11 +27,8 @@ public class CKeyGenerator extends Random {
 
     private final CKeyNumberGenerator mKeyNumberGenerator = new CKeyNumberGenerator();
     private final BigInteger mPublicKey = mKeyNumberGenerator.getPublicKey();
-    //private final byte[] mPublicKey = randByte(new byte[SIZES]); // 16 bytes = 128 bits
 
-    //partie spécifique au serveur
-    private final Map<Integer, SecretKey> mClef = new HashMap<>();
-    //fin de la partie spécifique au serveur
+    private final Map<UUID, SecretKey> mClef = new HashMap<>();
 
     /**
      * Génère la clef privé automatiquement à sa construction
@@ -83,7 +78,7 @@ public class CKeyGenerator extends Random {
         //System.out.println(Arrays.toString(lKey));
         MessageDigest lSha;
         try {
-            lSha = MessageDigest.getInstance("SHA-1");
+            lSha = MessageDigest.getInstance(HASH);
             lKey = lSha.digest(lKey);
             lKey = Arrays.copyOf(lKey, SIZES); // utilise les 128 premier bit
             return new SecretKeySpec(lKey, TRANSFORMATION_STRING);
@@ -104,7 +99,7 @@ public class CKeyGenerator extends Random {
     }
     */
 
-    public Map<Integer, SecretKey> getClef() {
+    public Map<UUID, SecretKey> getClef() {
         return mClef;
     }
 

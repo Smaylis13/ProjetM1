@@ -1,9 +1,11 @@
 package fr.univtln.m1dapm.g3.g3vote.Interface;
 
 
+import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,10 +13,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.util.concurrent.ExecutionException;
-
 import fr.univtln.m1dapm.g3.g3vote.Communication.CCommunication;
-import fr.univtln.m1dapm.g3.g3vote.Communication.CEnvoiMessage;
 import fr.univtln.m1dapm.g3.g3vote.Communication.CRequestTypesEnum;
 import fr.univtln.m1dapm.g3.g3vote.Communication.CTaskParam;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CUser;
@@ -31,6 +30,20 @@ public class CSubActivity extends AppCompatActivity {
         CSubActivity.sContext = sContext;
     }
 
+    private static ProgressDialog sDialog;
+    public static Handler mHandler = new Handler() {
+
+        @Override
+        public void handleMessage(Message pMsg) {
+            switch (pMsg.what) {
+                case 1:
+                    sDialog.dismiss();
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +84,8 @@ public class CSubActivity extends AppCompatActivity {
         final String lMail = lET_Mail.getText().toString();
         final String lPassword = lET_Password.getText().toString();
         if (!lFirstName.isEmpty() && !lName.isEmpty() && !lMail.isEmpty() && !lPassword.isEmpty()) {
+
+            //sDialog = ProgressDialog.show(view.getContext(),"eeeeeeeeeee","eeeeeeeeeeeeeeee",true);
             CUser lUser = new CUser(lFirstName, lName, lMail, lPassword);
             CTaskParam lParams=new CTaskParam(CRequestTypesEnum.add_new_user,lUser);
 

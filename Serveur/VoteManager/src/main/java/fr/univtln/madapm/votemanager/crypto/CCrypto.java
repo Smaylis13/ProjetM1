@@ -3,6 +3,7 @@ package fr.univtln.madapm.votemanager.crypto;
 import fr.univtln.madapm.votemanager.crypto.aes.CAESCrypt;
 import fr.univtln.madapm.votemanager.crypto.aes.CAESFileCrypt;
 import fr.univtln.madapm.votemanager.crypto.keygen.CKeyGenerator;
+import org.mindrot.jbcrypt.BCrypt;
 
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
@@ -10,6 +11,7 @@ import java.math.BigInteger;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * Created by civars169 on 20/05/15.
@@ -62,7 +64,7 @@ public class CCrypto {
     }
 
     /**
-     * Décryptage de donnée via la clef public générer avec le paramètre recu
+     * Décryptage de donnée via la clef public générer avec le paramètre reçu
      * @param pSecretKeySpec clef public commune avec le téléphone
      * @param pCryptData Données à décrypter
      */
@@ -104,13 +106,43 @@ public class CCrypto {
      * @param pId Identifiant de l'appli
      * @return Paramètre à envoyer à l'appli
      */
-    public BigInteger receiveKeyParam(BigInteger pParam, int pId){
+    public BigInteger receiveKeyParam(BigInteger pParam, UUID pId){
         SecretKeySpec lK = sKeyGenerator.specificKeyKeyGen(BigInteger.valueOf((long)
                 (Math.pow(pParam.doubleValue(), sKeyGenerator.getKeyNumberGenerator().getab())
                         % sKeyGenerator.getKeyNumberGenerator().getPValue())).toByteArray());
         sKeyGenerator.getClef().put(pId, lK); //La conserve en mémoire dans une Map
         return sKeyGenerator.getPublicKey();
     }
+
+    /**
+     * Hashage d'un mot de passe
+     * @param pPassword Mot de passe à hasher
+     * @return résultat du hash
+     */
+    public String getHashed(String pPassword){
+        return BCrypt.hashpw(pPassword, BCrypt.gensalt());
+    }
+
+    /**
+     * Hashage d'un mot de passe
+     * Augmente la complexité (et donc le tempsde traitement) en passant le "workfactor"
+     * @param pPassword Mot de passe à hasher
+     * @return résultat du hash
+     */
+    public String getHashed2(String pPassword){
+        return BCrypt.hashpw(pPassword, BCrypt.gensalt(12));
+    }
+
+    /**
+     * Vérification d'un mot de passe à partir du hash
+     * @param pPlaintext Text en clair
+     * @param pHashed Valeur hashé
+     * @return True si le mot de passe correspond, false sinon
+     */
+    public boolean match(String pPlaintext, String pHashed){
+        return BCrypt.checkpw(pPlaintext, pHashed);
+    }
+
 
     /**
      * Méthode qui retourne le paramètre à envoyer à l'autre machine

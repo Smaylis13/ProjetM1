@@ -112,15 +112,22 @@ public class CVoteRest {
         }
         c.createData("Invitation","Vous êtes invité à participer à un vote : "+pNewVote.getVoteName());
         CPost2Gcm.post(CMainServer.API_KEY,c);
+        System.out.println("TEST");
         List<CCandidate> lCandidates=pNewVote.getCandidates();
+        System.out.println("TEST2");
         CVoteDAO lVoteDao=new CVoteDAO();
+        System.out.println("TEST3");
         CVote lNewVote= lVoteDao.create(pNewVote);
+        System.out.println("TEST4");
         for(CCandidate lCandidate:lCandidates) {
             System.out.println(lCandidate.toString());
             lCandidate.addVote(lNewVote);
         }
+        System.out.println("TEST5");
         lNewVote.setCandidates(lCandidates);
-        lVoteDao.update(lNewVote);
+        System.out.println("TEST6");
+        //lVoteDao.update(lNewVote);
+        System.out.println("TEST7");
         return Response.status(200).build();
     }
 }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +17,7 @@ import java.util.UUID;
 import fr.univtln.m1dapm.g3.g3vote.Communication.CCommunication;
 import fr.univtln.m1dapm.g3.g3vote.Communication.CRequestTypesEnum;
 import fr.univtln.m1dapm.g3.g3vote.Communication.CTaskParam;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CCryptoBean;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CUser;
 import fr.univtln.m1dapm.g3.g3vote.R;
 import fr.univtln.m1dapm.g3.g3vote.crypto.CCrypto;
@@ -52,11 +54,9 @@ public class CLoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clogin);
         sContext=getApplicationContext();
-      /*  CCrypto lt=new CCrypto();
-        Log.e("TEST","pk: "+lt.sendKeyParam());
-        CTaskParam lParams=new CTaskParam(CRequestTypesEnum.generate_keys);
+        CTaskParam lParams=new CTaskParam(CRequestTypesEnum.generate_keys,new CCryptoBean(PUBLIC_KEY,UNIQUE_KEY));
         CCommunication lCom=new CCommunication();
-        lCom.execute(lParams);*/
+        lCom.execute(lParams);
 
     }
 

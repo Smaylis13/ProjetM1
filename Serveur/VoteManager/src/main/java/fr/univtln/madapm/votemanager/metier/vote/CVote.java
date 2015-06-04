@@ -9,7 +9,6 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Created by civars169 on 05/05/15.
@@ -41,14 +40,14 @@ public class CVote implements Serializable {
     private boolean mStatusVote;
 
     @JoinColumn(name = "ID_UTILISATEUR")
-    @ManyToOne(fetch= FetchType.LAZY,optional=false,cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch= FetchType.LAZY,optional=false,cascade = CascadeType.DETACH)
     private CUser mOrganisateur;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy="mVote")
     private List<CResult> mResultVote=null;
 
     @JoinColumn(name="ID_TYPE")
-    @ManyToOne(fetch=FetchType.LAZY,optional = false,cascade = CascadeType.REFRESH)
+    @ManyToOne(fetch=FetchType.LAZY,optional = false,cascade = CascadeType.DETACH)
     private CType mType;
 
     @JoinTable(name="parametre", joinColumns = {@JoinColumn(name="ID_VOTE",nullable = false,updatable = false)},
@@ -131,7 +130,9 @@ public class CVote implements Serializable {
     public void setParticipatingUsers(List<Integer> pParticipatingUsersId) {
         this.mParticipatingUsers=new ArrayList<>();
         CUserDAO lUserDAO=new CUserDAO();
-        mParticipatingUsers.addAll(pParticipatingUsersId.stream().map(lUserDAO::findByID).collect(Collectors.toList()));
+        for(int lId:pParticipatingUsersId){
+            mParticipatingUsers.add(lUserDAO.findByID(lId));
+        }
     }
 
     public int getIdVote(){return mIdVote;}
@@ -234,7 +235,7 @@ public class CVote implements Serializable {
     /**
      * Ajoute une sélection pour le vote
      *
-     * @param pChoix Choix à ajouter
+     * @param pChoix
      */
     public void addParticipant(CChoice pChoix){
         this.mChoices.add(pChoix);
@@ -254,20 +255,18 @@ public class CVote implements Serializable {
     @Override
     public String toString() {
         return "CVote{" +
-                "mIdVote=" + mIdVote +
-                ", mVoteName='" + mVoteName + '\'' +
-                ", mDescriptionVote='" + mDescriptionVote + '\'' +
-                ", mDateDebut=" + mDateDebut +
-                ", mDateFin=" + mDateFin +
-                ", mStatusVote=" + mStatusVote +
+                "mIdvote=" + mIdVote +
+                ", mNomvote='" + mVoteName + '\'' +
+                ", mDescriptionvote='" + mDescriptionVote + '\'' +
+                ", mDatedebut='" + mDateDebut + '\'' +
+                ", mDatefin='" + mDateFin + '\'' +
+                ", mResultvote='" + mResultVote + '\'' +
+                ", mType='" + mType + '\'' +
+                ", mRegle='" + mRegle + '\'' +
+                ", mStatusvote='" + mStatusVote + '\'' +
                 ", mOrganisateur=" + mOrganisateur +
-                ", mResultVote=" + mResultVote +
-                ", mType=" + mType +
-                ", mRegle=" + mRegle +
                 ", mChoices=" + mChoices +
                 ", mCandidate=" + mCandidate +
-                ", mDeleguations=" + mDeleguations +
-                ", mVoted=" + mVoted +
                 '}';
     }
 }

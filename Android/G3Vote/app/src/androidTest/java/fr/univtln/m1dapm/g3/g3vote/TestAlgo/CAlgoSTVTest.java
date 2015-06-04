@@ -41,6 +41,11 @@ public class CAlgoSTVTest extends TestCase {
 
         lVote.setCandidates(lCands);
 
+        List<Integer> lCandsId = new ArrayList<>();
+
+        for(CCandidate cand : lCands)
+                lCandsId.add(cand.getIdCandidat());
+
         //       Log.i("Vote : ", "Creation Vote");
         CAlgoSTV lAlgo = new CAlgoSTV(lVote, 4);
 
@@ -48,13 +53,13 @@ public class CAlgoSTVTest extends TestCase {
 
         for(int i=0; i<27; i++)
         {
-            List<CCandidate> lList1 = new ArrayList<>(lCands);
+            List<Integer> lList1 = new ArrayList<>(lCandsId);
             Collections.shuffle(lList1);
-            for(CCandidate cand : lList1)
+            for (int j = 0; j <lList1.size() ; j++)
             {
                 CUser luser = new CUser(mNomsCands[i], mNomsCands[i], "", "");
                 luser.setUserId(i);
-                CChoice choice = new CChoice(lVote,luser, cand, lList1.indexOf(cand)+1);
+                CChoice choice = new CChoice(lVote.getIdVote(), luser.getUserId(), lList1.get(j), j+1);
                 lChoices.add(choice);
             }
         }

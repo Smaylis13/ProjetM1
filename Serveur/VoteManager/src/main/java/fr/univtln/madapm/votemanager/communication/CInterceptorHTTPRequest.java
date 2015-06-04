@@ -26,6 +26,7 @@ public class CInterceptorHTTPRequest implements ContainerRequestFilter {
         lBaos.flush();
         String lMsg=lBaos.toString();
         //DECODER lMsg
+        System.out.println(lMsg);
 
 
         pContainerRequestContext.setEntityStream(new ByteArrayInputStream(lMsg.getBytes()));
