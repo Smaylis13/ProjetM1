@@ -3,6 +3,7 @@ package fr.univtln.madapm.votemanager.crypto;
 import fr.univtln.madapm.votemanager.crypto.aes.CAESCrypt;
 import fr.univtln.madapm.votemanager.crypto.aes.CAESFileCrypt;
 import fr.univtln.madapm.votemanager.crypto.keygen.CKeyGenerator;
+import org.mindrot.jbcrypt.BCrypt;
 
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
@@ -112,6 +113,36 @@ public class CCrypto {
         sKeyGenerator.getClef().put(pId, lK); //La conserve en mémoire dans une Map
         return sKeyGenerator.getPublicKey();
     }
+
+    /**
+     * Hashage d'un mot de passe
+     * @param pPassword Mot de passe à hasher
+     * @return résultat du hash
+     */
+    public String getHashed(String pPassword){
+        return BCrypt.hashpw(pPassword, BCrypt.gensalt());
+    }
+
+    /**
+     * Hashage d'un mot de passe
+     * Augmente la complexité (et donc le tempsde traitement) en passant le "workfactor"
+     * @param pPassword Mot de passe à hasher
+     * @return résultat du hash
+     */
+    public String getHashed2(String pPassword){
+        return BCrypt.hashpw(pPassword, BCrypt.gensalt(12));
+    }
+
+    /**
+     * Vérification d'un mot de passe à partir du hash
+     * @param pPlaintext Text en clair
+     * @param pHashed Valeur hashé
+     * @return True si le mot de passe correspond, false sinon
+     */
+    public boolean match(String pPlaintext, String pHashed){
+        return BCrypt.checkpw(pPlaintext, pHashed);
+    }
+
 
     /**
      * Méthode qui retourne le paramètre à envoyer à l'autre machine
