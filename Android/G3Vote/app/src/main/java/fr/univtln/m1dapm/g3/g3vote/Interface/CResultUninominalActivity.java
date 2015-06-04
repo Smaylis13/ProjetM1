@@ -44,7 +44,7 @@ public class CResultUninominalActivity extends AppCompatActivity {
     public ArrayList<String> getCandidateList(){
         ArrayList<String> lListCandidat = new ArrayList<>();
         for(CResult iter : lListResultCandidate){
-            lListCandidat.add(iter.getCandidat().getNomCandidat());
+            //lListCandidat.add(iter.getCandidat().getNomCandidat());
         }
         return lListCandidat;
     }
