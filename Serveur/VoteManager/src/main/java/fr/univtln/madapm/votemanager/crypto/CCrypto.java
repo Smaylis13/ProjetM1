@@ -41,6 +41,7 @@ public class CCrypto {
     /**
      * Cryptage de données via la clef privé
      * @param pData Données à crypter
+     * @return données cryptées
      */
     public byte[] encrypt(String pData){
         return sAesCrypt.encrypt(sKeyGenerator.getPrivateKey(), pData);
@@ -49,6 +50,7 @@ public class CCrypto {
     /**
      * Décryptage de données via la clef privé
      * @param pCryptData Données à décrypter
+     * @return text en clair
      */
     public String decrypt(byte[] pCryptData){
         return sAesCrypt.decrypt(sKeyGenerator.getPrivateKey(), pCryptData);
@@ -58,6 +60,7 @@ public class CCrypto {
      * Cryptage de donnée via la clef public générer avec le paramètre recu
      * @param pData Données à crypter
      * @param pSecretKeySpec clef public commune avec le téléphone
+     * @return données cryptées
      */
     public byte[] publicEncrypt(String pData, SecretKeySpec pSecretKeySpec){
         return sAesCrypt.encrypt(pSecretKeySpec, pData);
@@ -67,6 +70,7 @@ public class CCrypto {
      * Décryptage de donnée via la clef public générer avec le paramètre reçu
      * @param pSecretKeySpec clef public commune avec le téléphone
      * @param pCryptData Données à décrypter
+     * @return text en clair
      */
     public String publicDecrypt(SecretKeySpec pSecretKeySpec, byte[] pCryptData){
         return sAesCrypt.decrypt(pSecretKeySpec, pCryptData);
