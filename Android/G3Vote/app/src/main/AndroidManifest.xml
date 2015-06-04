@@ -153,8 +153,19 @@
             android:label="@string/title_activity_ccontact_supression" >
         </activity>
         <activity
+            android:screenOrientation="portrait"
             android:name=".Interface.CRankingVote"
             android:label="@string/title_activity_cranking_vote" >
+        </activity>
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".Interface.CResultRankingActivity"
+            android:label="@string/title_activity_cresult_ranking">
+        </activity>
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".Interface.CResultUninominalActivity"
+            android:label="@string/title_activity_cresult_uninominal">
         </activity>
     </application>
 

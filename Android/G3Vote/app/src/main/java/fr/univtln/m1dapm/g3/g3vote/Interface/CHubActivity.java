@@ -124,7 +124,7 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         Intent lIntent=getIntent();
         //recupere l'utilisateur connecté et va cherché les votes de l'utilisateur
-        if(sLoggedUser==null) {
+        /*if(sLoggedUser==null) {
             sLoggedUser = (CUser) lIntent.getSerializableExtra(CCommunication.LOGGED_USER);
         }
         CTaskParam lParams=new CTaskParam(CRequestTypesEnum.get_votes,sLoggedUser.getUserId());
@@ -133,7 +133,7 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
 
         lParams=new CTaskParam(CRequestTypesEnum.get_contacts);
         CCommunication lCom=new CCommunication();
-        lCom.execute(lParams);
+        lCom.execute(lParams);*/
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
