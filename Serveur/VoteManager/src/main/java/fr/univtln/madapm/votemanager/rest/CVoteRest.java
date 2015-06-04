@@ -107,8 +107,8 @@ public class CVoteRest {
         List<CUser> lParticipant = pNewVote.getParticipatingUsers();
         CContent c = new CContent();
         for(CUser u : lParticipant){
-            c.addRegId(CUserRest.sIdDevice.get(u.getEmail()));
-            System.out.println(CUserRest.sIdDevice.get(u.getEmail()));
+            c.addRegId(CUserRest.getsIdDevice().get(u.getEmail()));
+            System.out.println(CUserRest.getsIdDevice().get(u.getEmail()));
         }
         c.createData("Invitation","Vous êtes invité à participer à un vote : "+pNewVote.getVoteName());
         CPost2Gcm.post(CMainServer.API_KEY,c);
