@@ -571,7 +571,6 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
     }
 
     public class CVotesAsync extends AsyncTask<Object, Void, Integer> {
-        public static final String SERVER_URL = "http://37.59.104.200:80/";
         private final ProgressDialog mDialog = new ProgressDialog(CHubActivity.this);
 
         @Override
@@ -587,20 +586,22 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
             try {
                 switch (lParams.getRequestType()) {
                     case get_votes:
-                        lUrl = new URL(SERVER_URL+"vote/all/"+Integer.toString((int)lParams.getObject()));
+                        lUrl = new URL(CCommunication.SERVER_URL+"vote/all/"+Integer.toString((int)lParams.getObject()));
                         lHttpCon = (HttpURLConnection) lUrl.openConnection();
+                        Log.e("URL",lUrl.toString());
                         lHttpCon.setDoInput(true);
                         lHttpCon.setRequestMethod("GET");
                         lHttpCon.setRequestProperty("Accept", "application/json");
                         lCode=lHttpCon.getResponseCode();
+                        Log.e("Test Recup",""+lCode);
                         if(lCode==200) {
-                            //lOut.close();
                             lIn = new BufferedInputStream(lHttpCon.getInputStream());
                             lResponse = readStream(lIn);
+
                             Type listType = new TypeToken<ArrayList<CVote>>() {}.getType();
-                            //ArrayList<CVote> lVotes = new Gson().fromJson(lResponse, listType);
                             ObjectMapper lMapper=new ObjectMapper();
                             ArrayList<CVote> lVotes = lMapper.readValue(lResponse, new TypeReference<ArrayList<CVote>>(){});
+                           // Log.e("TEST",lVotes.get(lVotes.size()-1).toString());
 
                             Message lMsg=new Message();
                             lMsg.what=0;
