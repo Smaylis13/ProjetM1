@@ -52,6 +52,9 @@ public class CKeyNumberGeneratorTest extends TestCase {
         System.out.println(lCryptoServeur.match("password", hash1));
         System.out.println(lCryptoServeur.match("rgnhiu", hash2));
 
+        //http://www.geeketfier.fr/2012/08/29/exemple-de-stockage-de-mot-de-passe-en-java-hashage-et-salage-est-ce-suffisant/
+        //http://30minparjour.la-bnbox.fr/2013/securisation-mots-de-passe-et-bcrypt
+
         System.out.println("Test terminé.");*/
     }
 }

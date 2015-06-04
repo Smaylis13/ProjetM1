@@ -235,7 +235,7 @@ public class CVote implements Serializable {
     /**
      * Ajoute une sélection pour le vote
      *
-     * @param pChoix
+     * @param pChoix Choix d'un participant
      */
     public void addParticipant(CChoice pChoix){
         this.mChoices.add(pChoix);
