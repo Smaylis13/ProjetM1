@@ -83,6 +83,19 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
 
         try {
             switch (lParams.getRequestType()) {
+                case regId_user:
+                    lUrl = new URL(SERVER_URL+"user/"+lParams.getObject());
+                    lHttpCon = (HttpURLConnection) lUrl.openConnection();
+                    Log.i("GCM_TAG",SERVER_URL+"user/"+lParams.getObject());
+                    lHttpCon.setRequestMethod("POST");
+                    lHttpCon.setRequestProperty("Content-Type", "application/json");
+                    lHttpCon.setRequestProperty("Accept", "application/json");
+                    lCode=lHttpCon.getResponseCode();
+                    if(lCode!=200) {
+                        return lCode;
+                    }
+
+                    break;
                 case log_user:
                     lUrl = new URL(SERVER_URL+"user/connect");
                     lHttpCon = (HttpURLConnection) lUrl.openConnection();
