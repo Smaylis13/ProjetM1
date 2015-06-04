@@ -56,7 +56,7 @@ public class CVote implements Serializable {
     private List<CRule> mRegle;
 
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="mVote")
+    @OneToMany(cascade = CascadeType.DETACH, mappedBy="mVote")
     private List<CChoice> mChoices=null;
 
     @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL, mappedBy="mVote")
@@ -207,6 +207,16 @@ public class CVote implements Serializable {
     public void setOrganisateur(int pIdOrga) {
         CUserDAO lUserDao=new CUserDAO();
         this.mOrganisateur = lUserDao.findByID(pIdOrga);
+    }
+
+
+    public List<CResult> getResultVote() {
+        return mResultVote;
+    }
+
+
+    public void setResultVote(List<CResult> pResultVote) {
+        this.mResultVote = pResultVote;
     }
 
     public boolean getVoted(){

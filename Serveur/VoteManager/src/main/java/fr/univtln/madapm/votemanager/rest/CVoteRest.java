@@ -48,7 +48,7 @@ public class CVoteRest {
     @Path("/all/{pIdUser}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getVotesOfUser(@PathParam("pIdUser") int pId){
-        System.out.println(pId);
+
         SimpleDateFormat lSdf = new SimpleDateFormat("yyyy-MM-dd");
         Date lToday=new Date();
         Calendar lCalendar = Calendar.getInstance();
@@ -91,9 +91,8 @@ public class CVoteRest {
                  if(lVote.getDateFin().compareTo(lToday)<0) {
                      lVote.setStatusVote(false);
                  }
-            //lVoteDAO.update(lVote);
+            lVoteDAO.update(lVote);
         }
-        System.out.println("ICI Votes"+lVotes);
         //System.out.println(lVotes);
         return Response.status(200).entity(lVotes).build();
     }
@@ -115,7 +114,7 @@ public class CVoteRest {
         System.out.println("TEST5");
         lNewVote.setCandidates(lCandidates);
         System.out.println("TEST6");
-        //lVoteDao.update(lNewVote);
+        lVoteDao.update(lNewVote);
         System.out.println("TEST7");
         return Response.status(200).build();
     }
