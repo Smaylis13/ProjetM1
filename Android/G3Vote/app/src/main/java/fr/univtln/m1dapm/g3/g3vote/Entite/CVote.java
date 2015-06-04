@@ -266,6 +266,15 @@ public class CVote implements Serializable {
                 '}';
     }
 
+    public List<CResult> getResultVote() {
+        return mResultVote;
+    }
+
+
+    public void setResultVote(List<CResult> pResultVote) {
+        this.mResultVote = pResultVote;
+    }
+
     @JsonIgnore
     public boolean isVoted(){
         return mVoted;

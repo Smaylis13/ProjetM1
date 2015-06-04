@@ -1,5 +1,8 @@
 package fr.univtln.madapm.votemanager.rest;
 
+import fr.univtln.madapm.votemanager.CMainServer;
+import fr.univtln.madapm.votemanager.communication.gcm.CContent;
+import fr.univtln.madapm.votemanager.communication.gcm.CPost2Gcm;
 import fr.univtln.madapm.votemanager.dao.CUserDAO;
 import fr.univtln.madapm.votemanager.dao.CVoteDAO;
 import fr.univtln.madapm.votemanager.metier.user.CUser;
@@ -48,7 +51,7 @@ public class CVoteRest {
     @Path("/all/{pIdUser}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getVotesOfUser(@PathParam("pIdUser") int pId){
-        System.out.println(pId);
+
         SimpleDateFormat lSdf = new SimpleDateFormat("yyyy-MM-dd");
         Date lToday=new Date();
         Calendar lCalendar = Calendar.getInstance();
@@ -66,9 +69,10 @@ public class CVoteRest {
         CUserDAO lUserDAO=new CUserDAO();
         CUser lUser=lUserDAO.findByID(pId);
         List<Integer> lIdVotes=lUser.obtainParticipatingVotesIds();
+        System.out.println(lIdVotes.toString());
         Map<String,Object> lParams = new HashMap<>();
         CVoteDAO lVoteDAO = new CVoteDAO();
-        List<CVote> lVotes=null;
+        List<CVote> lVotes;
         if(!lIdVotes.isEmpty()) {
             lParams.put("User", lUser);
             lParams.put("IdVotes", lIdVotes);
@@ -91,9 +95,8 @@ public class CVoteRest {
                  if(lVote.getDateFin().compareTo(lToday)<0) {
                      lVote.setStatusVote(false);
                  }
-            //lVoteDAO.update(lVote);
+            lVoteDAO.update(lVote);
         }
-        System.out.println("ICI Votes"+lVotes);
         //System.out.println(lVotes);
         return Response.status(200).entity(lVotes).build();
     }
@@ -101,6 +104,14 @@ public class CVoteRest {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addVote(CVote pNewVote){
+        List<CUser> lParticipant = pNewVote.getParticipatingUsers();
+        CContent c = new CContent();
+        for(CUser u : lParticipant){
+            c.addRegId(CUserRest.getsIdDevice().get(u.getEmail()));
+            System.out.println(CUserRest.getsIdDevice().get(u.getEmail()));
+        }
+        c.createData("Invitation","Vous êtes invité à participer à un vote : "+pNewVote.getVoteName());
+        CPost2Gcm.post(CMainServer.API_KEY,c);
         System.out.println("TEST");
         List<CCandidate> lCandidates=pNewVote.getCandidates();
         System.out.println("TEST2");
@@ -115,7 +126,7 @@ public class CVoteRest {
         System.out.println("TEST5");
         lNewVote.setCandidates(lCandidates);
         System.out.println("TEST6");
-        //lVoteDao.update(lNewVote);
+        lVoteDao.update(lNewVote);
         System.out.println("TEST7");
         return Response.status(200).build();
     }
