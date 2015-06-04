@@ -46,6 +46,12 @@ public class CKeyNumberGeneratorTest extends TestCase {
 
         System.out.println(cKeyNumberGenerator.getPValue());
 
+        String hash1 = lCryptoServeur.getHashed("password");
+        String hash2 = lCryptoServeur.getHashed2("password2");
+
+        System.out.println(lCryptoServeur.match("password", hash1));
+        System.out.println(lCryptoServeur.match("rgnhiu", hash2));
+
         System.out.println("Test terminé.");*/
     }
 }
