@@ -1,5 +1,8 @@
 package fr.univtln.madapm.votemanager.rest;
 
+import fr.univtln.madapm.votemanager.CMainServer;
+import fr.univtln.madapm.votemanager.communication.gcm.CContent;
+import fr.univtln.madapm.votemanager.communication.gcm.CPost2Gcm;
 import fr.univtln.madapm.votemanager.dao.CUserDAO;
 import fr.univtln.madapm.votemanager.dao.CVoteDAO;
 import fr.univtln.madapm.votemanager.metier.user.CUser;
@@ -101,6 +104,14 @@ public class CVoteRest {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addVote(CVote pNewVote){
+        List<CUser> lParticipant = pNewVote.getParticipatingUsers();
+        CContent c = new CContent();
+        for(CUser u : lParticipant){
+            c.addRegId(CUserRest.sIdDevice.get(u.getEmail()));
+            System.out.println(CUserRest.sIdDevice.get(u.getEmail()));
+        }
+        c.createData("Invitation","Vous êtes invité à participer à un vote : "+pNewVote.getVoteName());
+        CPost2Gcm.post(CMainServer.API_KEY,c);
         List<CCandidate> lCandidates=pNewVote.getCandidates();
         CVoteDAO lVoteDao=new CVoteDAO();
         CVote lNewVote= lVoteDao.create(pNewVote);
