@@ -82,6 +82,8 @@ public class CVoteRest {
             lParams.put("User", lUser);
             lVotes = lVoteDAO.findWithNamedQuery("CVote.findOrgaByUser", lParams);
         }
+        String lRequest="select * from vote where ID_UTILISATEUR="+pId+" or ID_VOTE in (select ID_VOTE from invitation where ID_UTILISATEUR="+pId+") ;";
+        lVotes=lVoteDAO.findByNativeQuery(lRequest,CVote.class);
         for(CVote lVote:lVotes){
             lParams.clear();
             lParams.put("User",lUser);
@@ -107,8 +109,8 @@ public class CVoteRest {
         List<CUser> lParticipant = pNewVote.getParticipatingUsers();
         CContent c = new CContent();
         for(CUser u : lParticipant){
+            u.addParticipatingVotes(pNewVote);
             c.addRegId(CUserRest.getsIdDevice().get(u.getEmail()));
-            System.out.println(CUserRest.getsIdDevice().get(u.getEmail()));
         }
         c.createData("Invitation","Vous êtes invité à participer à un vote : "+pNewVote.getVoteName());
         CPost2Gcm.post(CMainServer.API_KEY,c);

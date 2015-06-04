@@ -69,7 +69,7 @@ public class CVote implements Serializable {
     @JsonIgnore
     @JoinTable(name="invitation", joinColumns = {@JoinColumn(name="ID_VOTE",nullable = false,updatable = false)},
             inverseJoinColumns = {@JoinColumn(name="ID_UTILISATEUR",nullable = false,updatable = false)})
-    @ManyToMany(cascade = CascadeType.REFRESH)
+    @ManyToMany(cascade = CascadeType.DETACH)
     private List<CUser> mParticipatingUsers;
 
     @Transient

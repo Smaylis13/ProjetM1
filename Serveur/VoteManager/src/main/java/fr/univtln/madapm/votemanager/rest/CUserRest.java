@@ -40,9 +40,7 @@ public class CUserRest {
     @POST
     @Path("/regId/{emailC}/{regId}")
     public Response registerId(@PathParam("emailC") String pEmail,@PathParam("regId") String pRegId){
-
             sIdDevices.put(pEmail,pRegId);
-            System.out.println("Register id device...RegID="+ pRegId + "' et Email='" + pEmail + "'");
             return Response.status(Response.Status.OK).entity("Device registred.").build();
     }
 

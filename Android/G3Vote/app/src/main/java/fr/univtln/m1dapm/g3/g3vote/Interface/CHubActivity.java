@@ -615,11 +615,10 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
                         if(lCode==200) {
                             lIn = new BufferedInputStream(lHttpCon.getInputStream());
                             lResponse = readStream(lIn);
-
                             Type listType = new TypeToken<ArrayList<CVote>>() {}.getType();
                             ObjectMapper lMapper=new ObjectMapper();
                             ArrayList<CVote> lVotes = lMapper.readValue(lResponse, new TypeReference<ArrayList<CVote>>(){});
-                           // Log.e("TEST",lVotes.get(lVotes.size()-1).toString());
+                            //Log.e("TEST",lVotes.get(lVotes.size()-1).toString());
 
                             Message lMsg=new Message();
                             lMsg.what=0;
