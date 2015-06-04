@@ -319,7 +319,7 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                         Intent lIntent = new Intent(CVoteUninominal.getsContext(), CHubActivity.class);
                         lIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         lIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        CRankingVote.getsContext().startActivity(lIntent);
+                        CVoteUninominal.getsContext().startActivity(lIntent);
                         //lOut.close();
                        /* lIn = new BufferedInputStream(lHttpCon.getInputStream());
                         lResponse = readStream(lIn);

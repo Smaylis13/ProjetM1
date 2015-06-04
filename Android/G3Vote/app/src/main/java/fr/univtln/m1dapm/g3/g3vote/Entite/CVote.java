@@ -204,6 +204,16 @@ public class CVote implements Serializable {
         this.mParticipants = pParticipants;
     }
 
+    public List<CResult> getResultVote() {
+        return mResultVote;
+    }
+
+    public void setResultVote(List<CResult> mResultVote) {
+        this.mResultVote = mResultVote;
+    }
+
+
+
     public static ArrayList<CVote> getAListOfVote() {
         ArrayList<CVote> listVote = new ArrayList<CVote>();//GregorianCalendar (int year, int month, int day)
 
@@ -226,11 +236,11 @@ public class CVote implements Serializable {
 // representation of a date with the defined format.
 
 
-        listVote.add(new CVote(1,"elireToto",true,true,d1,d2));
-        listVote.add(new CVote(2,"elireTata",true,true,d3,d4));
+        listVote.add(new CVote(1, "elireToto", true, true, d1, d2));
+        listVote.add(new CVote(2, "elireTata", true, true, d3, d4));
         listVote.add(new CVote(3,"elireTiti",false,true,d5,d6));
         listVote.add(new CVote(4,"elireTete",true,false,d7,d8));
-        listVote.add(new CVote(5,"elireTutu",false,false,d9,d10));
+        listVote.add(new CVote(5, "elireTutu", false, false, d9, d10));
         return listVote;
     }
 
