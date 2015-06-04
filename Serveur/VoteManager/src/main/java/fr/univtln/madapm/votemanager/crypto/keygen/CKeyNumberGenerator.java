@@ -14,6 +14,8 @@ import java.util.Random;
 public class CKeyNumberGenerator extends Random {
 
     private static final int SIZE = 128;
+    private static final int MIN = 1000;
+    private static final int MAX = 10000;
 
     private static final String sKeyHexa = "FFFFFFFF FFFFFFFF C90FDAA2 2168C234 C4C6628B 80DC1CD1" +
                                           " 29024E08 8A67CC74 020BBEA6 3B139B22 514A0879 8E3404DD" +
@@ -28,7 +30,7 @@ public class CKeyNumberGenerator extends Random {
     private final static int sPrimeValue = (int)Math.pow(2, (Math.pow(2, 1024) - Math.pow(2, 960) - 1 +
                                            Math.pow(2, 64) * (  Math.PI * Math.pow(2, 894) + 129093 )));
     private final static int sGeneratorValue = 2;
-    private final static int sPetitParametre = (int) (1000 + mRandomParam.nextInt(10000 - 1000));
+    private final static int sPetitParametre = (int) (MIN + mRandomParam.nextInt(MAX - MIN));
 
     private final BigInteger mPrime = BigInteger.probablePrime(SIZE, mRandomParam);
     private final BigInteger mGenerator = BigInteger.probablePrime(SIZE, mRandomParam);

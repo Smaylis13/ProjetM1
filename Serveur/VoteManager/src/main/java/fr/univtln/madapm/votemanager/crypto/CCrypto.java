@@ -63,7 +63,7 @@ public class CCrypto {
     }
 
     /**
-     * Décryptage de donnée via la clef public générer avec le paramètre recu
+     * Décryptage de donnée via la clef public générer avec le paramètre reçu
      * @param pSecretKeySpec clef public commune avec le téléphone
      * @param pCryptData Données à décrypter
      */
