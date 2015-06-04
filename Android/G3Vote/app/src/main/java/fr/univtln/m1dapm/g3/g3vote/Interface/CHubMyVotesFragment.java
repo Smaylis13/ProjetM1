@@ -107,6 +107,16 @@ public class CHubMyVotesFragment extends Fragment implements AdapterView.OnItemC
         }
         // Sinon, on envoie sur la page des résultats
         else {
+            Intent lIntent;
+            if (lVote.getTypes().getNom().equals("STV") || lVote.getTypes().getNom().equals("Kemeny-Young")) {
+                lIntent = new Intent(getActivity(), CResultRankingActivity.class);
+            } else {
+                lIntent = new Intent(getActivity(), CResultUninominalActivity.class);
+            }
+
+
+            lIntent.putExtra("VOTE", lVote);
+            startActivity(lIntent);
             //TODO:Creer la page des resultats et envoyer dessus
         }
     }
