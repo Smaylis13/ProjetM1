@@ -40,6 +40,7 @@ import java.util.concurrent.CountDownLatch;
 public class CMainServer extends Application {
 
     private static CDatabase sDatabase=new CDatabase();
+    public static final String API_KEY = "AIzaSyCo4UkA1SvJoEi443j4YtFdOopcNjhyHCU";
 
     public static CDatabase getDatabase() {
         return sDatabase;

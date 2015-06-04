@@ -1,5 +1,8 @@
 package fr.univtln.madapm.votemanager.rest;
 
+import fr.univtln.madapm.votemanager.CMainServer;
+import fr.univtln.madapm.votemanager.communication.gcm.CContent;
+import fr.univtln.madapm.votemanager.communication.gcm.CPost2Gcm;
 import fr.univtln.madapm.votemanager.dao.CUserDAO;
 import fr.univtln.madapm.votemanager.dao.CVoteDAO;
 import fr.univtln.madapm.votemanager.metier.user.CUser;
@@ -66,9 +69,10 @@ public class CVoteRest {
         CUserDAO lUserDAO=new CUserDAO();
         CUser lUser=lUserDAO.findByID(pId);
         List<Integer> lIdVotes=lUser.obtainParticipatingVotesIds();
+        System.out.println(lIdVotes.toString());
         Map<String,Object> lParams = new HashMap<>();
         CVoteDAO lVoteDAO = new CVoteDAO();
-        List<CVote> lVotes=null;
+        List<CVote> lVotes;
         if(!lIdVotes.isEmpty()) {
             lParams.put("User", lUser);
             lParams.put("IdVotes", lIdVotes);
@@ -100,6 +104,14 @@ public class CVoteRest {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addVote(CVote pNewVote){
+        List<CUser> lParticipant = pNewVote.getParticipatingUsers();
+        CContent c = new CContent();
+        for(CUser u : lParticipant){
+            c.addRegId(CUserRest.getsIdDevice().get(u.getEmail()));
+            System.out.println(CUserRest.getsIdDevice().get(u.getEmail()));
+        }
+        c.createData("Invitation","Vous êtes invité à participer à un vote : "+pNewVote.getVoteName());
+        CPost2Gcm.post(CMainServer.API_KEY,c);
         System.out.println("TEST");
         List<CCandidate> lCandidates=pNewVote.getCandidates();
         System.out.println("TEST2");
