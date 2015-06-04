@@ -10,6 +10,7 @@ import java.math.BigInteger;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * Created by civars169 on 20/05/15.
@@ -104,7 +105,7 @@ public class CCrypto {
      * @param pId Identifiant de l'appli
      * @return Paramètre à envoyer à l'appli
      */
-    public BigInteger receiveKeyParam(BigInteger pParam, int pId){
+    public BigInteger receiveKeyParam(BigInteger pParam, UUID pId){
         SecretKeySpec lK = sKeyGenerator.specificKeyKeyGen(BigInteger.valueOf((long)
                 (Math.pow(pParam.doubleValue(), sKeyGenerator.getKeyNumberGenerator().getab())
                         % sKeyGenerator.getKeyNumberGenerator().getPValue())).toByteArray());

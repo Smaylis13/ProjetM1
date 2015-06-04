@@ -22,13 +22,13 @@ public class CKeyNumberGenerator extends Random {
                                           " EE386BFB 5A899FA5 AE9F2411 7C4B1FE6 49286651 ECE65381" +
                                           " FFFFFFFF FFFFFFFF";
 
+    private final static Random mRandomParam = new Random();
+
     private final static BigInteger sKey = new BigInteger(sKeyHexa.replace(" ",""), 16);
     private final static int sPrimeValue = (int)Math.pow(2, (Math.pow(2, 1024) - Math.pow(2, 960) - 1 +
                                            Math.pow(2, 64) * (  Math.PI * Math.pow(2, 894) + 129093 )));
     private final static int sGeneratorValue = 2;
-    private final static int sPetitParametre = (int) (Math.random() * 100);
-
-    private final Random mRandomParam = new Random();
+    private final static int sPetitParametre = (int) (1000 + mRandomParam.nextInt(10000 - 1000));
 
     private final BigInteger mPrime = BigInteger.probablePrime(SIZE, mRandomParam);
     private final BigInteger mGenerator = BigInteger.probablePrime(SIZE, mRandomParam);

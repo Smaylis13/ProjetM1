@@ -5,15 +5,17 @@ import junit.framework.TestCase;
 
 import javax.crypto.spec.SecretKeySpec;
 import java.util.Arrays;
+import java.util.UUID;
 
 /**
  * Classe de test final de la crypto
  */
 public class CKeyNumberGeneratorTest extends TestCase {
+    private static final UUID UNIQUE_KEY = UUID.randomUUID();
 
     public void testCreateSpecificKey() throws Exception {
 
-        String lData = "fhfhdijdrijiodyniognhtihvri,hieoeomhgvdril,hvioh";
+       /* String lData = "fhfhdijdrijiodyniognhtihvri,hieoeomhgvdril,hvioh";
 
         System.out.println(lData + "\n" + Arrays.toString(lData.getBytes()));
 
@@ -31,8 +33,8 @@ public class CKeyNumberGeneratorTest extends TestCase {
         lCryptoServeur.fileDecrypt("/src/json/CVoteEncrypt.txt", "/src/json/CVoteDecrypt.json");
 
         //Public
-        lCryptoServeur.receiveKeyParam(lCryptoAppli.sendKeyParam(), 1);//A
-        lCryptoAppli.receiveKeyParam(lCryptoServeur.sendKeyParam(), 1);//B
+        lCryptoServeur.receiveKeyParam(lCryptoAppli.sendKeyParam(), UNIQUE_KEY);//A
+        lCryptoAppli.receiveKeyParam(lCryptoServeur.sendKeyParam(), UNIQUE_KEY);//B
         byte[] lCryptData2 = lCryptoServeur.publicEncrypt(lData, (SecretKeySpec) lCryptoServeur.getKeyMap().get(1));
         System.out.println(Arrays.toString(lCryptData2) + "\n" + lCryptoServeur.getKeyMap().toString() +
                 lCryptoServeur.getKeyMap().get(1).equals(lCryptoAppli.getKeyMap().get(1)) + "\n" +
@@ -41,8 +43,10 @@ public class CKeyNumberGeneratorTest extends TestCase {
         lData = lCryptoServeur.publicDecrypt((SecretKeySpec) lCryptoAppli.getKeyMap().get(1), lCryptData2);
         System.out.println(lData);
 
-        System.out.println(Arrays.toString(((SecretKeySpec) lCryptoAppli.getKeyMap().get(1)).getEncoded()));
+        CKeyNumberGenerator cKeyNumberGenerator = new CKeyNumberGenerator();
 
-        System.out.println("Test terminé.");
+        System.out.println(cKeyNumberGenerator.getPValue());
+
+        System.out.println("Test terminé.");*/
     }
 }

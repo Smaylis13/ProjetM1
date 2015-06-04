@@ -9,6 +9,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
 import java.net.URL;
 /**
  * Created by lyamsi on 01/06/15.
@@ -19,7 +21,10 @@ public class CPost2Gcm {
 
 			URL url = new URL("https://android.googleapis.com/gcm/send");
 
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("proxy.univ-tln.fr", 3128));
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection(proxy);
+
+			//HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
 			conn.setRequestMethod("POST");
 

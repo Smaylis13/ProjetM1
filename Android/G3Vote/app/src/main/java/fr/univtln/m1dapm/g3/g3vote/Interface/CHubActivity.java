@@ -571,7 +571,7 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
     }
 
     public class CVotesAsync extends AsyncTask<Object, Void, Integer> {
-        public static final String SERVER_URL = "http://10.21.205.16:80/";
+        public static final String SERVER_URL = "http://37.59.104.200:80/";
         private final ProgressDialog mDialog = new ProgressDialog(CHubActivity.this);
 
         @Override

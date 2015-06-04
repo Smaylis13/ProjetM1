@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
+import java.math.BigInteger;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
@@ -37,6 +38,7 @@ import java.util.List;
 
 import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CChoice;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CCryptoBean;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CUser;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CContactAjout;
@@ -65,7 +67,7 @@ import org.apache.oltu.oauth2.common.message.types.GrantType;*/
  * Created by ludo on 05/05/15.
  */
 public class CCommunication extends AsyncTask<Object, Void, Integer> {
-    public static final String SERVER_URL="http://10.21.205.16:80/";
+    public static final String SERVER_URL="http://37.59.104.200:80/";
     public final static String LOGGED_USER = "fr.univtln.m1dapm.g3.g3vote.LOGGED_USER";
 
     @Override
@@ -89,6 +91,7 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
 
                     String lJsonString=lMapper.writeValueAsString(lUser);
                     JSONObject lUserOBJ = new JSONObject(lJsonString);
+                    Log.e("TEST",lUserOBJ.toString());
                     lHttpCon.setDoOutput(true);
                     lHttpCon.setDoInput(true);
                     lHttpCon.setRequestMethod("POST");
@@ -139,6 +142,8 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                     CUser lNewUser = (CUser) lParams.getObject();
                     String lJsonStringNewUser=lMapper.writeValueAsString(lNewUser);
                     JSONObject lNewUserOBJ = new JSONObject(lJsonStringNewUser);
+                    Log.e("TEST",lUrl.toString());
+                    Log.e("TEST",lJsonStringNewUser);
                     lHttpCon.setDoOutput(true);
                     lHttpCon.setDoInput(true);
                     lHttpCon.setRequestMethod("PUT");
@@ -431,9 +436,9 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                     break;
                 case generate_keys:
                     lUrl = new URL(SERVER_URL+"crypto");
-                    JSONObject lCryptoJSON=new JSONObject();
-                    lCryptoJSON.put("mPublicKey", CLoginActivity.getPublicKey());
-                    lCryptoJSON.put("mUniqueKey", CLoginActivity.getUniqueKey());
+                    CCryptoBean lCryptoBean=(CCryptoBean)lParams.getObject();
+                    String lCryptoString=lMapper.writeValueAsString(lCryptoBean);
+                    JSONObject lCryptoJson=new JSONObject(lCryptoString);
                     lHttpCon = (HttpURLConnection) lUrl.openConnection();
                     lHttpCon.setDoOutput(true);
                     lHttpCon.setDoInput(true);
@@ -442,13 +447,14 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                     lHttpCon.setRequestProperty("Accept", "application/json");
                     lOut = new OutputStreamWriter(lHttpCon.getOutputStream());
                     //lOut=lHttpCon.getOutputStream();
-                    lOut.write(lCryptoJSON.toString());
+                    lOut.write(lCryptoJson.toString());
                     lOut.flush();
                     lCode=lHttpCon.getResponseCode();
                     if(lCode==200) {
                         //lOut.close();
                         lIn = new BufferedInputStream(lHttpCon.getInputStream());
                         lResponse = readStream(lIn);
+                        BigInteger lKey=new BigInteger(lResponse);
                     }
                     else
                         return lCode;

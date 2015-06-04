@@ -13,9 +13,9 @@ import java.io.InputStream;
  */
 @Provider
 public class CInterceptorHTTPRequest implements ContainerRequestFilter {
+
     @Override
     public void filter(ContainerRequestContext pContainerRequestContext) throws IOException {
-
         InputStream lEntityStream = pContainerRequestContext.getEntityStream();
         ByteArrayOutputStream lBaos = new ByteArrayOutputStream();
         byte[] lBuffer = new byte[4096];
@@ -26,6 +26,7 @@ public class CInterceptorHTTPRequest implements ContainerRequestFilter {
         lBaos.flush();
         String lMsg=lBaos.toString();
         //DECODER lMsg
+
 
         pContainerRequestContext.setEntityStream(new ByteArrayInputStream(lMsg.getBytes()));
     }
