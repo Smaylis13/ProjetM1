@@ -6,9 +6,7 @@ import fr.univtln.madapm.votemanager.metier.user.CUser;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by civars169 on 06/05/15.
@@ -19,7 +17,35 @@ import java.util.Map;
 @Path("/user")
 public class CUserRest {
 
-    public static Map<String,String> sIdDevice = new HashMap<>();
+    private static Map<String,String> sIdDevices = new HashMap<>();
+
+    public static Map<String, String> getsIdDevice() {
+        return sIdDevices;
+    }
+
+    @GET
+    @Path("/regId/all")
+    @Produces("application/json")
+    public Collection<String> getsIdDevices(){
+        return sIdDevices.values();
+    }
+
+    @GET
+    @Path("/regId/{pMail}/")
+    @Produces("text/plain")
+    public String getRegId(@PathParam("pMail") String pEmail){
+        return sIdDevices.get(pEmail);
+    }
+
+    @POST
+    @Path("/regId/{emailC}/{regId}")
+    public Response registerId(@PathParam("emailC") String pEmail,@PathParam("regId") String pRegId){
+
+            sIdDevices.put(pEmail,pRegId);
+            System.out.println("Register id device...RegID="+ pRegId + "' et Email='" + pEmail + "'");
+            return Response.status(Response.Status.OK).entity("Device registred.").build();
+    }
+
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -92,17 +118,6 @@ public class CUserRest {
             return Response.status(201).entity(lExistingUser.getUserId()).build();
         }
         return Response.status(409).entity(0).build();
-    }
-
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("/regId/{emailC}/{regId}")
-    public Response registerId(@PathParam("emailC") String pEmail,@PathParam("regId") String pRegId){
-            sIdDevice.put(pEmail,pRegId);
-            System.out.println(pRegId);
-            return Response.status(Response.Status.OK).entity("Device registred.").build();
-
     }
 
     @POST

@@ -120,7 +120,7 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                 break;
                 case auth_user:
                     OAuthClientRequest lRequest = OAuthClientRequest
-                            .tokenLocation("http://10.21.205.16:80/" + "auth/token")
+                            .tokenLocation( SERVER_URL+ "auth/token")
                             .setGrantType(GrantType.PASSWORD)
                             .setClientId(CCommon.CLIENT_ID)
                             .setClientSecret(CCommon.CLIENT_SECRET)
