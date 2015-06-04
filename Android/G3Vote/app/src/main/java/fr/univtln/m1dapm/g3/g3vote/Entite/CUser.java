@@ -1,11 +1,6 @@
 package fr.univtln.m1dapm.g3.g3vote.Entite;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 
 import java.io.Serializable;
@@ -21,6 +16,8 @@ public class CUser implements Serializable{
     private String mName;//nom
     private String mEmail;
     private String mPassword;
+
+    private String mIdDevice;
 
     @JsonGetter("userId")
     public int getUserId() {
@@ -85,6 +82,11 @@ public class CUser implements Serializable{
         this.mPassword = password;
     }
 
+    public CUser (String pMail, String pIdDevice ){
+        super();
+        this.mEmail = pMail;
+        this.mIdDevice = pIdDevice;
+    }
     //initialise une liste de Users
     public static ArrayList<CUser> getAListOfUser(){
 

@@ -111,20 +111,26 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
     private GoogleCloudMessaging mGcm;
     private String mRegid;
     private Context mContext;
+    private static Context sContext;
     private AtomicInteger msgId = new AtomicInteger();
     private WebSocketClient mWebSocketClient;
+
+    public static Context getsContext() {
+        return sContext;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chub);
 
+        sContext = getApplicationContext();
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         Intent lIntent=getIntent();
         //recupere l'utilisateur connecté et va cherché les votes de l'utilisateur
-        if(sLoggedUser==null) {
+        /*if(sLoggedUser==null) {
             sLoggedUser = (CUser) lIntent.getSerializableExtra(CCommunication.LOGGED_USER);
         }
         CTaskParam lParams=new CTaskParam(CRequestTypesEnum.get_votes,sLoggedUser.getUserId());
@@ -133,7 +139,7 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
 
         lParams=new CTaskParam(CRequestTypesEnum.get_contacts);
         CCommunication lCom=new CCommunication();
-        lCom.execute(lParams);
+        lCom.execute(lParams);*/
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -186,6 +192,12 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
 
 		// Handle possible notification intent if app was not running
 		handleNotification(getIntent().getExtras());
+
+        //envoi regId to server
+        CTaskParam lParam = new CTaskParam(CRequestTypesEnum.regId_user,"regId/"+mMail+"/"+mRegid);
+        CCommunication lCom = new CCommunication();
+        lCom.execute(lParam);
+
     }
     /**
      * If this activity was started or brought to the front using an intent from a notification type
@@ -316,9 +328,14 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
 
             @Override
             protected void onPostExecute(String msg){
+                Log.i(GCM_TAG,"Avant l'envoi....");
+                CTaskParam lParam=new CTaskParam(CRequestTypesEnum.regId_user,"regId/"+mMail+"/"+mRegid);
+                CCommunication lCom=new CCommunication();
+                lCom.execute(lParam);
                 //Send vers le serveur
                 //sendToServer("register_id:"+mRegid);
-                Log.i(GCM_TAG,msg);
+                Log.i(GCM_TAG,"Après l'envoi..." + msg);
+
             }
         }.execute(null, null, null);
     }
@@ -571,6 +588,7 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
     }
 
     public class CVotesAsync extends AsyncTask<Object, Void, Integer> {
+        public static final String SERVER_URL = CCommunication.SERVER_URL;
         private final ProgressDialog mDialog = new ProgressDialog(CHubActivity.this);
 
         @Override

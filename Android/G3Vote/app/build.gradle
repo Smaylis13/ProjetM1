@@ -25,6 +25,9 @@ android {
         exclude 'META-INF/LICENSE.txt'
     }
 }
+repositories {
+    maven { url "https://jitpack.io" }
+}
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
@@ -35,6 +38,9 @@ dependencies {
     compile 'com.google.code.gson:gson:2.3.1'
     compile 'com.fasterxml.jackson.core:jackson-core:2.5.3'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.5.3'
+
+    // Pour les diagrammes
+    compile 'com.github.PhilJay:MPAndroidChart:v2.1.0'
 
     /* issma */
     compile 'com.google.android.gms:play-services:7.3.0'
