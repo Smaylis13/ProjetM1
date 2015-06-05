@@ -33,9 +33,12 @@ public class CChoiceRest {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/multiples")
     public Response addChoices(List<CChoice> pChoices){
+        System.out.println("ADDCHOICES1");
         CChoiceDAO lChoiceDAO = new CChoiceDAO();
+        System.out.println("ADDCHOICES2");
         for(CChoice lChoice:pChoices)
             lChoiceDAO.createChoice(lChoice);
+        System.out.println("ADDCHOICES3");
         return Response.status(200).build();
     }
 
