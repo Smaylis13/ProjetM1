@@ -1,6 +1,7 @@
 package fr.univtln.m1dapm.g3.g3vote.Interface;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
@@ -22,6 +23,9 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.univtln.m1dapm.g3.g3vote.Communication.CCommunication;
+import fr.univtln.m1dapm.g3.g3vote.Communication.CRequestTypesEnum;
+import fr.univtln.m1dapm.g3.g3vote.Communication.CTaskParam;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CChoice;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CVoixCandidat;
@@ -37,6 +41,11 @@ public class CNoteVote extends AppCompatActivity {
     private LayoutInflater mlayoutInflater;
     private View mpromptsView;
     private List<CVoixCandidat> mNotecandidat;
+    private static Context sContext;
+
+    public static Context getsContext() {
+        return sContext;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,8 +89,11 @@ public class CNoteVote extends AppCompatActivity {
             lListechoix.add(ltmpchoix);
         }
         Log.i("test","liste des candidat et leur point "+mNotecandidat);
-        Intent lIntent = new Intent(this,CHubActivity.class);
-        startActivity(lIntent);
+        CTaskParam lParams=new CTaskParam(CRequestTypesEnum.add_choices,lListechoix,"note");
+        CCommunication lCom=new CCommunication();
+        lCom.execute(lParams);
+        /*Intent lIntent = new Intent(this,CHubActivity.class);
+        startActivity(lIntent);*/
 
     }
 

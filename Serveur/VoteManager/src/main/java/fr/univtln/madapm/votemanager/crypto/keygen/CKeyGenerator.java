@@ -28,7 +28,7 @@ public class CKeyGenerator extends Random {
     private final CKeyNumberGenerator mKeyNumberGenerator = new CKeyNumberGenerator();
     private final BigInteger mPublicKey = mKeyNumberGenerator.getPublicKey();
 
-    private final Map<UUID, SecretKey> mClef = new HashMap<>();
+    private final Map<UUID, SecretKeySpec> mClef = new HashMap<>();
 
     /**
      * Génère la clef privé automatiquement à sa construction
@@ -99,7 +99,7 @@ public class CKeyGenerator extends Random {
     }
     */
 
-    public Map<UUID, SecretKey> getClef() {
+    public Map<UUID, SecretKeySpec> getClef() {
         return mClef;
     }
 

@@ -31,7 +31,7 @@ public class CKeyGenerator extends Random {
     //private final byte[] mPublicKey = randByte(new byte[SIZES]); // 16 bytes = 128 bits
 
     //partie spécifique au serveur
-    private SecretKey mClef;
+    private SecretKeySpec mClef;
     //fin de la partie spécifique au serveur
 
     /**
@@ -103,7 +103,7 @@ public class CKeyGenerator extends Random {
     }
     */
 
-    public SecretKey getClef() {
+    public SecretKeySpec getClef() {
         return mClef;
     }
 

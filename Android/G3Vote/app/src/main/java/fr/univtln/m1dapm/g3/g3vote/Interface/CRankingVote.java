@@ -81,7 +81,7 @@ public class CRankingVote extends AppCompatActivity {
                 }
                 Log.i("Choix : ", lChoiceList.toString());
                 //TODO:Envoyer le vote au serveur et afficher un toast pour confirmer le vote
-                CTaskParam lParams=new CTaskParam(CRequestTypesEnum.add_choices,lChoiceList);
+                CTaskParam lParams=new CTaskParam(CRequestTypesEnum.add_choices,lChoiceList,"rank");
                 CCommunication lCom=new CCommunication();
                 lCom.execute(lParams);
                 // On termine l'activité et on retourne sur la page principale

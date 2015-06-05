@@ -191,9 +191,9 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
 		handleNotification(getIntent().getExtras());
 
         //envoi regId to server
-        /*CTaskParam lParam = new CTaskParam(CRequestTypesEnum.regId_user,"regId/"+mMail+"/"+mRegid);
+        CTaskParam lParam = new CTaskParam(CRequestTypesEnum.regId_user,"regId/"+mMail+"/"+mRegid);
         lCom = new CCommunication();
-        lCom.execute(lParam);*/
+        lCom.execute(lParam);
 
     }
     /**

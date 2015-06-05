@@ -56,7 +56,7 @@ public class CUser {
     @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL, mappedBy="mOrganisateur")
     private List<CVote> mOrganisedVotes=null;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinTable(name="invitation", joinColumns = {@JoinColumn(name="ID_UTILISATEUR",nullable = false,updatable = false)},
             inverseJoinColumns = {@JoinColumn(name="ID_VOTE",nullable = false,updatable = false)})
     private List<CVote> mParticipatingVotes;

@@ -160,7 +160,7 @@ public class CCrypto {
      * Méthode qui retourne la Map dans laquelle sont stockées les clef public
      * @return Map des clef public correspondant aux identifiants
      */
-    public Map getKeyMap(){
+    public Map<UUID, SecretKeySpec> getKeyMap(){
         return sKeyGenerator.getClef();
     }
 }
