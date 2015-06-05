@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CChoice;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CVoixCandidat;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
 import fr.univtln.m1dapm.g3.g3vote.R;
@@ -67,6 +68,17 @@ public class CNoteVote extends AppCompatActivity {
 
     public void validenotevote (View view){
 
+        List<CChoice> lListechoix;
+        lListechoix=new ArrayList<CChoice>();
+
+        for (int i = 0; i <mNotecandidat.size() ; i++) {
+            CChoice ltmpchoix=new CChoice();
+            ltmpchoix.setIdVote(mVote.getIdVote());
+            ltmpchoix.setIdUser(CHubActivity.getsLoggedUser().getUserId());
+            ltmpchoix.setIdCandidate(mNotecandidat.get(i).getMcandidat().getIdCandidat());
+            ltmpchoix.setScore(mNotecandidat.get(i).getMvote());
+            lListechoix.add(ltmpchoix);
+        }
         Log.i("test","liste des candidat et leur point "+mNotecandidat);
         Intent lIntent = new Intent(this,CHubActivity.class);
         startActivity(lIntent);
