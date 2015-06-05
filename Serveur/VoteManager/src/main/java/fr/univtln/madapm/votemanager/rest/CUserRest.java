@@ -46,11 +46,21 @@ public class CUserRest {
 
 
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("/{pId}")
-    public CUser read(@PathParam("pId") int pId) {
+     @Produces(MediaType.APPLICATION_JSON)
+     @Path("/{pId}")
+     public CUser read(@PathParam("pId") int pId) {
         CUserDAO lUserDAO=new CUserDAO();
         return lUserDAO.findByID(pId);
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/all")
+    public Response getAllUsers() {
+        CUserDAO lUserDAO=new CUserDAO();
+        List<CUser> lUsers=lUserDAO.findByNativeQuery("SELECT ID_UTILISATEUR, MAIL, PRENOM, NOM FROM utilisateur",CUser.class);
+
+        return Response.status(200).entity(lUsers).build();
     }
 
     @GET
