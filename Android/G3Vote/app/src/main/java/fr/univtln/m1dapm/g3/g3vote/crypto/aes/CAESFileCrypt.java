@@ -32,9 +32,9 @@ public class CAESFileCrypt {
      * @param pSource Chemin du fichier à crypter
      * @param pCible Chemin du fichier qui contiendra les données cryptées
      * @return La fonction retour 1 si l'opération a réussit, 0 si elle a échoué
-     * @throws NoSuchAlgorithmException
-     * @throws NoSuchPaddingException
-     * @throws InvalidKeyException
+     * @throws NoSuchAlgorithmException erreur algorithme
+     * @throws NoSuchPaddingException erreur padding
+     * @throws InvalidKeyException clef invalide
      */
     public int encrypterFichier(SecretKey pClef, String pSource, String pCible)
             throws NoSuchAlgorithmException, NoSuchPaddingException,
@@ -48,9 +48,9 @@ public class CAESFileCrypt {
      * @param pSource Chemin du fichier à décrypter
      * @param pCible Chemin du fichier qui contiendra les données décryptées
      * @return La fonction retour 1 si l'opération a réussit, 0 si elle a échoué
-     * @throws NoSuchAlgorithmException
-     * @throws NoSuchPaddingException
-     * @throws InvalidKeyException
+     * @throws NoSuchAlgorithmException erreur algorithme
+     * @throws NoSuchPaddingException erreur padding
+     * @throws InvalidKeyException clef invalide
      */
     public int decrypterFichier(SecretKey pClef, String pSource, String pCible)
             throws NoSuchAlgorithmException, NoSuchPaddingException,
