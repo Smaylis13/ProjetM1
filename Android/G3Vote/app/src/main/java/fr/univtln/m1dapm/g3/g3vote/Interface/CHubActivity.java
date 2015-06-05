@@ -171,10 +171,7 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
                             .setTabListener(this));
         }
 
-        // issma
-        //mMail=sLoggedUser.getEmail();
-        mMail="test@gmail.com";
-
+        mMail=sLoggedUser.getEmail();
         mGcm = GoogleCloudMessaging.getInstance(this);
 
         if(getIntent().getAction()!=null){
@@ -194,9 +191,9 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
 		handleNotification(getIntent().getExtras());
 
         //envoi regId to server
-        CTaskParam lParam = new CTaskParam(CRequestTypesEnum.regId_user,"regId/"+mMail+"/"+mRegid);
+        /*CTaskParam lParam = new CTaskParam(CRequestTypesEnum.regId_user,"regId/"+mMail+"/"+mRegid);
         lCom = new CCommunication();
-        lCom.execute(lParam);
+        lCom.execute(lParam);*/
 
     }
     /**
@@ -269,9 +266,9 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
 
     /**
      * @return Application's {@code SharedPreferences}.
-     * @param context
+     * @param pContext
      */
-    private SharedPreferences getGcmPreferences(Context context){
+    private SharedPreferences getGcmPreferences(Context pContext){
         // This sample app persists the registration ID in shared preferences,
         return getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
     }
@@ -307,7 +304,6 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
                     Log.i(GCM_TAG, "GCM Registration Token: " + mRegid);
                     mRegid = mGcm.register(GCM_SENDER_ID);
                     msg = "Device registered, registration ID=" + mRegid;
-                    Log.i(GCM_TAG, "TOTO : "+msg);
                     // You should send the registration ID to your server over
                     // HTTP, so it can use GCM/HTTP or CCS to send messages to your app.
                     sendRegistrationIdToBackend();
@@ -328,13 +324,11 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
 
             @Override
             protected void onPostExecute(String msg){
-                Log.i(GCM_TAG,"Avant l'envoi....");
                 CTaskParam lParam=new CTaskParam(CRequestTypesEnum.regId_user,"regId/"+mMail+"/"+mRegid);
                 CCommunication lCom=new CCommunication();
                 lCom.execute(lParam);
                 //Send vers le serveur
                 //sendToServer("register_id:"+mRegid);
-                Log.i(GCM_TAG,"Après l'envoi..." + msg);
 
             }
         }.execute(null, null, null);
@@ -368,17 +362,17 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
      * Stores the registration ID and the app versionCode in the application's
      * {@code SharedPreferences}.
      *
-     * @param context
+     * @param pContext
      *            application's context.
-     * @param regId
+     * @param pRegId
      *            registration ID
      */
-    private void storeRegistrationId(Context context, String regId){
-        final SharedPreferences prefs = getGcmPreferences(context);
-        int appVersion = getAppVersion(context);
+    private void storeRegistrationId(Context pContext, String pRegId){
+        final SharedPreferences prefs = getGcmPreferences(pContext);
+        int appVersion = getAppVersion(pContext);
         Log.i(GCM_TAG, "Saving regId on app version " + appVersion);
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putString(PREFS_PROPERTY_REG_ID, regId);
+        editor.putString(PREFS_PROPERTY_REG_ID, pRegId);
         editor.putInt(PROPERTY_APP_VERSION, appVersion);
         editor.commit();
     }
