@@ -49,4 +49,16 @@
         android:layout_below="@+id/removeChoiceButton">
     </ListView>
 
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/nbgagnan"
+        android:layout_toLeftOf="@+id/button"
+        android:inputType="number"
+        android:maxLength="3"
+        android:hint="nombre de gagnant"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/removeChoiceButton"
+        android:layout_toEndOf="@+id/removeChoiceButton" />
+
 </RelativeLayout>
