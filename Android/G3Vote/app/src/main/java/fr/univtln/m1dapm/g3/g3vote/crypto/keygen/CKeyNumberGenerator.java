@@ -1,5 +1,7 @@
 package fr.univtln.m1dapm.g3.g3vote.crypto.keygen;
 
+import android.util.Log;
+
 import java.math.BigInteger;
 import java.util.Random;
 
@@ -32,8 +34,9 @@ public class CKeyNumberGenerator extends Random {
 
     private final BigInteger mPrime = BigInteger.probablePrime(SIZE, mRandomParam);
     private final BigInteger mGenerator = BigInteger.probablePrime(SIZE, mRandomParam);
+    private final BigInteger mKeyParam=BigInteger.valueOf(sGeneratorVALUE).pow(sPetitParam).mod(BigInteger.valueOf(sPrimeVALUE));
 
-    private final BigInteger mKeyParam = BigInteger.valueOf((long) Math.pow(sGeneratorVALUE, sPetitParam) % sPrimeVALUE);
+    //private final BigInteger mKeyParam = BigInteger.valueOf((long) Math.pow(sGeneratorVALUE, sPetitParam) % sPrimeVALUE);
 
     public int getPValue() {
         return sPrimeVALUE;
