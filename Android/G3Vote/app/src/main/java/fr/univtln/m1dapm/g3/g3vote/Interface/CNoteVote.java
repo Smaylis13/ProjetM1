@@ -51,7 +51,7 @@ public class CNoteVote extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cnote_vote);
-
+        sContext=getApplicationContext();
         // prepare la nouvelle forme de boite de dialogue
 
 
