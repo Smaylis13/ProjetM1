@@ -88,7 +88,6 @@ public class CVoteConfSTV extends AppCompatActivity {
         hideSoftKeyboard(this);
         mListCandidat.add(new CCandidate());
         mAdapter.notifyDataSetChanged();
-        scrollMyListViewToBottom();
     }
 
     public void removeChoiceButton(View pView) {
@@ -122,15 +121,6 @@ public class CVoteConfSTV extends AppCompatActivity {
         return super.onOptionsItemSelected(pItem);
     }
 
-    private void scrollMyListViewToBottom() {
-        mList.post(new Runnable() {
-            @Override
-            public void run() {
-                // Select the last row so it will scroll into view...
-                mList.setSelection(mListCandidat.size() - 1);
-            }
-        });
-    }
 
 
     @Override

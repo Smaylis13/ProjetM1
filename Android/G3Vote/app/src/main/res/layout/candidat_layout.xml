@@ -23,6 +23,7 @@ android:padding="10dp"
     android:layout_alignTop="@+id/imageCandidat"
     android:textStyle="bold"
     tools:text="Nom Candidat"
+    android:clickable="true"
     />
 
 <TextView
