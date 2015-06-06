@@ -17,6 +17,9 @@ public class CRule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="ID_REGLE")
     private int mIdRegle;
+
+    @Column(name="NOM_REGLE")
+    private String mRuleName;
     @Column(name="DESCRIPTION_REGLE")
     private String mDescription;
 
@@ -27,12 +30,24 @@ public class CRule {
 
     public CRule(){}
 
-    public CRule(int pIdRegle, String pDescription) {
+    public CRule(int pIdRegle,String pName, String pDescription) {
         this.mIdRegle = pIdRegle;
+        this.mRuleName=pName;
         this.mDescription = pDescription;
     }
 
+    public CRule(String pName, String pDescription) {
+        this.mRuleName=pName;
+        this.mDescription = pDescription;
+    }
 
+    public String getRuleName() {
+        return mRuleName;
+    }
+
+    public void setRuleName(String mRuleName) {
+        this.mRuleName = mRuleName;
+    }
 
     public String getDescription() {
         return mDescription;

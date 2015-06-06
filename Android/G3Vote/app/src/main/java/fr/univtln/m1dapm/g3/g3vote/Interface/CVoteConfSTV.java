@@ -67,7 +67,7 @@ public class CVoteConfSTV extends AppCompatActivity {
         hideSoftKeyboard(this);
         int j=0;
         mAdapter.notifyDataSetChanged();
-        int lnbgagnantint = Integer.parseInt(lnbgagnant.toString());
+        int lnbgagnantint = Integer.parseInt(lnbgagnant.getText().toString());
         // on verifie que tous les champs sont bien remplis
         for (int i = 0; i < mListCandidat.size() ; i++) {
             if ((mListCandidat.get(i).getNomCandidat()==null) || (mListCandidat.get(i).getDescriptionCandidat()==null )){

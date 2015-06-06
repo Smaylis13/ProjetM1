@@ -8,23 +8,38 @@ import java.util.List;
 public class CRule {
 
     private int mIdRegle;
-
+    private String mRuleName;
     private String mDescription;
 
     private List<CType> mListTypesAllow;
 
     public CRule(){}
 
-    public CRule(String pDescription){
-        this.mDescription=pDescription;
+    public CRule(int pIdRegle,String pName, String pDescription) {
+        this.mIdRegle = pIdRegle;
+        this.mRuleName=pName;
+        this.mDescription = pDescription;
     }
 
-    public CRule(int pIdRegle, String pDescription) {
-        this.mIdRegle = pIdRegle;
+    public CRule(String pName, String pDescription) {
+        this.mRuleName=pName;
         this.mDescription = pDescription;
     }
 
     public void setDescription(String pDescription){
         this.mDescription=pDescription;
     }
+
+    public String getRuleName() {
+        return mRuleName;
+    }
+
+    public void setRuleName(String mRuleName) {
+        this.mRuleName = mRuleName;
+    }
+
+    public String getDescription() {
+        return mDescription;
+    }
+
 }
