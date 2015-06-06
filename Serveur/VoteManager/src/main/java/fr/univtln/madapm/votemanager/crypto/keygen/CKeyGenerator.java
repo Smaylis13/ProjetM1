@@ -28,7 +28,7 @@ public class CKeyGenerator extends Random {
     private final CKeyNumberGenerator mKeyNumberGenerator = new CKeyNumberGenerator();
     private final BigInteger mPublicKey = mKeyNumberGenerator.getPublicKey();
 
-    private final Map<UUID, SecretKeySpec> mClef = new HashMap<>();
+    private final Map<UUID, SecretKey> mClef = new HashMap<>();
 
     /**
      * Génère la clef privé automatiquement à sa construction
@@ -78,7 +78,7 @@ public class CKeyGenerator extends Random {
         //System.out.println(Arrays.toString(lKey));
         MessageDigest lSha;
         try {
-            lSha = MessageDigest.getInstance(HASH);
+            lSha = MessageDigest.getInstance("SHA-256");
             lKey = lSha.digest(lKey);
             lKey = Arrays.copyOf(lKey, SIZES); // utilise les 128 premier bit
             return new SecretKeySpec(lKey, TRANSFORMATION_STRING);
@@ -99,7 +99,7 @@ public class CKeyGenerator extends Random {
     }
     */
 
-    public Map<UUID, SecretKeySpec> getClef() {
+    public Map<UUID, SecretKey> getClef() {
         return mClef;
     }
 

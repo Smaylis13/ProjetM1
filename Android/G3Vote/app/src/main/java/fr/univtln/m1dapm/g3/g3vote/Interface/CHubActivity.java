@@ -32,6 +32,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.gson.reflect.TypeToken;
 
+import org.apache.commons.codec.DecoderException;
+import org.apache.commons.codec.binary.Hex;
 import org.java_websocket.client.WebSocketClient;
 
 import java.io.BufferedInputStream;
@@ -61,6 +63,7 @@ import fr.univtln.m1dapm.g3.g3vote.Entite.CUser;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
 import fr.univtln.m1dapm.g3.g3vote.R;
 import fr.univtln.m1dapm.g3.g3vote.Service.CGcmIntentService;
+import fr.univtln.m1dapm.g3.g3vote.crypto.CCrypto;
 
 public class CHubActivity extends AppCompatActivity implements ActionBar.TabListener {
 
@@ -594,6 +597,7 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
             String lResponse=null;
             int lCode;
             CTaskParam lParams=(CTaskParam)pObject[0];
+            CCrypto lCrypto=new CCrypto();
 
             try {
                 switch (lParams.getRequestType()) {
@@ -603,15 +607,17 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
                         Log.e("URL",lUrl.toString());
                         lHttpCon.setDoInput(true);
                         lHttpCon.setRequestMethod("GET");
+                        lHttpCon.setRequestProperty("ID",CLoginActivity.getUniqueKey().toString());
                         lHttpCon.setRequestProperty("Accept", "application/json");
                         lCode=lHttpCon.getResponseCode();
                         Log.e("Test Recup",""+lCode);
                         if(lCode==200) {
                             lIn = new BufferedInputStream(lHttpCon.getInputStream());
                             lResponse = readStream(lIn);
+                            String lDecryptString=lCrypto.publicDecrypt(lCrypto.getKey(), Hex.decodeHex(lResponse.toCharArray()));
                             Type listType = new TypeToken<ArrayList<CVote>>() {}.getType();
                             ObjectMapper lMapper=new ObjectMapper();
-                            ArrayList<CVote> lVotes = lMapper.readValue(lResponse, new TypeReference<ArrayList<CVote>>(){});
+                            ArrayList<CVote> lVotes = lMapper.readValue(lDecryptString, new TypeReference<ArrayList<CVote>>(){});
                             //Log.e("TEST",lVotes.get(lVotes.size()-1).toString());
 
                             Message lMsg=new Message();
@@ -619,24 +625,26 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
                             lMsg.obj=lVotes;
                             mHandler.sendMessage(lMsg);
 
-                        /*Intent lIntent = new Intent(CSubActivity.getsContext(), CHubActivity.class);
-                        lIntent.putParcelableArrayListExtra("GOTTEN_VOTES", lVotes);
-                        lIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        CSubActivity.getsContext().startActivity(lIntent);*/
+                                /*Intent lIntent = new Intent(CSubActivity.getsContext(), CHubActivity.class);
+                                lIntent.putParcelableArrayListExtra("GOTTEN_VOTES", lVotes);
+                                lIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                CSubActivity.getsContext().startActivity(lIntent);*/
                         }
                         else
                             return lCode;
 
                         break;
-                }
-            }catch (ProtocolException e) {
+            }
+        }catch (ProtocolException e) {
             Log.e("CCommunication", e.toString());
         }catch (MalformedURLException e) {
             Log.e("CCommunication", e.toString());
         }catch (IOException e) {
             Log.e("CCommunication", e.toString());
-        }
-        return null;
+        } catch (DecoderException e) {
+                e.printStackTrace();
+            }
+            return null;
         }
 
         @Override

@@ -1,10 +1,13 @@
 package fr.univtln.madapm.votemanager.communication;
 
 import fr.univtln.madapm.votemanager.crypto.CCrypto;
-import org.glassfish.jersey.internal.util.Base64;
+import org.apache.commons.codec.DecoderException;
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.binary.Hex;
 
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -30,22 +33,27 @@ public class CInterceptorHTTPRequest implements ContainerRequestFilter {
         }
         lBaos.flush();
         String lMsg=lBaos.toString();
+        String lId=pContainerRequestContext.getHeaderString("ID");
 
-        if(lCrypted==null||lCrypted=="yes"){
-            /*System.out.println(lMsg);
-            String lId=pContainerRequestContext.getHeaderString("ID");
-            UUID lUUID= UUID.fromString(lId);
-            System.out.println("INTERCEPTOR");
-            lMsg= Base64.decodeAsString(lBaos.toByteArray());
-            CCrypto lCrypto=new CCrypto();
-            System.out.println("CRYPTED MESSAGE  "+lMsg);
-            lMsg=lCrypto.publicDecrypt(lCrypto.getKeyMap().get(lUUID), lBaos.toByteArray());*/
+        if(lId!=null){
+            if(!lId.equals("15128")) {
+                UUID lUUID= UUID.fromString(lId);
+                CCrypto lCrypto = new CCrypto();
+                try {
+                    lMsg = lCrypto.publicDecrypt(lCrypto.getKeyMap().get(lUUID), Hex.decodeHex(lMsg.toCharArray()));
+                } catch (DecoderException e) {
+                    e.printStackTrace();
+                }
+            }
+            pContainerRequestContext.setEntityStream(new ByteArrayInputStream(lMsg.getBytes()));
+
         }
-            //DECODER lMsg
-        System.out.println("ICI   "+lMsg);
-        System.out.println("test "+lCrypted);
+        else{
+            pContainerRequestContext.abortWith(Response.status(500).build());
+        }
 
 
-        pContainerRequestContext.setEntityStream(new ByteArrayInputStream(lMsg.getBytes()));
+
+
     }
 }
