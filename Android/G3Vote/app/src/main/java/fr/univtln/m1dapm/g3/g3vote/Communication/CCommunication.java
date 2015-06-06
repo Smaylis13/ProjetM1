@@ -72,7 +72,7 @@ import org.apache.oltu.oauth2.common.message.types.GrantType;*/
  * Created by ludo on 05/05/15.
  */
 public class CCommunication extends AsyncTask<Object, Void, Integer> {
-    public static final String SERVER_URL="http://192.168.1.92:80/";
+    public static final String SERVER_URL="http://37.59.104.200:80/";
     public final static String LOGGED_USER = "fr.univtln.m1dapm.g3.g3vote.LOGGED_USER";
 
     @Override
