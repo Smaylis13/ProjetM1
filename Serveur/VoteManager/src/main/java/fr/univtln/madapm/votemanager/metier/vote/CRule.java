@@ -10,7 +10,7 @@ import java.util.List;
  * copyright Christian
  */
 @Entity
-@Table(name="regle",uniqueConstraints =@UniqueConstraint(columnNames={"DESCRIPTION_REGLE"}))
+@Table(name="regle")
 public class CRule {
 
     @Id

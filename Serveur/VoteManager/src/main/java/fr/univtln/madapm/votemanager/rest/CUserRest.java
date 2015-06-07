@@ -125,6 +125,7 @@ public class CUserRest {
         List<CUser> lUsers;
         lUsers=lUserDAO.findWithNamedQuery("CUser.findAll",lParams);
         if(lUsers.isEmpty()) {
+            pNewUser.setPassword(mCrypto.getHashed(pNewUser.getPassword()));
             lUserDAO.create(pNewUser);
             return Response.status(201).header("ID", mRequest.getHeader("ID")).entity(mMapper.writeValueAsString(pNewUser.getUserId())).build();
         }
@@ -132,7 +133,7 @@ public class CUserRest {
             CUser lExistingUser=lUsers.get(0);
             lExistingUser.setFirstName(pNewUser.getFirstName());
             lExistingUser.setName(pNewUser.getName());
-            lExistingUser.setPassword(pNewUser.getPassword());
+            lExistingUser.setPassword(mCrypto.getHashed(pNewUser.getPassword()));
             lUserDAO.update(lExistingUser);
             return Response.status(201).header("ID", mRequest.getHeader("ID")).entity(mMapper.writeValueAsString(lExistingUser.getUserId())).build();
         }
@@ -151,7 +152,7 @@ public class CUserRest {
         lUsers=lUserDAO.findWithNamedQuery("CUser.findAll",lParams);
         if(!lUsers.isEmpty()) {
             CUser lFindedUser = lUsers.get(0);
-            if ((pUser.getEmail().equals(lFindedUser.getEmail())) && (pUser.getPassword().equals(lFindedUser.getPassword())))
+            if ((pUser.getEmail().equals(lFindedUser.getEmail())) && (mCrypto.match(pUser.getPassword(),lFindedUser.getPassword()))/*(pUser.getPassword().equals(lFindedUser.getPassword()))*/)
                 try {
                     return Response.status(200).header("ID", mRequest.getHeader("ID")).entity(mMapper.writeValueAsString(lFindedUser)).build();
                 } catch (JsonProcessingException e) {
@@ -173,7 +174,8 @@ public class CUserRest {
         List<CUser> lUsers=lUserDAO.findWithNamedQuery("CUser.findAll",lParams);
         if(!lUsers.isEmpty()){
             CUser lUser=lUsers.get(0);
-            if(lUser.getPassword().equals(pPassword)) {
+            //if(lUser.getPassword().equals(pPassword)) {
+            if(mCrypto.match(pPassword,lUser.getPassword())){
                 lUserDAO.deleteUser(lUser.getUserId());
 
                 return Response.status(Response.Status.OK).header("ID", mRequest.getHeader("ID")).entity("User has been removed").build();
@@ -206,7 +208,7 @@ public class CUserRest {
             if (lUsers.isEmpty()) {
                 lUser.setName(pNewUserParams.getName());
                 lUser.setFirstName(pNewUserParams.getFirstName());
-                lUser.setPassword(pNewUserParams.getPassword());
+                lUser.setPassword(mCrypto.getHashed(pNewUserParams.getPassword()));
                 lUser.setEmail(pNewUserParams.getEmail());
                 return Response.status(200).build();
             }
@@ -217,7 +219,7 @@ public class CUserRest {
         else{
             lUser.setName(pNewUserParams.getName());
             lUser.setFirstName(pNewUserParams.getFirstName());
-            lUser.setPassword(pNewUserParams.getPassword());
+            lUser.setPassword(mCrypto.getHashed(pNewUserParams.getPassword()));
             return Response.status(200).build();
         }
 
