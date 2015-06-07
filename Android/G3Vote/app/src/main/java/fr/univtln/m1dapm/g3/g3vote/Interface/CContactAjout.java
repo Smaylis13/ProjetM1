@@ -16,17 +16,18 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import org.apache.commons.codec.DecoderException;
+import org.apache.commons.codec.binary.Hex;
 import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.protocol.BasicHttpContext;
-import org.apache.http.protocol.HttpContext;
 import org.json.JSONArray;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +35,7 @@ import fr.univtln.m1dapm.g3.g3vote.Communication.CCommunication;
 import fr.univtln.m1dapm.g3.g3vote.Communication.CRequestTypesEnum;
 import fr.univtln.m1dapm.g3.g3vote.Communication.CTaskParam;
 import fr.univtln.m1dapm.g3.g3vote.R;
+import fr.univtln.m1dapm.g3.g3vote.crypto.CCrypto;
 
 public class CContactAjout extends AppCompatActivity {
 
@@ -142,24 +144,36 @@ public class CContactAjout extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    /**
+     * Récupère la liste des utilisateurs et affiche que leurs mail dans la SearchView ( ListView)
+     */
        private class CallAPI extends AsyncTask<String, String, String> {
 
         @Override
         protected String doInBackground(String... params) {
             String text="";
+            String lDecryptString = null;
 
             String lService_url = params[0];
             String pSearch = params[1];
-
-            HttpClient httpClient = new DefaultHttpClient();
-            HttpContext localContext = new BasicHttpContext();
-            HttpGet httpGet = new HttpGet(lService_url);
+            URL lUrl;
+            int lCode;
             try {
-                HttpResponse response = httpClient.execute(httpGet, localContext);
-                HttpEntity entity = response.getEntity();
-                text = getASCIIContentFromEntity(entity);
+                lUrl = new URL(lService_url);
 
-                JSONArray json = new JSONArray(text);
+                HttpURLConnection lHttpCon = (HttpURLConnection) lUrl.openConnection();
+                    lHttpCon.setDoInput(true);
+                    lHttpCon.setRequestMethod("GET");
+                    lHttpCon.setRequestProperty("Accept", "application/json");
+                    lHttpCon.setRequestProperty("ID", CLoginActivity.getUniqueKey().toString());
+                    lCode=lHttpCon.getResponseCode();
+                BufferedInputStream lIn = new BufferedInputStream(lHttpCon.getInputStream());
+                String lResponse = CCommunication.readStream(lIn);
+                CCrypto lCrypto=new CCrypto();
+
+                lDecryptString=lCrypto.publicDecrypt(lCrypto.getKey(), Hex.decodeHex(lResponse.toCharArray()));
+                JSONArray json = new JSONArray(lDecryptString);
 
                 mRes.clear();
                 for (int i = 0; i < json.length(); i++){
@@ -168,7 +182,14 @@ public class CContactAjout extends AppCompatActivity {
                     }
 
                 }
-
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (ProtocolException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (DecoderException e) {
+                e.printStackTrace();
             } catch (Exception e) {
                 Log.e("SEARCH", e.getLocalizedMessage());
                 return "Error";
