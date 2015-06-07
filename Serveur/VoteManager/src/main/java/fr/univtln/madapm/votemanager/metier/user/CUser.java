@@ -2,6 +2,7 @@ package fr.univtln.madapm.votemanager.metier.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import fr.univtln.madapm.votemanager.crypto.CCrypto;
 import fr.univtln.madapm.votemanager.dao.CUserDAO;
 import fr.univtln.madapm.votemanager.metier.vote.CChoice;
 import fr.univtln.madapm.votemanager.metier.vote.CDeleguation;

@@ -1,13 +1,19 @@
 package fr.univtln.madapm.votemanager.rest;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import fr.univtln.madapm.votemanager.CMainServer;
+import fr.univtln.madapm.votemanager.communication.gcm.CContent;
 import fr.univtln.madapm.votemanager.communication.gcm.CPost2Gcm;
 import fr.univtln.madapm.votemanager.dao.CUserDAO;
 import fr.univtln.madapm.votemanager.dao.CVoteDAO;
 import fr.univtln.madapm.votemanager.metier.user.CUser;
 import fr.univtln.madapm.votemanager.metier.vote.CCandidate;
 import fr.univtln.madapm.votemanager.metier.vote.CVote;
+import org.glassfish.grizzly.http.server.Request;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.text.ParseException;
@@ -21,34 +27,38 @@ import java.util.*;
 
 @Path("/vote")
 public class CVoteRest {
+    @Context
+    public Request mRequest;
+
+    private ObjectMapper mMapper=new ObjectMapper();
 
    @GET
    @Path("/{pIdVote}")
    @Produces(MediaType.APPLICATION_JSON)
-   public Response getVote(@PathParam("pIdVote") int pId){
+   public Response getVote(@PathParam("pIdVote") int pId) throws JsonProcessingException {
        CVoteDAO lVoteDAO=new CVoteDAO();
        CVote lVote=lVoteDAO.findById(pId);
        if(lVote!=null)
-           return Response.status(200).entity(lVote).build();
+           return Response.status(200).header("ID", mRequest.getHeader("ID")).entity(mMapper.writeValueAsString(lVote)).build();
        return Response.status(409).build();
    }
 
     @GET
     @Path("/{pIdVote}/candidats")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getCandidates(@PathParam("pIdVote") int pId){
+    public Response getCandidates(@PathParam("pIdVote") int pId) throws JsonProcessingException {
         CVoteDAO lVoteDAO=new CVoteDAO();
         CVote lVote=lVoteDAO.findById(pId);
         List<CCandidate> lCandidates=lVote.getCandidates();
-        if(lCandidates!=null)
-            return Response.status(200).entity(lCandidates).build();
+        if (lCandidates != null)
+            return Response.status(200).header("ID", mRequest.getHeader("ID")).entity(mMapper.writeValueAsString(lCandidates)).build();
         return Response.status(409).build();
     }
 
     @GET
     @Path("/all/{pIdUser}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getVotesOfUser(@PathParam("pIdUser") int pId){
+    public Response getVotesOfUser(@PathParam("pIdUser") int pId) throws JsonProcessingException {
 
         SimpleDateFormat lSdf = new SimpleDateFormat("yyyy-MM-dd");
         Date lToday=new Date();
@@ -80,8 +90,8 @@ public class CVoteRest {
             lParams.put("User", lUser);
             lVotes = lVoteDAO.findWithNamedQuery("CVote.findOrgaByUser", lParams);
         }
-        String lRequest="select * from vote where ID_UTILISATEUR="+pId+" or ID_VOTE in (select ID_VOTE from invitation where ID_UTILISATEUR="+pId+") ;";
-        lVotes=lVoteDAO.findByNativeQuery(lRequest,CVote.class);
+        String lRequestSQL="select * from vote where ID_UTILISATEUR="+pId+" or ID_VOTE in (select ID_VOTE from invitation where ID_UTILISATEUR="+pId+") ;";
+        lVotes=lVoteDAO.findByNativeQuery(lRequestSQL,CVote.class);
         for(CVote lVote:lVotes){
             lParams.clear();
             lParams.put("User",lUser);
@@ -98,7 +108,7 @@ public class CVoteRest {
             lVoteDAO.update(lVote);
         }
         //System.out.println(lVotes);
-        return Response.status(200).entity(lVotes).build();
+        return Response.status(200).header("ID", mRequest.getHeader("ID")).entity(mMapper.writeValueAsString(lVotes)).build();
     }
 
     @PUT

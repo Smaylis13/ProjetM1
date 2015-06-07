@@ -1,9 +1,12 @@
 package fr.univtln.madapm.votemanager.rest;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.univtln.madapm.votemanager.dao.CResultDAO;
 import fr.univtln.madapm.votemanager.metier.vote.CResult;
+import org.glassfish.grizzly.http.server.Request;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -13,6 +16,11 @@ import javax.ws.rs.core.Response;
 
 @Path("/result")
 public class CResultRest {
+
+    @Context
+    public Request mRequest;
+
+    private ObjectMapper mMapper=new ObjectMapper();
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -34,8 +42,7 @@ public class CResultRest {
     public Response deleteResult(@PathParam("pId") int pId){
         CResultDAO lResultDAO = new CResultDAO();
         lResultDAO.deleteResult(pId);
-        return Response.status(Response.Status.NO_CONTENT)// 204
-                .entity("Result has been removed").build();
+        return Response.status(Response.Status.NO_CONTENT).header("ID", mRequest.getHeader("ID")).entity("Result has been removed").build();
     }
 
     @POST

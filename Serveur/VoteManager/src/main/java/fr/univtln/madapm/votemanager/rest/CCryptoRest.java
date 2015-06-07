@@ -3,6 +3,7 @@ package fr.univtln.madapm.votemanager.rest;
 import fr.univtln.madapm.votemanager.crypto.CCrypto;
 import fr.univtln.madapm.votemanager.crypto.CCryptoBean;
 
+import javax.crypto.spec.SecretKeySpec;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;

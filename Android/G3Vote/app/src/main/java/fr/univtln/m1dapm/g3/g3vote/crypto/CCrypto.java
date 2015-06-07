@@ -1,5 +1,7 @@
 package fr.univtln.m1dapm.g3.g3vote.crypto;
 
+import android.util.Log;
+
 import java.math.BigInteger;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -71,7 +73,7 @@ public class CCrypto {
      * @param pCryptData Données à décrypter
      * @return text en clair
      */
-    public String publicDecrypt(SecretKeySpec pSecretKeySpec, byte[] pCryptData){
+    public String publicDecrypt(SecretKey pSecretKeySpec, byte[] pCryptData){
         return AESCRYPT.decrypt(pSecretKeySpec, pCryptData);
     }
 
@@ -107,9 +109,8 @@ public class CCrypto {
      * @param pParam Paramètre reçu pour générer la clef de chiffrement commune
      */
     public void receiveKeyParam(BigInteger pParam){
-        SecretKeySpec lK = KEYGENERATOR.specificKeyKeyGen(BigInteger.valueOf((long)
-                (Math.pow(pParam.doubleValue(), KEYGENERATOR.getKeyNumberGenerator().getab())
-                        % KEYGENERATOR.getKeyNumberGenerator().getPValue())).toByteArray());
+        BigInteger lParam=pParam.pow(KEYGENERATOR.getKeyNumberGenerator().getab()).mod(BigInteger.valueOf(KEYGENERATOR.getKeyNumberGenerator().getPValue()));
+        SecretKeySpec lK = KEYGENERATOR.specificKeyKeyGen(lParam.toByteArray());
         KEYGENERATOR.setClef(lK); //La conserve en mémoire
     }
 

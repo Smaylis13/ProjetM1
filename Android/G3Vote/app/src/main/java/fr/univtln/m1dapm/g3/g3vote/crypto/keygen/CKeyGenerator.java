@@ -1,5 +1,7 @@
 package fr.univtln.m1dapm.g3.g3vote.crypto.keygen;
 
+import android.util.Log;
+
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -82,7 +84,7 @@ public class CKeyGenerator extends Random {
         //System.out.println(Arrays.toString(lKey));
         MessageDigest lSha;
         try {
-            lSha = MessageDigest.getInstance("SHA-1");
+            lSha = MessageDigest.getInstance("SHA-256");
             lKey = lSha.digest(lKey);
             lKey = Arrays.copyOf(lKey, SIZES); // utilise les 128 premier bit
             return new SecretKeySpec(lKey, TRANSFORMATION_STRING);
