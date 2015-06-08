@@ -2,9 +2,7 @@ package fr.univtln.m1dapm.g3.g3vote.Algorithme.VoteMajoritaire;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Majority Judjement
@@ -68,7 +66,7 @@ public class CChoiceVM {
         mNotes.add(pNote);
     }
     /**
-     * Supprime un note ( index en paramètre
+     * Supprime une note ( index en paramètre )
      * @param pIndex
      */
     public void subNote(int pIndex){
