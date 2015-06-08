@@ -3,7 +3,7 @@ package fr.univtln.m1dapm.g3.g3vote.Entite;
 /**
  * Created by ludo on 05/05/15.
  */
-public class CResult {
+public class CResult implements Comparable<CResult>{
 
     private int mIdResultat;
 
@@ -53,5 +53,13 @@ public class CResult {
 
     public void setOrder(int pOrder) {
         this.mOrder = pOrder;
+    }
+
+    @Override
+    public int compareTo(CResult pCandidat2) {
+        if(this.getOrder() > pCandidat2.getOrder())
+            return 1;
+        else
+            return 0;
     }
 }
