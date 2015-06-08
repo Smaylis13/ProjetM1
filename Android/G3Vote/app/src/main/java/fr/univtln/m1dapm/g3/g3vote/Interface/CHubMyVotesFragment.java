@@ -91,14 +91,17 @@ public class CHubMyVotesFragment extends Fragment implements AdapterView.OnItemC
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        //Intent lIntent = new Intent(getActivity(), CRankingVote.class);
+        Intent lIntent ;
         CVote lVote = (CVote) sList.getItemAtPosition(position);
         // Si le vote est actif, on envoie sur la page de vote
         if(lVote.getStatusVote()) {
-            Intent lIntent;
             if (lVote.getTypes().getNom().equals("STV") || lVote.getTypes().getNom().equals("Kemeny-Young")) {
                 lIntent = new Intent(getActivity(), CRankingVote.class);
-            } else {
+            } else if (lVote.getTypes().getNom().equals("Uninominal à 1 tour")){
                 lIntent = new Intent(getActivity(), CVoteUninominal.class);
+            } else {
+                lIntent = new Intent(getActivity(),CNoteVote.class);
             }
 
 
@@ -107,11 +110,14 @@ public class CHubMyVotesFragment extends Fragment implements AdapterView.OnItemC
         }
         // Sinon, on envoie sur la page des résultats
         else {
-            Intent lIntent;
             if (lVote.getTypes().getNom().equals("STV") || lVote.getTypes().getNom().equals("Kemeny-Young")) {
                 lIntent = new Intent(getActivity(), CResultRankingActivity.class);
-            } else {
+            } else if (lVote.getTypes().getNom().equals("Uninominal à 1 tour")) {
                 lIntent = new Intent(getActivity(), CResultUninominalActivity.class);
+            } else{
+
+                lIntent = new Intent(getActivity(), CNoteVote.class);
+
             }
 
 

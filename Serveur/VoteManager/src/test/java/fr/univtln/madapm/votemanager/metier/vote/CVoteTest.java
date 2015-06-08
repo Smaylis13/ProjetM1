@@ -41,8 +41,8 @@ public class CVoteTest extends TestCase {
 
         CType type1 = new CType(1, "type1", "type");
 
-        CRule regle1 = new CRule(1, "Regle1");
-        CRule regle2 = new CRule(2, "Regle2");
+        CRule regle1 = new CRule("Nom1","Regle1");
+        CRule regle2 = new CRule("Nom2", "Regle2");
         java.util.List<CRule> regles = new ArrayList<>();
         regles.add(regle1);
         regles.add(regle2);

@@ -29,6 +29,9 @@ public class CResult {
     @OneToOne(fetch= FetchType.LAZY, cascade ={CascadeType.MERGE, CascadeType.PERSIST},optional=false)
     private CCandidate mCandidate;
 
+    @Transient
+    private int mPercent;
+
     public CResult(){}
     public CResult(int pIdResultat, int pOrder, CVote pVote, CCandidate pCandidate) {
         this.mIdResultat = pIdResultat;
@@ -60,6 +63,14 @@ public class CResult {
 
     public void setCandidat(CCandidate pCandidate) {
         this.mCandidate = pCandidate;
+    }
+
+    public int getOrder() {
+        return mOrder;
+    }
+
+    public void setOrder(int pOrder) {
+        this.mOrder = pOrder;
     }
 
     @Override

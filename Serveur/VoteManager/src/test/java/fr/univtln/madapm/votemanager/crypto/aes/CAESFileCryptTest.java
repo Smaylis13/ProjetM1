@@ -4,6 +4,8 @@ import fr.univtln.madapm.votemanager.crypto.keygen.CKeyGenerator;
 import junit.framework.TestCase;
 
 import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
@@ -26,7 +28,7 @@ public class CAESFileCryptTest extends TestCase {
 
         CAESCrypt aesCrypt = new CAESCrypt();
         byte[] lCryptData = aesCrypt.encrypt(lKeyGenerator.getPrivateKey(), lData);
-        System.out.println(aesCrypt.decrypt(lKeyGenerator.getPrivateKey(), lCryptData));
+        System.out.println(aesCrypt.decrypt((SecretKeySpec)lKeyGenerator.getPrivateKey(), lCryptData));
 
         System.out.println("Test fichier");
 

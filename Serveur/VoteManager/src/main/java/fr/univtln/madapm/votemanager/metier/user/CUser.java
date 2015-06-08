@@ -2,6 +2,7 @@ package fr.univtln.madapm.votemanager.metier.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import fr.univtln.madapm.votemanager.crypto.CCrypto;
 import fr.univtln.madapm.votemanager.dao.CUserDAO;
 import fr.univtln.madapm.votemanager.metier.vote.CChoice;
 import fr.univtln.madapm.votemanager.metier.vote.CDeleguation;
@@ -56,7 +57,7 @@ public class CUser {
     @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL, mappedBy="mOrganisateur")
     private List<CVote> mOrganisedVotes=null;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinTable(name="invitation", joinColumns = {@JoinColumn(name="ID_UTILISATEUR",nullable = false,updatable = false)},
             inverseJoinColumns = {@JoinColumn(name="ID_VOTE",nullable = false,updatable = false)})
     private List<CVote> mParticipatingVotes;
@@ -87,6 +88,10 @@ public class CUser {
         for(CVote v:mParticipatingVotes)
             lIdVotes.add(v.getIdVote());
         return lIdVotes;
+    }
+
+    public void addParticipatingVotes(CVote pVote){
+        mParticipatingVotes.add(pVote);
     }
 
     public int getUserId() {

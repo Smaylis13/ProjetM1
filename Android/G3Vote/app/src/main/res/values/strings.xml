@@ -106,4 +106,18 @@
     <string name="supression_boutton">supprimer compte</string>
     <string name="title_activity_ccontact_supression">Suppression du contact</string>
 
+    <string name="title_activity_cnote_vote">CNoteVote</string>
+
+    <string-array name="notepossible">
+        <item>Excellent</item>
+        <item>Tres bien</item>
+        <item>Bien</item>
+        <item>Assez bien</item>
+        <item>Insuffisant</item>
+        <item>A rejeter</item>
+    </string-array>
+    <string name="title_activity_spinnertest">Spinnertest</string>
+
+
+
 </resources>

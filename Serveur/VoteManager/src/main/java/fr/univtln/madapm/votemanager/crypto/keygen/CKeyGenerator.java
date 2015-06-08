@@ -78,7 +78,7 @@ public class CKeyGenerator extends Random {
         //System.out.println(Arrays.toString(lKey));
         MessageDigest lSha;
         try {
-            lSha = MessageDigest.getInstance(HASH);
+            lSha = MessageDigest.getInstance("SHA-256");
             lKey = lSha.digest(lKey);
             lKey = Arrays.copyOf(lKey, SIZES); // utilise les 128 premier bit
             return new SecretKeySpec(lKey, TRANSFORMATION_STRING);

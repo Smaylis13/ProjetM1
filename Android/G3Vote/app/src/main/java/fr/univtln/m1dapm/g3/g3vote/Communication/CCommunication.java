@@ -10,6 +10,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import org.apache.commons.codec.DecoderException;
+import org.apache.commons.codec.binary.Hex;
 import org.apache.oltu.oauth2.client.OAuthClient;
 import org.apache.oltu.oauth2.client.URLConnectionClient;
 import org.apache.oltu.oauth2.client.request.OAuthClientRequest;
@@ -36,6 +38,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.crypto.spec.SecretKeySpec;
+
 import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CChoice;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CCryptoBean;
@@ -47,10 +51,12 @@ import fr.univtln.m1dapm.g3.g3vote.Interface.CHubContactFragment;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CHubMyVotesFragment;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CLoginActivity;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CModifCompte;
+import fr.univtln.m1dapm.g3.g3vote.Interface.CNoteVote;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CRankingVote;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CSubActivity;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CSuppressionCompte;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CVoteUninominal;
+import fr.univtln.m1dapm.g3.g3vote.crypto.CCrypto;
 
 /*import com.google.gson.Gson;
 
@@ -80,6 +86,10 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
         ObjectMapper lMapper=new ObjectMapper();
         int lCode;
         CTaskParam lParams=(CTaskParam)pObject[0];
+        CCrypto lCrypto=new CCrypto();
+        byte[] lMessageBytes;
+        String lMessageCrypte;
+        String lDecryptString;
 
         try {
             switch (lParams.getRequestType()) {
@@ -88,6 +98,7 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                     lHttpCon = (HttpURLConnection) lUrl.openConnection();
                     Log.i("GCM_TAG",SERVER_URL+"user/"+lParams.getObject());
                     lHttpCon.setRequestMethod("POST");
+                    lHttpCon.setRequestProperty("ID", CLoginActivity.getUniqueKey().toString());
                     lHttpCon.setRequestProperty("Content-Type", "application/json");
                     lHttpCon.setRequestProperty("Accept", "application/json");
                     lCode=lHttpCon.getResponseCode();
@@ -104,24 +115,27 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
 
                     String lJsonString=lMapper.writeValueAsString(lUser);
                     JSONObject lUserOBJ = new JSONObject(lJsonString);
-                    Log.e("TEST",lUserOBJ.toString());
-                    Log.e("TEST", lUrl.toString());
+                    lMessageBytes=lCrypto.publicEncrypt(lUserOBJ.toString(),(SecretKeySpec)lCrypto.getKey());
+                    lMessageCrypte = new String(Hex.encodeHex(lMessageBytes));
+
                     lHttpCon.setDoOutput(true);
                     lHttpCon.setDoInput(true);
                     lHttpCon.setRequestMethod("POST");
-
+                    lHttpCon.setRequestProperty("ID", CLoginActivity.getUniqueKey().toString());
                     lHttpCon.setRequestProperty("Content-Type", "application/json");
                     lHttpCon.setRequestProperty("Accept", "application/json");
                     lOut = new OutputStreamWriter(lHttpCon.getOutputStream());
                     //lOut=lHttpCon.getOutputStream();
-                    lOut.write(lUserOBJ.toString());
+                    lOut.write(lMessageCrypte);
+
                     lOut.flush();
                     lCode=lHttpCon.getResponseCode();
                     if(lCode==200) {
                         //lOut.close();
                         lIn = new BufferedInputStream(lHttpCon.getInputStream());
                         lResponse = readStream(lIn);
-                        CUser lLoggedUser=lMapper.readValue(lResponse,CUser.class);
+                        lDecryptString=lCrypto.publicDecrypt(lCrypto.getKey(),Hex.decodeHex(lResponse.toCharArray()));
+                        CUser lLoggedUser=lMapper.readValue(lDecryptString,CUser.class);
                         Intent lLogIntent=new Intent(CLoginActivity.getsContext(),CHubActivity.class);
                         lLogIntent.putExtra(LOGGED_USER, lLoggedUser);
                         lLogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -156,23 +170,25 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                     CUser lNewUser = (CUser) lParams.getObject();
                     String lJsonStringNewUser=lMapper.writeValueAsString(lNewUser);
                     JSONObject lNewUserOBJ = new JSONObject(lJsonStringNewUser);
-                    Log.e("TEST",lUrl.toString());
-                    Log.e("TEST",lJsonStringNewUser);
+                    lMessageBytes=lCrypto.publicEncrypt(lNewUserOBJ.toString(),(SecretKeySpec)lCrypto.getKey());
+                    lMessageCrypte = new String(Hex.encodeHex(lMessageBytes));
                     lHttpCon.setDoOutput(true);
                     lHttpCon.setDoInput(true);
                     lHttpCon.setRequestMethod("PUT");
+                    lHttpCon.setRequestProperty("ID", CLoginActivity.getUniqueKey().toString());
                     lHttpCon.setRequestProperty("Content-Type", "application/json");
                     lHttpCon.setRequestProperty("Accept", "application/json");
                     lOut = new OutputStreamWriter(lHttpCon.getOutputStream());
                     //lOut=lHttpCon.getOutputStream();
-                    lOut.write(lNewUserOBJ.toString());
+                    lOut.write(lMessageCrypte);
                     lOut.flush();
                     lCode=lHttpCon.getResponseCode();
                     if(lCode==201) {
                         //lOut.close();
                         lIn = new BufferedInputStream(lHttpCon.getInputStream());
                         lResponse = readStream(lIn);
-                        lNewUser.setUserId(Integer.decode(lResponse));
+                        lDecryptString=lCrypto.publicDecrypt(lCrypto.getKey(),Hex.decodeHex(lResponse.toCharArray()));
+                        lNewUser.setUserId(Integer.decode(lDecryptString));
                         //CSubActivity.getIntentCSubActivity().putExtra(LOGGED_USER,lNewUser);
                         Intent lIntent = new Intent(CSubActivity.getsContext(), CHubActivity.class);
                         lIntent.putExtra(LOGGED_USER, lNewUser);
@@ -186,16 +202,18 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                     lUser=(CUser)lParams.getObject();
                     String lJsonStringUser=lMapper.writeValueAsString(lUser);
                     JSONObject lUserJsonObj = new JSONObject(lJsonStringUser);
-                    lUrl = new URL(SERVER_URL+"user/");
+                    lMessageBytes=lCrypto.publicEncrypt(lUserJsonObj.toString(),(SecretKeySpec)lCrypto.getKey());
+                    lMessageCrypte = new String(Hex.encodeHex(lMessageBytes));
                     lHttpCon = (HttpURLConnection) lUrl.openConnection();
                     lHttpCon.setRequestMethod("POST");
+                    lHttpCon.setRequestProperty("ID", CLoginActivity.getUniqueKey().toString());
                     lHttpCon.setDoOutput(true);
                     lHttpCon.setDoInput(true);
                     lHttpCon.setRequestProperty("Content-Type", "application/json");
                     //lHttpCon.setRequestProperty("Accept", "application/json");
                     lOut = new OutputStreamWriter(lHttpCon.getOutputStream());
 
-                    lOut.write(lUserJsonObj.toString());
+                    lOut.write(lMessageCrypte);
                     lOut.flush();
                     lCode=lHttpCon.getResponseCode();
                     if(lCode==200) {
@@ -222,6 +240,7 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                     lHttpCon = (HttpURLConnection) lUrl.openConnection();
                     lHttpCon.setDoInput(true);
                     lHttpCon.setRequestMethod("DELETE");
+                    lHttpCon.setRequestProperty("ID", CLoginActivity.getUniqueKey().toString());
                     //lOut.close();
                     //CSubActivity.getIntentCSubActivity().putExtra(LOGGED_USER,lNewUser);
                     lCode = lHttpCon.getResponseCode();
@@ -241,11 +260,13 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                     lHttpCon.setDoInput(true);
                     lHttpCon.setRequestMethod("GET");
                     lHttpCon.setRequestProperty("Accept", "application/json");
+                    lHttpCon.setRequestProperty("ID", CLoginActivity.getUniqueKey().toString());
                     lCode=lHttpCon.getResponseCode();
                     if(lCode==200) {
                         //lOut.close();
                         lIn = new BufferedInputStream(lHttpCon.getInputStream());
                         lResponse = readStream(lIn);
+
                         Gson lGson = new Gson();
                         CVote lGottenVote=lGson.fromJson(lResponse, CVote.class);
                         Intent lIntent = new Intent(CSubActivity.getsContext(), CHubActivity.class);
@@ -262,6 +283,7 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                     lHttpCon = (HttpURLConnection) lUrl.openConnection();
                     lHttpCon.setDoInput(true);
                     lHttpCon.setRequestMethod("GET");
+                    lHttpCon.setRequestProperty("ID", CLoginActivity.getUniqueKey().toString());
                     lHttpCon.setRequestProperty("Accept", "application/json");
                     lCode=lHttpCon.getResponseCode();
                     if(lCode==200) {
@@ -290,15 +312,18 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                     CVote lNewVote = (CVote) lParams.getObject();
                     String lJsonStringNewVote=lMapper.writeValueAsString(lNewVote);
                     JSONObject lNewVoteOBJ = new JSONObject(lJsonStringNewVote);
+                    lMessageBytes=lCrypto.publicEncrypt(lNewVoteOBJ.toString(),(SecretKeySpec)lCrypto.getKey());
+                    lMessageCrypte = new String(Hex.encodeHex(lMessageBytes));
                     Log.e("CREATEDVOTE",lNewVoteOBJ.toString());
                     lHttpCon.setDoOutput(true);
                     lHttpCon.setDoInput(true);
                     lHttpCon.setRequestMethod("PUT");
+                    lHttpCon.setRequestProperty("ID", CLoginActivity.getUniqueKey().toString());
                     lHttpCon.setRequestProperty("Content-Type", "application/json");
                     lHttpCon.setRequestProperty("Accept", "application/json");
                     lOut = new OutputStreamWriter(lHttpCon.getOutputStream());
                     //lOut=lHttpCon.getOutputStream();
-                    lOut.write(lNewVoteOBJ.toString());
+                    lOut.write(lMessageCrypte);
                     lOut.flush();
                     lCode=lHttpCon.getResponseCode();
                     if(lCode==200) {
@@ -318,20 +343,25 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                     lHttpCon.setDoOutput(true);
                     lHttpCon.setDoInput(true);
                     lHttpCon.setRequestMethod("PUT");
+                    lHttpCon.setRequestProperty("ID", CLoginActivity.getUniqueKey().toString());
                     lHttpCon.setRequestProperty("Content-Type", "application/json");
                     lHttpCon.setRequestProperty("Accept", "application/json");
                     String lJSONStringChoice=lMapper.writeValueAsString(lChoice);
                     Log.e("ADDCHOICEUNIQUE",lJSONStringChoice);
                     lOut = new OutputStreamWriter(lHttpCon.getOutputStream());
                     JSONObject lChoiceJson=new JSONObject(lJSONStringChoice);
+                    lMessageBytes=lCrypto.publicEncrypt(lChoiceJson.toString(),(SecretKeySpec)lCrypto.getKey());
+                    lMessageCrypte = new String(Hex.encodeHex(lMessageBytes));
                     //lOut=lHttpCon.getOutputStream();
-                    lOut.write(lChoiceJson.toString());
+                    lOut.write(lMessageCrypte);
                     lOut.flush();
                     lCode=lHttpCon.getResponseCode();
                     if(lCode==200) {
                         Intent lIntent = new Intent(CVoteUninominal.getsContext(), CHubActivity.class);
+
                         lIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         lIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        Log.e("TEST",lIntent.toString());
                         CVoteUninominal.getsContext().startActivity(lIntent);
                         //lOut.close();
                        /* lIn = new BufferedInputStream(lHttpCon.getInputStream());
@@ -349,22 +379,33 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                     lHttpCon.setDoOutput(true);
                     lHttpCon.setDoInput(true);
                     lHttpCon.setRequestMethod("PUT");
+                    lHttpCon.setRequestProperty("ID", CLoginActivity.getUniqueKey().toString());
                     lHttpCon.setRequestProperty("Content-Type", "application/json");
                     lHttpCon.setRequestProperty("Accept", "application/json");
                     String lChoicesToString=lMapper.writeValueAsString(lListChoices);
                     Log.e("ADDCHOICE",lChoicesToString);
                     lOut = new OutputStreamWriter(lHttpCon.getOutputStream());
                     JSONArray lChoicesJson=new JSONArray(lChoicesToString);
+                    lMessageBytes=lCrypto.publicEncrypt(lChoicesJson.toString(),(SecretKeySpec)lCrypto.getKey());
+                    lMessageCrypte = new String(Hex.encodeHex(lMessageBytes));
                     //JSONObject lChoicesJson=new JSONObject(lChoicesToString);
                     //lOut=lHttpCon.getOutputStream();
-                    lOut.write(lChoicesJson.toString());
+                    lOut.write(lMessageCrypte);
                     lOut.flush();
                     lCode=lHttpCon.getResponseCode();
                     if(lCode==200) {
-                        Intent lIntent = new Intent(CRankingVote.getsContext(), CHubActivity.class);
-                        lIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        lIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        CRankingVote.getsContext().startActivity(lIntent);
+                        if(((String)lParams.getType()).equals("rank")){
+                            Intent lIntent = new Intent(CRankingVote.getsContext(), CHubActivity.class);
+                            lIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            lIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            CRankingVote.getsContext().startActivity(lIntent);
+                        }
+                        if(((String)lParams.getType()).equals("note")){
+                            Intent lIntent = new Intent(CNoteVote.getsContext(), CHubActivity.class);
+                            lIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            lIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            CNoteVote.getsContext().startActivity(lIntent);
+                        }
                         //lOut.close();
                        /* lIn = new BufferedInputStream(lHttpCon.getInputStream());
                         lResponse = readStream(lIn);
@@ -380,13 +421,15 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                     lHttpCon = (HttpURLConnection) lUrl.openConnection();
                     lHttpCon.setDoInput(true);
                     lHttpCon.setRequestMethod("GET");
+                    lHttpCon.setRequestProperty("ID", CLoginActivity.getUniqueKey().toString());
                     lHttpCon.setRequestProperty("Accept", "application/json");
                     lCode=lHttpCon.getResponseCode();
                     if(lCode==200) {
                         lIn = new BufferedInputStream(lHttpCon.getInputStream());
                         lResponse = readStream(lIn);
+                        lDecryptString=lCrypto.publicDecrypt(lCrypto.getKey(),Hex.decodeHex(lResponse.toCharArray()));
                         Type listType = new TypeToken<ArrayList<CCandidate>>() {}.getType();
-                        ArrayList<CCandidate> lCandidates = new Gson().fromJson(lResponse, listType);
+                        ArrayList<CCandidate> lCandidates = new Gson().fromJson(lDecryptString, listType);
                         CVoteUninominal.setlList(lCandidates);
                     }
                     else
@@ -398,6 +441,7 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                     lUrl = new URL(SERVER_URL+"user/contact/"+CHubActivity.getsLoggedUser().getUserId()+"/"+lParams.getObject());
                     lHttpCon = (HttpURLConnection) lUrl.openConnection();
                     lHttpCon.setRequestMethod("PUT");
+                    lHttpCon.setRequestProperty("ID", CLoginActivity.getUniqueKey().toString());
                     lHttpCon.setRequestProperty("Content-Type", "application/json");
                     lHttpCon.setRequestProperty("Accept", "application/json");
                     lCode=lHttpCon.getResponseCode();
@@ -416,6 +460,7 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                     lUrl = new URL(SERVER_URL+"user/contact/"+lParams.getObject());
                     lHttpCon = (HttpURLConnection) lUrl.openConnection();
                     lHttpCon.setRequestMethod("DELETE");
+                    lHttpCon.setRequestProperty("ID", CLoginActivity.getUniqueKey().toString());
                     lHttpCon.setRequestProperty("Content-Type", "application/json");
                     lHttpCon.setRequestProperty("Accept", "application/json");
                     lCode=lHttpCon.getResponseCode();
@@ -434,13 +479,15 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                     lHttpCon = (HttpURLConnection) lUrl.openConnection();
                     lHttpCon.setDoInput(true);
                     lHttpCon.setRequestMethod("GET");
+                    lHttpCon.setRequestProperty("ID", CLoginActivity.getUniqueKey().toString());
                     lHttpCon.setRequestProperty("Accept", "application/json");
                     lCode=lHttpCon.getResponseCode();
                     if(lCode==200) {
                         //lOut.close();
                         lIn = new BufferedInputStream(lHttpCon.getInputStream());
                         lResponse = readStream(lIn);
-                        ArrayList<CUser> lContacts = lMapper.readValue(lResponse, new TypeReference<ArrayList<CUser>>(){});
+                        lDecryptString=lCrypto.publicDecrypt(lCrypto.getKey(),Hex.decodeHex(lResponse.toCharArray()));
+                        ArrayList<CUser> lContacts = lMapper.readValue(lDecryptString, new TypeReference<ArrayList<CUser>>(){});
                         CHubContactFragment.setsContacts(lContacts);
 
 
@@ -458,6 +505,7 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                     lHttpCon.setDoOutput(true);
                     lHttpCon.setDoInput(true);
                     lHttpCon.setRequestMethod("PUT");
+                    lHttpCon.setRequestProperty("ID",Integer.toString(15128));
                     lHttpCon.setRequestProperty("Content-Type", "application/json");
                     lHttpCon.setRequestProperty("Accept", "application/json");
                     lOut = new OutputStreamWriter(lHttpCon.getOutputStream());
@@ -470,6 +518,7 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                         lIn = new BufferedInputStream(lHttpCon.getInputStream());
                         lResponse = readStream(lIn);
                         BigInteger lKey=new BigInteger(lResponse);
+                        lCrypto.receiveKeyParam(lKey);
                     }
                     else
                         return lCode;
@@ -489,6 +538,8 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
             Log.e("CCommunication",e.toString());
         } catch (OAuthProblemException e) {
             Log.e("CCommunication",e.toString());
+        } catch (DecoderException e) {
+            e.printStackTrace();
         }
         return null;
 
@@ -510,7 +561,7 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
     //startActivity(mIntent);
 
 
-    private String readStream(InputStream is) {
+    public static String readStream(InputStream is) {
         try {
             ByteArrayOutputStream bo = new ByteArrayOutputStream();
             int i = is.read();

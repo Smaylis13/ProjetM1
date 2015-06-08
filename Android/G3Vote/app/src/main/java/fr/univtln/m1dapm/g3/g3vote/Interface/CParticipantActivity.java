@@ -36,6 +36,7 @@ public class CParticipantActivity extends AppCompatActivity {
     private CUserChoiceAdapter adapter;
     //Majority
     private int mCalculationMethod;//
+    private int mNbGagnant;
 
 
 
@@ -53,6 +54,8 @@ public class CParticipantActivity extends AppCompatActivity {
         mDateFin = (String) extras.get("END_DATE");
         mListCandidat = (ArrayList<CCandidate>)extras.get("liste de Candidat");
         mTypeVote = (CType) extras.getSerializable("VOTE_TYPE");
+        if(mTypeVote.getIdType()==1)
+                mNbGagnant=(int)extras.get("NB_GAGNANT");
         //Majority
         if(mTypeVote.getIdType()==5)
             mCalculationMethod = (int) extras.get("CALCULATIONMETHOD");
@@ -133,7 +136,10 @@ public class CParticipantActivity extends AppCompatActivity {
         lIntent.putExtra("START_DATE", mDateDebut);
         lIntent.putExtra("END_DATE", mDateFin);
         lIntent.putExtra("VOTE_TYPE", mTypeVote);
-        lIntent.putExtra("CALCULATIONMETHOD", mCalculationMethod);
+        if(mTypeVote.getIdType()==1)
+            lIntent.putExtra("NB_GAGNANT",mNbGagnant);
+        else if(mTypeVote.getIdType()==5)
+            lIntent.putExtra("CALCULATIONMETHOD", mCalculationMethod);
         startActivity(lIntent);
     }
 

@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -62,10 +63,11 @@ public class CVoteConfSTV extends AppCompatActivity {
     }
 
     public void validateConfSTV(View pView) {
+        final EditText lnbgagnant = (EditText)findViewById(R.id.nbgagnan);
         hideSoftKeyboard(this);
         int j=0;
         mAdapter.notifyDataSetChanged();
-
+        int lnbgagnantint = Integer.parseInt(lnbgagnant.getText().toString());
         // on verifie que tous les champs sont bien remplis
         for (int i = 0; i < mListCandidat.size() ; i++) {
             if ((mListCandidat.get(i).getNomCandidat()==null) || (mListCandidat.get(i).getDescriptionCandidat()==null )){
@@ -80,6 +82,7 @@ public class CVoteConfSTV extends AppCompatActivity {
             lIntent.putExtra("START_DATE", mDateDebut);
             lIntent.putExtra("END_DATE", mDateFin);
             lIntent.putExtra("VOTE_TYPE", mTypeVote);
+            lIntent.putExtra("NB_GAGNANT",lnbgagnantint);
             startActivity(lIntent);
         }
     }
@@ -88,7 +91,6 @@ public class CVoteConfSTV extends AppCompatActivity {
         hideSoftKeyboard(this);
         mListCandidat.add(new CCandidate());
         mAdapter.notifyDataSetChanged();
-        scrollMyListViewToBottom();
     }
 
     public void removeChoiceButton(View pView) {
@@ -122,15 +124,6 @@ public class CVoteConfSTV extends AppCompatActivity {
         return super.onOptionsItemSelected(pItem);
     }
 
-    private void scrollMyListViewToBottom() {
-        mList.post(new Runnable() {
-            @Override
-            public void run() {
-                // Select the last row so it will scroll into view...
-                mList.setSelection(mListCandidat.size() - 1);
-            }
-        });
-    }
 
 
     @Override

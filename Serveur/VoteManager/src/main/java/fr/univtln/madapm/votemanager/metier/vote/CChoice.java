@@ -24,15 +24,15 @@ public class CChoice {
     @JsonIgnore
     private int mIdChoice;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "ID_VOTE")
     private CVote mVote;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "ID_UTILISATEUR")
     private CUser mUser;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "ID_CANDIDAT" )
     private CCandidate mCandidate;
 

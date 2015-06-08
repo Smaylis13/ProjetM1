@@ -1,9 +1,14 @@
 package fr.univtln.madapm.votemanager.rest;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import fr.univtln.madapm.votemanager.crypto.CCrypto;
 import fr.univtln.madapm.votemanager.dao.CUserDAO;
 import fr.univtln.madapm.votemanager.metier.user.CUser;
+import org.glassfish.grizzly.http.server.Request;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.*;
@@ -16,6 +21,11 @@ import java.util.*;
 
 @Path("/user")
 public class CUserRest {
+    @Context
+    public Request mRequest;
+
+    private ObjectMapper mMapper=new ObjectMapper();
+    private CCrypto mCrypto=new CCrypto();
 
     private static Map<String,String> sIdDevices = new HashMap<>();
 
@@ -40,24 +50,32 @@ public class CUserRest {
     @POST
     @Path("/regId/{emailC}/{regId}")
     public Response registerId(@PathParam("emailC") String pEmail,@PathParam("regId") String pRegId){
-
             sIdDevices.put(pEmail,pRegId);
-            System.out.println("Register id device...RegID="+ pRegId + "' et Email='" + pEmail + "'");
-            return Response.status(Response.Status.OK).entity("Device registred.").build();
+            return Response.status(Response.Status.OK).header("ID", mRequest.getHeader("ID")).entity("Device registred.").build();
     }
 
 
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("/{pId}")
-    public CUser read(@PathParam("pId") int pId) {
+     @Produces(MediaType.APPLICATION_JSON)
+     @Path("/{pId}")
+     public CUser read(@PathParam("pId") int pId) {
         CUserDAO lUserDAO=new CUserDAO();
         return lUserDAO.findByID(pId);
     }
 
     @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/all")
+    public Response getAllUsers() throws JsonProcessingException {
+        CUserDAO lUserDAO=new CUserDAO();
+        List<CUser> lUsers=lUserDAO.findByNativeQuery("SELECT ID_UTILISATEUR, MAIL, PRENOM, NOM FROM utilisateur",CUser.class);
+
+        return Response.status(200).header("ID", mRequest.getHeader("ID")).entity(mMapper.writeValueAsString(lUsers)).build();
+    }
+
+    @GET
     @Path("/contact/{pIdU}")
-    public Response getContacts(@PathParam("pIdU") int pIdU){
+    public Response getContacts(@PathParam("pIdU") int pIdU) throws JsonProcessingException {
         System.out.println("getContact");
         CUserDAO lUserDAO=new CUserDAO();
         CUser lUser=lUserDAO.findByID(pIdU);
@@ -71,7 +89,8 @@ public class CUserRest {
         lContacts.addAll(lContactsUser);
         lUserDAO.rollBackTransac();
         lUserDAO.update(lUser);*/
-        return Response.status(200).entity(lContactsUser).build();
+
+        return Response.status(200).header("ID", mRequest.getHeader("ID")).entity(mMapper.writeValueAsString(lContactsUser)).build();
     }
 
     @PUT
@@ -97,7 +116,7 @@ public class CUserRest {
 
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response addUser(CUser pNewUser){
+    public Response addUser(CUser pNewUser) throws JsonProcessingException {
         System.out.println("addUser");
         Map<String,String> lParams = new HashMap<>();
         lParams.put("emailUser",pNewUser.getEmail());
@@ -106,16 +125,17 @@ public class CUserRest {
         List<CUser> lUsers;
         lUsers=lUserDAO.findWithNamedQuery("CUser.findAll",lParams);
         if(lUsers.isEmpty()) {
+            pNewUser.setPassword(mCrypto.getHashed(pNewUser.getPassword()));
             lUserDAO.create(pNewUser);
-            return Response.status(201).entity(pNewUser.getUserId()).build();
+            return Response.status(201).header("ID", mRequest.getHeader("ID")).entity(mMapper.writeValueAsString(pNewUser.getUserId())).build();
         }
         else if(lUsers.get(0).getPassword().equals("attente")){
             CUser lExistingUser=lUsers.get(0);
             lExistingUser.setFirstName(pNewUser.getFirstName());
             lExistingUser.setName(pNewUser.getName());
-            lExistingUser.setPassword(pNewUser.getPassword());
+            lExistingUser.setPassword(mCrypto.getHashed(pNewUser.getPassword()));
             lUserDAO.update(lExistingUser);
-            return Response.status(201).entity(lExistingUser.getUserId()).build();
+            return Response.status(201).header("ID", mRequest.getHeader("ID")).entity(mMapper.writeValueAsString(lExistingUser.getUserId())).build();
         }
         return Response.status(409).entity(0).build();
     }
@@ -125,7 +145,6 @@ public class CUserRest {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/connect")
     public Response logUser(CUser pUser){
-        System.out.println("logUser");
         Map<String,String> lParams = new HashMap<>();
         lParams.put("emailUser",pUser.getEmail());
         CUserDAO lUserDAO=new CUserDAO();
@@ -133,8 +152,12 @@ public class CUserRest {
         lUsers=lUserDAO.findWithNamedQuery("CUser.findAll",lParams);
         if(!lUsers.isEmpty()) {
             CUser lFindedUser = lUsers.get(0);
-            if ((pUser.getEmail().equals(lFindedUser.getEmail())) && (pUser.getPassword().equals(lFindedUser.getPassword())))
-                return Response.status(200).entity(lFindedUser).build();
+            if ((pUser.getEmail().equals(lFindedUser.getEmail())) && (mCrypto.match(pUser.getPassword(),lFindedUser.getPassword()))/*(pUser.getPassword().equals(lFindedUser.getPassword()))*/)
+                try {
+                    return Response.status(200).header("ID", mRequest.getHeader("ID")).entity(mMapper.writeValueAsString(lFindedUser)).build();
+                } catch (JsonProcessingException e) {
+                    e.printStackTrace();
+                }
 
         }
         return Response.status(401).header("WWW-Authenticate", "xBasic realm=\"fake\"").build();
@@ -151,10 +174,11 @@ public class CUserRest {
         List<CUser> lUsers=lUserDAO.findWithNamedQuery("CUser.findAll",lParams);
         if(!lUsers.isEmpty()){
             CUser lUser=lUsers.get(0);
-            if(lUser.getPassword().equals(pPassword)) {
+            //if(lUser.getPassword().equals(pPassword)) {
+            if(mCrypto.match(pPassword,lUser.getPassword())){
                 lUserDAO.deleteUser(lUser.getUserId());
 
-                return Response.status(Response.Status.OK).entity("User has been removed").build();
+                return Response.status(Response.Status.OK).header("ID", mRequest.getHeader("ID")).entity("User has been removed").build();
             }
         }
 
@@ -184,18 +208,18 @@ public class CUserRest {
             if (lUsers.isEmpty()) {
                 lUser.setName(pNewUserParams.getName());
                 lUser.setFirstName(pNewUserParams.getFirstName());
-                lUser.setPassword(pNewUserParams.getPassword());
+                lUser.setPassword(mCrypto.getHashed(pNewUserParams.getPassword()));
                 lUser.setEmail(pNewUserParams.getEmail());
                 return Response.status(200).build();
             }
             else{
-                return Response.status(455).entity("L'email existe déjà").build();
+                return Response.status(455).header("ID", mRequest.getHeader("ID")).entity("L'email existe déjà").build();
             }
         }
         else{
             lUser.setName(pNewUserParams.getName());
             lUser.setFirstName(pNewUserParams.getFirstName());
-            lUser.setPassword(pNewUserParams.getPassword());
+            lUser.setPassword(mCrypto.getHashed(pNewUserParams.getPassword()));
             return Response.status(200).build();
         }
 

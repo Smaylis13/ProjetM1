@@ -46,4 +46,12 @@ public class CResult {
         this.mIdCandidate = pIdCandidate;
     }
 
+
+    public int getOrder() {
+        return mOrder;
+    }
+
+    public void setOrder(int pOrder) {
+        this.mOrder = pOrder;
+    }
 }

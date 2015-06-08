@@ -1,9 +1,12 @@
 package fr.univtln.madapm.votemanager.rest;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.univtln.madapm.votemanager.dao.CChoiceDAO;
 import fr.univtln.madapm.votemanager.metier.vote.CChoice;
+import org.glassfish.grizzly.http.server.Request;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
@@ -13,6 +16,11 @@ import java.util.List;
  */
 @Path("/choice")
 public class CChoiceRest {
+    @Context
+    public Request mRequest;
+
+    private ObjectMapper mMapper=new ObjectMapper();
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/{pId}")
@@ -33,9 +41,12 @@ public class CChoiceRest {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/multiples")
     public Response addChoices(List<CChoice> pChoices){
+        System.out.println("ADDCHOICES1");
         CChoiceDAO lChoiceDAO = new CChoiceDAO();
+        System.out.println("ADDCHOICES2");
         for(CChoice lChoice:pChoices)
             lChoiceDAO.createChoice(lChoice);
+        System.out.println("ADDCHOICES3");
         return Response.status(200).build();
     }
 
@@ -44,8 +55,7 @@ public class CChoiceRest {
     public Response deleteChoice(@PathParam("pId") int pId){
         CChoiceDAO lChoiceDAO = new CChoiceDAO();
         lChoiceDAO.deleteChoice(pId);
-        return Response.status(Response.Status.NO_CONTENT)// 204
-                .entity("Choice has been removed").build();
+        return Response.status(Response.Status.NO_CONTENT).header("ID", mRequest.getHeader("ID")).entity("Choice has been removed").build();
     }
 
     @POST

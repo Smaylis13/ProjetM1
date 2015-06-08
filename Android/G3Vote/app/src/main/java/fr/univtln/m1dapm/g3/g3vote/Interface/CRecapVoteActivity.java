@@ -23,6 +23,7 @@ import fr.univtln.m1dapm.g3.g3vote.Communication.CCommunication;
 import fr.univtln.m1dapm.g3.g3vote.Communication.CRequestTypesEnum;
 import fr.univtln.m1dapm.g3.g3vote.Communication.CTaskParam;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CRule;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CType;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CUser;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
@@ -36,6 +37,7 @@ public class CRecapVoteActivity extends AppCompatActivity {
     private String mDateFin;
     private ArrayList<CCandidate> mListCandidat = new ArrayList<CCandidate>();
     private ArrayList<CUser> mListParticipant = new ArrayList<CUser>();
+    private List<CRule> mRules=new ArrayList<>();
     private CType mTypeVote;
 
     @Override
@@ -54,6 +56,11 @@ public class CRecapVoteActivity extends AppCompatActivity {
         mListCandidat = (ArrayList<CCandidate>)extras.get("liste de Candidat");
         mListParticipant=(ArrayList<CUser>)extras.get("liste de participant");
         mTypeVote = (CType) extras.get("VOTE_TYPE");
+        int lNbGagants;
+        if(mTypeVote.getIdType()==1){
+           lNbGagants=(int)extras.get("NB_GAGNANT");
+            mRules.add(new CRule("NB_GAGNANT",String.valueOf(lNbGagants)));
+        }
 
         Log.i("donner candida", mListCandidat.toString());
         //remplis la liste des participants
@@ -96,7 +103,7 @@ public class CRecapVoteActivity extends AppCompatActivity {
         Date lDateDeb = new java.sql.Date(simpleDateFormat.parse(mDateDebut).getTime());
         Date lDateFin = new java.sql.Date(simpleDateFormat.parse(mDateFin).getTime());
 
-        CVote lVote = new CVote(mVoteName, "", true, lDateDeb, lDateFin, CHubActivity.getsLoggedUser().getUserId(), null, mTypeVote, null, mListCandidat, null,mListParticipant);
+        CVote lVote = new CVote(mVoteName, "", true, lDateDeb, lDateFin, CHubActivity.getsLoggedUser().getUserId(), null, mTypeVote, mRules, mListCandidat, null,mListParticipant);
         CTaskParam lParams = new CTaskParam(CRequestTypesEnum.add_new_vote, lVote);
         CCommunication lCom = new CCommunication();
         lCom.execute(lParams);

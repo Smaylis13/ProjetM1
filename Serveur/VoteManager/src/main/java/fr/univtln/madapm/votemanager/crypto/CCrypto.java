@@ -6,6 +6,7 @@ import fr.univtln.madapm.votemanager.crypto.keygen.CKeyGenerator;
 import org.mindrot.jbcrypt.BCrypt;
 
 import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.math.BigInteger;
 import java.security.InvalidKeyException;
@@ -62,7 +63,7 @@ public class CCrypto {
      * @param pSecretKeySpec clef public commune avec le téléphone
      * @return données cryptées
      */
-    public byte[] publicEncrypt(String pData, SecretKeySpec pSecretKeySpec){
+    public byte[] publicEncrypt(String pData, SecretKey pSecretKeySpec){
         return sAesCrypt.encrypt(pSecretKeySpec, pData);
     }
 
@@ -72,7 +73,7 @@ public class CCrypto {
      * @param pCryptData Données à décrypter
      * @return text en clair
      */
-    public String publicDecrypt(SecretKeySpec pSecretKeySpec, byte[] pCryptData){
+    public String publicDecrypt(SecretKey pSecretKeySpec, byte[] pCryptData){
         return sAesCrypt.decrypt(pSecretKeySpec, pCryptData);
     }
 
@@ -111,9 +112,8 @@ public class CCrypto {
      * @return Paramètre à envoyer à l'appli
      */
     public BigInteger receiveKeyParam(BigInteger pParam, UUID pId){
-        SecretKeySpec lK = sKeyGenerator.specificKeyKeyGen(BigInteger.valueOf((long)
-                (Math.pow(pParam.doubleValue(), sKeyGenerator.getKeyNumberGenerator().getab())
-                        % sKeyGenerator.getKeyNumberGenerator().getPValue())).toByteArray());
+        BigInteger lParam=pParam.pow(sKeyGenerator.getKeyNumberGenerator().getab()).mod(BigInteger.valueOf(sKeyGenerator.getKeyNumberGenerator().getPValue()));
+        SecretKeySpec lK = sKeyGenerator.specificKeyKeyGen(lParam.toByteArray());
         sKeyGenerator.getClef().put(pId, lK); //La conserve en mémoire dans une Map
         return sKeyGenerator.getPublicKey();
     }
@@ -160,7 +160,7 @@ public class CCrypto {
      * Méthode qui retourne la Map dans laquelle sont stockées les clef public
      * @return Map des clef public correspondant aux identifiants
      */
-    public Map getKeyMap(){
+    public Map<UUID, SecretKey> getKeyMap(){
         return sKeyGenerator.getClef();
     }
 }

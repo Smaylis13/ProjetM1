@@ -32,6 +32,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.gson.reflect.TypeToken;
 
+import org.apache.commons.codec.DecoderException;
+import org.apache.commons.codec.binary.Hex;
 import org.java_websocket.client.WebSocketClient;
 
 import java.io.BufferedInputStream;
@@ -61,6 +63,7 @@ import fr.univtln.m1dapm.g3.g3vote.Entite.CUser;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
 import fr.univtln.m1dapm.g3.g3vote.R;
 import fr.univtln.m1dapm.g3.g3vote.Service.CGcmIntentService;
+import fr.univtln.m1dapm.g3.g3vote.crypto.CCrypto;
 
 public class CHubActivity extends AppCompatActivity implements ActionBar.TabListener {
 
@@ -171,10 +174,7 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
                             .setTabListener(this));
         }
 
-        // issma
-        //mMail=sLoggedUser.getEmail();
-        mMail="test@gmail.com";
-
+        mMail=sLoggedUser.getEmail();
         mGcm = GoogleCloudMessaging.getInstance(this);
 
         if(getIntent().getAction()!=null){
@@ -269,9 +269,9 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
 
     /**
      * @return Application's {@code SharedPreferences}.
-     * @param context
+     * @param pContext
      */
-    private SharedPreferences getGcmPreferences(Context context){
+    private SharedPreferences getGcmPreferences(Context pContext){
         // This sample app persists the registration ID in shared preferences,
         return getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
     }
@@ -307,7 +307,6 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
                     Log.i(GCM_TAG, "GCM Registration Token: " + mRegid);
                     mRegid = mGcm.register(GCM_SENDER_ID);
                     msg = "Device registered, registration ID=" + mRegid;
-                    Log.i(GCM_TAG, "TOTO : "+msg);
                     // You should send the registration ID to your server over
                     // HTTP, so it can use GCM/HTTP or CCS to send messages to your app.
                     sendRegistrationIdToBackend();
@@ -328,13 +327,11 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
 
             @Override
             protected void onPostExecute(String msg){
-                Log.i(GCM_TAG,"Avant l'envoi....");
                 CTaskParam lParam=new CTaskParam(CRequestTypesEnum.regId_user,"regId/"+mMail+"/"+mRegid);
                 CCommunication lCom=new CCommunication();
                 lCom.execute(lParam);
                 //Send vers le serveur
                 //sendToServer("register_id:"+mRegid);
-                Log.i(GCM_TAG,"Après l'envoi..." + msg);
 
             }
         }.execute(null, null, null);
@@ -368,17 +365,17 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
      * Stores the registration ID and the app versionCode in the application's
      * {@code SharedPreferences}.
      *
-     * @param context
+     * @param pContext
      *            application's context.
-     * @param regId
+     * @param pRegId
      *            registration ID
      */
-    private void storeRegistrationId(Context context, String regId){
-        final SharedPreferences prefs = getGcmPreferences(context);
-        int appVersion = getAppVersion(context);
+    private void storeRegistrationId(Context pContext, String pRegId){
+        final SharedPreferences prefs = getGcmPreferences(pContext);
+        int appVersion = getAppVersion(pContext);
         Log.i(GCM_TAG, "Saving regId on app version " + appVersion);
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putString(PREFS_PROPERTY_REG_ID, regId);
+        editor.putString(PREFS_PROPERTY_REG_ID, pRegId);
         editor.putInt(PROPERTY_APP_VERSION, appVersion);
         editor.commit();
     }
@@ -600,6 +597,7 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
             String lResponse=null;
             int lCode;
             CTaskParam lParams=(CTaskParam)pObject[0];
+            CCrypto lCrypto=new CCrypto();
 
             try {
                 switch (lParams.getRequestType()) {
@@ -609,41 +607,44 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
                         Log.e("URL",lUrl.toString());
                         lHttpCon.setDoInput(true);
                         lHttpCon.setRequestMethod("GET");
+                        lHttpCon.setRequestProperty("ID",CLoginActivity.getUniqueKey().toString());
                         lHttpCon.setRequestProperty("Accept", "application/json");
                         lCode=lHttpCon.getResponseCode();
                         Log.e("Test Recup",""+lCode);
                         if(lCode==200) {
                             lIn = new BufferedInputStream(lHttpCon.getInputStream());
                             lResponse = readStream(lIn);
-
+                            String lDecryptString=lCrypto.publicDecrypt(lCrypto.getKey(), Hex.decodeHex(lResponse.toCharArray()));
                             Type listType = new TypeToken<ArrayList<CVote>>() {}.getType();
                             ObjectMapper lMapper=new ObjectMapper();
-                            ArrayList<CVote> lVotes = lMapper.readValue(lResponse, new TypeReference<ArrayList<CVote>>(){});
-                           // Log.e("TEST",lVotes.get(lVotes.size()-1).toString());
+                            ArrayList<CVote> lVotes = lMapper.readValue(lDecryptString, new TypeReference<ArrayList<CVote>>(){});
+                            //Log.e("TEST",lVotes.get(lVotes.size()-1).toString());
 
                             Message lMsg=new Message();
                             lMsg.what=0;
                             lMsg.obj=lVotes;
                             mHandler.sendMessage(lMsg);
 
-                        /*Intent lIntent = new Intent(CSubActivity.getsContext(), CHubActivity.class);
-                        lIntent.putParcelableArrayListExtra("GOTTEN_VOTES", lVotes);
-                        lIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        CSubActivity.getsContext().startActivity(lIntent);*/
+                                /*Intent lIntent = new Intent(CSubActivity.getsContext(), CHubActivity.class);
+                                lIntent.putParcelableArrayListExtra("GOTTEN_VOTES", lVotes);
+                                lIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                CSubActivity.getsContext().startActivity(lIntent);*/
                         }
                         else
                             return lCode;
 
                         break;
-                }
-            }catch (ProtocolException e) {
+            }
+        }catch (ProtocolException e) {
             Log.e("CCommunication", e.toString());
         }catch (MalformedURLException e) {
             Log.e("CCommunication", e.toString());
         }catch (IOException e) {
             Log.e("CCommunication", e.toString());
-        }
-        return null;
+        } catch (DecoderException e) {
+                e.printStackTrace();
+            }
+            return null;
         }
 
         @Override
