@@ -67,8 +67,7 @@ import fr.univtln.m1dapm.g3.g3vote.R;
 import fr.univtln.m1dapm.g3.g3vote.Service.CGcmIntentService;
 import fr.univtln.m1dapm.g3.g3vote.crypto.CCrypto;
 
-public class CHubActivity extends AppCompatActivity implements ActionBar.TabListener,
-        TimePicker.OnTimeChangedListener{
+public class CHubActivity extends AppCompatActivity implements ActionBar.TabListener{
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -485,6 +484,8 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
         dialog.setTitle("Custom Dialog");
         dialog.show();
         final TimePicker tp = (TimePicker)dialog.findViewById(R.id.timePicker1);
+        tp.setIs24HourView(true);
+        tp.setCurrentHour(Calendar.getInstance().get(Calendar.HOUR_OF_DAY));
         final DatePicker dp=(DatePicker)dialog.findViewById(R.id.datePicker1);
         Button lValidate=(Button)dialog.findViewById(R.id.ValidDate);
         lValidate.setOnClickListener(new View.OnClickListener() {
@@ -510,6 +511,8 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
         dialog.show();
         final TimePicker tp = (TimePicker)dialog.findViewById(R.id.timePicker1);
         final DatePicker dp=(DatePicker)dialog.findViewById(R.id.datePicker1);
+        tp.setIs24HourView(true);
+        tp.setCurrentHour(Calendar.getInstance().get(Calendar.HOUR_OF_DAY));
         Button lValidate=(Button)dialog.findViewById(R.id.ValidDate);
         lValidate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -533,22 +536,6 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
 
     }
 
-    public void validTimeBegin(View pView){
-        final Dialog dialog = new Dialog(CHubActivity.this);
-
-        dialog.setContentView(R.layout.custom_datepicker);
-        dialog.setTitle("Custom Dialog");
-        TimePicker tp = (TimePicker)dialog.findViewById(R.id.timePicker1);
-        DatePicker dp=(DatePicker)dialog.findViewById(R.id.datePicker1);
-        final Button button = (Button) CHubActivity.this.findViewById(R.id.bVoteDateBegin);
-        button.setText(dp.getYear()+"-"+(dp.getMonth()+1)+":" +
-                "-"+dp.getDayOfMonth()+" "+tp.getCurrentHour()+":"+tp.getCurrentMinute()+":00.000");
-    }
-
-    @Override
-    public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
-
-    }
     public static java.util.Date getDateFromDatePicker(DatePicker datePicker){
         int day = datePicker.getDayOfMonth();
         int month = datePicker.getMonth();
@@ -682,13 +669,11 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
                     case get_votes:
                         lUrl = new URL(CCommunication.SERVER_URL+"vote/all/"+Integer.toString((int)lParams.getObject()));
                         lHttpCon = (HttpURLConnection) lUrl.openConnection();
-                        Log.e("URL",lUrl.toString());
                         lHttpCon.setDoInput(true);
                         lHttpCon.setRequestMethod("GET");
                         lHttpCon.setRequestProperty("ID",CLoginActivity.getUniqueKey().toString());
                         lHttpCon.setRequestProperty("Accept", "application/json");
                         lCode=lHttpCon.getResponseCode();
-                        Log.e("Test Recup",""+lCode);
                         if(lCode==200) {
                             lIn = new BufferedInputStream(lHttpCon.getInputStream());
                             lResponse = readStream(lIn);
