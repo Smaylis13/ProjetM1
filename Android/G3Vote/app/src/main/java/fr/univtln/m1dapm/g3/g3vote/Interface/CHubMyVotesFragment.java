@@ -3,7 +3,6 @@ package fr.univtln.m1dapm.g3.g3vote.Interface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,6 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.univtln.m1dapm.g3.g3vote.Entite.CUser;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
 import fr.univtln.m1dapm.g3.g3vote.R;
 
@@ -41,7 +39,7 @@ public class CHubMyVotesFragment extends Fragment implements AdapterView.OnItemC
         for (CVote lVote:pVotes) {
             this.sVotes.add(lVote);
         }
-        sAdapter.notifyDataSetChanged();
+        //sAdapter.notifyDataSetChanged();
     }
 
     /**
@@ -125,5 +123,12 @@ public class CHubMyVotesFragment extends Fragment implements AdapterView.OnItemC
             startActivity(lIntent);
             //TODO:Creer la page des resultats et envoyer dessus
         }
+    }
+
+    //met a jour le fragment quand on reviens dessus
+    @Override
+    public void onStart(){
+        super.onStart();
+        sAdapter.notifyDataSetChanged();
     }
 }

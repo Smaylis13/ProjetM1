@@ -1,6 +1,5 @@
 package fr.univtln.m1dapm.g3.g3vote.Interface;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,9 +10,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CUser;
-import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
 import fr.univtln.m1dapm.g3.g3vote.R;
 
 /**
@@ -26,7 +23,7 @@ public class CHubContactFragment extends Fragment {
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
     private static List<CUser> sContacts=new ArrayList<>();
-    private CUserAdapter adapter;
+    private static CUserAdapter adapter;
 
     public static List<CUser> getsContacts() {
         return sContacts;
@@ -37,6 +34,7 @@ public class CHubContactFragment extends Fragment {
         for (CUser lUser:pUsers) {
             sContacts.add(lUser);
         }
+
     }
 
     /**
@@ -62,9 +60,6 @@ public class CHubContactFragment extends Fragment {
         //Récupération du composant ListView
         ListView list = (ListView)rootView.findViewById(R.id.ListContact);
 
-        //Récupération de la liste des personnes
-        ArrayList<CUser> lContacts = CUser.getAListOfUser();
-
         //Création et initialisation de l'Adapter pour les personnes
         adapter = new CUserAdapter(rootView.getContext(), sContacts);
 
@@ -76,6 +71,12 @@ public class CHubContactFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
         adapter.notifyDataSetChanged();
     }
 }
