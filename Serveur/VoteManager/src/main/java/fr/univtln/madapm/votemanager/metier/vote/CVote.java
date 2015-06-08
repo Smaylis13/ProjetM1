@@ -1,12 +1,14 @@
 package fr.univtln.madapm.votemanager.metier.vote;
 
 import com.fasterxml.jackson.annotation.*;
+import fr.univtln.madapm.votemanager.dao.CTypeDAO;
 import fr.univtln.madapm.votemanager.dao.CUserDAO;
 import fr.univtln.madapm.votemanager.metier.user.CUser;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,9 +34,9 @@ public class CVote implements Serializable {
     @Column(name="DESCRIPTION_VOTE")
     private String mDescriptionVote;
     @Column(name="DATE_DEBUT_VOTE")
-    private Date mDateDebut;
+    private Timestamp mDateDebut;
     @Column(name="DATE_FIN_VOTE")
-    private Date mDateFin;
+    private Timestamp mDateFin;
 
     @Column(name="STATUT_VOTE")
     private boolean mStatusVote;
@@ -77,7 +79,7 @@ public class CVote implements Serializable {
 
     public CVote(){}
 
-    public CVote(int pIdvote, String pNomvote, String pDescriptionvote, Date pDatedebut, Date pDatefin,
+    public CVote(int pIdvote, String pNomvote, String pDescriptionvote, Timestamp pDatedebut, Timestamp pDatefin,
                  List<CResult> pResultvote, CType pType, List<CRule> pRegle, boolean pStatusvote,
                  CUser pOrganisateur, List<CCandidate> pCandidate) {
         this.mIdVote = pIdvote;
@@ -93,7 +95,7 @@ public class CVote implements Serializable {
         this.mCandidate = pCandidate;
     }
 
-    public CVote(int pIdvote, String pNomvote, String pDescriptionvote, Date pDatedebut, Date pDatefin,
+    public CVote(int pIdvote, String pNomvote, String pDescriptionvote, Timestamp pDatedebut, Timestamp pDatefin,
                  List<CResult> pResultvote, CType pType, List<CRule> pRegle, boolean pStatusvote,
                  CUser pOrganisateur, List<CChoice> pChoices, List<CCandidate> pCandidate) {
         this.mIdVote = pIdvote;
@@ -152,19 +154,19 @@ public class CVote implements Serializable {
         this.mDescriptionVote = pDescriptionvote;
     }
 
-    public Date getDateDebut() {
+    public Timestamp getDateDebut() {
         return mDateDebut;
     }
 
-    public void setDateDebut(Date pDatedebut) {
+    public void setDateDebut(Timestamp pDatedebut) {
         this.mDateDebut = pDatedebut;
     }
 
-    public Date getDateFin() {
+    public Timestamp getDateFin() {
         return mDateFin;
     }
 
-    public void setDateFin(Date pDatefin) {
+    public void setDateFin(Timestamp pDatefin) {
         this.mDateFin = pDatefin;
     }
 
@@ -180,8 +182,9 @@ public class CVote implements Serializable {
         return mType;
     }
 
-    public void setTypes(CType pType) {
-        this.mType = pType;
+    public void setTypes(int pIdType) {
+        CTypeDAO lTypeDAO=new CTypeDAO();
+        this.mType=lTypeDAO.findById(pIdType);
     }
 
     public List<CRule> getRegles() {

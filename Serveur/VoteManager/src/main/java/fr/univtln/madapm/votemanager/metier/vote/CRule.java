@@ -45,6 +45,7 @@ public class CRule {
         return mRuleName;
     }
 
+
     public void setRuleName(String mRuleName) {
         this.mRuleName = mRuleName;
     }
