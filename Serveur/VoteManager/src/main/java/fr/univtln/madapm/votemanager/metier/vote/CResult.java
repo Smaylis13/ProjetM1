@@ -65,6 +65,14 @@ public class CResult {
         this.mCandidate = pCandidate;
     }
 
+    public int getOrder() {
+        return mOrder;
+    }
+
+    public void setOrder(int pOrder) {
+        this.mOrder = pOrder;
+    }
+
     @Override
     public String toString() {
         return "CResultat{" +
