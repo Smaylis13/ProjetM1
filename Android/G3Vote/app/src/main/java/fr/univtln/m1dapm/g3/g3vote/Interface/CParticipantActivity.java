@@ -140,7 +140,7 @@ public class CParticipantActivity extends AppCompatActivity {
             lIntent.putExtra("NB_GAGNANT",mNbGagnant);
         else if(mTypeVote.getIdType()==5)
             lIntent.putExtra("CALCULATIONMETHOD", mCalculationMethod);
-        finish();
+
         startActivity(lIntent);
     }
 
