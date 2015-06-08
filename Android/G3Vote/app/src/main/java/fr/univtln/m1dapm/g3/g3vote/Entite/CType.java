@@ -28,6 +28,10 @@ public class CType implements Serializable {
         this.mDescription = pDescription;
     }
 
+    public void setIdType(int pId){
+        this.mIdType=pId;
+    }
+
     public int getIdType(){
         return this.mIdType;
     }
