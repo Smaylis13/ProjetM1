@@ -97,6 +97,7 @@ public class CHubCreateVoteFragment extends Fragment {
         return rootView;
     }
 
+
     //TODO: handle the clik on validate to go to the right vote conf interface with the data
 
 

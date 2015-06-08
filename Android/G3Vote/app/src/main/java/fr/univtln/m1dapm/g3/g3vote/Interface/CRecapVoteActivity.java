@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -53,6 +54,7 @@ public class CRecapVoteActivity extends AppCompatActivity {
         mVoteName = (String) extras.get("VOTE_NAME");
         mDateDebut = (String) extras.get("START_DATE");
         mDateFin = (String) extras.get("END_DATE");
+
         mListCandidat = (ArrayList<CCandidate>)extras.get("liste de Candidat");
         mListParticipant=(ArrayList<CUser>)extras.get("liste de participant");
         mTypeVote = (CType) extras.get("VOTE_TYPE");
@@ -98,12 +100,24 @@ public class CRecapVoteActivity extends AppCompatActivity {
 
     public void validate (View pView) throws ParseException {
 
-        DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+/*        DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
         Date lDateDeb = new java.sql.Date(simpleDateFormat.parse(mDateDebut).getTime());
-        Date lDateFin = new java.sql.Date(simpleDateFormat.parse(mDateFin).getTime());
+        Date lDateFin = new java.sql.Date(simpleDateFormat.parse(mDateFin).getTime());*/
 
-        CVote lVote = new CVote(mVoteName, "", true, lDateDeb, lDateFin, CHubActivity.getsLoggedUser().getUserId(), null, mTypeVote, mRules, mListCandidat, null,mListParticipant);
+        Timestamp lDateDeDebut = null;
+        Timestamp lDateDeFin=null;
+        try{
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+            java.util.Date parsedDate = dateFormat.parse(mDateDebut+":00.000");
+            lDateDeDebut = new java.sql.Timestamp(parsedDate.getTime());
+            parsedDate=dateFormat.parse(mDateFin+":00.000");
+            lDateDeFin = new java.sql.Timestamp(parsedDate.getTime());
+        }catch(Exception e){//this generic but you can control another types of exception
+
+        }
+
+        CVote lVote = new CVote(mVoteName, "", true, lDateDeDebut, lDateDeFin, CHubActivity.getsLoggedUser().getUserId(), null, mTypeVote, mRules, mListCandidat, null,mListParticipant);
         CTaskParam lParams = new CTaskParam(CRequestTypesEnum.add_new_vote, lVote);
         CCommunication lCom = new CCommunication();
         lCom.execute(lParams);
