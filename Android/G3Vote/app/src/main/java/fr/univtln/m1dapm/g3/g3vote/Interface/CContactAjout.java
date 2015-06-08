@@ -44,6 +44,8 @@ public class CContactAjout extends AppCompatActivity {
     private ListView mLvSearch;
     private List<String> mRes = new ArrayList<String>();
 
+
+
     public static Context getsContext() {
         return sContext;
     }
@@ -70,6 +72,9 @@ public class CContactAjout extends AppCompatActivity {
                         CTaskParam lParams=new CTaskParam(CRequestTypesEnum.add_contact,mLvSearch.getItemAtPosition(position));
                         CCommunication lCom=new CCommunication();
                         lCom.execute(lParams);
+
+                        Toast.makeText(getsContext(),"Contact "+mLvSearch.getItemAtPosition(position).toString()+" ajouter",
+                                Toast.LENGTH_SHORT).show();
 
                         CTaskParam lParams2=new CTaskParam(CRequestTypesEnum.get_contacts);
                         CCommunication lCom2=new CCommunication();

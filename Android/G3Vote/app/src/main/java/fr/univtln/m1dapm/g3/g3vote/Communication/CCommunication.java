@@ -447,10 +447,10 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                     lCode=lHttpCon.getResponseCode();
                     if(lCode==200) {
                         //lOut.close();
-                        Intent lIntent = new Intent(CContactAjout.getsContext(),CHubActivity.class);
+                        /*Intent lIntent = new Intent(CContactAjout.getsContext(),CHubActivity.class);
                         lIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         lIntent.setAction("OPEN_TAB_CONTACT");
-                        CContactAjout.getsContext().startActivity(lIntent);
+                        CContactAjout.getsContext().startActivity(lIntent);*/
                     }
                     else
                         return lCode;
