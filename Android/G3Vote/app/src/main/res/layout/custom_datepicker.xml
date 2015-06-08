@@ -8,13 +8,16 @@
     <DatePicker
         android:id="@+id/datePicker1"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:calendarViewShown="false"
+        android:datePickerMode="spinner">
     </DatePicker>
 
     <TimePicker
         android:id="@+id/timePicker1"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:timePickerMode="spinner">
     </TimePicker>
 
     <Button

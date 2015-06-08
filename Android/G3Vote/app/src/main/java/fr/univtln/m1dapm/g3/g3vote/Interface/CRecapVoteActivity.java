@@ -128,6 +128,7 @@ public class CRecapVoteActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, CHubActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        finish();
         startActivity(intent);
 
     }

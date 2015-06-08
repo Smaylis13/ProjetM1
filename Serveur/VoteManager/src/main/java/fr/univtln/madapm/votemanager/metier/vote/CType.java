@@ -42,6 +42,9 @@ public class CType {
     public void setIdType(int pId){
         this.mIdType=pId;
     }
+    public int getIdType(){
+        return this.mIdType;
+    }
     public String getNom() {
         return mName;
     }

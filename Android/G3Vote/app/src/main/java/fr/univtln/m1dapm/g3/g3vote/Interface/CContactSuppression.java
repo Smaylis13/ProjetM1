@@ -81,9 +81,7 @@ public class CContactSuppression extends ActionBarActivity {
     }
 
     public void retour(View view){
-        Intent lIntent = new Intent(this,CHubActivity.class);
-
-        startActivity(lIntent);
+        super.finish();
 
     }
     @Override
