@@ -1,17 +1,12 @@
 package fr.univtln.m1dapm.g3.g3vote.TestAlgo;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import fr.univtln.m1dapm.g3.g3vote.Algorithme.Borda.CAlgoBorda;
-import fr.univtln.m1dapm.g3.g3vote.Algorithme.Borda.CCandidateBorda;
-
 /**
  * Created by lyamsi on 12/05/15.
  */
 public class TestBorda {
     public static void main(String[] args) {
         // 4 Candidats :
+        /*
         CCandidateBorda A = new CCandidateBorda("A");
         CCandidateBorda B = new CCandidateBorda("B");
         CCandidateBorda C = new CCandidateBorda("C");
@@ -46,7 +41,7 @@ public class TestBorda {
 
 
         // Calcule du gagnant :
-        System.out.println(cAlgoBorda.borda());
+        System.out.println(cAlgoBorda.borda());*/
 
     }
 }

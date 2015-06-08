@@ -1,146 +1,131 @@
 package fr.univtln.m1dapm.g3.g3vote.Algorithme.VoteMajoritaire;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import fr.univtln.m1dapm.g3.g3vote.Algorithme.AAlgorithme;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CChoice;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CResult;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
 
-public class CAlgoVoteMaj {
-    List<CChoiceVM> mChoices = new ArrayList<CChoiceVM>();
-    List<CVoterVM> mVoters = new ArrayList<CVoterVM>();
 
-    public CAlgoVoteMaj() {
+public class CAlgoVoteMaj extends AAlgorithme{
+    private List<CChoice> mChoices;
+    private List<Integer> mIdCands;
+    private List<List<Integer>> mCandVote;
+    List<CResult> mResult;
 
+    private int mNumbVote;
+
+    public CAlgoVoteMaj(CVote pVote) {
+        super(pVote);
     }
 
-    public CAlgoVoteMaj(List<CChoiceVM> pChoices,List<CVoterVM> pVoters){
-        this.mChoices = pChoices;
-        this.mVoters = pVoters;
+
+    public void initVote(List<CChoice> pChoices)
+    {
+        mResult = new ArrayList<>();
+        mChoices = new ArrayList<>(pChoices);
+        mIdCands = new ArrayList<>();
+
+        List<CCandidate> lCands = mVote.getCandidates();
+
+        for (int i = 0; i < lCands.size(); i++) {
+            mIdCands.add(lCands.get(i).getIdCandidat());
+        }
+
+        mCandVote = new ArrayList<>();
+        mNumbVote = mChoices.size()/mIdCands.size();
+
+        for (int i = 0; i < lCands.size(); i++) {
+            List<Integer> lCandVote = new ArrayList<>();
+
+            for (int j = (i*mNumbVote); j < mNumbVote; j++) {
+                lCandVote.add(mChoices.get(j).getScore());
+            }
+
+            mCandVote.add(lCandVote);
+        }
     }
 
     /**
      *
      * @return CChoixVM
      */
-    public CChoiceVM calculateMedian() {
-        int lNbVoting = mVoters.size();
+    public List<CResult> calculateMedian() {
 
+        List<Integer> lMedianeValue = new ArrayList<>();
         // Le trie
-        for (CChoiceVM c : mChoices) {
-            c.sortNote();
+        for (List<Integer> VoteCand : mCandVote) {
+            Collections.sort(VoteCand);
         }
         // recherche du vaiqueur
-        int max = 0;
-        CChoiceVM lWinner = null;
-        int mediane = (lNbVoting + 1) / 2;
-        for (CChoiceVM c : mChoices) {
-            if (c.getNotes().get(mediane) > max) {
-                max = c.getNotes().get(mediane);
-                lWinner = c;
-            }
-        }
-        // on cherche s'il ya d'autres vainqueurs qui ont la même médiane
-        List<CChoiceVM> lWinners = new ArrayList<CChoiceVM>();// il peut y avoir plusieurs Gagnants
-        for (CChoiceVM c : mChoices) {
-            if (lWinner.getNotes().get(mediane) == c.getNotes().get(mediane)){
-                lWinners.add(c);
-            }
-        }
-        if (lWinners.size() <= 1 ){//s'il exite qu'un seul vainqueur on sort
-            return lWinner;
-        }
-        //pour les départager on supprime la valeur de la médiane et on recommence avec la nouvelle liste
-        mChoices.clear();
-        for (CChoiceVM c : lWinners){
-            c.subNote(mediane);
-            mChoices.add(c);
-        }
-        // Si la taille des est moins de 2 alors on return null ce qui veut dire qu'il n'y a pas de gagnant!
-        if ( mChoices.get(0).getNotes().size() < 2){
-            return null;
-        }
-        return calculateMedian();
+        int lMediane = (mNumbVote + 1) / 2;
+        for (List<Integer> VoteCand : mCandVote)
+            lMedianeValue.add(VoteCand.get(lMediane));
+
+        int lMax = Collections.max(lMedianeValue);
+
+        for (int i = 0; i < lMedianeValue.size(); i++)
+            if (lMedianeValue.get(i) == lMax)
+                mResult.add(new CResult(0, mVote, mIdCands.get(i)));
+
+        return mResult;
     }
 
     /**
      *
      * @return le gagnant en fonction de sa moyenne
      */
-    public CChoiceVM calculateAverage() {
-        int lNbVoting = mVoters.size();
+    public List<CResult> calculateAverage() {
+
+        List<Double> lAverageValue = new ArrayList<>();
         // recherche du vaiqueur
-        double max = 0.0;
-        CChoiceVM lWinner = null;
+        double lValue;
 
-        for (CChoiceVM c : mChoices) {
-            if (c.moyenneNote() > max) {
-                max = c.moyenneNote();
-                lWinner = c;
-            }
+        for (List<Integer> candVote : mCandVote) {
+            lValue = 0.0;
+            for (Integer value : candVote)
+                lValue += value;
+
+            lAverageValue.add(lValue/candVote.size());
         }
+        double lMax = Collections.max(lAverageValue);
         // on cherche s'il ya d'autres vainqueurs qui ont la même moyenne
-        List<CChoiceVM> lWinners = new ArrayList<CChoiceVM>();
-        for (CChoiceVM c : mChoices) {
-            if (lWinner.getmAvg() == c.getmAvg()){
-                lWinners.add(c);
-            }
-        }
-        if (lWinners.size() <= 1 ){//s'il exite qu'un seul vainqueur on sort
-            return lWinner;
-        }
 
-        int mediane = (lNbVoting + 1) / 2;
-        mChoices.clear();
-        for (CChoiceVM c : lWinners){
-            c.subNote(mediane);
-            mChoices.add(c);
-        }
-        // Si la taille des notes est moins de 2 alors on return null ce qui veut dire qu'il n'y a pas de gagnant!
-        if ( mChoices.get(0).getNotes().size() < 2){
-            return null;
-        }
-        return calculateAverage();
+        for (int i = 0; i < lAverageValue.size(); i++)
+            if (lAverageValue.get(i) == lMax)
+                mResult.add(new CResult(0, mVote, mIdCands.get(i)));
+
+        return mResult;
     }
 
     /**
      *
      * @return gagnant par somme des points reçu
      */
-    public CChoiceVM calculateSum() {
-        int lNbVoting = mVoters.size();
+    public List<CResult> calculateSum() {
 
-        // recherche du vaiqueur
-        double lMax = 0.0;
-        CChoiceVM lWinner = null;
+        int lValue;
+        List<Integer> lCandValue = new ArrayList<>();
 
-        for (CChoiceVM c : mChoices) {
-            if (c.sommeNote() > lMax) {
-                lMax = c.getmSum();
-                lWinner = c;
-            }
-        }
-        // on cherche s'il ya d'autres vainqueurs qui ont la même somme
-        List<CChoiceVM> lWinners = new ArrayList<CChoiceVM>();
-        for (CChoiceVM c : mChoices) {
-            assert lWinner != null;
-            if (lWinner.getmSum() == c.getmSum()){
-                lWinners.add(c);
-            }
-        }
-        if (lWinners.size() <  2 ){//s'il exite qu'un seul vainqueur on sort
-            return lWinner;
+        for (List<Integer> candVote : mCandVote) {
+            lValue = 0;
+            for (Integer value : candVote)
+                lValue += value;
+
+            lCandValue.add(lValue);
         }
 
-        int mediane = (lNbVoting + 1) / 2;
-        mChoices.clear();
-        for (CChoiceVM c : lWinners){
-            c.subNote(mediane);
-            mChoices.add(c);
-        }
-        // Si la taille des est moins de 2 alors on return null ce qui veut dire qu'il n'y a pas de gagnant!
-        if ( mChoices.get(0).getNotes().size() < 2){
-            return null;
-        }
-        return calculateSum();
+        int lMax = Collections.max(lCandValue);
+
+        for (int i = 0; i < lCandValue.size(); i++)
+            if (lCandValue.get(i) == lMax)
+                mResult.add(new CResult(0, mVote, mIdCands.get(i)));
+
+        return mResult;
     }
 
 }

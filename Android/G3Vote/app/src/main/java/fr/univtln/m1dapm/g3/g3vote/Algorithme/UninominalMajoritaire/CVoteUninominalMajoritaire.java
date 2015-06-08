@@ -7,6 +7,7 @@ import java.util.List;
 
 import fr.univtln.m1dapm.g3.g3vote.Algorithme.AAlgorithme;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CResult;
 
 /**
  * Created by Pierre on 20/05/2015.
@@ -57,7 +58,6 @@ public class CVoteUninominalMajoritaire extends AAlgorithme{
      *
      * @see CVoteUninominalMajoritaire#initVote(List, int, int)
      */
-
     public  CVoteUninominalMajoritaire(){}
 
     /**
@@ -138,14 +138,13 @@ public class CVoteUninominalMajoritaire extends AAlgorithme{
      * <p>cherche dans la liste des candidat celui qui a le plus de voix , pui le renvoi </p>
      * @return le candidat qui a le plus de voix
      */
-    public CCandidate resultat(){// renvoi le candidat avec le plus de vote pour lui
+    public CResult resultat(){// renvoi le candidat avec le plus de vote pour lui
         /** donne le resultat du vote sans parametre avec pour retour le candidat avec le plus de vote pour lui  **/
-        CCandidate vainqueur;
+
         int lindex = mCandNumbVote.indexOf(Collections.max(mCandNumbVote));
+        CResult lWinner = new CResult(1,mVote, mListeCandidat.get(lindex).getIdCandidat());
 
-        vainqueur = mListeCandidat.get(lindex);
-
-       return vainqueur;
+       return lWinner;
     }
 
 }
