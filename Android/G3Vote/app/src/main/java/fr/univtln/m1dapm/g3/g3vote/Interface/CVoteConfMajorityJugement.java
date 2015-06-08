@@ -120,7 +120,6 @@ public class CVoteConfMajorityJugement extends AppCompatActivity {
             lIntent.putExtra("END_DATE", mDateFin);
             lIntent.putExtra("VOTE_TYPE", mTypeVote);
             lIntent.putExtra("CALCULATIONMETHOD", mCalculationMethod);
-            finish();
             startActivity(lIntent);
         }
 

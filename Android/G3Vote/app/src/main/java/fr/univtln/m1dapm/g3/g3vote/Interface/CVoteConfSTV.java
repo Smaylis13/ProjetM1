@@ -14,7 +14,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
 
 import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
@@ -83,7 +82,6 @@ public class CVoteConfSTV extends AppCompatActivity {
             lIntent.putExtra("END_DATE", mDateFin);
             lIntent.putExtra("VOTE_TYPE", mTypeVote);
             lIntent.putExtra("NB_GAGNANT",lnbgagnantint);
-            finish();
             startActivity(lIntent);
         }
     }

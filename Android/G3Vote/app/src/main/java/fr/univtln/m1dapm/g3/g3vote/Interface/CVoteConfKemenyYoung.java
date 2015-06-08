@@ -6,12 +6,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -88,7 +86,6 @@ public class CVoteConfKemenyYoung extends AppCompatActivity {
             lIntent.putExtra("START_DATE", mDateDebut);
             lIntent.putExtra("END_DATE", mDateFin);
             lIntent.putExtra("VOTE_TYPE", mTypeVote);
-            finish();
             startActivity(lIntent);
         }
 
