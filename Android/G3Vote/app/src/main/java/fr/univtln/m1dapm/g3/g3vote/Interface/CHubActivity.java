@@ -1,5 +1,6 @@
 package fr.univtln.m1dapm.g3.g3vote.Interface;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -25,6 +26,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -46,6 +48,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -65,7 +68,8 @@ import fr.univtln.m1dapm.g3.g3vote.R;
 import fr.univtln.m1dapm.g3.g3vote.Service.CGcmIntentService;
 import fr.univtln.m1dapm.g3.g3vote.crypto.CCrypto;
 
-public class CHubActivity extends AppCompatActivity implements ActionBar.TabListener {
+public class CHubActivity extends AppCompatActivity implements ActionBar.TabListener,
+        TimePicker.OnTimeChangedListener{
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -423,6 +427,7 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
 
 
 
+
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
@@ -473,16 +478,78 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
 
     //handle click on button below text date fin
     public void showDateEndPickerDialog(View view) {
-        android.support.v4.app.DialogFragment newFragment = new CDateEndPickerFragment();
-        newFragment.show(getSupportFragmentManager(), "datePicker");
+        /*android.support.v4.app.DialogFragment newFragment = new CDateEndPickerFragment();
+        newFragment.show(getSupportFragmentManager(), "datePicker");*/
+        final Dialog dialog = new Dialog(CHubActivity.this);
+
+        dialog.setContentView(R.layout.custom_datepicker);
+        dialog.setTitle("Custom Dialog");
+        dialog.show();
+        final TimePicker tp = (TimePicker)dialog.findViewById(R.id.timePicker1);
+        final DatePicker dp=(DatePicker)dialog.findViewById(R.id.datePicker1);
+        Button lValidate=(Button)dialog.findViewById(R.id.ValidDate);
+        lValidate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Button button = (Button) CHubActivity.this.findViewById(R.id.bVoteDateEnd);
+                button.setText(dp.getYear()+"-"+(dp.getMonth()+1)+"-" +dp.getDayOfMonth()+" "+tp.getCurrentHour()+":"+tp.getCurrentMinute());
+                dialog.cancel();
+            }
+        });
+
     }
 
     //handle click on button below text date debut
     public void showDateBeginPickerDialog(View view) {
+        /*
         android.support.v4.app.DialogFragment newFragment = new CDateBeginPickerFragment();
-        newFragment.show(getSupportFragmentManager(), "datePicker");
+        newFragment.show(getSupportFragmentManager(), "datePicker");*/
+        final Dialog dialog = new Dialog(CHubActivity.this);
+
+        dialog.setContentView(R.layout.custom_datepicker);
+        dialog.setTitle("Custom Dialog");
+        dialog.show();
+        final TimePicker tp = (TimePicker)dialog.findViewById(R.id.timePicker1);
+        final DatePicker dp=(DatePicker)dialog.findViewById(R.id.datePicker1);
+        Button lValidate=(Button)dialog.findViewById(R.id.ValidDate);
+        lValidate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Button button = (Button) CHubActivity.this.findViewById(R.id.bVoteDateBegin);
+                button.setText(dp.getYear()+"-"+(dp.getMonth()+1)+"-" +dp.getDayOfMonth()+" "+tp.getCurrentHour()+":"+tp.getCurrentMinute());
+                dialog.cancel();
+            }
+        });
+
+        /*tp.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
+
+            public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
+                final Button button = (Button) CHubActivity.this.findViewById(R.id.bVoteDateBegin);
+                String[] lButtonText=button.getText().toString().split("\\s+");
+                if(lButtonText[0].equals("Choix"))
+                    lButtonText[0]="";
+                button.setText(lButtonText[0] + " " + hourOfDay + ":" + minute);
+            }
+        });*/
+
     }
 
+    public void validTimeBegin(View pView){
+        final Dialog dialog = new Dialog(CHubActivity.this);
+
+        dialog.setContentView(R.layout.custom_datepicker);
+        dialog.setTitle("Custom Dialog");
+        TimePicker tp = (TimePicker)dialog.findViewById(R.id.timePicker1);
+        DatePicker dp=(DatePicker)dialog.findViewById(R.id.datePicker1);
+        final Button button = (Button) CHubActivity.this.findViewById(R.id.bVoteDateBegin);
+        button.setText(dp.getYear()+"-"+(dp.getMonth()+1)+":" +
+                "-"+dp.getDayOfMonth()+" "+tp.getCurrentHour()+":"+tp.getCurrentMinute()+":00.000");
+    }
+
+    @Override
+    public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
+
+    }
     public static java.util.Date getDateFromDatePicker(DatePicker datePicker){
         int day = datePicker.getDayOfMonth();
         int month = datePicker.getMonth();
@@ -504,16 +571,28 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
         final String lDateDebut=lB_DateDebut.getText().toString();
         final String lDateFin=lB_DateFin.getText().toString();
 
-        Date lDateDeDebut=new Date();
-        Date lDateDeFin=new Date();
+        Timestamp lDateDeDebut = null;
+        Timestamp lDateDeFin=null;
 
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        if (!lDateDebut.equals("Choix date")){
+
+
+        try{
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+            Date parsedDate = dateFormat.parse(lDateDebut+":00.000");
+            lDateDeDebut = new java.sql.Timestamp(parsedDate.getTime());
+
+            parsedDate=dateFormat.parse(lDateFin+":00.000");
+            lDateDeFin = new java.sql.Timestamp(parsedDate.getTime());
+
+        }catch(Exception e){//this generic but you can control another types of exception
+
+        }
+        /*if (!lDateDebut.equals("Choix date")){
             lDateDeDebut = dateFormat.parse(lDateDebut);
         }
         if (!lDateFin.equals("Choix date")){
             lDateDeFin = dateFormat.parse(lDateFin);
-        }
+        }*/
 
         Log.i("valeur boutons","le début: "+lDateDebut+" la fin :"+lDateFin);
 
@@ -554,7 +633,7 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
         else if (lDateFin.equals("Choix date")){
             Toast.makeText(this,getString(R.string.dateEndEmpty),Toast.LENGTH_SHORT).show();
         }
-        else if(lDateDeDebut.compareTo(lDateDeFin)>0) {
+        else if(lDateDeDebut.after(lDateDeFin)) {
             Toast.makeText(this,getString(R.string.dateBeginAfterDateEnd),Toast.LENGTH_SHORT).show();
         }
         else{
@@ -615,6 +694,7 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
                             lIn = new BufferedInputStream(lHttpCon.getInputStream());
                             lResponse = readStream(lIn);
                             String lDecryptString=lCrypto.publicDecrypt(lCrypto.getKey(), Hex.decodeHex(lResponse.toCharArray()));
+
                             Type listType = new TypeToken<ArrayList<CVote>>() {}.getType();
                             ObjectMapper lMapper=new ObjectMapper();
                             ArrayList<CVote> lVotes = lMapper.readValue(lDecryptString, new TypeReference<ArrayList<CVote>>(){});

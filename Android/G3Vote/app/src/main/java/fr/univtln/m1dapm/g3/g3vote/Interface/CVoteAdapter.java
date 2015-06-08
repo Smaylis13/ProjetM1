@@ -94,7 +94,7 @@ public class CVoteAdapter extends BaseAdapter {
 
         //ltv_beginDate.setText(mListVote.get(position).getmDebut().getGregorianChange().toString());
         //ltv_endDate.setText(mListVote.get(position).getmFin().getGregorianChange().toString());
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");//new DateTime( currentDate ).toString("yyyy-MM-dd HH:mm:ss")
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");//new DateTime( currentDate ).toString("yyyy-MM-dd HH:mm:ss")
         ltv_beginDate.setText(df.format(mListVote.get(position).getDateDebut()));
         ltv_endDate.setText(df.format(mListVote.get(position).getDateFin()));
 

@@ -84,7 +84,7 @@
     <string name="validateVoteTypeETempty">Vous n\'avez pas rempli le nom du vote</string>
     <string name="dateBeginEmpty">Vous n\'avez pas choisi de date de début</string>
     <string name="dateEndEmpty">Vous n\'avez pas choisi de date de fin</string>
-    <string name="dateBeginAfterDateEnd">La date de début est avant la date de fin</string>
+    <string name="dateBeginAfterDateEnd">La date de début est après la date de fin</string>
 
     <string name="cancelVote">Annuler tout</string>
     <string name="vote">Voter !</string>

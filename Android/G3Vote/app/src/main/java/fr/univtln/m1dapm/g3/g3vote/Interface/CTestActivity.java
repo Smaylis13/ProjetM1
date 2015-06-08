@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import java.sql.Array;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -84,12 +85,20 @@ public class CTestActivity extends AppCompatActivity {
 
     public void validate (View view) throws ParseException {
 
-        DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Timestamp lDateDeDebut = null;
+        Timestamp lDateDeFin=null;
 
-        Date lDateDeb = new java.sql.Date(simpleDateFormat.parse(mDateDebut).getTime());
-        Date lDateFin = new java.sql.Date(simpleDateFormat.parse(mDateFin).getTime());
+        try{
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+            java.util.Date parsedDate = dateFormat.parse(mDateDebut);
+            lDateDeDebut = new java.sql.Timestamp(parsedDate.getTime());
+            parsedDate=dateFormat.parse(mDateFin);
+            lDateDeFin = new java.sql.Timestamp(parsedDate.getTime());
+        }catch(Exception e){//this generic but you can control another types of exception
 
-        CVote lVote = new CVote(mVoteName, "", true, lDateDeb, lDateFin, 1, null, new CType(1,mVoteType,"test"), null, listCandidat, null,null);
+        }
+
+        CVote lVote = new CVote(mVoteName, "", true, lDateDeDebut, lDateDeFin, 1, null, new CType(1,mVoteType,"test"), null, listCandidat, null,null);
         CTaskParam lParams = new CTaskParam(CRequestTypesEnum.add_new_vote, lVote);
         CCommunication lCom = new CCommunication();
         lCom.execute(lParams);

@@ -3,10 +3,12 @@ package fr.univtln.m1dapm.g3.g3vote.Entite;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSetter;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -29,8 +31,8 @@ public class CVote implements Serializable {
 
 
 
-    private Date mDateDebut;
-    private Date mDateFin;
+    private Timestamp mDateDebut;
+    private Timestamp mDateFin;
 
     private int mIdOrganisateur;
 
@@ -53,7 +55,7 @@ public class CVote implements Serializable {
 
     public CVote(){};
 
-    public CVote(int pIdVote, String pVoteName, String pDescriptionVote, boolean pStatusVote, Date pDateDebut, Date pDateFin, int pOrganisateur, List<CResult> pResultVote,CType pType, List<CRule> pRules, List<CCandidate> pCandidate, List<CDeleguation> pDeleguations, List<CUser> pParticipants) {
+    public CVote(int pIdVote, String pVoteName, String pDescriptionVote, boolean pStatusVote, Timestamp pDateDebut, Timestamp pDateFin, int pOrganisateur, List<CResult> pResultVote,CType pType, List<CRule> pRules, List<CCandidate> pCandidate, List<CDeleguation> pDeleguations, List<CUser> pParticipants) {
         this.mIdVote=pIdVote;
         this.mVoteName = pVoteName;
         this.mDescriptionVote = pDescriptionVote;
@@ -69,7 +71,7 @@ public class CVote implements Serializable {
         this.mParticipants=pParticipants;
     }
 
-    public CVote(String pVoteName, String pDescriptionVote, boolean pStatusVote, Date pDateDebut, Date pDateFin, int pOrganisateur, List<CResult> pResultVote,CType pType, List<CRule> pRules, List<CCandidate> pCandidate, List<CDeleguation> pDeleguations, List<CUser> pParticipants) {
+    public CVote(String pVoteName, String pDescriptionVote, boolean pStatusVote, Timestamp pDateDebut, Timestamp pDateFin, int pOrganisateur, List<CResult> pResultVote,CType pType, List<CRule> pRules, List<CCandidate> pCandidate, List<CDeleguation> pDeleguations, List<CUser> pParticipants) {
         this.mVoteName = pVoteName;
         this.mDescriptionVote = pDescriptionVote;
         this.mStatusVote = pStatusVote;
@@ -89,14 +91,14 @@ public class CVote implements Serializable {
         this.mVoteName = pNom;
     }
 
-    public CVote(int pIdVote, String pNom, boolean pStatut, Date pDebut, Date pFin){
+    public CVote(int pIdVote, String pNom, boolean pStatut, Timestamp pDebut, Timestamp pFin){
         this(pIdVote,pNom);
         this.mStatusVote =pStatut;
         this.mDateDebut = pDebut;
         this.mDateFin = pFin;
     }
 
-    public CVote(int pIdVote, String pNom, boolean pStatut,boolean mVoted, Date pDebut, Date pFin){
+    public CVote(int pIdVote, String pNom, boolean pStatut,boolean mVoted, Timestamp pDebut, Timestamp pFin){
         this(pIdVote,pNom);
         this.mStatusVote =pStatut;
         this.mDateDebut = pDebut;
@@ -133,7 +135,7 @@ public class CVote implements Serializable {
         return mDateDebut;
     }
 
-    public void setDateDebut(Date beginDate) {
+    public void setDateDebut(Timestamp beginDate) {
         this.mDateDebut = beginDate;
     }
 
@@ -141,7 +143,7 @@ public class CVote implements Serializable {
         return mDateFin;
     }
 
-    public void setDateFin(Date endDate) {
+    public void setDateFin(Timestamp endDate) {
         this.mDateFin = endDate;
     }
 
@@ -181,10 +183,15 @@ public class CVote implements Serializable {
         this.mRules=pRules;
     }
 
+    @JsonIgnore
     public CType getTypes() {
         return mTypes;
     }
 
+    @JsonGetter("types")
+    public int getIdType(){
+        return mTypes.getIdType();
+    }
     public void setTypes(CType pTypes) {
         this.mTypes = pTypes;
     }
@@ -222,16 +229,17 @@ public class CVote implements Serializable {
         DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 
 // Get the date today using Calendar object.
-        Date d1 = new Date(2015-1900,05,12);
-        Date d2 = new Date(2015-1900,05,22);
-        Date d3 = new Date(2015-1900,05,13);
-        Date d4 = new Date(2015-1900,05,23);
-        Date d5 = new Date(2015-1900,05,14);
-        Date d6 = new Date(2015-1900,05,24);
-        Date d7 = new Date(2015-1900,05,15);
-        Date d8 = new Date(2015-1900,05,25);
-        Date d9 = new Date(2015-1900,05,16);
-        Date d10 = new Date(2015-1900,05,26);
+        Timestamp d1 = new Timestamp(System.currentTimeMillis());
+        Timestamp d2 = new Timestamp(System.currentTimeMillis());
+        Timestamp d3 = new Timestamp(System.currentTimeMillis());
+        Timestamp d4 = new Timestamp(System.currentTimeMillis());
+        Timestamp d5 = new Timestamp(System.currentTimeMillis());
+        Timestamp d6 = new Timestamp(System.currentTimeMillis());
+        Timestamp d7 = new Timestamp(System.currentTimeMillis());
+        Timestamp d8 = new Timestamp(System.currentTimeMillis());
+        Timestamp d9 = new Timestamp(System.currentTimeMillis());
+        Timestamp d10 = new Timestamp(System.currentTimeMillis());
+
 // Using DateFormat format method we can create a string
 // representation of a date with the defined format.
 
