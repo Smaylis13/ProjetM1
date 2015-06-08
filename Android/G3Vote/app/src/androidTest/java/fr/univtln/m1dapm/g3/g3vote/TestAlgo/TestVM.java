@@ -1,14 +1,5 @@
 package fr.univtln.m1dapm.g3.g3vote.TestAlgo;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-import fr.univtln.m1dapm.g3.g3vote.Algorithme.VoteMajoritaire.CAlgoVoteMaj;
-import fr.univtln.m1dapm.g3.g3vote.Algorithme.VoteMajoritaire.CChoiceVM;
-import fr.univtln.m1dapm.g3.g3vote.Algorithme.VoteMajoritaire.CVoterVM;
-import fr.univtln.m1dapm.g3.g3vote.Algorithme.VoteMajoritaire.CVoterVM;
-
 /**
  * Created by lyamsi on 09/05/15.
  */
@@ -17,6 +8,7 @@ public class TestVM {
     public static int NB_CANDIDATE = 5;
     public static void main(String[] args) {
         // entrée
+        /*
         List<CChoiceVM> candidates = new ArrayList<CChoiceVM>();
         List<CVoterVM> votants = new ArrayList<CVoterVM>();
         // init Entrée
@@ -35,7 +27,7 @@ public class TestVM {
         }
 
         CAlgoVoteMaj cAlgoVoteMaj = new CAlgoVoteMaj(candidates,votants);
-        System.out.println(cAlgoVoteMaj.calculateSum());
+        System.out.println(cAlgoVoteMaj.calculateSum());*/
         /*System.out.println(cAlgoVoteMaj.calculateAverage());
 
         System.out.println(cAlgoVoteMaj.calculateMedian());*/
