@@ -39,6 +39,7 @@ public class CRecapVoteActivity extends AppCompatActivity {
     private ArrayList<CUser> mListParticipant = new ArrayList<CUser>();
     private List<CRule> mRules=new ArrayList<>();
     private CType mTypeVote;
+    private int mCalculationMethod=-1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,19 +48,23 @@ public class CRecapVoteActivity extends AppCompatActivity {
 
         //stockage des données de l'activity precedente
         Bundle extras = getIntent().getExtras();
-        if (extras==null){
+        if (extras == null) {
             return;
         }
         mVoteName = (String) extras.get("VOTE_NAME");
         mDateDebut = (String) extras.get("START_DATE");
         mDateFin = (String) extras.get("END_DATE");
-        mListCandidat = (ArrayList<CCandidate>)extras.get("liste de Candidat");
-        mListParticipant=(ArrayList<CUser>)extras.get("liste de participant");
+        mListCandidat = (ArrayList<CCandidate>) extras.get("liste de Candidat");
+        mListParticipant = (ArrayList<CUser>) extras.get("liste de participant");
         mTypeVote = (CType) extras.get("VOTE_TYPE");
         int lNbGagants;
-        if(mTypeVote.getIdType()==1){
-           lNbGagants=(int)extras.get("NB_GAGNANT");
-            mRules.add(new CRule("NB_GAGNANT",String.valueOf(lNbGagants)));
+        if (mTypeVote.getIdType() == 1) {
+            lNbGagants = (int) extras.get("NB_GAGNANT");
+            mRules.add(new CRule("NB_GAGNANT", String.valueOf(lNbGagants)));
+        }
+        if (mTypeVote.getIdType() == 5){
+            mCalculationMethod = (int) extras.get("CALCULATIONMETHOD");
+            mRules.add(new CRule("CALCULATION_METHOD",String.valueOf(mCalculationMethod)));
         }
 
         Log.i("donner candida", mListCandidat.toString());
