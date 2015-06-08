@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/linearLayout1"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical" >
 
     <DatePicker
@@ -17,14 +17,17 @@
         android:id="@+id/timePicker1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:timePickerMode="spinner">
+        android:timePickerMode="spinner"
+        android:layout_below="@id/datePicker1">
     </TimePicker>
 
     <Button
         android:id="@+id/ValidDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/datePicker1"
+        android:layout_alignParentRight="true"
         android:text="@string/bSubValidationText"
         />
 
-</LinearLayout>
+</RelativeLayout>
