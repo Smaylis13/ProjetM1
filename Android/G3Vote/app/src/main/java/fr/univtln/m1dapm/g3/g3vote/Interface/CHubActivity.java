@@ -491,16 +491,40 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
         lValidate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Button button = (Button) CHubActivity.this.findViewById(R.id.bVoteDateEnd);
-                button.setText(dp.getYear()+"-"+(dp.getMonth()+1)+"-" +dp.getDayOfMonth()+" "+tp.getCurrentHour()+":"+tp.getCurrentMinute());
-                dialog.cancel();
+                final Button buttonEnd = (Button) CHubActivity.this.findViewById(R.id.bVoteDateEnd);
+                final Button buttonBegin = (Button) CHubActivity.this.findViewById(R.id.bVoteDateBegin);
+                //si le bouton date début n'a pas encore été remplis on peut remplir direct le bouton date début
+                if (buttonBegin.getText().toString().equals(getString(R.string.lchoiceDate))){
+                    buttonEnd.setText(dp.getYear()+"-"+(dp.getMonth()+1)+"-" +dp.getDayOfMonth()+" "+tp.getCurrentHour()+":"+tp.getCurrentMinute());
+                    dialog.cancel();
+                }
+                //sinon on verifie que la date début est bien antérieure
+                // a la date de fin
+
+                try {
+                    String dateEnd = dp.getYear()+"-"+(dp.getMonth()+1)+"-" +dp.getDayOfMonth()+" "+tp.getCurrentHour()+":"+tp.getCurrentMinute();
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+                    Date parsedDate = dateFormat.parse(dateEnd+":00.000");
+                    Timestamp lDateBegin = getDateBegin();
+                    Timestamp lDateEnd = new java.sql.Timestamp(parsedDate.getTime());
+
+                    if (lDateBegin.after(lDateEnd)){
+                        Toast.makeText(getsContext(),"La date de début est après la date de fin ",Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        buttonEnd.setText(dp.getYear()+"-"+(dp.getMonth()+1)+"-" +dp.getDayOfMonth()+" "+tp.getCurrentHour()+":"+tp.getCurrentMinute());
+                        dialog.cancel();
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
     }
 
     //handle click on button below text date debut
-    public void showDateBeginPickerDialog(View view) {
+    public void showDateBeginPickerDialog(View view) throws ParseException {
         /*
         android.support.v4.app.DialogFragment newFragment = new CDateBeginPickerFragment();
         newFragment.show(getSupportFragmentManager(), "datePicker");*/
@@ -517,9 +541,34 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
         lValidate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Button button = (Button) CHubActivity.this.findViewById(R.id.bVoteDateBegin);
-                button.setText(dp.getYear()+"-"+(dp.getMonth()+1)+"-" +dp.getDayOfMonth()+" "+tp.getCurrentHour()+":"+tp.getCurrentMinute());
-                dialog.cancel();
+                final Button buttonEnd = (Button) CHubActivity.this.findViewById(R.id.bVoteDateEnd);
+                final Button buttonBegin = (Button) CHubActivity.this.findViewById(R.id.bVoteDateBegin);
+                Log.i("contenue bouton", buttonEnd.getText().toString());
+                //si le bouton date fin n'a pas encore été remplis on peut remplir direct le bouton date début
+                if (buttonEnd.getText().toString().equals(getString(R.string.lchoiceDate))) {
+                    buttonBegin.setText(dp.getYear() + "-" + (dp.getMonth() + 1) + "-" + dp.getDayOfMonth() + " " + tp.getCurrentHour() + ":" + tp.getCurrentMinute());
+                    dialog.cancel();
+                }
+                //sinon on verifie que la date début est bien antérieure
+                // a la date de fin
+                else{
+                try {
+                    String dateBegin = dp.getYear() + "-" + (dp.getMonth() + 1) + "-" + dp.getDayOfMonth() + " " + tp.getCurrentHour() + ":" + tp.getCurrentMinute();
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+                    Date parsedDate = dateFormat.parse(dateBegin + ":00.000");
+                    Timestamp lDateBegin = new java.sql.Timestamp(parsedDate.getTime());
+                    Timestamp lDateEnd = getDateEnd();
+
+                    if (lDateBegin.after(lDateEnd)) {
+                        Toast.makeText(getsContext(), "La date de début est après la date de fin ", Toast.LENGTH_SHORT).show();
+                    } else {
+                        buttonBegin.setText(dp.getYear() + "-" + (dp.getMonth() + 1) + "-" + dp.getDayOfMonth() + " " + tp.getCurrentHour() + ":" + tp.getCurrentMinute());
+                        dialog.cancel();
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
             }
         });
 
@@ -557,22 +606,12 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
         final String lDateDebut=lB_DateDebut.getText().toString();
         final String lDateFin=lB_DateFin.getText().toString();
 
-        Timestamp lDateDeDebut = null;
-        Timestamp lDateDeFin=null;
+        Timestamp lDateDeDebut = getDateBegin();
+        Timestamp lDateDeFin=getDateEnd();
 
 
 
-        try{
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-            Date parsedDate = dateFormat.parse(lDateDebut+":00.000");
-            lDateDeDebut = new java.sql.Timestamp(parsedDate.getTime());
 
-            parsedDate=dateFormat.parse(lDateFin+":00.000");
-            lDateDeFin = new java.sql.Timestamp(parsedDate.getTime());
-
-        }catch(Exception e){//this generic but you can control another types of exception
-
-        }
         /*if (!lDateDebut.equals("Choix date")){
             lDateDeDebut = dateFormat.parse(lDateDebut);
         }
@@ -580,7 +619,7 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
             lDateDeFin = dateFormat.parse(lDateFin);
         }*/
 
-        Log.i("valeur boutons","le début: "+lDateDebut+" la fin :"+lDateFin);
+
 
         int test = spin.getSelectedItemPosition();
         Intent lIntent=null;
@@ -631,6 +670,24 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
         }
 
 
+    }
+
+    //retourne la date de début avec l'heure de début
+    public Timestamp getDateBegin() throws ParseException {
+        final Button lB_DateDebut = (Button)findViewById(R.id.bVoteDateBegin);
+        final String lDateDebut=lB_DateDebut.getText().toString();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+        Date parsedDate = dateFormat.parse(lDateDebut + ":00.000");
+        return new java.sql.Timestamp(parsedDate.getTime());
+    }
+
+    //retourne la date de fin avec l'heure de début
+    public Timestamp getDateEnd() throws ParseException {
+        final Button lB_DateEnd = (Button)findViewById(R.id.bVoteDateEnd);
+        final String lDateEnd=lB_DateEnd.getText().toString();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+        Date parsedDate = dateFormat.parse(lDateEnd+":00.000");
+        return new java.sql.Timestamp(parsedDate.getTime());
     }
 
     public void addContact(View view){

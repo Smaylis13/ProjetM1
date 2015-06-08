@@ -131,4 +131,10 @@ public class CHubMyVotesFragment extends Fragment implements AdapterView.OnItemC
         super.onStart();
         sAdapter.notifyDataSetChanged();
     }
+
+    @Override
+    public void  onResume(){
+        super.onResume();
+        sAdapter.notifyDataSetChanged();
+    }
 }

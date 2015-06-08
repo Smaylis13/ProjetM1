@@ -117,7 +117,7 @@
         <item>A rejeter</item>
     </string-array>
     <string name="title_activity_spinnertest">Spinnertest</string>
-
+    <string name="lchoiceDate">Choix date</string>
 
 
 </resources>
