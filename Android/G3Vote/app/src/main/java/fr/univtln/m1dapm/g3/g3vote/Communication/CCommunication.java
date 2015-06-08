@@ -415,6 +415,28 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                         return lCode;
 
                     break;
+                case get_choices:
+                    lUrl = new URL(SERVER_URL+"choice/all/"+Integer.toString((int)lParams.getObject()));
+                    lHttpCon = (HttpURLConnection) lUrl.openConnection();
+                    lHttpCon.setDoInput(true);
+                    lHttpCon.setRequestMethod("GET");
+                    lHttpCon.setRequestProperty("ID", CLoginActivity.getUniqueKey().toString());
+                    lHttpCon.setRequestProperty("Accept", "application/json");
+                    lCode=lHttpCon.getResponseCode();
+                    if(lCode==200) {
+                        lIn = new BufferedInputStream(lHttpCon.getInputStream());
+                        lResponse = readStream(lIn);
+                        lDecryptString=lCrypto.publicDecrypt(lCrypto.getKey(),Hex.decodeHex(lResponse.toCharArray()));
+                        ArrayList<CChoice> lChoices = lMapper.readValue(lDecryptString, new TypeReference<ArrayList<CChoice>>(){});
+                        CHubMyVotesFragment.startActivityIntent();
+                       // CHubMyVotesFragment.getIntent().addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        //CHubMyVotesFragment.getsContext().startActivity(CHubMyVotesFragment.getIntent());
+                        //CVoteUninominal.setlList(lCandidates);
+                    }
+                    else
+                        return lCode;
+
+                    break;
 
                 case get_candidates:
                     lUrl = new URL(SERVER_URL+"vote/"+Integer.toString((int)lParams.getObject())+"/candidats");

@@ -12,6 +12,9 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.univtln.m1dapm.g3.g3vote.Communication.CCommunication;
+import fr.univtln.m1dapm.g3.g3vote.Communication.CRequestTypesEnum;
+import fr.univtln.m1dapm.g3.g3vote.Communication.CTaskParam;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
 import fr.univtln.m1dapm.g3.g3vote.R;
 
@@ -28,6 +31,7 @@ public class CHubMyVotesFragment extends Fragment implements AdapterView.OnItemC
     private static CHubMyVotesFragment sFragment;
     private static CVoteAdapter sAdapter;
     private static ListView sList;
+    private static Intent sIntent;
 
     public static CVoteAdapter getsAdapter(){return sAdapter;}
     public List<CVote> getmVotes() {
@@ -40,6 +44,10 @@ public class CHubMyVotesFragment extends Fragment implements AdapterView.OnItemC
             this.sVotes.add(lVote);
         }
         //sAdapter.notifyDataSetChanged();
+    }
+
+    public static Intent getsIntent() {
+        return sIntent;
     }
 
     /**
@@ -90,39 +98,50 @@ public class CHubMyVotesFragment extends Fragment implements AdapterView.OnItemC
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         //Intent lIntent = new Intent(getActivity(), CRankingVote.class);
-        Intent lIntent ;
+
         CVote lVote = (CVote) sList.getItemAtPosition(position);
         // Si le vote est actif, on envoie sur la page de vote
         if(lVote.getStatusVote()) {
             if (lVote.getTypes().getNom().equals("STV") || lVote.getTypes().getNom().equals("Kemeny-Young")) {
-                lIntent = new Intent(getActivity(), CRankingVote.class);
+                sIntent = new Intent(getActivity(), CRankingVote.class);
             } else if (lVote.getTypes().getNom().equals("Uninominal à 1 tour")){
-                lIntent = new Intent(getActivity(), CVoteUninominal.class);
+                sIntent = new Intent(getActivity(), CVoteUninominal.class);
             } else {
-                lIntent = new Intent(getActivity(),CNoteVote.class);
+                sIntent = new Intent(getActivity(),CNoteVote.class);
             }
 
 
-            lIntent.putExtra("VOTE", lVote);
-            startActivity(lIntent);
+            sIntent.putExtra("VOTE", lVote);
+            startActivity(sIntent);
         }
         // Sinon, on envoie sur la page des résultats
         else {
             if (lVote.getTypes().getNom().equals("STV") || lVote.getTypes().getNom().equals("Kemeny-Young")) {
-                lIntent = new Intent(getActivity(), CResultRankingActivity.class);
+                sIntent = new Intent(getActivity(), CResultRankingActivity.class);
+                startActivityIntent();
             } else if (lVote.getTypes().getNom().equals("Uninominal à 1 tour")) {
-                lIntent = new Intent(getActivity(), CResultUninominalActivity.class);
+                sIntent = new Intent(getActivity(), CResultUninominalActivity.class);
+                sIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                CTaskParam lParams=new CTaskParam(CRequestTypesEnum.get_choices,lVote.getIdVote());
+                CCommunication lCom=new CCommunication();
+                lCom.execute(lParams);
+
             } else{
 
-                lIntent = new Intent(getActivity(), CNoteVote.class);
+                sIntent = new Intent(getActivity(), CNoteVote.class);
+                startActivityIntent();
 
             }
 
 
-            lIntent.putExtra("VOTE", lVote);
-            startActivity(lIntent);
+            sIntent.putExtra("VOTE", lVote);
+            //startActivity(lIntent);
             //TODO:Creer la page des resultats et envoyer dessus
         }
+    }
+
+    public static void startActivityIntent(){
+        CHubActivity.getsContext().startActivity(sIntent);
     }
 
     //met a jour le fragment quand on reviens dessus

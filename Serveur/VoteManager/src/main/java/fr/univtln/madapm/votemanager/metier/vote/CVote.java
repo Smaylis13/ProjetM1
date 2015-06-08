@@ -237,6 +237,11 @@ public class CVote implements Serializable {
         this.mChoices = pChoices;
     }*/
 
+    @JsonIgnore
+    public List<CChoice> getChoices() {
+        return mChoices;
+    }
+
     public List<CCandidate> getCandidates() {
         return mCandidate;
     }
@@ -257,12 +262,10 @@ public class CVote implements Serializable {
     /**
      * Ajoute le choix d'un participant
      *
-     * @param pUser Participant concerné
-     * @param pCandidate Candidat concerné
-     * @param pChois chois pour ce candidat
+     * @param pChoice Choix d'un votant
      */
-    public void addChoice(CUser pUser, CCandidate pCandidate, int pChois){
-        CChoice lChoice = new CChoice(this, pUser, pCandidate, pChois);
+    public void addChoice(CChoice pChoice){
+        this.mChoices.add(pChoice);
     }
 
     @Override

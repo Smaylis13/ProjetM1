@@ -71,8 +71,8 @@ public class CVoteTest extends TestCase {
 
         System.out.println("\nVotes des participants\n");
 
-        vote.addChoice(utilisateur2, candidate1, 1);
-        vote.addChoice(utilisateur3, candidate3, 1);
+        //vote.addChoice(utilisateur2, candidate1, 1);
+        //vote.addChoice(utilisateur3, candidate3, 1);
 
         System.out.println(results);
 
@@ -84,7 +84,7 @@ public class CVoteTest extends TestCase {
         CUser newparticipant = new CUser(0, "coucou@coucou.fr", "root");
         participants.add(newparticipant);
 
-        vote.addChoice(newparticipant, candidate1, 1);
+        //vote.addChoice(newparticipant, candidate1, 1);
 
         System.out.println("Test JSON");
 
