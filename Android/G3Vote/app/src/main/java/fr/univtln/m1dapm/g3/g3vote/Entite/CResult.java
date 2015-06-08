@@ -21,6 +21,11 @@ public class CResult implements Comparable<CResult>{
         this.mIdCandidate = pIdCandidate;
     }
 
+    public CResult(int pOrder, CVote pVote, int pIdCandidate) {
+        this.mOrder = pOrder;
+        this.mVote = pVote;
+        this.mIdCandidate = pIdCandidate;
+    }
 
     public int getResultat() {
         return mOrder;
