@@ -83,6 +83,7 @@ public class CVoteConfSTV extends AppCompatActivity {
             lIntent.putExtra("END_DATE", mDateFin);
             lIntent.putExtra("VOTE_TYPE", mTypeVote);
             lIntent.putExtra("NB_GAGNANT",lnbgagnantint);
+            finish();
             startActivity(lIntent);
         }
     }

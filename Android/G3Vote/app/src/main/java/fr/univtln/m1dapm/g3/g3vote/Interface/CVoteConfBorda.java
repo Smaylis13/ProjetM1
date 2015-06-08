@@ -80,6 +80,7 @@ public class CVoteConfBorda extends AppCompatActivity {
             lIntent.putExtra("START_DATE", mDateDebut);
             lIntent.putExtra("END_DATE", mDateFin);
             lIntent.putExtra("VOTE_TYPE", mTypeVote);
+            finish();
             startActivity(lIntent);
         }
 

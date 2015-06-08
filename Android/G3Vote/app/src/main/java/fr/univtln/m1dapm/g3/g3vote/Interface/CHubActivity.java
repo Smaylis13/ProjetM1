@@ -639,6 +639,7 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
             lIntent.putExtra("VOTE_NAME",lVoteName);
             lIntent.putExtra("START_DATE",lDateDebut);
             lIntent.putExtra("END_DATE",lDateFin);
+            finish();
             startActivity(lIntent);
         }
 
