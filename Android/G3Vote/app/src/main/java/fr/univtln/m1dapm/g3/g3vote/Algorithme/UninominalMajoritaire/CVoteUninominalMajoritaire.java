@@ -7,7 +7,9 @@ import java.util.List;
 
 import fr.univtln.m1dapm.g3.g3vote.Algorithme.AAlgorithme;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CChoice;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CResult;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
 
 /**
  * Created by Pierre on 20/05/2015.
@@ -34,7 +36,9 @@ public class CVoteUninominalMajoritaire extends AAlgorithme{
     /**
      * liste des candidat
      */
-    private List<CCandidate> mListeCandidat;//liste des candidat
+    private List<Integer> mChoices;//liste des candidat
+
+    private List<Integer> mIdCands;
 
     /**
      * Liste du nombre de vote pour chaque candidat
@@ -58,44 +62,45 @@ public class CVoteUninominalMajoritaire extends AAlgorithme{
      *
      * @see CVoteUninominalMajoritaire#initVote(List, int, int)
      */
-    public  CVoteUninominalMajoritaire(){}
+    public  CVoteUninominalMajoritaire(CVote pVote)
+    {
+        super(pVote);
+    }
 
     /**
      * initialisation du vote
      *
      * <p>initialise les parametres   </p>
-     * @param pListeCandidat
+     * @param pChoices
      *          la liste des candidats qui se sont presentes
      * @param pNbtour
      *          le nombre de tour prevu (1 ou 2)
      * @param pNbcandidattour2
      *          le nombre de candidat quil restera au tour 2
      */
-    protected void initVote(List<CCandidate> pListeCandidat, int pNbtour, int pNbcandidattour2) {
+    protected void initVote(List<CChoice> pChoices, int pNbtour, int pNbcandidattour2) {
         /** initialise le vote avec pour argument la liste des candidats**/
-        mListeCandidat = new ArrayList<>(pListeCandidat);
-        Integer[] lDefaultVal = new Integer[pListeCandidat.size()];
+
+        for (CCandidate cand : mVote.getCandidates())
+            mIdCands.add(cand.getIdCandidat());
+
+        for (CChoice choice : pChoices)
+            mChoices.add(choice.getIdCandidate());
+
+        Integer[] lDefaultVal = new Integer[pChoices.size()];
         Arrays.fill(lDefaultVal, 0);
         mCandNumbVote = new ArrayList<>(Arrays.asList(lDefaultVal));
         mNbtour=pNbtour;
         mNbCandidatTour2=pNbcandidattour2;
-        /*
-        for (int i =0;i<pListeCandidat.size();i++){//mise en place de la liste pour ce vote
-            CCandidate lCand = new CCandidate(pListeCandidat.get(i));
-            mListeCandidat.add(lCand);
-        }*/
+
     }
 
-    /**
-     * traitement d'un nouveau vote
-     *
-     * <p> A l'arrivée d'un nouveau bulletin, ajoute une voix au candidat dans la liste </p>
-     * @param pchoix candidat choisi par le votant
-     */
-    public void nouveauVote(CCandidate pchoix){
-        /** permet de valider le choix d'un votant avec pour argument le candidat choisi **/
-        int lindex = mListeCandidat.indexOf(pchoix);
-        mCandNumbVote.set(lindex, mCandNumbVote.get(lindex)+1);
+
+    private void CalcScore() {
+
+        for (int i = 0; i < mIdCands.size(); i++)
+            mCandNumbVote.add(Collections.frequency(mChoices, mIdCands.get(i)));
+
     }
 
     /**
@@ -105,44 +110,38 @@ public class CVoteUninominalMajoritaire extends AAlgorithme{
      */
     public void tourSuivant(){
 
-        List<CCandidate> lListTour = new ArrayList<>();//cree la nouvelle liste de candidat pour le tour suivant
+        List<Integer> lListTour = new ArrayList<>();//cree la nouvelle liste de candidat pour le tour suivant
         List<Integer> lCandNumbVote = new ArrayList<>();
         int lNbCandT2 = 0;
 
         while(lNbCandT2 < mNbCandidatTour2)
         {
             int lindex = mCandNumbVote.indexOf(Collections.max(mCandNumbVote));
-            lListTour.add(mListeCandidat.get(lindex));
+            lListTour.add(mIdCands.get(lindex));
             lCandNumbVote.add(mCandNumbVote.get(lindex));
             mCandNumbVote.remove(lindex);
-            mListeCandidat.remove(lindex);
+            mIdCands.remove(lindex);
             lNbCandT2++;
         }
 
-        mListeCandidat = lListTour;
+        mIdCands = lListTour;
         mCandNumbVote = lCandNumbVote;
 
     }
 
     /**
-     * fonction d'affichage sur la sortie sout
-     */
-    public void affiche(){
-        for (int i = 0; i <mListeCandidat.size() ; i++) {
-            System.out.println(mListeCandidat.get(i));
-        }
-    }
-
-    /**
-     * fonction de calcule de resultat
-     * <p>cherche dans la liste des candidat celui qui a le plus de voix , pui le renvoi </p>
+     * fonction de calcul du resultat
+     * <p>cherche dans la liste des candidat celui qui a le plus de voix , puis le renvoi </p>
      * @return le candidat qui a le plus de voix
      */
     public CResult resultat(){// renvoi le candidat avec le plus de vote pour lui
         /** donne le resultat du vote sans parametre avec pour retour le candidat avec le plus de vote pour lui  **/
 
+        CalcScore();
+        if(mNbtour == 2)
+            tourSuivant();
         int lindex = mCandNumbVote.indexOf(Collections.max(mCandNumbVote));
-        CResult lWinner = new CResult(1,mVote, mListeCandidat.get(lindex).getIdCandidat());
+        CResult lWinner = new CResult(1,mVote, mIdCands.get(lindex));
 
        return lWinner;
     }
