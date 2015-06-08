@@ -24,8 +24,6 @@ public class CVoteConfSTV extends AppCompatActivity {
 
 
     private ArrayList<CCandidate> mListCandidat = new ArrayList<CCandidate>();
-    private CCandidate mCandidat;
-
     private CCandidatAdapter mAdapter;
 
     private String mVoteName;
@@ -41,19 +39,19 @@ public class CVoteConfSTV extends AppCompatActivity {
         setContentView(R.layout.activity_cvote_conf_stv);
         mTypeVote = new CType(1,"STV",this.getString(R.string.stvDescription));
 
-        Bundle extras = getIntent().getExtras();
-        if (extras==null){
+        Bundle lExtras = getIntent().getExtras();
+        if (lExtras == null){
             return;
         }
-        mVoteName = (String) extras.get("VOTE_NAME");
-        mDateDebut = (String) extras.get("START_DATE");
-        mDateFin = (String) extras.get("END_DATE");
-        ListView lList = (ListView)findViewById(R.id.lLVSTV);
+        mVoteName = (String) lExtras.get("VOTE_NAME");
+        mDateDebut = (String) lExtras.get("START_DATE");
+        mDateFin = (String) lExtras.get("END_DATE");
+        mList = (ListView) findViewById(R.id.lLVSTV);
         mListCandidat.add(new CCandidate());
         mListCandidat.add(new CCandidate());
         mAdapter = new CCandidatAdapter(this, mListCandidat);
 
-        lList.setAdapter(mAdapter);
+        mList.setAdapter(mAdapter);
     }
 
     public static void hideSoftKeyboard(Activity activity) {
@@ -62,26 +60,27 @@ public class CVoteConfSTV extends AppCompatActivity {
     }
 
     public void validateConfSTV(View pView) {
-        final EditText lnbgagnant = (EditText)findViewById(R.id.nbgagnan);
+        final EditText lNbGagnant = (EditText)findViewById(R.id.nbGagnant);
         hideSoftKeyboard(this);
-        int j=0;
+        int lNbError = 0;
         mAdapter.notifyDataSetChanged();
-        int lnbgagnantint = Integer.parseInt(lnbgagnant.getText().toString());
         // on verifie que tous les champs sont bien remplis
-        for (int i = 0; i < mListCandidat.size() ; i++) {
-            if ((mListCandidat.get(i).getNomCandidat()==null) || (mListCandidat.get(i).getDescriptionCandidat()==null )){
-                Toast.makeText(getApplicationContext(), "vous n'avez pas remplis tous les champs", Toast.LENGTH_LONG).show();
-                j++;
+        for (int i = 0; i < mListCandidat.size(); i++) {
+            if ((mListCandidat.get(i).getNomCandidat() == null) || (mListCandidat.get(i).getDescriptionCandidat() == null)
+                    || (lNbGagnant.getText() == null)){
+                Toast.makeText(getApplicationContext(), "Vous n'avez pas rempli tous les champs", Toast.LENGTH_LONG).show();
+                lNbError++;
             }
         }
-        if (j==0){
+        if (lNbError == 0){
             Intent lIntent = new Intent(this,CParticipantActivity.class);
+            int lNbGagnantInt = Integer.parseInt(lNbGagnant.getText().toString());
             lIntent.putExtra("liste de Candidat", mListCandidat);
             lIntent.putExtra("VOTE_NAME", mVoteName);
             lIntent.putExtra("START_DATE", mDateDebut);
             lIntent.putExtra("END_DATE", mDateFin);
             lIntent.putExtra("VOTE_TYPE", mTypeVote);
-            lIntent.putExtra("NB_GAGNANT",lnbgagnantint);
+            lIntent.putExtra("NB_GAGNANT", lNbGagnantInt);
             startActivity(lIntent);
         }
     }

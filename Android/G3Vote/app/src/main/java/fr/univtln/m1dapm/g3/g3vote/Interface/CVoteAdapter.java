@@ -57,7 +57,7 @@ public class CVoteAdapter extends BaseAdapter {
         RelativeLayout layoutItem;
         //re-use of layout
         if (convertView == null) {
-            //Initialisation de notre item à partir du  layout XML "personne_layout.xml"
+            //Initialisation de notre item à partir du  layout XML "vote_layout.xml"
             layoutItem = (RelativeLayout) mInflater.inflate(R.layout.vote_layout, parent, false);
         } else {
             layoutItem = (RelativeLayout) convertView;
@@ -83,18 +83,18 @@ public class CVoteAdapter extends BaseAdapter {
         //(3) : Renseignement des valeurs
         ltv_voteName.setText(mListVote.get(position).getVoteName());
         if (mListVote.get(position).getStatusVote()){
-            ltv_voteStatus.setText("en Cours");
+            ltv_voteStatus.setText("En Cours");
             ltv_voteStatus.setTextColor(Color.parseColor("green"));
         }
         else{
-            ltv_voteStatus.setText("fini");
+            ltv_voteStatus.setText("Fini");
             ltv_voteStatus.setTextColor(Color.parseColor("red"));
         }
 
 
         //ltv_beginDate.setText(mListVote.get(position).getmDebut().getGregorianChange().toString());
         //ltv_endDate.setText(mListVote.get(position).getmFin().getGregorianChange().toString());
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");//new DateTime( currentDate ).toString("yyyy-MM-dd HH:mm:ss")
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");//new DateTime( currentDate ).toString("yyyy-MM-dd HH:mm:ss")
         ltv_beginDate.setText(df.format(mListVote.get(position).getDateDebut()));
         ltv_endDate.setText(df.format(mListVote.get(position).getDateFin()));
 

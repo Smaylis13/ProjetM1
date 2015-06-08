@@ -34,7 +34,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="DateDebut-"
         android:id="@+id/lTVDateBegin"
-        android:layout_below="@+id/lTVNameVote"
+        android:layout_below="@id/lTVNameVote"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -44,9 +44,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="DateFin"
         android:id="@+id/lTVDateEnd"
-        android:layout_below="@+id/lTVTypeVote"
-        android:layout_toRightOf="@+id/lTVDateBegin"
-        android:layout_toEndOf="@+id/lTVDateBegin" />
+        android:layout_below="@id/lTVDateBegin" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -88,19 +86,21 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/validationText"
-        android:id="@+id/ValidationRecap"
-        android:onClick="validate"
-        android:layout_below="@id/lTVDateBegin"/>
+        android:text="@string/cancelVote"
+        android:id="@+id/AnnulationVote"
+        android:onClick="cancelVoteCreation"
+        android:layout_below="@id/lTVDateEnd"
+        />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/cancelVote"
-        android:id="@+id/AnnulationVote"
-        android:onClick="cancelVoteCreation"
+        android:text="@string/validationText"
+        android:id="@+id/ValidationRecap"
+        android:onClick="validate"
         android:layout_alignParentRight="true"
-        android:layout_below="@id/lTVDateBegin"
-        />
+        android:layout_below="@id/lTVDateEnd"/>
+
+
 
 </RelativeLayout>

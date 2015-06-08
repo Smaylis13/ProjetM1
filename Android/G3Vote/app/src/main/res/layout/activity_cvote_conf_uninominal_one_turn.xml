@@ -22,8 +22,8 @@
         android:src="@mipmap/ic_remove_button"
         android:onClick="removeChoiceButton"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/addChoiceButton"
-        android:layout_toEndOf="@+id/addChoiceButton" />
+        android:layout_toRightOf="@id/addChoiceButton"
+        android:layout_toEndOf="@id/addChoiceButton" />
 
 
     <Button
@@ -34,17 +34,17 @@
         android:id="@+id/button"
         android:layout_alignParentTop="true"
         android:layout_alignRight="@+id/lLVUninomialOneTurn"
-        android:layout_alignEnd="@+id/lLVUninomialOneTurn" />
+        android:layout_alignEnd="@id/lLVUninomialOneTurn" />
 
     <ListView
-        android:id="@+id/lLVUninomialOneTurn"
+        android:id="@id/lLVUninomialOneTurn"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:descendantFocusability="afterDescendants"
         android:focusable="false"
-        android:layout_below="@+id/removeChoiceButton">
+        android:layout_below="@id/removeChoiceButton">
     </ListView>
 
 </RelativeLayout>

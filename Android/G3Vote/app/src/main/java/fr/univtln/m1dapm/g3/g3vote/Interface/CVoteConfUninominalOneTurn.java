@@ -38,17 +38,17 @@ public class CVoteConfUninominalOneTurn extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         mTypeVote = new CType(6,"Uninominal à 1 tour",getResources().getString(R.string.uninomialOneTurnVoteDescription));
         setContentView(R.layout.activity_cvote_conf_uninominal_one_turn);
-        Bundle extras = getIntent().getExtras();
-        if (extras==null){
+        Bundle lExtras = getIntent().getExtras();
+        if (lExtras == null){
             return;
         }
-        mVoteName = (String) extras.get("VOTE_NAME");
-        mDateDebut = (String) extras.get("START_DATE");
-        mDateFin = (String) extras.get("END_DATE");
+        mVoteName = (String) lExtras.get("VOTE_NAME");
+        mDateDebut = (String) lExtras.get("START_DATE");
+        mDateFin = (String) lExtras.get("END_DATE");
 
 
         //Récupération du composant ListView
-        ListView list = (ListView)findViewById(R.id.lLVUninomialOneTurn);
+        ListView lListView = (ListView)findViewById(R.id.lLVUninomialOneTurn);
 
         //Récupération de la liste des personnes
         //ArrayList<CCandidat> mListCandidat = new ArrayList<CCandidat>();
@@ -60,7 +60,7 @@ public class CVoteConfUninominalOneTurn extends AppCompatActivity {
 
 
         //Initialisation de la liste avec les données
-        list.setAdapter(mAdapter);
+        lListView.setAdapter(mAdapter);
 
     }
 
@@ -72,24 +72,24 @@ public class CVoteConfUninominalOneTurn extends AppCompatActivity {
     }
 
     public static void hideSoftKeyboard(Activity activity) {
-        InputMethodManager inputMethodManager = (InputMethodManager)  activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
     }
     //send vote parameters to the participant selection
     public void validateConfUniOne(View view) {
         hideSoftKeyboard(this);
-        int j=0;
+        int lNbErrors = 0;
         mAdapter.notifyDataSetChanged();
 
         // on verifie que tous les champs sont bien remplis
-        for (int i = 0; i < mListCandidat.size() ; i++) {
-            if ((mListCandidat.get(i).getNomCandidat()==null) || (mListCandidat.get(i).getDescriptionCandidat()==null )){
-                Toast.makeText(getApplicationContext(), "vous n'avez pas remplis tous les champs", Toast.LENGTH_LONG).show();
-                j++;
+        for (int i = 0; i < mListCandidat.size(); i++) {
+            if ((mListCandidat.get(i).getNomCandidat() == null) || (mListCandidat.get(i).getDescriptionCandidat() == null )){
+                Toast.makeText(getApplicationContext(), "Vous n'avez pas rempli tous les champs", Toast.LENGTH_LONG).show();
+                lNbErrors++;
             }
         }
-        if (j==0){
-            Intent lIntent = new Intent(this,CParticipantActivity.class);
+        if (lNbErrors == 0){
+            Intent lIntent = new Intent(this, CParticipantActivity.class);
             lIntent.putExtra("liste de Candidat", mListCandidat);
             lIntent.putExtra("VOTE_NAME", mVoteName);
             lIntent.putExtra("START_DATE", mDateDebut);
@@ -105,7 +105,7 @@ public class CVoteConfUninominalOneTurn extends AppCompatActivity {
     }
 
     public void removeChoiceButton(View view) {
-        if (mListCandidat.size()>2){
+        if (mListCandidat.size() > 2){
             mListCandidat.remove(mListCandidat.size() - 1);
            // ListView test = (ListView)findViewById(R.id.lLVUninomialOneTurn);
             //Log.i("contenu",mListCandidat.toString());
