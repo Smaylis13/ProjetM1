@@ -1,15 +1,18 @@
-package fr.univtln.m1dapm.g3.g3vote.Algorithme.Condorcet;
+package fr.univtln.m1dapm.g3.g3vote.TestAlgo;
+
+import junit.framework.TestCase;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.univtln.m1dapm.g3.g3vote.Algorithme.Condorcet.CCondorcet;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CChoixpossible;
 
 /**
  * Created by Pierre on 21/05/2015.
  */
-public class CCondorcetTest {
+public class CCondorcetTest extends TestCase{
 
 
     public static void main(String[] args) {

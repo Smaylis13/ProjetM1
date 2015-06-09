@@ -59,7 +59,6 @@ public class CAlgoSTV extends AAlgorithme {
     public CAlgoSTV(CVote pVote, int pNbElu) {
         super(pVote);
         mNbElu = pNbElu;
-
     }
 
 
@@ -68,12 +67,16 @@ public class CAlgoSTV extends AAlgorithme {
      * @param pChoices  Liste des réponses des utilisateurs
      */
 
-    public void initVote(List<CChoice> pChoices)
+    public int initVote(List<CChoice> pChoices)
     {
+        if(mVote.getCandidates().size() > mVote.getParticipants().size())
+            return 1;
+
         getChoix(pChoices);
 
         Calcul_Quota();
-        //Log.i("Vote : ", "Quota : " + mQuota);
+
+        return 0;
     }
 
 

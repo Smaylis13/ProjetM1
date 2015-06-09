@@ -1,4 +1,4 @@
-package fr.univtln.m1dapm.g3.g3vote.Algorithme.UninominalMajoritaire;
+package fr.univtln.m1dapm.g3.g3vote.TestAlgo;
 
 /**
  * Created by Pierre on 20/05/2015.

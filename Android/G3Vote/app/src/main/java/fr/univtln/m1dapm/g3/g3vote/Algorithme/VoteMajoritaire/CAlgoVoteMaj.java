@@ -12,18 +12,44 @@ import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
 
 
 public class CAlgoVoteMaj extends AAlgorithme{
+
+    /**
+     * Liste des choix faits par les participants
+     */
     private List<CChoice> mChoices;
+
+    /**
+     * Liste des identifiants des candidats
+     */
     private List<Integer> mIdCands;
+
+    /**
+     * Liste des notes attribués aux candidats
+     */
     private List<List<Integer>> mCandVote;
+
+    /**
+     * Liste des resultats
+     */
     List<CResult> mResult;
 
+    /**
+     * Nombre de vote
+     */
     private int mNumbVote;
 
+    /**
+     * Constructeur de l'algo
+     * @param pVote Vote pour lequel on fait le calcul
+     */
     public CAlgoVoteMaj(CVote pVote) {
         super(pVote);
     }
 
-
+    /**
+     * Initialisation du vote
+     * @param pChoices Liste des choix faits par les utilisateurs
+     */
     public void initVote(List<CChoice> pChoices)
     {
         mResult = new ArrayList<>();
@@ -51,8 +77,8 @@ public class CAlgoVoteMaj extends AAlgorithme{
     }
 
     /**
-     *
-     * @return CChoixVM
+     * Calcul du resultat par la mediane des notes
+     * @return Liste des vainqueurs
      */
     public List<CResult> calculateMedian() {
 
@@ -76,8 +102,8 @@ public class CAlgoVoteMaj extends AAlgorithme{
     }
 
     /**
-     *
-     * @return le gagnant en fonction de sa moyenne
+     * Calcul du resultat par la moyenne de leurs notes
+     * @return Liste des gagnants
      */
     public List<CResult> calculateAverage() {
 
@@ -103,8 +129,8 @@ public class CAlgoVoteMaj extends AAlgorithme{
     }
 
     /**
-     *
-     * @return gagnant par somme des points reçu
+     * Calcul du resultat par la somme
+     * @return Liste des gagnants
      */
     public List<CResult> calculateSum() {
 
