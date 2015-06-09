@@ -43,7 +43,7 @@ public class CHubMyVotesFragment extends Fragment implements AdapterView.OnItemC
         for (CVote lVote:pVotes) {
             this.sVotes.add(lVote);
         }
-        //sAdapter.notifyDataSetChanged();
+        sAdapter.notifyDataSetChanged();
     }
 
     public static Intent getsIntent() {
@@ -60,6 +60,7 @@ public class CHubMyVotesFragment extends Fragment implements AdapterView.OnItemC
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
         sFragment.setArguments(args);
         return sFragment;
+
     }
 
     public static CHubMyVotesFragment getInstance(){

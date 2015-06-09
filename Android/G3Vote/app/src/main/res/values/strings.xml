@@ -118,6 +118,8 @@
     </string-array>
     <string name="title_activity_spinnertest">Spinnertest</string>
     <string name="lchoiceDate">Choix date</string>
+    <string name="help_title">Aide</string>
+    <string name="rankvote_help_message">Pour voter vous devez classer les candidats selon votre ordre de préférence par un appuy long sur le candidat puis en le faisant glisser a la position souhaité.</string>
 
 
 </resources>
