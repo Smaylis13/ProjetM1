@@ -191,9 +191,16 @@ public class CUserRest {
     public Response removeContact(@PathParam("idU") int pIdU,@PathParam("idC") int pIdC){
         CUserDAO lUserDAO=new CUserDAO();
         CUser lUser =lUserDAO.findByID(pIdU);
-        lUser.obtainContacts().remove(lUserDAO.findByID(pIdC));
+
+        for(CUser u:lUser.obtainContacts())
+            System.out.println(u.getEmail());
+        CUser lContact=lUserDAO.findByID(pIdC);
+        lUser.obtainContacts().remove(new CUser(lContact.getUserId(),lContact.getEmail(),"contact",lContact.getFirstName(),lContact.getName()));
         lUserDAO.update(lUser);
-        return Response.status(Response.Status.OK).entity("Contact has been removed").build();
+        for(CUser u:lUser.obtainContacts())
+            System.out.println(u.getEmail());
+
+        return Response.status(Response.Status.OK).header("ID", mRequest.getHeader("ID")).entity("Contact has been removed").build();
     }
 
     @POST

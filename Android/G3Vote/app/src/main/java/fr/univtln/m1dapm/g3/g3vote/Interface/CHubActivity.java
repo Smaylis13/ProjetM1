@@ -430,6 +430,8 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
         CVotesAsync lVotesAsc=new CVotesAsync();
         lVotesAsc.execute(lParams);
 
+        CHubMyVotesFragment.getsAdapter().notifyDataSetChanged();
+
         lParams=new CTaskParam(CRequestTypesEnum.get_contacts);
         CCommunication lCom=new CCommunication();
         lCom.execute(lParams);
@@ -749,7 +751,7 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
                             Type listType = new TypeToken<ArrayList<CVote>>() {}.getType();
                             ObjectMapper lMapper=new ObjectMapper();
                             ArrayList<CVote> lVotes = lMapper.readValue(lDecryptString, new TypeReference<ArrayList<CVote>>(){});
-                            Log.e("TEST",lVotes.get(lVotes.size()-1).toString());
+                            //Log.e("TEST",lVotes.get(lVotes.size()-1).toString());
 
                             Message lMsg=new Message();
                             lMsg.what=0;

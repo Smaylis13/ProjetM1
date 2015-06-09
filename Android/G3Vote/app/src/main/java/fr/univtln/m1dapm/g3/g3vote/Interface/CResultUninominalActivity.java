@@ -14,6 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.univtln.m1dapm.g3.g3vote.Algorithme.UninominalMajoritaire.CVoteUninominalMajoritaire;
+import fr.univtln.m1dapm.g3.g3vote.Communication.CCommunication;
+import fr.univtln.m1dapm.g3.g3vote.Communication.CRequestTypesEnum;
+import fr.univtln.m1dapm.g3.g3vote.Communication.CTaskParam;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CChoice;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CResult;
@@ -67,6 +70,9 @@ public class CResultUninominalActivity extends AppCompatActivity {
         CVoteUninominalMajoritaire lVoteUM=new CVoteUninominalMajoritaire(mVote);
         lVoteUM.initVote(mChoices,1,1);
         mResults.addAll(lVoteUM.resultat());
+        CTaskParam lParams=new CTaskParam(CRequestTypesEnum.add_results,mResults);
+        CCommunication lCom=new CCommunication();
+        lCom.execute(lParams);
     }
     public ArrayList<String> getCandidateList(){
         ArrayList<String> lListCandidat = new ArrayList<>();
