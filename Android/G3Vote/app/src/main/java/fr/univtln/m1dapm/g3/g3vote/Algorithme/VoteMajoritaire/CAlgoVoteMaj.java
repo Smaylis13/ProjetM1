@@ -1,5 +1,7 @@
 package fr.univtln.m1dapm.g3.g3vote.Algorithme.VoteMajoritaire;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -68,6 +70,7 @@ public class CAlgoVoteMaj extends AAlgorithme{
         for (int i = 0; i < lCands.size(); i++) {
             List<Integer> lCandVote = new ArrayList<>();
 
+            //TODO NE PASSE QU'UNE FOIS DANS LA BOUCLE (pour i=1, j==mNumbVote)
             for (int j = (i*mNumbVote); j < mNumbVote; j++) {
                 lCandVote.add(mChoices.get(j).getScore());
             }
@@ -113,17 +116,20 @@ public class CAlgoVoteMaj extends AAlgorithme{
 
         for (List<Integer> candVote : mCandVote) {
             lValue = 0.0;
-            for (Integer value : candVote)
+            for (Integer value : candVote) {
                 lValue += value;
+            }
 
             lAverageValue.add(lValue/candVote.size());
         }
         double lMax = Collections.max(lAverageValue);
         // on cherche s'il ya d'autres vainqueurs qui ont la même moyenne
 
-        for (int i = 0; i < lAverageValue.size(); i++)
-            if (lAverageValue.get(i) == lMax)
+        for (int i = 0; i < lAverageValue.size(); i++) {
+            if (lAverageValue.get(i) == lMax) {
                 mResult.add(new CResult(0, mVote.getIdVote(), mIdCands.get(i)));
+            }
+        }
 
         return mResult;
     }
@@ -146,6 +152,7 @@ public class CAlgoVoteMaj extends AAlgorithme{
         }
 
         int lMax = Collections.max(lCandValue);
+
 
         for (int i = 0; i < lCandValue.size(); i++)
             if (lCandValue.get(i) == lMax)

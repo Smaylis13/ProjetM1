@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import fr.univtln.m1dapm.g3.g3vote.Algorithme.KemenyYoung.CKemenyYoung;
 import fr.univtln.m1dapm.g3.g3vote.Algorithme.STV.CAlgoSTV;
 import fr.univtln.m1dapm.g3.g3vote.Communication.CCommunication;
 import fr.univtln.m1dapm.g3.g3vote.Communication.CRequestTypesEnum;
@@ -99,6 +100,12 @@ public class CResultRankingActivity extends AppCompatActivity {
             for(int lId:lElusId){
                 mResults.add(new CResult(1,mVote.getIdVote(),lId));
             }
+
+        }
+        else if(mVote.getTypes().getNom().equals("Kemeny-Young")){
+            CKemenyYoung lKemenyYoung=new CKemenyYoung(mVote);
+            lKemenyYoung.initVote(mChoices);
+            mResults=lKemenyYoung.CalculResultat();
 
         }
         CTaskParam lParams=new CTaskParam(CRequestTypesEnum.add_results,mResults);

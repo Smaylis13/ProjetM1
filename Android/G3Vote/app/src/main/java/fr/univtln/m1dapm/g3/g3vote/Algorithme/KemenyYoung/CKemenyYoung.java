@@ -1,5 +1,7 @@
 package fr.univtln.m1dapm.g3.g3vote.Algorithme.KemenyYoung;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -64,10 +66,11 @@ public class CKemenyYoung extends AAlgorithme {
      * @param pChoices Liste des choix fait par les participants
      */
     public void initVote(List<CChoice> pChoices) {
-
-        List<List<Integer>> lChoices = new ArrayList<>();
+        Log.e("SIZECHOICES", pChoices.size()+"");
+        ArrayList<List<Integer>> lChoices = new ArrayList<>();
         mIdCands = new ArrayList<>();
         mDualList = new ArrayList<>();
+
 
         List<Integer> lUserList = new ArrayList<>();
 
@@ -106,9 +109,15 @@ public class CKemenyYoung extends AAlgorithme {
         {
             mChoices.add(lChoices.get(0));
             mNumbChoice.add(Collections.frequency(lChoices, mChoices.get(mChoices.size() - 1)));
-            lChoices.removeAll(mChoices.get(mChoices.size() - 1));
+            lChoices.remove(mChoices.get(mChoices.size() - 1));
+            /*lChoices.removeAll(mChoices.get(mChoices.size() - 1));
+            lChoices.trimToSize();*/
         }
-
+        Log.e("LA", "KEMENY");
+        Log.e("LA", mDualList.size()+"");
+        Log.e("LA", mNumbChoice.size()+"");
+        Log.e("LA", mIdCands.size()+"");
+        //TODO SOUCI SUR LA BOUCLE, taille de mNumbChoice < taille de mChoices
         /// Creation de la table des duels entre candidats
         for (int i = 0; i < mChoices.size(); i++) {
             List<Integer> lchoice = mChoices.get(i);
@@ -120,6 +129,7 @@ public class CKemenyYoung extends AAlgorithme {
                 }
             }
         }
+        Log.e("LA", "KEMENY");
     }
 
     /**
