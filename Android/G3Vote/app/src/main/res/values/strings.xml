@@ -71,7 +71,7 @@
     <string name="BordaDescription">le vote Borda sert à blablabla</string>
     <string name="userFirstNameInputHint">Prénom</string>
     <string name="userLastNameInputHint">Nom de famille</string>
-    <string name="lTVvoteNameLabel">Nom du vote :</string>
+    <string name="lTVvoteNameLabel">Nom :</string>
     <string name="lTVHelpMessageLog">Si vous avez déjà un compte, veuillez renseigner votre mail et
         votre mot de passe et appuyer sur le bouton se connecter. Sinon veuillez appuyer sur le bouton
         s\'inscrire</string>
