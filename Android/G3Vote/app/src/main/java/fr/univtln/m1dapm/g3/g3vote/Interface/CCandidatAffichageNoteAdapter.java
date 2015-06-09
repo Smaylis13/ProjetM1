@@ -24,64 +24,58 @@ import fr.univtln.m1dapm.g3.g3vote.R;
  */
 public class CCandidatAffichageNoteAdapter extends ArrayAdapter<CCandidate> {
 
-    int midLayout;
-    Context mcontext;
-    private List<String> mnotepossible;
-    ArrayAdapter<CharSequence> madapter;
-    private List<CVoixCandidat> mNotecandidat;
-    private String mnomcandidat;
+    int mIdLayout;
+    Context mContext;
+    private List<String> mNotePossible;
+    ArrayAdapter<CharSequence> mAdapter;
+    private List<CVoixCandidat> mNoteCandidat;
 
-    public CCandidatAffichageNoteAdapter(Context pcontext,int ptextViewResourceId,List<CVoixCandidat> pNotecandidat) {
-        super(pcontext, ptextViewResourceId);
-        this.mcontext = pcontext;
-        midLayout = R.layout.candidatnotelayout;
-        mNotecandidat=pNotecandidat;
+    public CCandidatAffichageNoteAdapter(Context pContext,int pTextViewResourceId, List<CVoixCandidat> pNoteCandidat) {
+        super(pContext, pTextViewResourceId);
+        this.mContext = pContext;
+        mIdLayout = R.layout.candidatnotelayout;
+        mNoteCandidat=  pNoteCandidat;
     }
-
-
-
 
     public static class ViewHolderItem {
         TextView textViewName;
         TextView textViewDesc;
-        Spinner Spinnernote;
+        Spinner SpinnerNote;
     }
 
 
     @Override
-    public View getView(final int pposition, View pconvertView, ViewGroup pparent) {
+    public View getView(final int pPosition, View pConvertView, ViewGroup pParent) {
         ViewHolderItem viewHolder;
-        if(pconvertView==null){
+        if(pConvertView == null){
             // layout
-            LayoutInflater inflater = ((Activity) mcontext).getLayoutInflater();
-            pconvertView = inflater.inflate(midLayout, pparent, false);
+            LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
+            pConvertView = inflater.inflate(mIdLayout, pParent, false);
 
-
-
-            mnotepossible=new ArrayList<String>();
-            mnotepossible.add("Excellent");
-            mnotepossible.add("Tres bien");
-            mnotepossible.add("Bien");
-            mnotepossible.add("Assez bien");
-            mnotepossible.add("Insuffisant");
-            mnotepossible.add("A rejeter");
+            mNotePossible = new ArrayList<String>();
+            mNotePossible.add("Excellent");
+            mNotePossible.add("Tres bien");
+            mNotePossible.add("Bien");
+            mNotePossible.add("Assez bien");
+            mNotePossible.add("Insuffisant");
+            mNotePossible.add("A rejeter");
 
             // ViewHolder
             viewHolder = new ViewHolderItem();
-            viewHolder.textViewName = (TextView) pconvertView.findViewById(R.id.NomCandidat);
-            viewHolder.textViewDesc = (TextView) pconvertView.findViewById(R.id.DescriptionCandidat);
-            viewHolder.Spinnernote = (Spinner) pconvertView.findViewById(R.id.spinernote);
-            pconvertView.setTag(viewHolder);
-            madapter=ArrayAdapter.createFromResource(getContext(),
+            viewHolder.textViewName = (TextView) pConvertView.findViewById(R.id.NomCandidat);
+            viewHolder.textViewDesc = (TextView) pConvertView.findViewById(R.id.DescriptionCandidat);
+            viewHolder.SpinnerNote = (Spinner) pConvertView.findViewById(R.id.spinerNote);
+            pConvertView.setTag(viewHolder);
+            mAdapter = ArrayAdapter.createFromResource(getContext(),
                     R.array.notepossible, android.R.layout.simple_spinner_item);
-            madapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            mAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-            viewHolder.Spinnernote.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            viewHolder.SpinnerNote.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
 
-                    mNotecandidat.get(pposition).setMvote(5-position);
+                    mNoteCandidat.get(pPosition).setMvote(5-position);
                 }
 
                 @Override
@@ -91,17 +85,17 @@ public class CCandidatAffichageNoteAdapter extends ArrayAdapter<CCandidate> {
             });
 
         }else{
-            viewHolder = (ViewHolderItem) pconvertView.getTag();
+            viewHolder = (ViewHolderItem) pConvertView.getTag();
         }
 
 
 
-        CCandidate lCandidate = getItem(pposition);
+        CCandidate lCandidate = getItem(pPosition);
         if (lCandidate != null) {
             viewHolder.textViewName.setText(lCandidate.getNomCandidat());
             viewHolder.textViewDesc.setText(lCandidate.getDescriptionCandidat());
-            viewHolder.Spinnernote.setAdapter(madapter);
-                    }
-        return pconvertView;
+            viewHolder.SpinnerNote.setAdapter(mAdapter);
+        }
+        return pConvertView;
     }
 }

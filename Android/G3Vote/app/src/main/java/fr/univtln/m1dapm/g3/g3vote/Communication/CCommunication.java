@@ -143,6 +143,7 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                         lLogIntent.putExtra(LOGGED_USER, lLoggedUser);
                         lLogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         CLoginActivity.getsContext().startActivity(lLogIntent);
+                        CLoginActivity.getsActivity().finish();
                         //return lCode;
                     }
                     else if(lCode==401){
