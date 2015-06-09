@@ -1,0 +1,15 @@
+fr.univtln.madapm.votemanager
+fr.univtln.madapm.votemanager.bdd
+fr.univtln.madapm.votemanager.communication
+fr.univtln.madapm.votemanager.communication.authentification
+fr.univtln.madapm.votemanager.communication.gcm
+fr.univtln.madapm.votemanager.crud
+fr.univtln.madapm.votemanager.crypto
+fr.univtln.madapm.votemanager.crypto.aes
+fr.univtln.madapm.votemanager.crypto.keygen
+fr.univtln.madapm.votemanager.dao
+fr.univtln.madapm.votemanager.gcm
+fr.univtln.madapm.votemanager.metier.json
+fr.univtln.madapm.votemanager.metier.user
+fr.univtln.madapm.votemanager.metier.vote
+fr.univtln.madapm.votemanager.rest
