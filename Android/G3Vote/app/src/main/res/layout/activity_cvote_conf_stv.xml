@@ -35,7 +35,7 @@
         android:id="@+id/button"
         android:layout_alignParentTop="true"
         android:layout_alignRight="@+id/lLVSTV"
-        android:layout_alignEnd="@id/lLVSTV" />
+        android:layout_alignEnd="@+id/lLVSTV" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -47,7 +47,7 @@
         android:layout_below="@id/addChoiceButton" />
 
     <ListView
-        android:id="@id/lLVSTV"
+        android:id="@+id/lLVSTV"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_alignParentRight="true"

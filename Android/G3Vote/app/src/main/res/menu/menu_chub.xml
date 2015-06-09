@@ -4,4 +4,10 @@
     tools:context="fr.univtln.m1dapm.g3.g3vote.Interface.CHubActivity">
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never" />
+    <item
+        android:id="@+id/refresh"
+        android:title="@string/menu_refresh_title"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_action_refresh"
+        android:onClick="refreshAction"/>
 </menu>

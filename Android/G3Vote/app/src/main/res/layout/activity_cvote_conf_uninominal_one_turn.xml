@@ -34,10 +34,10 @@
         android:id="@+id/button"
         android:layout_alignParentTop="true"
         android:layout_alignRight="@+id/lLVUninomialOneTurn"
-        android:layout_alignEnd="@id/lLVUninomialOneTurn" />
+        android:layout_alignEnd="@+id/lLVUninomialOneTurn" />
 
     <ListView
-        android:id="@id/lLVUninomialOneTurn"
+        android:id="@+id/lLVUninomialOneTurn"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_alignParentRight="true"
