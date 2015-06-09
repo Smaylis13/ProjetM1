@@ -570,13 +570,8 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                     lHttpCon.setRequestProperty("ID", CLoginActivity.getUniqueKey().toString());
                     lHttpCon.setRequestProperty("Content-Type", "application/json");
                     lHttpCon.setRequestProperty("Accept", "application/json");
-                    for(CResult r:lListResults)
-                        Log.e("ADDRESULTS",r.toString());
-                    Log.e("ADDRESULTS","ICI");
                     String lReTest=lMapper.writeValueAsString(lListResults.get(0));
-                    Log.e("ADDRESULTS",lReTest);
                     String lResultsToString=lMapper.writeValueAsString(lListResults);
-                    Log.e("ADDRESULTS",lResultsToString);
                     lOut = new OutputStreamWriter(lHttpCon.getOutputStream());
                     JSONArray lResultsJson=new JSONArray(lResultsToString);
                     lMessageBytes=lCrypto.publicEncrypt(lResultsJson.toString(),(SecretKeySpec)lCrypto.getKey());
