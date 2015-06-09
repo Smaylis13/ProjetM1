@@ -99,6 +99,7 @@ public class CContactAjout extends AppCompatActivity {
             public boolean onQueryTextSubmit(String query) {
                 Toast.makeText(getBaseContext(), query,
                         Toast.LENGTH_SHORT).show();
+                mSearch.clearFocus();
                 return false;
             }
 

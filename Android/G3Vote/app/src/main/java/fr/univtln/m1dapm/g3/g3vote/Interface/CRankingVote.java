@@ -6,6 +6,9 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -62,6 +65,14 @@ public class CRankingVote extends AppCompatActivity {
         //mListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.crankvote, menu);
+        return true;
+    }
+
     public void sendRankingVote(View pView){
         // On crée le dialogue
         AlertDialog.Builder lConfirmationDialog = new AlertDialog.Builder(CRankingVote.this);
@@ -101,6 +112,20 @@ public class CRankingVote extends AppCompatActivity {
         // On affiche le message
         lConfirmationDialog.show();
 
+    }
+
+    public void rankVoteHelp(MenuItem item) {
+        AlertDialog.Builder lRankVoteHelpAD = new AlertDialog.Builder(CRankingVote.this);
+        lRankVoteHelpAD.setTitle(getString(R.string.help_title));
+        lRankVoteHelpAD.setMessage(getString(R.string.rankvote_help_message));
+        lRankVoteHelpAD.setPositiveButton("Ok",new DialogInterface.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        lRankVoteHelpAD.show();
     }
 }
 

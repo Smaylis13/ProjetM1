@@ -1,5 +1,6 @@
 package fr.univtln.m1dapm.g3.g3vote.Interface;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -79,6 +80,7 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
      */
     SectionsPagerAdapter mSectionsPagerAdapter;
     private static CUser sLoggedUser;
+    public static Activity sActivity;
 
     public static CUser getsLoggedUser() {
         return sLoggedUser;
@@ -128,7 +130,7 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chub);
-
+        sActivity = this;
         sContext = getApplicationContext();
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
@@ -423,7 +425,15 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
     }
 
+    public void refreshAction(MenuItem item) {
+        CTaskParam lParams=new CTaskParam(CRequestTypesEnum.get_votes,sLoggedUser.getUserId());
+        CVotesAsync lVotesAsc=new CVotesAsync();
+        lVotesAsc.execute(lParams);
 
+        lParams=new CTaskParam(CRequestTypesEnum.get_contacts);
+        CCommunication lCom=new CCommunication();
+        lCom.execute(lParams);
+    }
 
 
     /**
@@ -664,7 +674,7 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
         else{
             lIntent.putExtra("VOTE_NAME",lVoteName);
             lIntent.putExtra("START_DATE",lDateDebut);
-            lIntent.putExtra("END_DATE",lDateFin);
+            lIntent.putExtra("END_DATE", lDateFin);
             startActivity(lIntent);
         }
 
