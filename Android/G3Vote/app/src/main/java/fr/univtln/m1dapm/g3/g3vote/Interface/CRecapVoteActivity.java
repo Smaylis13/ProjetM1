@@ -46,6 +46,8 @@ public class CRecapVoteActivity extends AppCompatActivity {
     private static Context sContext;
     private static Intent sIntent;
     private static Activity sActivity;
+    private Bundle extras ;
+    private int mNbGagnant;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +57,12 @@ public class CRecapVoteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_crecap_vote);
 
         //stockage des données de l'activity precedente
-        Bundle extras = getIntent().getExtras();
+        extras = getIntent().getExtras();
         if (extras == null) {
             return;
+        }
+        if (extras.get("NB_GAGNANT")!=null){
+            mNbGagnant = (int)extras.get("NB_GAGNANT");
         }
         mVoteName = (String) extras.get("VOTE_NAME");
         mDateDebut = (String) extras.get("START_DATE");
@@ -202,6 +207,7 @@ public class CRecapVoteActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+
         // On crée le dialogue
         AlertDialog.Builder lConfirmationDialog = new AlertDialog.Builder(CRecapVoteActivity.this);
         // On modifie le titre
@@ -213,6 +219,22 @@ public class CRecapVoteActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
+                Intent lIntent = new Intent(getApplicationContext(),CParticipantActivity.class);
+                //lIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                lIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                //lIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                lIntent.putExtra("liste de Candidat", mListCandidat);
+                mListParticipant.clear();
+                lIntent.putExtra("liste de participant",mListParticipant);
+                lIntent.putExtra("VOTE_NAME", mVoteName);
+                lIntent.putExtra("START_DATE", mDateDebut);
+                lIntent.putExtra("END_DATE", mDateFin);
+                lIntent.putExtra("VOTE_TYPE", mTypeVote);
+                if(mTypeVote.getIdType()==1)
+                    lIntent.putExtra("NB_GAGNANT",mNbGagnant);
+                else if(mTypeVote.getIdType()==5)
+                    lIntent.putExtra("CALCULATIONMETHOD", mCalculationMethod);
+                startActivity(lIntent);
                 // On termine l'activité
                 finish();
             }
