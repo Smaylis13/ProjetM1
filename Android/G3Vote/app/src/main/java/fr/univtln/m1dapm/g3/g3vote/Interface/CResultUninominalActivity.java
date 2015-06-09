@@ -101,7 +101,7 @@ public class CResultUninominalActivity extends AppCompatActivity {
         int i = 0;
         for(CResult iter : lListResultCandidate){
 
-            lValueSet.add(new BarEntry(iter.getResultat(), i));
+            lValueSet.add(new BarEntry(iter.getOrder(), i));
             ++i;
         }
         Log.i("Value set : ", "" + lValueSet.toString());
