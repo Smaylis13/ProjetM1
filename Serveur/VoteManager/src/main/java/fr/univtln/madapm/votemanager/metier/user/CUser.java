@@ -83,6 +83,14 @@ public class CUser {
         this.mPassword = pPassword;
     }
 
+    public CUser(int pUserId, String pEmail, String pPassword,String pFirstName, String pName) {
+        this.mUserId = pUserId;
+        this.mEmail = pEmail;
+        this.mPassword = pPassword;
+        this.mFirstName=pFirstName;
+        this.mName=pName;
+    }
+
     public List<Integer> obtainParticipatingVotesIds() {
         List<Integer> lIdVotes=new ArrayList<>();
         for(CVote v:mParticipatingVotes)
