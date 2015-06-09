@@ -171,6 +171,10 @@
             android:name=".Interface.CNoteVote"
             android:label="@string/title_activity_cnote_vote" >
         </activity>
+        <activity
+            android:name=".Interface.CResultJugementMajoritaire"
+            android:label="@string/title_activity_cresult_JM" >
+        </activity>
     </application>
 
 </manifest>

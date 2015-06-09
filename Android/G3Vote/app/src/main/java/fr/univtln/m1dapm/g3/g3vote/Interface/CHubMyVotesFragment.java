@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -137,20 +138,27 @@ public class CHubMyVotesFragment extends Fragment implements AdapterView.OnItemC
         }
         // Sinon, on envoie sur la page des résultats
         else {
+            Log.i("Vote : ", lVote.getTypes().getNom());
             if (lVote.getTypes().getNom().equals("STV") || lVote.getTypes().getNom().equals("Kemeny-Young")) {
                 sIntent = new Intent(getActivity(), CResultRankingActivity.class);
                 sIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                CTaskParam lParams=new CTaskParam(CRequestTypesEnum.get_choices,lVote.getIdVote(),"rank");
-                CCommunication lCom=new CCommunication();
+                CTaskParam lParams = new CTaskParam(CRequestTypesEnum.get_choices, lVote.getIdVote(), "rank");
+                CCommunication lCom = new CCommunication();
                 lCom.execute(lParams);
                 //startActivityIntent();
             } else if (lVote.getTypes().getNom().equals("Uninominal à 1 tour")) {
                 sIntent = new Intent(getActivity(), CResultUninominalActivity.class);
                 sIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                CTaskParam lParams=new CTaskParam(CRequestTypesEnum.get_choices,lVote.getIdVote(),"uninominal");
-                CCommunication lCom=new CCommunication();
+                CTaskParam lParams = new CTaskParam(CRequestTypesEnum.get_choices, lVote.getIdVote(), "uninominal");
+                CCommunication lCom = new CCommunication();
                 lCom.execute(lParams);
-            } else{
+            } else if (lVote.getTypes().getNom().equals("MAJORITY")) {
+                sIntent = new Intent(getActivity(), CResultJugementMajoritaire.class);
+                sIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                CTaskParam lParams = new CTaskParam(CRequestTypesEnum.get_choices, lVote.getIdVote(), "note");
+                CCommunication lCom = new CCommunication();
+                lCom.execute(lParams);
+            } else {
                 sIntent = new Intent(getActivity(), CNoteVote.class);
                 sIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
@@ -161,7 +169,6 @@ public class CHubMyVotesFragment extends Fragment implements AdapterView.OnItemC
 
             sIntent.putExtra("VOTE", lVote);
             //startActivity(lIntent);
-            //TODO:Creer la page des resultats et envoyer dessus
         }
     }
 
