@@ -152,7 +152,6 @@ public class CHubMyVotesFragment extends Fragment implements AdapterView.OnItemC
                 CTaskParam lParams = new CTaskParam(CRequestTypesEnum.get_choices, lVote.getIdVote(), "uninominal");
                 CCommunication lCom = new CCommunication();
                 lCom.execute(lParams);
-
             } else if (lVote.getTypes().getNom().equals("MAJORITY")) {
                 sIntent = new Intent(getActivity(), CResultJugementMajoritaire.class);
                 sIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -162,6 +161,7 @@ public class CHubMyVotesFragment extends Fragment implements AdapterView.OnItemC
             } else {
                 sIntent = new Intent(getActivity(), CNoteVote.class);
                 sIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
                 startActivityIntent();
 
             }
