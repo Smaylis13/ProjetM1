@@ -150,11 +150,10 @@ public class CHubMyVotesFragment extends Fragment implements AdapterView.OnItemC
                 CTaskParam lParams=new CTaskParam(CRequestTypesEnum.get_choices,lVote.getIdVote(),"uninominal");
                 CCommunication lCom=new CCommunication();
                 lCom.execute(lParams);
-
             } else{
-
                 sIntent = new Intent(getActivity(), CNoteVote.class);
                 sIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
                 startActivityIntent();
 
             }
