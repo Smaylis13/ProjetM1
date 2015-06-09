@@ -124,7 +124,7 @@ public class CHubMyVotesFragment extends Fragment implements AdapterView.OnItemC
             } else if (lVote.getTypes().getNom().equals("Uninominal à 1 tour")) {
                 sIntent = new Intent(getActivity(), CResultUninominalActivity.class);
                 sIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                CTaskParam lParams=new CTaskParam(CRequestTypesEnum.get_choices,lVote.getIdVote());
+                CTaskParam lParams=new CTaskParam(CRequestTypesEnum.get_choices,lVote.getIdVote(),"uninominal");
                 CCommunication lCom=new CCommunication();
                 lCom.execute(lParams);
 

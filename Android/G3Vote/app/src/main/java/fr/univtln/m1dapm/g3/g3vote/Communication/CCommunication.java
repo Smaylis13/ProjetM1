@@ -433,7 +433,9 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                         lResponse = readStream(lIn);
                         lDecryptString=lCrypto.publicDecrypt(lCrypto.getKey(),Hex.decodeHex(lResponse.toCharArray()));
                         ArrayList<CChoice> lChoices = lMapper.readValue(lDecryptString, new TypeReference<ArrayList<CChoice>>(){});
-                        CResultUninominalActivity.setChoices(lChoices);
+                        if(((String)lParams.getType()).equals("uninominal")) {
+                            CResultUninominalActivity.setChoices(lChoices);
+                        }
                         //CHubMyVotesFragment.getsIntent().putParcelableArrayListExtra("CHOICES",lChoices);
                         CHubMyVotesFragment.startActivityIntent();
                        // CHubMyVotesFragment.getIntent().addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
