@@ -55,6 +55,7 @@ import fr.univtln.m1dapm.g3.g3vote.Interface.CModifCompte;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CNoteVote;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CRankingVote;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CRecapVoteActivity;
+import fr.univtln.m1dapm.g3.g3vote.Interface.CResultJugementMajoritaire;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CResultRankingActivity;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CResultUninominalActivity;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CSubActivity;
@@ -439,6 +440,9 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                         }
                         else if(((String)lParams.getType()).equals("rank")) {
                             CResultRankingActivity.setChoices(lChoices);
+                        }
+                        else if(((String)lParams.getType()).equals("note")){
+                            CResultJugementMajoritaire.setChoices(lChoices);
                         }
                         //CHubMyVotesFragment.getsIntent().putParcelableArrayListExtra("CHOICES",lChoices);
                         CHubMyVotesFragment.startActivityIntent();
