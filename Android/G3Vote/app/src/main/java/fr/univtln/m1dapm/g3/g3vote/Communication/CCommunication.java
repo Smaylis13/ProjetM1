@@ -578,22 +578,7 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                     lOut.flush();
                     lCode=lHttpCon.getResponseCode();
                     if(lCode==200) {
-                       /* if(((String)lParams.getType()).equals("rank")){
-                            Intent lIntent = new Intent(CRankingVote.getsContext(), CHubActivity.class);
-                            lIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            lIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            CRankingVote.getsContext().startActivity(lIntent);
-                        }
-                        if(((String)lParams.getType()).equals("note")){
-                            Intent lIntent = new Intent(CNoteVote.getsContext(), CHubActivity.class);
-                            lIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            lIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            CNoteVote.getsContext().startActivity(lIntent);
-                        }*/
-                        //lOut.close();
-                       /* lIn = new BufferedInputStream(lHttpCon.getInputStream());
-                        lResponse = readStream(lIn);
-                        lNewVote.setIdVote(Integer.decode(lResponse));*/
+
                     }
                     else
                         return lCode;
