@@ -1,15 +1,17 @@
 package fr.univtln.m1dapm.g3.g3vote.Interface;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.google.android.gms.location.SettingsApi;
 
 import java.math.BigInteger;
 import java.util.UUID;
@@ -24,9 +26,11 @@ import fr.univtln.m1dapm.g3.g3vote.crypto.CCrypto;
 
 public class CLoginActivity extends AppCompatActivity {
     private static Context sContext;
+    private static Activity sActivity;
     private static final UUID UNIQUE_KEY = UUID.randomUUID();
     public final static String EXTRA_LOGIN = "USER_LOGIN";
     private final static BigInteger PUBLIC_KEY=CCrypto.sendKeyParam();
+    private SettingsApi mIpSettingsSpinner;
 
     public static UUID getUniqueKey() {
         return UNIQUE_KEY;
@@ -38,6 +42,10 @@ public class CLoginActivity extends AppCompatActivity {
 
     public static Context getsContext() {
         return sContext;
+    }
+
+    public static Activity getsActivity() {
+        return sActivity;
     }
 
     public static void setsContext(Context sContext) {
@@ -54,6 +62,7 @@ public class CLoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clogin);
         sContext=getApplicationContext();
+        sActivity = this;
         CTaskParam lParams=new CTaskParam(CRequestTypesEnum.generate_keys,new CCryptoBean(PUBLIC_KEY,UNIQUE_KEY));
         CCommunication lCom=new CCommunication();
         lCom.execute(lParams);

@@ -49,6 +49,8 @@ public class CSettingAccount extends ActionBarActivity {
     public void deconnexion(View view){
         Intent lIntent = new Intent(this,CLoginActivity.class);
         startActivity(lIntent);
+        this.finish();
+        CHubActivity.sActivity.finish();
     }
 
     public void supprimercompte(View view){
