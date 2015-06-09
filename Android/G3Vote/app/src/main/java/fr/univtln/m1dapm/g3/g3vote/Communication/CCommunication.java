@@ -55,6 +55,7 @@ import fr.univtln.m1dapm.g3.g3vote.Interface.CModifCompte;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CNoteVote;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CRankingVote;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CRecapVoteActivity;
+import fr.univtln.m1dapm.g3.g3vote.Interface.CResultRankingActivity;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CResultUninominalActivity;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CSubActivity;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CSuppressionCompte;
@@ -436,6 +437,9 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                         if(((String)lParams.getType()).equals("uninominal")) {
                             CResultUninominalActivity.setChoices(lChoices);
                         }
+                        else if(((String)lParams.getType()).equals("rank")) {
+                            CResultRankingActivity.setChoices(lChoices);
+                        }
                         //CHubMyVotesFragment.getsIntent().putParcelableArrayListExtra("CHOICES",lChoices);
                         CHubMyVotesFragment.startActivityIntent();
                        // CHubMyVotesFragment.getIntent().addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -566,6 +570,11 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                     lHttpCon.setRequestProperty("ID", CLoginActivity.getUniqueKey().toString());
                     lHttpCon.setRequestProperty("Content-Type", "application/json");
                     lHttpCon.setRequestProperty("Accept", "application/json");
+                    for(CResult r:lListResults)
+                        Log.e("ADDRESULTS",r.toString());
+                    Log.e("ADDRESULTS","ICI");
+                    String lReTest=lMapper.writeValueAsString(lListResults.get(0));
+                    Log.e("ADDRESULTS",lReTest);
                     String lResultsToString=lMapper.writeValueAsString(lListResults);
                     Log.e("ADDRESULTS",lResultsToString);
                     lOut = new OutputStreamWriter(lHttpCon.getOutputStream());
@@ -578,22 +587,7 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                     lOut.flush();
                     lCode=lHttpCon.getResponseCode();
                     if(lCode==200) {
-                       /* if(((String)lParams.getType()).equals("rank")){
-                            Intent lIntent = new Intent(CRankingVote.getsContext(), CHubActivity.class);
-                            lIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            lIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            CRankingVote.getsContext().startActivity(lIntent);
-                        }
-                        if(((String)lParams.getType()).equals("note")){
-                            Intent lIntent = new Intent(CNoteVote.getsContext(), CHubActivity.class);
-                            lIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            lIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            CNoteVote.getsContext().startActivity(lIntent);
-                        }*/
-                        //lOut.close();
-                       /* lIn = new BufferedInputStream(lHttpCon.getInputStream());
-                        lResponse = readStream(lIn);
-                        lNewVote.setIdVote(Integer.decode(lResponse));*/
+
                     }
                     else
                         return lCode;

@@ -11,6 +11,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CChoice;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CResult;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
 import fr.univtln.m1dapm.g3.g3vote.R;
@@ -22,6 +23,7 @@ public class CResultRankingActivity extends AppCompatActivity {
     private CResultMultipleCandidatAdapter mAdapter;
     private List<CCandidate> mCandidateList;
     private List<CResult> mResultList;
+    private static List<CChoice> mChoices;
 
     private CVote mVote;
 
@@ -70,5 +72,9 @@ public class CResultRankingActivity extends AppCompatActivity {
         mAdapter = new CResultMultipleCandidatAdapter(this, lWinningCandidatesList);
         lListViewResult.setAdapter(mAdapter);
 
+    }
+
+    public static void setChoices(List<CChoice> pChoices) {
+        mChoices=pChoices;
     }
 }

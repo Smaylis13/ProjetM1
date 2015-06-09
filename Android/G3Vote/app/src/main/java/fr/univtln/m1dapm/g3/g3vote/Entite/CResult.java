@@ -1,10 +1,16 @@
 package fr.univtln.m1dapm.g3.g3vote.Entite;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.io.Serializable;
+
 /**
  * Created by ludo on 05/05/15.
  */
-public class CResult{
+public class CResult implements Serializable{
 
+    @JsonIgnore
     private int mIdResultat;
 
     private int mOrder; //Résultat du vote
@@ -27,21 +33,16 @@ public class CResult{
         this.mIdCandidate = pIdCandidate;
     }
 
-    public int getResultat() {
-        return mOrder;
-    }
 
-    public void setResultat(int pOrder) {
-        this.mOrder = pOrder;
-    }
 
-    public CVote getVote() {
-        return mVote;
+    public int getVote() {
+        return mVote.getIdVote();
     }
 
     public void setVote(CVote pVote) {
         this.mVote = pVote;
     }
+
 
     public int getCandidat() {
         return mIdCandidate;
@@ -52,11 +53,21 @@ public class CResult{
     }
 
 
+
     public int getOrder() {
         return mOrder;
     }
 
     public void setOrder(int pOrder) {
         this.mOrder = pOrder;
+    }
+
+    @Override
+    public String toString() {
+        return "CResult{" +
+                "mIdResultat=" + mIdResultat +
+                ", mOrder=" + mOrder +
+                ", mIdCandidate=" + mIdCandidate +
+                '}';
     }
 }

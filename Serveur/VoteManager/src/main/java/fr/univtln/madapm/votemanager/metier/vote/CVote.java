@@ -46,7 +46,7 @@ public class CVote implements Serializable {
     private CUser mOrganisateur;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy="mVote")
-    private List<CResult> mResultVote=null;
+    private List<CResult> mResultVote;
 
     @JoinColumn(name="ID_TYPE")
     @ManyToOne(fetch=FetchType.LAZY,optional = false,cascade = CascadeType.DETACH)
@@ -217,7 +217,6 @@ public class CVote implements Serializable {
         return mResultVote;
     }
 
-
     public void setResultVote(List<CResult> pResultVote) {
         this.mResultVote = pResultVote;
     }
@@ -229,7 +228,9 @@ public class CVote implements Serializable {
     public void setterVoted(boolean pVoted){
         this.mVoted=pVoted;
     }
-   /* public List<CChoice> getVotes() {
+
+
+    /* public List<CChoice> getVotes() {
         return mChoices;
     }
 
