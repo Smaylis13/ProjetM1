@@ -9,19 +9,20 @@
         android:layout_height="wrap_content"
         android:src="@mipmap/ic_yes_vote"
         android:layout_alignBottom="@+id/linearLayout"
-        android:layout_alignTop="@+id/lLL_vote" />
+        android:layout_alignTop="@+id/lLL_vote_1" />
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="1dp"
-        android:id="@+id/lLL_vote"
+        android:id="@+id/lLL_vote_1"
         android:layout_toRightOf="@id/icon">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/lTVvoteNameLabel"/>
+            android:text="@string/lTVvoteNameLabel"
+            android:id="@+id/toto" />
         <TextView
             android:text="Nom du vote"
             android:id="@+id/lTV_voteName"
@@ -31,12 +32,20 @@
             />
 
 
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/lLL_vote_2"
+        android:layout_below="@id/lLL_vote_1">
+
         <TextView
             android:text="status"
             android:id="@+id/lTV_voteStatus"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="right" />
+            android:gravity="center_horizontal" />
 
     </LinearLayout>
 
@@ -45,7 +54,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="1dp"
-        android:layout_below="@id/lLL_vote"
+        android:layout_below="@id/lLL_vote_2"
         android:id="@+id/linearLayout"
         android:layout_toRightOf="@id/icon">
 
@@ -70,6 +79,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
         </TextView>
+
+
 
     </LinearLayout>
 
