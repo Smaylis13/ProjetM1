@@ -3,11 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".Interface.CRankingVote">
+    tools:context=".Interface.CVoteUninominal">
 
     <item
         app:showAsAction="ifRoom"
         android:title="@string/help_title"
         android:icon="@drawable/ic_action_help"
-        android:onClick="rankVoteHelp" />
+        android:onClick="uninominalVoteHelp" />
 </menu>

@@ -157,4 +157,17 @@ public class CNoteVote extends AppCompatActivity {
         lConfirmationDialog.show();
     }
 
+    public void noteVoteHelp(MenuItem item) {
+        AlertDialog.Builder lNoteVoteHelpAD = new AlertDialog.Builder(CNoteVote.this);
+        lNoteVoteHelpAD.setTitle(getString(R.string.help_title));
+        lNoteVoteHelpAD.setMessage(getString(R.string.notevote_help_message));
+        lNoteVoteHelpAD.setPositiveButton("Ok",new DialogInterface.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        lNoteVoteHelpAD.show();
+    }
 }
