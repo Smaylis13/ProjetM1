@@ -430,6 +430,8 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
         CVotesAsync lVotesAsc=new CVotesAsync();
         lVotesAsc.execute(lParams);
 
+        CHubMyVotesFragment.getsAdapter().notifyDataSetChanged();
+
         lParams=new CTaskParam(CRequestTypesEnum.get_contacts);
         CCommunication lCom=new CCommunication();
         lCom.execute(lParams);
