@@ -51,8 +51,8 @@ public class CResultUninominalActivity extends AppCompatActivity {
             calculateResults();
         }
         List<CResult> lListResultatFaux = new ArrayList<>();
-        lListResultatFaux.add(new CResult(0, 30, mVote, 57));
-        lListResultatFaux.add(new CResult(0, 40, mVote, 56));
+        lListResultatFaux.add(new CResult(0, 30, mVote.getIdVote(), 57));
+        lListResultatFaux.add(new CResult(0, 40, mVote.getIdVote(), 56));
         mVote.setResultVote(lListResultatFaux);
         lListResultCandidate = (ArrayList)mResults;
 
