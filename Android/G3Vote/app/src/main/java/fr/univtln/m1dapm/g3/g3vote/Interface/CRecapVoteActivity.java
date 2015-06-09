@@ -1,6 +1,8 @@
 package fr.univtln.m1dapm.g3.g3vote.Interface;
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -41,10 +43,15 @@ public class CRecapVoteActivity extends AppCompatActivity {
     private List<CRule> mRules=new ArrayList<>();
     private CType mTypeVote;
     private int mCalculationMethod=-1;
+    private static Context sContext;
+    private static Intent sIntent;
+    private static Activity sActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sActivity=this;
+        sContext=getApplicationContext();
         setContentView(R.layout.activity_crecap_vote);
 
         //stockage des données de l'activity precedente
@@ -121,16 +128,24 @@ public class CRecapVoteActivity extends AppCompatActivity {
 
         }
 
+        sIntent = new Intent(this, CHubActivity.class);
+        sIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        sIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
         CVote lVote = new CVote(mVoteName, "", true, lDateDeDebut, lDateDeFin, CHubActivity.getsLoggedUser().getUserId(), null, mTypeVote, mRules, mListCandidat, null,mListParticipant);
         CTaskParam lParams = new CTaskParam(CRequestTypesEnum.add_new_vote, lVote);
         CCommunication lCom = new CCommunication();
         lCom.execute(lParams);
 
-        Intent intent = new Intent(this, CHubActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        finish();
-        startActivity(intent);
 
+       // startActivity(intent);
+        //finish();
+
+    }
+
+    public static void startIntentActivity(){
+        sContext.startActivity(sIntent);
+        sActivity.finish();
     }
 
     public void cancelVoteCreation(View pView){

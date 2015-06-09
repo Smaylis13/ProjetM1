@@ -22,5 +22,5 @@ public enum CRequestTypesEnum implements Serializable {
     add_choices,
     add_choice,
     get_choices,
-    regId_user
+    add_results, regId_user
 }

@@ -1,11 +1,15 @@
 package fr.univtln.m1dapm.g3.g3vote.Entite;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.util.Log;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Created by ludo on 05/05/15.
  */
-public class CChoice {
+public class CChoice implements Parcelable {
 
     private int mIdChoice;
 
@@ -98,6 +102,37 @@ public class CChoice {
         this.mIdCandidate = mIdCandidate;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
+    }
+
+    public CChoice(Parcel p){
+        setIdVote(p.readInt());
+        setIdUser(p.readInt());
+        setIdCandidate(p.readInt());
+        //setIdChoice(p.readInt());
+        setScore(p.readInt());
+    }
+
+    public static final Parcelable.Creator<CChoice> CREATOR = new Creator<CChoice>() {
+
+        public CChoice createFromParcel(Parcel source) {
+
+            return new CChoice(source);
+        }
+
+        public CChoice[] newArray(int size) {
+
+            return new CChoice[size];
+        }
+
+    };
 
 /* public CUser getUser() {
         return mUser;

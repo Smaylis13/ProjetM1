@@ -1,5 +1,7 @@
 package fr.univtln.m1dapm.g3.g3vote.Algorithme.UninominalMajoritaire;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -65,6 +67,9 @@ public class CVoteUninominalMajoritaire extends AAlgorithme{
     public  CVoteUninominalMajoritaire(CVote pVote)
     {
         super(pVote);
+        mIdCands=new ArrayList<>();
+        mChoices=new ArrayList<>();
+
     }
 
     /**
@@ -78,18 +83,23 @@ public class CVoteUninominalMajoritaire extends AAlgorithme{
      * @param pNbcandidattour2
      *          le nombre de candidat quil restera au tour 2
      */
-    protected void initVote(List<CChoice> pChoices, int pNbtour, int pNbcandidattour2) {
+    public void initVote(List<CChoice> pChoices, int pNbtour, int pNbcandidattour2) {
         /** initialise le vote avec pour argument la liste des candidats**/
 
-        for (CCandidate cand : mVote.getCandidates())
+        for (CCandidate cand : mVote.getCandidates()) {
             mIdCands.add(cand.getIdCandidat());
+        }
 
-        for (CChoice choice : pChoices)
+        for (CChoice choice : pChoices) {
             mChoices.add(choice.getIdCandidate());
+        }
 
         Integer[] lDefaultVal = new Integer[pChoices.size()];
         Arrays.fill(lDefaultVal, 0);
-        mCandNumbVote = new ArrayList<>(Arrays.asList(lDefaultVal));
+        mCandNumbVote = new ArrayList<>(/*Arrays.asList(lDefaultVal)*/);
+        for(int i:mCandNumbVote){
+            Log.e("NUMBVOTE",i+"");
+        }
         mNbtour=pNbtour;
         mNbCandidatTour2=pNbcandidattour2;
 
@@ -134,7 +144,7 @@ public class CVoteUninominalMajoritaire extends AAlgorithme{
      * <p>cherche dans la liste des candidat celui qui a le plus de voix , puis le renvoi </p>
      * @return le candidat qui a le plus de voix
      */
-    public CResult resultat(){// renvoi le candidat avec le plus de vote pour lui
+    public List<CResult> resultat(){// renvoi le candidat avec le plus de vote pour lui
         /** donne le resultat du vote sans parametre avec pour retour le candidat avec le plus de vote pour lui  **/
 
         CalcScore();
@@ -143,7 +153,18 @@ public class CVoteUninominalMajoritaire extends AAlgorithme{
         int lindex = mCandNumbVote.indexOf(Collections.max(mCandNumbVote));
         CResult lWinner = new CResult(1,mVote, mIdCands.get(lindex));
 
-       return lWinner;
+        List<CResult> lResults=new ArrayList<>();
+        for(int i=0;i<mIdCands.size();i++){
+            Log.e("SIZE",mIdCands.size()+"");
+            Log.e("NumbVote",mCandNumbVote.get(i)+"");
+            Log.e("Vote",mVote.toString());
+            Log.e("IdCand",mIdCands.get(i)+"");
+            CResult lResult=new CResult(mCandNumbVote.get(i),mVote,mIdCands.get(i));
+            Log.e("RESULT",lResult.toString());
+            lResults.add(lResult);
+        }
+
+       return lResults;
     }
 
 }

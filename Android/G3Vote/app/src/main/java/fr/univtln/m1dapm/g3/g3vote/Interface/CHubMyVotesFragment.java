@@ -43,7 +43,7 @@ public class CHubMyVotesFragment extends Fragment implements AdapterView.OnItemC
         for (CVote lVote:pVotes) {
             this.sVotes.add(lVote);
         }
-        //sAdapter.notifyDataSetChanged();
+        sAdapter.notifyDataSetChanged();
     }
 
     public static Intent getsIntent() {
@@ -118,6 +118,7 @@ public class CHubMyVotesFragment extends Fragment implements AdapterView.OnItemC
         else {
             if (lVote.getTypes().getNom().equals("STV") || lVote.getTypes().getNom().equals("Kemeny-Young")) {
                 sIntent = new Intent(getActivity(), CResultRankingActivity.class);
+                sIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivityIntent();
             } else if (lVote.getTypes().getNom().equals("Uninominal à 1 tour")) {
                 sIntent = new Intent(getActivity(), CResultUninominalActivity.class);
@@ -129,6 +130,7 @@ public class CHubMyVotesFragment extends Fragment implements AdapterView.OnItemC
             } else{
 
                 sIntent = new Intent(getActivity(), CNoteVote.class);
+                sIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivityIntent();
 
             }

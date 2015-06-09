@@ -210,7 +210,6 @@ public class CVote implements Serializable {
 
 
     public void setParticipants(List<CUser> pParticipants) {
-
         this.mParticipants = pParticipants;
     }
 
@@ -221,8 +220,6 @@ public class CVote implements Serializable {
     public void setResultVote(List<CResult> mResultVote) {
         this.mResultVote = mResultVote;
     }
-
-
 
     public static ArrayList<CVote> getAListOfVote() {
         ArrayList<CVote> listVote = new ArrayList<CVote>();//GregorianCalendar (int year, int month, int day)
