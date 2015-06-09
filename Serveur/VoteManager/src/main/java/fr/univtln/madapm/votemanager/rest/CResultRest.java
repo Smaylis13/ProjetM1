@@ -36,8 +36,13 @@ public class CResultRest {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     public Response addResult(List<CResult> pResult){
+        System.out.println("ICI Result");
         CVoteDAO lVoteDAO=new CVoteDAO();
-        CVote lVote=lVoteDAO.findById(pResult.get(0).getVote().getIdVote());
+        System.out.println("là");
+        CVote lVote=lVoteDAO.findById(pResult.get(0).getVote());
+        System.out.println("là");
+        System.out.println(pResult.get(0).toString());
+        System.out.println("là");
         lVote.setResultVote(pResult);
         lVoteDAO.update(lVote);
         return Response.status(200).header("ID", mRequest.getHeader("ID")).entity("Results have been added").build();

@@ -1,8 +1,13 @@
 package fr.univtln.madapm.votemanager.metier.vote;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import fr.univtln.madapm.votemanager.dao.CCandidateDAO;
+import fr.univtln.madapm.votemanager.dao.CVoteDAO;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by civars169 on 12/05/15.
@@ -10,7 +15,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="resultat")
-public class CResult {
+public class CResult implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,15 +26,18 @@ public class CResult {
     @Column(name="ORDRE")
     private int mOrder; //Résultat du vote
 
+    @JsonIgnore
     @JoinColumn(name="ID_VOTE")
     @ManyToOne(fetch= FetchType.LAZY, cascade ={CascadeType.MERGE, CascadeType.PERSIST},optional=false)
     private CVote mVote;
 
+    @JsonIgnore
     @JoinColumn(name="ID_CANDIDAT")
     @OneToOne(fetch= FetchType.LAZY, cascade ={CascadeType.MERGE, CascadeType.PERSIST},optional=false)
     private CCandidate mCandidate;
 
     @Transient
+    @JsonIgnore
     private int mPercent;
 
     public CResult(){}
@@ -41,34 +49,42 @@ public class CResult {
     }
 
 
-    public int getResultat() {
+    /*public int getResultat() {
         return mOrder;
     }
 
     public void setResultat(int pOrder) {
         this.mOrder = pOrder;
+    }*/
+
+    @JsonGetter("vote")
+    public int getVote() {
+        return mVote.getIdVote();
     }
 
-    public CVote getVote() {
-        return mVote;
+    @JsonSetter("vote")
+    public void setVote(int pVoteId) {
+        CVoteDAO lVDAO=new CVoteDAO();
+        this.mVote = lVDAO.findById(pVoteId);
     }
 
-    public void setVote(CVote pVote) {
-        this.mVote = pVote;
+    @JsonGetter("candidat")
+    public int getCandidat() {
+        return mCandidate.getIdCandidat();
     }
 
-    public CCandidate getCandidat() {
-        return mCandidate;
+    @JsonSetter("candidat")
+    public void setCandidat(int pCandId) {
+        CCandidateDAO lCandidateDao=new CCandidateDAO();
+        this.mCandidate = lCandidateDao.findById(pCandId);
     }
 
-    public void setCandidat(CCandidate pCandidate) {
-        this.mCandidate = pCandidate;
-    }
-
+    @JsonGetter("order")
     public int getOrder() {
         return mOrder;
     }
 
+    @JsonSetter("order")
     public void setOrder(int pOrder) {
         this.mOrder = pOrder;
     }
@@ -78,8 +94,7 @@ public class CResult {
         return "CResultat{" +
                 "mIdResultat=" + mIdResultat +
                 ", mOrder='" + mOrder + '\'' +
-                ", mvote=" + mVote + '\'' +
-                ", mCandidate=" + mCandidate +
+                ", mCandidate=" + mCandidate.getIdCandidat() +
                 '}';
     }
 }

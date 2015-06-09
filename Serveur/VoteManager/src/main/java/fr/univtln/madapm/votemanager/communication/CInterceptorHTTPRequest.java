@@ -46,14 +46,9 @@ public class CInterceptorHTTPRequest implements ContainerRequestFilter {
                 }
             }
             pContainerRequestContext.setEntityStream(new ByteArrayInputStream(lMsg.getBytes()));
-
         }
         else{
             pContainerRequestContext.abortWith(Response.status(500).build());
         }
-
-
-
-
     }
 }

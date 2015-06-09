@@ -52,9 +52,9 @@ public class CChoice {
     public String toString() {
         return "CChoice{" +
                 "mIdChoice=" + mIdChoice +
-                ", mVote=" + mVote +
-                ", mUser=" + mUser +
-                ", mCandidate=" + mCandidate +
+                ", mVote=" + mVote.getIdVote() +
+                ", mUser=" + mUser.getUserId() +
+                ", mCandidate=" + mCandidate.getIdCandidat() +
                 ", mScore=" + mScore +
                 '}';
     }

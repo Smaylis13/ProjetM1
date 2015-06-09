@@ -110,6 +110,8 @@ public class CVoteRest {
                  }
             lVoteDAO.update(lVote);
         }
+        for(CVote v:lVotes)
+            System.out.println(v.toString());
         //System.out.println(lVotes);
         return Response.status(200).header("ID", mRequest.getHeader("ID")).entity(mMapper.writeValueAsString(lVotes)).build();
     }

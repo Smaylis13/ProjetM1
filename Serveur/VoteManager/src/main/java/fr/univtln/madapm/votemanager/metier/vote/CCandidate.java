@@ -120,7 +120,6 @@ public class CCandidate implements Serializable {
                 "mIdCandidat=" + mIdCandidat +
                 ", mNomCandidat='" + mNomCandidat + '\'' +
                 ", mDescriptionCandidat='" + mDescriptionCandidat + '\'' +
-                ", mChoices=" + mChoices +
                 '}';
     }
 }

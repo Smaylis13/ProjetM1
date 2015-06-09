@@ -45,6 +45,7 @@ public class CVote implements Serializable {
     @ManyToOne(fetch= FetchType.LAZY,optional=false,cascade = CascadeType.DETACH)
     private CUser mOrganisateur;
 
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy="mVote")
     private List<CResult> mResultVote;
 
@@ -213,6 +214,7 @@ public class CVote implements Serializable {
     }
 
 
+    @JsonGetter("resultVote")
     public List<CResult> getResultVote() {
         return mResultVote;
     }
