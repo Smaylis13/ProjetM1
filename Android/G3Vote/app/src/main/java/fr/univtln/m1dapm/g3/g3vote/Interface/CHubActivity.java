@@ -425,7 +425,15 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
     }
 
+    public void refreshAction(MenuItem item) {
+        CTaskParam lParams=new CTaskParam(CRequestTypesEnum.get_votes,sLoggedUser.getUserId());
+        CVotesAsync lVotesAsc=new CVotesAsync();
+        lVotesAsc.execute(lParams);
 
+        lParams=new CTaskParam(CRequestTypesEnum.get_contacts);
+        CCommunication lCom=new CCommunication();
+        lCom.execute(lParams);
+    }
 
 
     /**
