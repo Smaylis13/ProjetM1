@@ -39,9 +39,9 @@ public class CResultRankingActivity extends AppCompatActivity {
         mVote = (CVote) extras.get("VOTE");
         Log.i("Mon vote : ", mVote.toString());
         List<CResult> lListResultatFaux = new ArrayList<>();
-        lListResultatFaux.add(new CResult(0, 2, mVote, 4));
-        lListResultatFaux.add(new CResult(1, 0, mVote, 3));
-        lListResultatFaux.add(new CResult(2, 1, mVote, 5));
+        lListResultatFaux.add(new CResult(0, 2, mVote.getIdVote(), 4));
+        lListResultatFaux.add(new CResult(1, 0, mVote.getIdVote(), 3));
+        lListResultatFaux.add(new CResult(2, 1, mVote.getIdVote(), 5));
         mVote.setResultVote(lListResultatFaux);
         mResultList = new ArrayList<>(mVote.getResultVote());
         Log.i("Avant sort : ", "" + mResultList.get(0).getCandidat());

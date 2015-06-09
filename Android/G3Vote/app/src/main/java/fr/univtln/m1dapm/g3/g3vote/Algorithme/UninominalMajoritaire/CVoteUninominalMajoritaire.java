@@ -151,7 +151,7 @@ public class CVoteUninominalMajoritaire extends AAlgorithme{
         if(mNbtour == 2)
             tourSuivant();
         int lindex = mCandNumbVote.indexOf(Collections.max(mCandNumbVote));
-        CResult lWinner = new CResult(1,mVote, mIdCands.get(lindex));
+        CResult lWinner = new CResult(1,mVote.getIdVote(), mIdCands.get(lindex));
 
         List<CResult> lResults=new ArrayList<>();
         for(int i=0;i<mIdCands.size();i++){
@@ -159,7 +159,7 @@ public class CVoteUninominalMajoritaire extends AAlgorithme{
             Log.e("NumbVote",mCandNumbVote.get(i)+"");
             Log.e("Vote",mVote.toString());
             Log.e("IdCand",mIdCands.get(i)+"");
-            CResult lResult=new CResult(mCandNumbVote.get(i),mVote,mIdCands.get(i));
+            CResult lResult=new CResult(mCandNumbVote.get(i),mVote.getIdVote(),mIdCands.get(i));
             Log.e("RESULT",lResult.toString());
             lResults.add(lResult);
         }

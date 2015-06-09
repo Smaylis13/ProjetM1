@@ -15,19 +15,19 @@ public class CResult implements Serializable{
 
     private int mOrder; //Résultat du vote
 
-    private CVote mVote;
+    private int mVote;
 
     private int mIdCandidate;
 
     public CResult(){}
-    public CResult(int pIdResultat, int pOrder, CVote pVote, int pIdCandidate) {
+    public CResult(int pIdResultat, int pOrder, int pVote, int pIdCandidate) {
         this.mIdResultat = pIdResultat;
         this.mOrder = pOrder;
         this.mVote = pVote;
         this.mIdCandidate = pIdCandidate;
     }
 
-    public CResult(int pOrder, CVote pVote, int pIdCandidate) {
+    public CResult(int pOrder, int pVote, int pIdCandidate) {
         this.mOrder = pOrder;
         this.mVote = pVote;
         this.mIdCandidate = pIdCandidate;
@@ -36,11 +36,11 @@ public class CResult implements Serializable{
 
 
     public int getVote() {
-        return mVote.getIdVote();
+        return mVote;
     }
 
-    public void setVote(CVote pVote) {
-        this.mVote = pVote;
+    public void setVote(int pVoteId) {
+        this.mVote=pVoteId;
     }
 
 
