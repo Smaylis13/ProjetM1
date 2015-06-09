@@ -806,7 +806,7 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
             }
         }
     }
-  
+
     Handler mHandler = new Handler() {
 
         @Override
