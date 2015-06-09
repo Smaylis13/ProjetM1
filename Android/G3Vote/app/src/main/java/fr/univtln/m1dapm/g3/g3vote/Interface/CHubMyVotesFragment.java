@@ -119,17 +119,19 @@ public class CHubMyVotesFragment extends Fragment implements AdapterView.OnItemC
         else {
             if (lVote.getTypes().getNom().equals("STV") || lVote.getTypes().getNom().equals("Kemeny-Young")) {
                 sIntent = new Intent(getActivity(), CResultRankingActivity.class);
+                sIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivityIntent();
             } else if (lVote.getTypes().getNom().equals("Uninominal à 1 tour")) {
                 sIntent = new Intent(getActivity(), CResultUninominalActivity.class);
                 sIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                CTaskParam lParams=new CTaskParam(CRequestTypesEnum.get_choices,lVote.getIdVote());
+                CTaskParam lParams=new CTaskParam(CRequestTypesEnum.get_choices,lVote.getIdVote(),"uninominal");
                 CCommunication lCom=new CCommunication();
                 lCom.execute(lParams);
 
             } else{
 
                 sIntent = new Intent(getActivity(), CNoteVote.class);
+                sIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivityIntent();
 
             }

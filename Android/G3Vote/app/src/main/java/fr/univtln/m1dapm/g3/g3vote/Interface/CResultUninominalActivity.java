@@ -13,7 +13,9 @@ import com.github.mikephil.charting.data.BarEntry;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.univtln.m1dapm.g3.g3vote.Algorithme.UninominalMajoritaire.CVoteUninominalMajoritaire;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CChoice;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CResult;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
 import fr.univtln.m1dapm.g3.g3vote.R;
@@ -23,7 +25,13 @@ import fr.univtln.m1dapm.g3.g3vote.R;
  */
 public class CResultUninominalActivity extends AppCompatActivity {
     private CVote mVote;
+    private static List<CChoice> mChoices;
     private ArrayList<CResult> lListResultCandidate;
+    private List<CResult> mResults;
+
+    public static void setChoices(List<CChoice> pChoices) {
+        mChoices = pChoices;
+    }
 
     protected void onCreate(Bundle pSavedInstanceState){
         super.onCreate(pSavedInstanceState);
@@ -34,11 +42,16 @@ public class CResultUninominalActivity extends AppCompatActivity {
             return;
         }
         mVote = (CVote) extras.get("VOTE");
+       // mChoices = extras.getParcelableArrayList("CHOICES");
+        mResults=mVote.getResultVote();
+        if(mResults==null||mResults.isEmpty()){
+            calculateResults();
+        }
         List<CResult> lListResultatFaux = new ArrayList<>();
         lListResultatFaux.add(new CResult(0, 30, mVote, 57));
         lListResultatFaux.add(new CResult(0, 40, mVote, 56));
         mVote.setResultVote(lListResultatFaux);
-        lListResultCandidate = (ArrayList) mVote.getResultVote();
+        lListResultCandidate = (ArrayList)mResults;
 
         BarChart lBarChart = (BarChart) findViewById(R.id.barChartResultUninominal);
 
@@ -49,6 +62,12 @@ public class CResultUninominalActivity extends AppCompatActivity {
         lBarChart.animateY(2000);
     }
 
+    public void calculateResults(){
+
+        CVoteUninominalMajoritaire lVoteUM=new CVoteUninominalMajoritaire(mVote);
+        lVoteUM.initVote(mChoices,1,1);
+        mResults.addAll(lVoteUM.resultat());
+    }
     public ArrayList<String> getCandidateList(){
         ArrayList<String> lListCandidat = new ArrayList<>();
         ArrayList<CCandidate> lListCandidatComplet = (ArrayList) mVote.getCandidates();
