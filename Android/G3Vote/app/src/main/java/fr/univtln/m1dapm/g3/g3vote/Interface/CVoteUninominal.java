@@ -7,6 +7,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 
@@ -146,6 +149,13 @@ public class CVoteUninominal extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_vote_uninominal, menu);
+        return true;
+    }
+
+    @Override
     public void onBackPressed() {
         // On crée le dialogue
         AlertDialog.Builder lConfirmationDialog = new AlertDialog.Builder(CVoteUninominal.this);
@@ -174,4 +184,17 @@ public class CVoteUninominal extends AppCompatActivity {
         lConfirmationDialog.show();
     }
 
+    public void uninominalVoteHelp(MenuItem item) {
+        AlertDialog.Builder lUninominalVoteHelpAD = new AlertDialog.Builder(CVoteUninominal.this);
+        lUninominalVoteHelpAD.setTitle(getString(R.string.help_title));
+        lUninominalVoteHelpAD.setMessage(getString(R.string.uninominalvote_help_message));
+        lUninominalVoteHelpAD.setPositiveButton("Ok",new DialogInterface.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        lUninominalVoteHelpAD.show();
+    }
 }
