@@ -96,7 +96,6 @@ public class CVoteUninominal extends AppCompatActivity {
 
                     CCandidate lCandidat  = (CCandidate) mList.getItemAtPosition(position);
 
-
                     Log.i("Candidat voté : ", lCandidat.toString());
 
                     CChoice lUniqueChoice = new CChoice(mVote.getIdVote(), CHubActivity.getsLoggedUser().getUserId(), lCandidat.getIdCandidat(), 1);

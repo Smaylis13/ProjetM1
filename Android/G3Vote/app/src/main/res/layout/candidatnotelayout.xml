@@ -9,10 +9,10 @@
     <Spinner
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/spinernote"
+        android:id="@+id/spinerNote"
         android:clickable="true"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/NomCandidat"
+        android:layout_toRightOf="@id/NomCandidat"
 
 
         />
