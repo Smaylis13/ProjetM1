@@ -1,5 +1,7 @@
 package fr.univtln.m1dapm.g3.g3vote.Interface;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -102,7 +104,7 @@ public class CHubMyVotesFragment extends Fragment implements AdapterView.OnItemC
 
         CVote lVote = (CVote) sList.getItemAtPosition(position);
         // Si le vote est actif, on envoie sur la page de vote
-        if(lVote.getStatusVote()) {
+        if(lVote.getStatusVote() && !lVote.isVoted()) {
             if (lVote.getTypes().getNom().equals("STV") || lVote.getTypes().getNom().equals("Kemeny-Young")) {
                 sIntent = new Intent(getActivity(), CRankingVote.class);
             } else if (lVote.getTypes().getNom().equals("Uninominal à 1 tour")){
@@ -115,12 +117,33 @@ public class CHubMyVotesFragment extends Fragment implements AdapterView.OnItemC
             sIntent.putExtra("VOTE", lVote);
             startActivity(sIntent);
         }
+
+        else if(lVote.getStatusVote() && lVote.isVoted()){
+            // On crée le dialogue
+            AlertDialog.Builder lConfirmationDialog = new AlertDialog.Builder(getActivity());
+            // On modifie le titre
+            lConfirmationDialog.setTitle("Vote déjà effectué");
+            // On modifie le message
+            lConfirmationDialog.setMessage("Vous avez déjà voté !");
+            // Bouton OK: on ferme le dialogue
+            lConfirmationDialog.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+            // On affiche le message
+            lConfirmationDialog.show();
+        }
         // Sinon, on envoie sur la page des résultats
         else {
             if (lVote.getTypes().getNom().equals("STV") || lVote.getTypes().getNom().equals("Kemeny-Young")) {
                 sIntent = new Intent(getActivity(), CResultRankingActivity.class);
                 sIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivityIntent();
+                CTaskParam lParams=new CTaskParam(CRequestTypesEnum.get_choices,lVote.getIdVote(),"rank");
+                CCommunication lCom=new CCommunication();
+                lCom.execute(lParams);
+                //startActivityIntent();
             } else if (lVote.getTypes().getNom().equals("Uninominal à 1 tour")) {
                 sIntent = new Intent(getActivity(), CResultUninominalActivity.class);
                 sIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
