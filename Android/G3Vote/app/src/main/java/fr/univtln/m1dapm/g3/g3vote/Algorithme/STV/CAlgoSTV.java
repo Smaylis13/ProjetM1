@@ -1,6 +1,8 @@
 package fr.univtln.m1dapm.g3.g3vote.Algorithme.STV;
 
 
+import android.util.Log;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -71,9 +73,7 @@ public class CAlgoSTV extends AAlgorithme {
     {
         if(mVote.getCandidates().size() > mVote.getParticipants().size())
             return 1;
-
         getChoix(pChoices);
-
         Calcul_Quota();
 
         return 0;
@@ -86,6 +86,7 @@ public class CAlgoSTV extends AAlgorithme {
      */
     private void getChoix(List<CChoice> pChoices)
     {
+        Log.e("SIZEpCHoices", pChoices.size()+"");
         mChoice = new LinkedList<>();
         mChoiceNumb = new LinkedList<>();
         List<Integer> lUserList= new LinkedList<>();
