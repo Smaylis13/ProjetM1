@@ -1,5 +1,7 @@
 package fr.univtln.m1dapm.g3.g3vote.Interface;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -23,13 +25,10 @@ import fr.univtln.m1dapm.g3.g3vote.Entite.CResult;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
 import fr.univtln.m1dapm.g3.g3vote.R;
 
-/**
- * Created by sebastien on 09/06/15.
- */
 public class CResultJugementMajoritaire extends AppCompatActivity {
     private CVote mVote;
     private static List<CChoice> mChoices;
-    private ArrayList<CResult> lListResultCandidate;
+    private ArrayList<CResult> mListResultCandidate;
     private List<CResult> mResults;
     String mCalculationMethod;
 
@@ -47,15 +46,14 @@ public class CResultJugementMajoritaire extends AppCompatActivity {
         }
         mVote = (CVote) lExtras.get("VOTE");
         // mChoices = extras.getParcelableArrayList("CHOICES");
-        mResults=mVote.getResultVote();
+        mResults = mVote.getResultVote();
         mCalculationMethod = mVote.getRegles().get(0).getDescription();
 
-        if(mResults==null||mResults.isEmpty()){
+        if(mResults == null||mResults.isEmpty()){
             calculateResults();
         }
 
-
-        lListResultCandidate = (ArrayList)mResults;
+        mListResultCandidate = (ArrayList<CResult>)mResults;
 
         BarChart lBarChart = (BarChart) findViewById(R.id.barChartResultUninominal);
 
@@ -63,6 +61,24 @@ public class CResultJugementMajoritaire extends AppCompatActivity {
 
         lBarChart.setData(lBarData);
         lBarChart.setDescription("Résultat vote");
+        if(mChoices.size() == mVote.getCandidates().size() && mCalculationMethod.equals("1")){
+            // On crée le dialogue
+            AlertDialog.Builder lConfirmationDialog = new AlertDialog.Builder(CResultJugementMajoritaire.this);
+            // On modifie le titre
+            lConfirmationDialog.setTitle("Vote unique enregistré");
+            // On modifie le message
+            lConfirmationDialog.setMessage("Attention, vote unique enregistré, les notes attribuées sont affichées sans calcul.");
+            // Bouton OK: on ferme le dialogue
+            lConfirmationDialog.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+
+                }
+            });
+            // On affiche le message
+            lConfirmationDialog.show();
+        }
         lBarChart.animateY(2000);
     }
 
@@ -70,12 +86,17 @@ public class CResultJugementMajoritaire extends AppCompatActivity {
 
         CAlgoVoteMaj lVoteJM = new CAlgoVoteMaj(mVote);
         lVoteJM.initVote(mChoices);
-        if(mCalculationMethod.equals("0"))
-            mResults.addAll(lVoteJM.calculateAverage());
-        else if(mCalculationMethod.equals("1"))
-            mResults.addAll(lVoteJM.calculateMedian());
-        else
-            mResults.addAll(lVoteJM.calculateSum());
+        switch (mCalculationMethod){
+            case "0":
+                mResults.addAll(lVoteJM.calculateAverage());
+                break;
+            case "1":
+                mResults.addAll(lVoteJM.calculateMedian());
+                break;
+            case "2":
+                mResults.addAll(lVoteJM.calculateSum());
+                break;
+        }
 
         CTaskParam lParams = new CTaskParam(CRequestTypesEnum.add_results, mResults);
         CCommunication lCom = new CCommunication();
@@ -83,12 +104,12 @@ public class CResultJugementMajoritaire extends AppCompatActivity {
     }
     public ArrayList<String> getCandidateList(){
         ArrayList<String> lListCandidat = new ArrayList<>();
-        ArrayList<CCandidate> lListCandidatComplet = (ArrayList) mVote.getCandidates();
+        ArrayList<CCandidate> lListCandidatComplet = (ArrayList<CCandidate>) mVote.getCandidates();
         Log.i("ID : ", "" + lListCandidatComplet.get(0).getIdCandidat());
         Log.i("Nom : ", "" + lListCandidatComplet.get(0).getNomCandidat());
 
 
-        for(CResult iter : lListResultCandidate){
+        for(CResult iter : mListResultCandidate){
             int lIdCandidat = iter.getCandidat();
             for(int i = 0; i < lListCandidatComplet.size(); ++i){
                 if(lListCandidatComplet.get(i).getIdCandidat() == lIdCandidat){
@@ -103,25 +124,32 @@ public class CResultJugementMajoritaire extends AppCompatActivity {
     public BarDataSet getResultData(){
 
         ArrayList<BarEntry> lValueSet = new ArrayList<>();
-        ArrayList<BarDataSet> lDataSets = new ArrayList<>();
         int i = 0;
-        for(CResult iter : lListResultCandidate){
+        for(CResult iter : mListResultCandidate){
 
             lValueSet.add(new BarEntry(iter.getOrder(), i));
             ++i;
         }
         Log.i("Value set : ", "" + lValueSet.toString());
-        BarDataSet lBarDataSet;
+        BarDataSet lBarDataSet = null;
 
-        if(mCalculationMethod.equals("0"))
-            lBarDataSet = new BarDataSet(lValueSet, "Moyenne obtenue");
-        else if(mCalculationMethod.equals("1"))
-            lBarDataSet = new BarDataSet(lValueSet, "Médiane obtenue");
-        else
-            lBarDataSet = new BarDataSet(lValueSet, "Somme des notes");
+        switch (mCalculationMethod){
+            case "0":
+                lBarDataSet = new BarDataSet(lValueSet, "Moyenne obtenue");
+                break;
+            case "1":
+                lBarDataSet = new BarDataSet(lValueSet, "Médiane obtenue");
+                break;
+            case "2":
+                lBarDataSet = new BarDataSet(lValueSet, "Somme des notes");
+                break;
+            default:
+                break;
+        }
 
-        lBarDataSet.setColor(Color.rgb(0, 155, 0));
-        lDataSets.add(lBarDataSet);
+        if (lBarDataSet != null) {
+            lBarDataSet.setColor(Color.rgb(0, 155, 0));
+        }
 
         return lBarDataSet;
     }
