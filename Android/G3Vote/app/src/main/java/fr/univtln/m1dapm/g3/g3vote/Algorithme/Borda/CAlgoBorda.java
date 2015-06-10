@@ -63,12 +63,7 @@ public class CAlgoBorda extends AAlgorithme{
         for(CChoice choice : pChoices)
         {
             lindex = mIdCands.indexOf(choice.getIdCandidate());
-            mChoices.get(lindex).add(lCands.size()-(choice.getScore()-1));
-        }
-
-        /// calcul le score de chaque candidats
-        for (int i = 0; i < lCands.size(); i++) {
-            CalculateScore(i);
+            mChoices.get(lindex).add(choice.getScore());
         }
     }
 
@@ -93,6 +88,11 @@ public class CAlgoBorda extends AAlgorithme{
     public CResult CalculResult(){
 
         CResult lResult;
+
+        /// calcul le score de chaque candidats
+        for (int i = 0; i < mIdCands.size(); i++) {
+            CalculateScore(i);
+        }
 
         int lMax = Collections.max(mCandsScore);
 

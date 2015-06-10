@@ -1,5 +1,7 @@
 package fr.univtln.m1dapm.g3.g3vote.TestAlgo;
 
+import android.util.Log;
+
 import junit.framework.TestCase;
 
 import java.util.ArrayList;
@@ -9,6 +11,7 @@ import java.util.List;
 import fr.univtln.m1dapm.g3.g3vote.Algorithme.KemenyYoung.CKemenyYoung;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CChoice;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CResult;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CUser;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
 
@@ -17,7 +20,13 @@ import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
  */
 public class CKemenyYoungtest extends TestCase{
 
-    public static void main(String[] args) {
+    private final String[] mNomUser = {"Jack", "Paul", "Laurent", "Bernard", "Bob", "Momo", "Georges",
+            "Carlos", "Leon", "Theo", "John", "Hector", "Lea", "Sophie", "Bea", "Jeanne", "Toto",
+            "Eli", "Will", "Brad", "Chris", "Jacques", "Lou", "Lola", "Phil", "Grant", "Val", "Lee",
+            "Bruce", "Clark", "Didier", "Emma", "Joey", "Monique", "Ted"};
+
+
+    public void testCalculResultat() throws Exception {
 
         CCandidate a=new CCandidate(84,"Memphis");
         CCandidate b=new CCandidate(51,"Nashville");
@@ -35,7 +44,7 @@ public class CKemenyYoungtest extends TestCase{
         lcand.add(d);
         lcand.add(e);
         lcand.add(f);
-        lcand.add(f);
+        lcand.add(g);
 
         CVote lvote = new CVote(6846, "zefze");
 
@@ -54,20 +63,35 @@ public class CKemenyYoungtest extends TestCase{
 
         List<CChoice> lchoices = new ArrayList<>();
 
-        for (int i = 0; i < 40; i++) {
+        for(int i=0; i<35; i++)
+        {
             Collections.shuffle(list);
-            lchoices.addAll(generateChoice(list, lvote));
-        }
-    }
-
-    private static List<CChoice> generateChoice (List<Integer> pCandList, CVote pVote)
-    {
-        List<CChoice> lchoices = new ArrayList<>();
-
-        for (int i = 0; i < pCandList.size(); i++) {
-            lchoices.add(new CChoice(pVote.getIdVote(), new CUser().getUserId(),pCandList.get(i), i+1));
+            for (int j = 0; j <list.size() ; j++)
+            {
+                CUser luser = new CUser(mNomUser[i], mNomUser[i], "", "");
+                luser.setUserId(i);
+                CChoice choice = new CChoice(lvote.getIdVote(), luser.getUserId(), list.get(j), j+1);
+                lchoices.add(choice);
+            }
         }
 
-        return lchoices;
+        lkemenyYoung.initVote(lchoices);
+
+        List<CResult> lResult;
+
+        lResult = lkemenyYoung.CalculResultat();
+
+        List<List<Integer>> lChoiceRes = new ArrayList<>();
+
+        for (int i = 0; i < lResult.size(); i++) {
+            if (i%lcand.size() == 0)
+                lChoiceRes.add(new ArrayList<Integer>(Collections.nCopies(lcand.size(),0)));
+
+            lChoiceRes.get(i/lcand.size()).set(lResult.get(i).getOrder()-1, lResult.get(i).getCandidat());
+        }
+
+        for (List<Integer> choice : lChoiceRes)
+            Log.i("Vote : ", choice.toString());
     }
+
 }

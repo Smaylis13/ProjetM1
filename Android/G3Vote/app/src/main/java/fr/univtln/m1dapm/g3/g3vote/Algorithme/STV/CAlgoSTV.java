@@ -1,9 +1,7 @@
 package fr.univtln.m1dapm.g3.g3vote.Algorithme.STV;
 
 
-import android.util.Log;
-
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -96,10 +94,9 @@ public class CAlgoSTV extends AAlgorithme {
         /// Initialisation de la liste des réponses par utilisateur
         for(int i=0; i<(pChoices.size()/mVote.getCandidates().size()); i++)
         {
-            lUserList.add(i, pChoices.get(i*mVote.getCandidates().size()).getIdUser());
-            Integer[] lDefaultValue = new Integer[mVote.getCandidates().size()];
-            Arrays.fill(lDefaultValue, 0);
-            lChoices.add(Arrays.asList(lDefaultValue));
+            lUserList.add(i, pChoices.get(i * mVote.getCandidates().size()).getIdUser());
+
+            lChoices.add(Collections.nCopies(mVote.getCandidates().size(), 0));
         }
 
         /// Remplissage de la liste des réponses par utilisateur
@@ -305,13 +302,9 @@ public class CAlgoSTV extends AAlgorithme {
 
         mIdCands = new LinkedList<>();
 
-        Double[] lDefaultValue = new Double[mVote.getCandidates().size()];
-        Arrays.fill(lDefaultValue, 0.0);
-        lCandNbVote = Arrays.asList(lDefaultValue);
+        lCandNbVote = new ArrayList<>(Collections.nCopies(mVote.getCandidates().size(), 0.0));
 
-        Boolean[] lInitValue = new Boolean[mVote.getCandidates().size()];
-        Arrays.fill(lInitValue, true);
-        mCheckCands = Arrays.asList(lInitValue);
+        mCheckCands = new ArrayList<>(Collections.nCopies(mVote.getCandidates().size(), true));
 
         /// Initialisation de la liste de réference des candidats
         for (int i=0; i<mChoice.get(0).size(); i++)
