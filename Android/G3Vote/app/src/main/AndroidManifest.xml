@@ -24,7 +24,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_appli"
+        android:icon="@mipmap/ic_appli_transparent"
         android:screenOrientation="portrait"
         android:theme="@style/Theme.AppCompat.Light.DarkActionBar" >
         <activity

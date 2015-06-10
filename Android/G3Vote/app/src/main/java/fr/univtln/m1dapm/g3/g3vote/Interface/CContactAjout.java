@@ -35,6 +35,7 @@ import java.util.List;
 import fr.univtln.m1dapm.g3.g3vote.Communication.CCommunication;
 import fr.univtln.m1dapm.g3.g3vote.Communication.CRequestTypesEnum;
 import fr.univtln.m1dapm.g3.g3vote.Communication.CTaskParam;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CUser;
 import fr.univtln.m1dapm.g3.g3vote.R;
 import fr.univtln.m1dapm.g3.g3vote.crypto.CCrypto;
 
@@ -44,7 +45,7 @@ public class CContactAjout extends AppCompatActivity {
     private SearchView mSearch;
     private ListView mLvSearch;
     private List<String> mRes = new ArrayList<>();
-
+    private List<String> mListContactMail = new ArrayList<String>();
 
 
     public static Context getsContext() {
@@ -56,6 +57,14 @@ public class CContactAjout extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ccontact_ajout);
         sContext=this;
+        Bundle extras = getIntent().getExtras();
+        if (extras != null){
+           List<CUser> lListContact = (List<CUser>) extras.get("listecontact");
+            for(CUser lUser : lListContact){
+                mListContactMail.add(lUser.getEmail());
+            }
+
+        }
 
 
         mSearch = (SearchView) findViewById(R.id.searchView);
@@ -74,12 +83,15 @@ public class CContactAjout extends AppCompatActivity {
                         CCommunication lCom=new CCommunication();
                         lCom.execute(lParams);
 
-                        Toast.makeText(getsContext(),"Contact "+mLvSearch.getItemAtPosition(position).toString()+" ajouter",
+                        Toast.makeText(getsContext(),"Contact "+mLvSearch.getItemAtPosition(position).toString()+" ajouté",
                                 Toast.LENGTH_SHORT).show();
 
                         CTaskParam lParams2=new CTaskParam(CRequestTypesEnum.get_contacts);
                         CCommunication lCom2=new CCommunication();
                         lCom2.execute(lParams2);
+                        mListContactMail.add(String.valueOf(mLvSearch.getItemAtPosition(position)));
+                        new CallAPI().execute(CCommunication.SERVER_URL + "user/all",
+                                ((SearchView) findViewById(R.id.searchView)).getQuery().toString());
 
                     }
                 });
@@ -142,15 +154,19 @@ public class CContactAjout extends AppCompatActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        switch (item.getItemId()) {
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            Intent lIntent = new Intent(this,CSettingAccount.class);
-            startActivity(lIntent);
-            return true;
+            //noinspection SimplifiableIfStatement
+            case R.id.action_settings:
+                Intent lIntent = new Intent(this, CSettingAccount.class);
+                startActivity(lIntent);
+                this.finish();
+                return true;
+            case R.id.check_contact:
+                onBackPressed();
+                this.finish();
+                return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -186,8 +202,10 @@ public class CContactAjout extends AppCompatActivity {
 
                 mRes.clear();
                 for (int i = 0; i < json.length(); i++){
-                    if (json.getJSONObject(i).getString("email").contains(pSearch)){
+                    if (json.getJSONObject(i).getString("email").contains(pSearch)
+                            && contactNotExist(json.getJSONObject(i).getString("email"))){
                         mRes.add(json.getJSONObject(i).getString("email"));
+
                     }
 
                 }
@@ -217,4 +235,16 @@ public class CContactAjout extends AppCompatActivity {
             }
         }
     }
+
+
+
+    private boolean contactNotExist(String pMail) {
+        for (String lmail : mListContactMail) {
+            if (lmail.equals(pMail))
+                return false;
+        }
+       return true;
+}
+
+
 }
