@@ -1,9 +1,11 @@
 package fr.univtln.m1dapm.g3.g3vote.Interface;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
@@ -888,6 +890,40 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
             }
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        // On cree le dialogue
+        AlertDialog.Builder lConfirmationDialog = new AlertDialog.Builder(CHubActivity.this);
+        // On modifie le titre
+        lConfirmationDialog.setTitle("Voulez vous vous déconnecter?");
+        // On modifie le message
+        lConfirmationDialog.setMessage("");
+        // Bouton Oui
+        lConfirmationDialog.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                CSessionManager lSession = new CSessionManager(getApplicationContext());
+                lSession.logoutUser();
+                Intent lIntent = new Intent(getApplicationContext(),CLoginActivity.class);
+                lIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                // On termine l'activité
+                finish();
+                startActivity(lIntent);
+            }
+        });
+
+        // Bouton non: on ferme le dialogue
+        lConfirmationDialog.setNegativeButton("Non", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        // On affiche le message
+        lConfirmationDialog.show();
+    }
+
 
     Handler mHandler = new Handler() {
 

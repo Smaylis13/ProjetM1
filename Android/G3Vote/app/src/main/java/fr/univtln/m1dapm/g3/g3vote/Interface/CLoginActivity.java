@@ -73,7 +73,9 @@ public class CLoginActivity extends AppCompatActivity {
         if (mSession.isLoggedIn()){
             Intent lIntent = new Intent(this,CHubActivity.class);
             lIntent.putExtra("LOGGER",true);
+            finish();
             startActivity(lIntent);
+
 
         }
 
@@ -112,6 +114,7 @@ public class CLoginActivity extends AppCompatActivity {
     public void Sub(View view) {
         Intent intent = new Intent(this,CSubActivity.class);
         startActivity(intent);
+        this.finish();
     }
 
     //gere le clic sur le bouton se connecter
@@ -126,6 +129,7 @@ public class CLoginActivity extends AppCompatActivity {
             CTaskParam lParams=new CTaskParam(CRequestTypesEnum.log_user,new CUser(null,null,lMail,lPassword));
             CCommunication lCom=new CCommunication();
             lCom.execute(lParams);
+            finish();
             /*Intent lIntent = new Intent(this,CHubActivity.class);
             lIntent.putExtra(EXTRA_LOGIN,lET_Mail.getText().toString());
             startActivity(lIntent);*/
