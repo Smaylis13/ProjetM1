@@ -115,6 +115,7 @@
     <string name="menu_refresh_title">Actualiser</string>
     <string name="notevote_help_message">Pour voter, vous devez attribuer une note à chaque candidat à l\'aide des menus déroulants.</string>
     <string name="uninominalvote_help_message">Pour voter, vous devez selectionner un candidat en appuyant sur la petite case à côté de son nom et valider.</string>
+    <string name="action_validate_ajout_contact">Validate add contact</string>
 
 
 </resources>

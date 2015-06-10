@@ -1,34 +1,140 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-<meta charset="utf-8">
-<title>Sécurité</title>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Sécurité</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/grayscale_secu.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
 </head>
-<body style="background-color:lightgrey">
 
-<h1 style="color:green">Securite</h1>
-<h2>Echange de donnees</h2>
+<body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
 
-<p style="text-align:center"><img src="Dif.png" alt="dif" style="width:300px;height:300px;"></p>
+    <!-- Navigation -->
+    <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand page-scroll" href="./Home.html">
+                    <i class="fa fa-play-circle"></i>  <span class="light">Accueil</span>
+                </a>
+            </div>
 
-<p>Toutes les donnees echangees entre les applications et le serveur sont cryptees via Diffie-Hellman.
-Chaque machine diffinie un paramettre qu'ils s'echangent pour generer une même clef de cryptage secrete
-avec laquelle ils crypteront et decrypteront tout les messages. Ceuci permet de prevenir les attaques du
-type "Man in the middle" (l'homme du milieu) en ne laissant pas les donnees
-transitees en clair.</p>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+                <ul class="nav navbar-nav">
+                    <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#data">Echange de données</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#pass">Gestion des mots de passe</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
 
-<h2>Gestion des mots de pass</h2>
+        <!-- Intro Header -->
+    <header class="intro">
+        <div class="intro-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <h1 class="brand-heading" style="font-size:4em">Documentation sur la sécurité</h1>
+                        <p class="intro-text">Voici la page de documentation concernant la sécurité.</p>
+                        <a href="#data" class="btn btn-circle page-scroll">
+                            <i class="fa fa-angle-double-down animated"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
 
-<p style="text-align:center"><img src="mot.jpg" alt="mot" style="width:300px;height:300px;"></p>
+    <!-- About Section -->
+    <section id="data" class="container content-section text-center">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">
+                <h2>Echange de données</h2>
+                <p style="text-align:center"><img src="Dif.png" alt="dif" style="width:328px;height:180px;"></p>
+                <p>Toutes les données échangées entre les applications et le serveur sont cryptées via Diffie-Hellman.
+Chaque machine définie un paramètre qu'elles s'échangent pour générer une même clef de cryptage secrète
+avec laquelle elles crypteront et décrypteront tout les messages.</p><p> Ceci permet de prévenir les attaques du
+type "Man in the middle" (l'homme du milieu) en ne laissant pas les données
+transiter en clair.</p>            </div>
+        </div>
+    </section>
 
-<p>Les mots de pass sont "sales" et "hashes" en utilisant la librairie bCrypt qui permet en plus d'augmenter la complexite
-de l'algorithme de hashage pour une securite acccrue. Ce systeme permet de prevenir notament des attaques du type
-brute force, rainbow tables et attaques par dictionnaire.
-Le resultat est le stockage dans la base d'une empreinte du mot de passe. Quand une tentative de connection sera effectue,
-le mot de pass entre alors subira les memes operations et sera compare a l'empreinte correspondant au login se trouvant
-dans la base. Si les empreintes correspondent, alors les mots de pass sont les memes et l'utilisateur est autentifie.</p>
 
-<a href="Home.html">Retour</a>
+    <!-- About Section -->
+    <section id="pass" class="container content-section text-center">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">
+                <h2>Gestion des mots de passe</h2>
+                <p style="text-align:center"><img src="mot.jpg" alt="mot" style="width:280px;height:155px;"></p>
+                <p>Les mots de passe sont "salés" et "hashés" en utilisant la librairie bCrypt qui permet d'augmenter la compléxitée
+de l'algorithme de hashage pour une sécurité acccrue. Ce système permet de prévenir notament des attaques du type
+brute force, rainbow tables et attaques par dictionnaire.</p><p>
+Le résultat est le stockage dans la base d'une empreinte du mot de passe. Quand une tentative de connection sera effectuée,
+le mot de passe entré subira les mêmes operations et sera comparé a l'empreinte correspondant au login se trouvant
+dans la base. Si les empreintes correspondent alors les mots de passe sont les mêmes et l'utilisateur est authentifié.</p>          </div>
+        </div>
+    </section>
 
+
+
+
+
+
+    <!-- Footer -->
+    <footer>
+        <div class="container text-center">
+            <p>Copyright &copy; EVS 2015</p>
+        </div>
+    </footer>
+
+
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="js/jquery.easing.min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="js/grayscale.js"></script>
 </body>
 </html>

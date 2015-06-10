@@ -44,6 +44,7 @@ import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CChoice;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CCryptoBean;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CResult;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CSessionManager;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CUser;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
 import fr.univtln.m1dapm.g3.g3vote.Interface.CContactAjout;
@@ -116,8 +117,7 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                     lUrl = new URL(SERVER_URL+"user/connect");
                     lHttpCon = (HttpURLConnection) lUrl.openConnection();
                     CUser lUser = (CUser) lParams.getObject();
-
-
+                    Log.i("test",lUser.toString());
                     String lJsonString=lMapper.writeValueAsString(lUser);
                     JSONObject lUserOBJ = new JSONObject(lJsonString);
                     lMessageBytes=lCrypto.publicEncrypt(lUserOBJ.toString(),(SecretKeySpec)lCrypto.getKey());
@@ -143,6 +143,7 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                         CUser lLoggedUser=lMapper.readValue(lDecryptString,CUser.class);
                         Intent lLogIntent=new Intent(CLoginActivity.getsContext(),CHubActivity.class);
                         lLogIntent.putExtra(LOGGED_USER, lLoggedUser);
+                        lLogIntent.putExtra("LOGGER",false);
                         lLogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         CLoginActivity.getsContext().startActivity(lLogIntent);
                         CLoginActivity.getsActivity().finish();
@@ -197,6 +198,7 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
                         lNewUser.setUserId(Integer.decode(lDecryptString));
                         //CSubActivity.getIntentCSubActivity().putExtra(LOGGED_USER,lNewUser);
                         Intent lIntent = new Intent(CSubActivity.getsContext(), CHubActivity.class);
+
                         lIntent.putExtra(LOGGED_USER, lNewUser);
                         lIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         CSubActivity.getsContext().startActivity(lIntent);

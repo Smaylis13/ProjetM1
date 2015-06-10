@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +21,7 @@ import fr.univtln.m1dapm.g3.g3vote.Communication.CCommunication;
 import fr.univtln.m1dapm.g3.g3vote.Communication.CRequestTypesEnum;
 import fr.univtln.m1dapm.g3.g3vote.Communication.CTaskParam;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CCryptoBean;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CSessionManager;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CUser;
 import fr.univtln.m1dapm.g3.g3vote.R;
 import fr.univtln.m1dapm.g3.g3vote.crypto.CCrypto;
@@ -32,6 +34,8 @@ public class CLoginActivity extends AppCompatActivity {
     private final static BigInteger PUBLIC_KEY=CCrypto.sendKeyParam();
     private SettingsApi mIpSettingsSpinner;
 
+    // Session Manager Class
+    private CSessionManager mSession;
     public static UUID getUniqueKey() {
         return UNIQUE_KEY;
     }
@@ -61,11 +65,24 @@ public class CLoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clogin);
-        sContext=getApplicationContext();
+        sContext = getApplicationContext();
         sActivity = this;
-        CTaskParam lParams=new CTaskParam(CRequestTypesEnum.generate_keys,new CCryptoBean(PUBLIC_KEY,UNIQUE_KEY));
-        CCommunication lCom=new CCommunication();
+        // Session Manager
+        mSession = new CSessionManager(getApplicationContext());
+
+        if (mSession.isLoggedIn()){
+            Intent lIntent = new Intent(this,CHubActivity.class);
+            lIntent.putExtra("LOGGER",true);
+            startActivity(lIntent);
+
+        }
+
+
+        CTaskParam lParams = new CTaskParam(CRequestTypesEnum.generate_keys, new CCryptoBean(PUBLIC_KEY, UNIQUE_KEY));
+        CCommunication lCom = new CCommunication();
         lCom.execute(lParams);
+
+
 
     }
 
