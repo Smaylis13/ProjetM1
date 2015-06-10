@@ -768,7 +768,10 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
     }
 
     public void addContact(View view){
+        ArrayList<CUser> lContacts = new ArrayList<CUser>();
+        lContacts=(ArrayList)CHubContactFragment.getsContacts();
         Intent lIntent = new Intent(this,CContactAjout.class);
+        lIntent.putExtra("listecontact",lContacts);
         startActivity(lIntent);
     }
 
