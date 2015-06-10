@@ -48,9 +48,11 @@ public class CResultJugementMajoritaire extends AppCompatActivity {
         mVote = (CVote) lExtras.get("VOTE");
         // mChoices = extras.getParcelableArrayList("CHOICES");
         mResults=mVote.getResultVote();
+        mCalculationMethod = mVote.getRegles().get(0).getDescription();
         if(mResults==null||mResults.isEmpty()){
             calculateResults();
         }
+
 
         lListResultCandidate = (ArrayList)mResults;
 
@@ -67,7 +69,6 @@ public class CResultJugementMajoritaire extends AppCompatActivity {
 
         CAlgoVoteMaj lVoteJM = new CAlgoVoteMaj(mVote);
         lVoteJM.initVote(mChoices);
-        mCalculationMethod = mVote.getRegles().get(0).getDescription();
         if(mCalculationMethod.equals("0"))
             mResults.addAll(lVoteJM.calculateAverage());
         else if(mCalculationMethod.equals("1"))
@@ -75,8 +76,6 @@ public class CResultJugementMajoritaire extends AppCompatActivity {
         else
             mResults.addAll(lVoteJM.calculateSum());
 
-
-        //Log.i ("mResult : ", "" + mResults.toString());
         CTaskParam lParams = new CTaskParam(CRequestTypesEnum.add_results, mResults);
         CCommunication lCom = new CCommunication();
         lCom.execute(lParams);

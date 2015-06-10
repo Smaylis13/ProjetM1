@@ -59,13 +59,15 @@ public class CAlgoVoteMaj extends AAlgorithme{
 
         List<CCandidate> lCands = mVote.getCandidates();
 
+        mCandVote = new ArrayList<>();
+
         /// Remplis la liste des candidats
         for (int i = 0; i < lCands.size(); i++) {
             mIdCands.add(lCands.get(i).getIdCandidat());
             mCandVote.add(new ArrayList<Integer>());
         }
 
-        mCandVote = new ArrayList<>();
+
         mNumbVote = mChoices.size()/mIdCands.size();
 
         /// Remplissage de la liste des scores obtenus pour chaque candidats
