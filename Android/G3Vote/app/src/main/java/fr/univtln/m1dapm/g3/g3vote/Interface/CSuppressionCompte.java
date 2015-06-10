@@ -44,9 +44,14 @@ public class CSuppressionCompte extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if(id == R.id.action_settings) {
             Intent lIntent = new Intent(this,CSettingAccount.class);
             finish();
+            startActivity(lIntent);
+            return true;
+        }
+        if(id == R.id.websiteMenu){
+            Intent lIntent = new Intent(this, CWebSiteActivity.class);
             startActivity(lIntent);
             return true;
         }
@@ -56,7 +61,7 @@ public class CSuppressionCompte extends ActionBarActivity {
 
 
 
-    public void suprimer (View view) {
+    public void supprimer (View view) {
         //changer destination pour suprimer le compte
         final EditText lET_Mail = (EditText)findViewById(R.id.mailInputsupression);
         final EditText lET_Password = (EditText)findViewById(R.id.passInputsupression);

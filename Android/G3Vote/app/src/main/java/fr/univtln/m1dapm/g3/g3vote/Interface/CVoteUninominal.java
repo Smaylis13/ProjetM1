@@ -101,7 +101,6 @@ public class CVoteUninominal extends AppCompatActivity {
                     Log.i("Candidat voté : ", lCandidat.toString());
 
                     CChoice lUniqueChoice = new CChoice(mVote.getIdVote(), CHubActivity.getsLoggedUser().getUserId(), lCandidat.getIdCandidat(), 1);
-                    //TODO:Envoyer le vote au serveur et afficher un toast pour confirmer le vote
 
                     CTaskParam lParams = new CTaskParam(CRequestTypesEnum.add_choice,lUniqueChoice);
                     CCommunication lCom = new CCommunication();
@@ -207,6 +206,11 @@ public class CVoteUninominal extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (lId == R.id.action_settings) {
             Intent lIntent = new Intent(this,CSettingAccount.class);
+            startActivity(lIntent);
+            return true;
+        }
+        if (lId == R.id.websiteMenu){
+            Intent lIntent = new Intent(this, CWebSiteActivity.class);
             startActivity(lIntent);
             return true;
         }

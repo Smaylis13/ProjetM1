@@ -14,4 +14,7 @@
         app:showAsAction="ifRoom"
         android:icon="@drawable/check"
         />
+    <item
+        android:id="@+id/websiteMenu"
+        android:title="@string/website_menu" />
 </menu>

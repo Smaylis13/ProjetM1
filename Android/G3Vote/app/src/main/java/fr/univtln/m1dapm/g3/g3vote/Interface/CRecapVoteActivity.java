@@ -45,7 +45,6 @@ public class CRecapVoteActivity extends AppCompatActivity {
     private static Context sContext;
     private static Intent sIntent;
     private static Activity sActivity;
-    private Bundle extras ;
     private int mNbGagnant;
 
     @Override
@@ -56,30 +55,30 @@ public class CRecapVoteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_crecap_vote);
 
         //stockage des données de l'activity precedente
-        extras = getIntent().getExtras();
-        if (extras == null) {
+        Bundle lExtras = getIntent().getExtras();
+        if (lExtras == null) {
             return;
         }
-        if (extras.get("NB_GAGNANT")!=null){
-            mNbGagnant = (int)extras.get("NB_GAGNANT");
+        if (lExtras.get("NB_GAGNANT")!=null){
+            mNbGagnant = (int)lExtras.get("NB_GAGNANT");
         }
-        mVoteName = (String) extras.get("VOTE_NAME");
-        mDateDebut = (String) extras.get("START_DATE");
-        mDateFin = (String) extras.get("END_DATE");
-        mListCandidat = (ArrayList<CCandidate>) extras.get("liste de Candidat");
-        mListParticipant = (ArrayList<CUser>) extras.get("liste de participant");
-        mTypeVote = (CType) extras.get("VOTE_TYPE");
+        mVoteName = (String) lExtras.get("VOTE_NAME");
+        mDateDebut = (String) lExtras.get("START_DATE");
+        mDateFin = (String) lExtras.get("END_DATE");
+        mListCandidat = (ArrayList<CCandidate>) lExtras.get("liste de Candidat");
+        mListParticipant = (ArrayList<CUser>) lExtras.get("liste de participant");
+        mTypeVote = (CType) lExtras.get("VOTE_TYPE");
         int lNbGagants;
         if (mTypeVote.getIdType() == 1) {
-            lNbGagants = (int) extras.get("NB_GAGNANT");
+            lNbGagants = (int) lExtras.get("NB_GAGNANT");
             mRules.add(new CRule("NB_GAGNANT", String.valueOf(lNbGagants)));
         }
         if (mTypeVote.getIdType() == 5){
-            mCalculationMethod = (int) extras.get("CALCULATIONMETHOD");
+            mCalculationMethod = (int) lExtras.get("CALCULATIONMETHOD");
             mRules.add(new CRule("CALCULATION_METHOD",String.valueOf(mCalculationMethod)));
         }
 
-        Log.i("donner candida", mListCandidat.toString());
+        Log.i("données candidat", mListCandidat.toString());
         //remplis la liste des participants
         ListView lListParticipant = (ListView)this.findViewById(R.id.lLVParticipantList);
         CUserAdapter cUserAdapter = new CUserAdapter(this,mListParticipant);
@@ -200,6 +199,11 @@ public class CRecapVoteActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             Intent lIntent = new Intent(this,CSettingAccount.class);
+            startActivity(lIntent);
+            return true;
+        }
+        if(id == R.id.websiteMenu){
+            Intent lIntent = new Intent(this, CWebSiteActivity.class);
             startActivity(lIntent);
             return true;
         }

@@ -35,9 +35,14 @@ public class CSettingAccount extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if(id == R.id.action_settings) {
             Intent lIntent = new Intent(this,CSettingAccount.class);
             finish();
+            startActivity(lIntent);
+            return true;
+        }
+        if(id == R.id.websiteMenu){
+            Intent lIntent = new Intent(this, CWebSiteActivity.class);
             startActivity(lIntent);
             return true;
         }
@@ -64,7 +69,7 @@ public class CSettingAccount extends ActionBarActivity {
         // On cree le dialogue
         AlertDialog.Builder lConfirmationDialog = new AlertDialog.Builder(CSettingAccount.this);
         // On modifie le titre
-        lConfirmationDialog.setTitle("supprimer compte");
+        lConfirmationDialog.setTitle("Supprimer compte");
         // On modifie le message
         lConfirmationDialog.setMessage("Voulez-vous supprimer votre compte ?");
         // Bouton Oui

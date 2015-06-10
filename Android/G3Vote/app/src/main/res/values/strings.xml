@@ -15,7 +15,7 @@
     <string name="title_activity_crecap_vote">Récapitulatif du vote</string>
     <string name="title_activity_cranking_vote">Vote par classement</string>
     <string name="title_activity_cresult_ranking">Résultat vote par classement</string>
-    <string name="title_activity_cresult_uninominal">Résultat vote uninominal</string>
+    <string name="title_activity_cresult_uninominal">Résultat vote candidat unique</string>
     <string name="title_activity_cresult_JM">Résultat vote jugement majoritaire</string>
 
     <string name="hello_world">Hello world!</string>
@@ -87,6 +87,7 @@
 
     <string name="title_activity_ctest_contact_ajout">CTestContactAjout</string>
     <string name="title_activity_csetting_account">CSettingAccount</string>
+    <string name="title_activity_cwebsite">Site</string>
 
 
     <string name="text_bouton_modifier_compte">Modifier compte</string>
@@ -117,5 +118,6 @@
     <string name="uninominalvote_help_message">Pour voter, vous devez selectionner un candidat en appuyant sur la petite case à côté de son nom et valider.</string>
     <string name="action_validate_ajout_contact">Validate add contact</string>
 
+    <string name="website_menu">Aide en ligne</string>
 
 </resources>

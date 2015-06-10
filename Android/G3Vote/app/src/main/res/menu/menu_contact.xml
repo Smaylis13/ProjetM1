@@ -4,10 +4,13 @@
        android:layout_width="match_parent" android:layout_height="match_parent"
     tools:context="fr.univtln.m1dapm.g3.g3vote.Interface.CHubActivity" >
 
-        <item
+    <item
         android:id="@+id/refresh"
         android:title="@string/menu_refresh_title"
         app:showAsAction="ifRoom"
         android:icon="@drawable/del"
         android:onClick="deleteContactAction"/>
+    <item
+        android:id="@+id/websiteMenu"
+        android:title="@string/website_menu" />
 </menu>

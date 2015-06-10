@@ -117,6 +117,11 @@ public class CVoteConfBorda extends AppCompatActivity {
             startActivity(lIntent);
             return true;
         }
+        if(lId == R.id.websiteMenu){
+            Intent lIntent = new Intent(this, CWebSiteActivity.class);
+            startActivity(lIntent);
+            return true;
+        }
 
         return super.onOptionsItemSelected(pItem);
     }

@@ -4,4 +4,7 @@
     tools:context="fr.univtln.m1dapm.g3.g3vote.Interface.CVoteConfUninominalTwoTurn">
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never" />
+    <item
+        android:id="@+id/websiteMenu"
+        android:title="@string/website_menu" />
 </menu>

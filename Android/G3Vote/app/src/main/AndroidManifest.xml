@@ -175,6 +175,10 @@
             android:name=".Interface.CResultJugementMajoritaire"
             android:label="@string/title_activity_cresult_JM" >
         </activity>
+        <activity
+            android:name=".Interface.CWebSiteActivity"
+            android:label="@string/title_activity_cwebsite">
+        </activity>
     </application>
 
 </manifest>

@@ -39,7 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/supression_boutton"
-        android:onClick="suprimer"
+        android:onClick="supprimer"
         android:layout_below="@id/passInputsupression"
         android:layout_centerHorizontal="true" />
 

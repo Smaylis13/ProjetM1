@@ -68,6 +68,11 @@ public class CModifCompte extends ActionBarActivity {
             startActivity(lIntent);
             return true;
         }
+        if(id == R.id.websiteMenu){
+            Intent lIntent = new Intent(this, CWebSiteActivity.class);
+            startActivity(lIntent);
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }

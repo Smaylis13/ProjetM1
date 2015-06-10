@@ -151,20 +151,24 @@ public class CContactAjout extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent lIntent;
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
-
             //noinspection SimplifiableIfStatement
             case R.id.action_settings:
-                Intent lIntent = new Intent(this, CSettingAccount.class);
+                lIntent = new Intent(this, CSettingAccount.class);
                 startActivity(lIntent);
                 this.finish();
                 return true;
             case R.id.check_contact:
                 onBackPressed();
                 this.finish();
+                return true;
+            case R.id.websiteMenu:
+                lIntent = new Intent(this, CWebSiteActivity.class);
+                startActivity(lIntent);
                 return true;
         }
         return super.onOptionsItemSelected(item);

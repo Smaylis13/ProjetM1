@@ -10,4 +10,7 @@
         android:title="@string/help_title"
         android:icon="@drawable/ic_action_help"
         android:onClick="rankVoteHelp" />
+    <item
+        android:id="@+id/websiteMenu"
+        android:title="@string/website_menu" />
 </menu>

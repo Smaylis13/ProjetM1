@@ -1,5 +1,6 @@
 package fr.univtln.m1dapm.g3.g3vote.Interface;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -113,6 +114,11 @@ public class CTestActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            return true;
+        }
+        if(id == R.id.websiteMenu){
+            Intent lIntent = new Intent(this, CWebSiteActivity.class);
+            startActivity(lIntent);
             return true;
         }
 

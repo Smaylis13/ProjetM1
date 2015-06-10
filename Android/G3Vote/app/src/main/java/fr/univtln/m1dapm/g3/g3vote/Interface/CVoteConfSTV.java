@@ -67,10 +67,19 @@ public class CVoteConfSTV extends AppCompatActivity {
         // on verifie que tous les champs sont bien remplis
         for (int i = 0; i < mListCandidat.size(); i++) {
             if ((mListCandidat.get(i).getNomCandidat() == null) || (mListCandidat.get(i).getDescriptionCandidat() == null)
-                    || (lNbGagnant.getText() == null)){
+                    || (lNbGagnant.getText().toString().equals(""))){
                 Toast.makeText(getApplicationContext(), "Vous n'avez pas rempli tous les champs", Toast.LENGTH_LONG).show();
                 lNbError++;
             }
+        }
+        // On vérifie que le nombre de gagnants est inférieur au nombre de candidats
+        if(!lNbGagnant.getText().toString().equals("")){
+            int lNbGagnantInt = Integer.parseInt(lNbGagnant.getText().toString());
+            if(lNbGagnantInt >= (mListCandidat.size())){
+                Toast.makeText(getApplicationContext(), "Nombre de gagnants supérieur ou égal au nombre de candidats", Toast.LENGTH_LONG).show();
+                lNbError++;
+            }
+
         }
         if (lNbError == 0){
             Intent lIntent = new Intent(this,CParticipantActivity.class);
@@ -117,6 +126,11 @@ public class CVoteConfSTV extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (lId == R.id.action_settings) {
             Intent lIntent = new Intent(this,CSettingAccount.class);
+            startActivity(lIntent);
+            return true;
+        }
+        if( lId == R.id.websiteMenu){
+            Intent lIntent = new Intent(this, CWebSiteActivity.class);
             startActivity(lIntent);
             return true;
         }

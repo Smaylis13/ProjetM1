@@ -420,6 +420,12 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
             return true;
         }
 
+        if(id == R.id.websiteMenu){
+            Intent lIntent = new Intent(this, CWebSiteActivity.class);
+            startActivity(lIntent);
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 

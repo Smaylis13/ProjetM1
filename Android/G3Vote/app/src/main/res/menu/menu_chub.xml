@@ -10,4 +10,7 @@
         app:showAsAction="ifRoom"
         android:icon="@drawable/ic_action_refresh"
         android:onClick="refreshAction"/>
+    <item
+        android:id="@+id/websiteMenu"
+        android:title="@string/website_menu" />
 </menu>
