@@ -31,6 +31,7 @@ public class CResultRankingActivity extends AppCompatActivity {
     private List<CResult> mResultList;
     private static List<CChoice> mChoices;
     private List<CResult> mResults;
+    private int sGood=0;
 
     private CVote mVote;
 
@@ -55,35 +56,36 @@ public class CResultRankingActivity extends AppCompatActivity {
         lListResultatFaux.add(new CResult(2, 1, mVote.getIdVote(), 5));
         mVote.setResultVote(lListResultatFaux);
         mResultList =mResults;
-        Log.i("Avant sort : ", "" + mResultList.get(0).getCandidat());
+       // Log.i("Avant sort : ", "" + mResultList.get(0).getCandidat());
 /*        Log.i("Avant sort : ", "" + mResultList.get(1).getCandidat());
         Log.i("Avant sort : ", "" + mResultList.get(2).getCandidat());
 
         Log.i("Apres sort : ", "" + mResultList.get(0).getCandidat());
         Log.i("Apres sort : ", "" + mResultList.get(1).getCandidat());
         Log.i("Apres sort : ", "" + mResultList.get(2).getCandidat());*/
-        Collections.sort(mResultList, new Comparator<CResult>() {
-            @Override
-            public int compare(CResult lhs, CResult rhs) {
-                return lhs.getOrder() - rhs.getOrder();
-            }
-        });
-        mCandidateList = new ArrayList<>(mVote.getCandidates());
-        List<CCandidate> lWinningCandidatesList = new ArrayList<>();
-        for(CResult res : mResultList) {
-            int lIdCandidat = res.getCandidat();
-            for (int i = 0; i < mCandidateList.size(); ++i){
-                if (mCandidateList.get(i).getIdCandidat() == lIdCandidat) {
-                    lWinningCandidatesList.add(mCandidateList.get(i));
+        if(sGood==0) {
+            Collections.sort(mResultList, new Comparator<CResult>() {
+                @Override
+                public int compare(CResult lhs, CResult rhs) {
+                    return lhs.getOrder() - rhs.getOrder();
+                }
+            });
+            mCandidateList = new ArrayList<>(mVote.getCandidates());
+            List<CCandidate> lWinningCandidatesList = new ArrayList<>();
+            for (CResult res : mResultList) {
+                int lIdCandidat = res.getCandidat();
+                for (int i = 0; i < mCandidateList.size(); ++i) {
+                    if (mCandidateList.get(i).getIdCandidat() == lIdCandidat) {
+                        lWinningCandidatesList.add(mCandidateList.get(i));
+                    }
                 }
             }
+
+            ListView lListViewResult = (ListView) findViewById(R.id.listViewRankingResult);
+            Log.i("Mon vote : ", lWinningCandidatesList.toString());
+            mAdapter = new CResultMultipleCandidatAdapter(this, lWinningCandidatesList);
+            lListViewResult.setAdapter(mAdapter);
         }
-
-        ListView lListViewResult = (ListView) findViewById(R.id.listViewRankingResult);
-        Log.i("Mon vote : ", lWinningCandidatesList.toString());
-        mAdapter = new CResultMultipleCandidatAdapter(this, lWinningCandidatesList);
-        lListViewResult.setAdapter(mAdapter);
-
     }
 
     private void calculateResults() {
@@ -95,10 +97,12 @@ public class CResultRankingActivity extends AppCompatActivity {
                     lRuleNbElus=lRule;
             }
             CAlgoSTV lAlgoSTV=new CAlgoSTV(mVote,Integer.parseInt(lRuleNbElus.getDescription()));
-            lAlgoSTV.initVote(mChoices);
-            List<Integer> lElusId=lAlgoSTV.CalculResultat();
-            for(int lId:lElusId){
-                mResults.add(new CResult(1,mVote.getIdVote(),lId));
+            sGood=lAlgoSTV.initVote(mChoices);
+            if(sGood==0) {
+                List<Integer> lElusId = lAlgoSTV.CalculResultat();
+                for (int lId : lElusId) {
+                    mResults.add(new CResult(1, mVote.getIdVote(), lId));
+                }
             }
 
         }
@@ -108,9 +112,11 @@ public class CResultRankingActivity extends AppCompatActivity {
             mResults=lKemenyYoung.CalculResultat();
 
         }
-        CTaskParam lParams=new CTaskParam(CRequestTypesEnum.add_results,mResults);
-        CCommunication lCom=new CCommunication();
-        lCom.execute(lParams);
+        if(sGood==0) {
+            CTaskParam lParams = new CTaskParam(CRequestTypesEnum.add_results, mResults);
+            CCommunication lCom = new CCommunication();
+            lCom.execute(lParams);
+        }
     }
 
     public static void setChoices(List<CChoice> pChoices) {
