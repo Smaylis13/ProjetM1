@@ -84,7 +84,6 @@ public class CAlgoSTV extends AAlgorithme {
      */
     private void getChoix(List<CChoice> pChoices)
     {
-        Log.e("SIZEpCHoices", pChoices.size()+"");
         mChoice = new LinkedList<>();
         mChoiceNumb = new LinkedList<>();
         List<Integer> lUserList= new LinkedList<>();

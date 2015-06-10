@@ -96,7 +96,7 @@ public class CAlgoBorda extends AAlgorithme{
 
         int lMax = Collections.max(mCandsScore);
 
-        lResult = new CResult(0, mVote.getIdVote(), mIdCands.get(mCandsScore.indexOf(lMax)));
+        lResult = new CResult(lMax, mVote.getIdVote(), mIdCands.get(mCandsScore.indexOf(lMax)));
 
         return lResult;
     }

@@ -65,7 +65,6 @@ public class CKemenyYoung extends AAlgorithme {
      * @param pChoices Liste des choix fait par les participants
      */
     public void initVote(List<CChoice> pChoices) {
-        Log.e("SIZECHOICES", pChoices.size()+"");
         List<List<Integer>> lChoices = new ArrayList<>();
         mIdCands = new ArrayList<>();
         mDualList = new ArrayList<>();
@@ -106,10 +105,6 @@ public class CKemenyYoung extends AAlgorithme {
             lChoices.removeAll(Collections.singleton(mChoices.get(mChoices.size() - 1)));
         }
 
-        Log.e("LA", "KEMENY");
-        Log.e("LA", mDualList.size()+"");
-        Log.e("LA", mNumbChoice.size()+"");
-        Log.e("LA", mIdCands.size()+"");
         //TODO SOUCI SUR LA BOUCLE, taille de mNumbChoice < taille de mChoices
         /// Creation de la table des duels entre candidats
         for (int i = 0; i < mChoices.size(); i++) {
@@ -123,7 +118,6 @@ public class CKemenyYoung extends AAlgorithme {
                 }
             }
         }
-        Log.e("LA", "KEMENY");
     }
 
     /**
@@ -144,14 +138,14 @@ public class CKemenyYoung extends AAlgorithme {
 
         int lMax = Collections.max(lScore);
         int lOccur = Collections.frequency(lScore, lMax);
-        for (int i = 0; i < lOccur; i++) {
+        //for (int i = 0; i < lOccur; i++) {
             lindex = lScore.indexOf(lMax);
             for (int j = 0; j < mIdCands.size(); j++) {
                 lResult.add(new CResult(j+1, mVote.getIdVote(), mChoices.get(lindex).get(j)));
             }
             mChoices.remove(lindex);
             lScore.remove(lindex);
-        }
+        //}
 
         return lResult;
     }

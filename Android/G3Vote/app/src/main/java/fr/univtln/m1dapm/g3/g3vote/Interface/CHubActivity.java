@@ -136,9 +136,10 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
         CSessionManager lSession = new CSessionManager(this);
         Bundle extras = getIntent().getExtras();
 
-        if (extras.getBoolean("LOGGER")){
-            sLoggedUser=lSession.getUser();
-        }
+        if(sLoggedUser==null)
+            if (extras.getBoolean("LOGGER")){
+                sLoggedUser=lSession.getUser();
+            }
 
         sActivity = this;
         sContext = getApplicationContext();
