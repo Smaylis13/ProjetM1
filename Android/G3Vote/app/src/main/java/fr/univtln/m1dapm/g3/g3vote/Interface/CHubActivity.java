@@ -518,30 +518,72 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
             public void onClick(View v) {
                 final Button buttonEnd = (Button) CHubActivity.this.findViewById(R.id.bVoteDateEnd);
                 final Button buttonBegin = (Button) CHubActivity.this.findViewById(R.id.bVoteDateBegin);
-                //si le bouton date début n'a pas encore été remplis on peut remplir direct le bouton date début
-                if (buttonBegin.getText().toString().equals(getString(R.string.lchoiceDate))){
-                    buttonEnd.setText(dp.getYear()+"-"+(dp.getMonth()+1)+"-" +dp.getDayOfMonth()+" "+tp.getCurrentHour()+":"+tp.getCurrentMinute());
-                    dialog.cancel();
-                }
-                //sinon on verifie que la date début est bien antérieure
-                // a la date de fin
+                Calendar c = Calendar.getInstance();
+                int currentDay = c.get(Calendar.DAY_OF_MONTH);
+                int currentMonth = c.get(Calendar.MONTH);
+                int currentYear = c.get(Calendar.YEAR);
+                int currentHour = c.get(Calendar.HOUR_OF_DAY);
+                int currentMinute = c.get(Calendar.MINUTE);
+                if((currentYear == dp.getYear()) && (currentMonth == dp.getMonth()) && (currentDay == dp.getDayOfMonth())){
+                    if((currentHour < tp.getCurrentHour()) || ((currentHour == tp.getCurrentHour()) && (currentMinute < tp.getCurrentMinute()))){
+                        //si le bouton date début n'a pas encore été rempli on peut remplir directement le bouton date fin
+                        if (buttonBegin.getText().toString().equals(getString(R.string.lchoiceDate))){
+                            buttonEnd.setText(dp.getYear()+"-"+(dp.getMonth()+1)+"-" +dp.getDayOfMonth()+" "+tp.getCurrentHour()+":"+tp.getCurrentMinute());
+                            dialog.cancel();
+                        }
+                        //sinon on verifie que la date début est bien antérieure
+                        // a la date de fin
 
-                try {
-                    String dateEnd = dp.getYear()+"-"+(dp.getMonth()+1)+"-" +dp.getDayOfMonth()+" "+tp.getCurrentHour()+":"+tp.getCurrentMinute();
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS",Locale.FRANCE);
-                    Date parsedDate = dateFormat.parse(dateEnd+":00.000");
-                    Timestamp lDateBegin = getDateBegin();
-                    Timestamp lDateEnd = new java.sql.Timestamp(parsedDate.getTime());
+                        try {
+                            String dateEnd = dp.getYear()+"-"+(dp.getMonth()+1)+"-" +dp.getDayOfMonth()+" "+tp.getCurrentHour()+":"+tp.getCurrentMinute();
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS",Locale.FRANCE);
+                            Date parsedDate = dateFormat.parse(dateEnd+":00.000");
+                            Timestamp lDateBegin = getDateBegin();
+                            Timestamp lDateEnd = new java.sql.Timestamp(parsedDate.getTime());
 
-                    if (lDateBegin.after(lDateEnd)){
-                        Toast.makeText(getsContext(),"La date de début est après la date de fin ",Toast.LENGTH_SHORT).show();
+                            if (lDateBegin.after(lDateEnd)){
+                                Toast.makeText(getsContext(),"La date de début est après la date de fin ",Toast.LENGTH_SHORT).show();
+                            }
+                            else{
+                                buttonEnd.setText(dp.getYear()+"-"+(dp.getMonth()+1)+"-" +dp.getDayOfMonth()+" "+tp.getCurrentHour()+":"+tp.getCurrentMinute());
+                                dialog.cancel();
+                            }
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        Toast.makeText(CHubActivity.getsContext(), "Heure antérieure à l'heure actuelle", Toast.LENGTH_SHORT).show();
                     }
-                    else{
+                }
+
+                else if((currentYear <= dp.getYear()) && (currentMonth <= dp.getMonth()) && (currentDay <= dp.getDayOfMonth())){
+                    //si le bouton date début n'a pas encore été rempli on peut remplir directement le bouton date fin
+                    if (buttonBegin.getText().toString().equals(getString(R.string.lchoiceDate))){
                         buttonEnd.setText(dp.getYear()+"-"+(dp.getMonth()+1)+"-" +dp.getDayOfMonth()+" "+tp.getCurrentHour()+":"+tp.getCurrentMinute());
                         dialog.cancel();
                     }
-                } catch (ParseException e) {
-                    e.printStackTrace();
+                    //sinon on verifie que la date début est bien antérieure
+                    // a la date de fin
+
+                    try {
+                        String dateEnd = dp.getYear()+"-"+(dp.getMonth()+1)+"-" +dp.getDayOfMonth()+" "+tp.getCurrentHour()+":"+tp.getCurrentMinute();
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS",Locale.FRANCE);
+                        Date parsedDate = dateFormat.parse(dateEnd+":00.000");
+                        Timestamp lDateBegin = getDateBegin();
+                        Timestamp lDateEnd = new java.sql.Timestamp(parsedDate.getTime());
+
+                        if (lDateBegin.after(lDateEnd)){
+                            Toast.makeText(getsContext(),"La date de début est après la date de fin ",Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            buttonEnd.setText(dp.getYear()+"-"+(dp.getMonth()+1)+"-" +dp.getDayOfMonth()+" "+tp.getCurrentHour()+":"+tp.getCurrentMinute());
+                            dialog.cancel();
+                        }
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    Toast.makeText(CHubActivity.getsContext(), "Date antérieure à la date du jour", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -568,32 +610,43 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
             public void onClick(View v) {
                 final Button buttonEnd = (Button) CHubActivity.this.findViewById(R.id.bVoteDateEnd);
                 final Button buttonBegin = (Button) CHubActivity.this.findViewById(R.id.bVoteDateBegin);
-                Log.i("contenue bouton", buttonEnd.getText().toString());
-                //si le bouton date fin n'a pas encore été remplis on peut remplir direct le bouton date début
-                if (buttonEnd.getText().toString().equals(getString(R.string.lchoiceDate))) {
-                    buttonBegin.setText(dp.getYear() + "-" + (dp.getMonth() + 1) + "-" + dp.getDayOfMonth() + " " + tp.getCurrentHour() + ":" + tp.getCurrentMinute());
-                    dialog.cancel();
-                }
-                //sinon on verifie que la date début est bien antérieure
-                // a la date de fin
-                else{
-                try {
-                    String dateBegin = dp.getYear() + "-" + (dp.getMonth() + 1) + "-" + dp.getDayOfMonth() + " " + tp.getCurrentHour() + ":" + tp.getCurrentMinute();
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS",Locale.FRANCE);
-                    Date parsedDate = dateFormat.parse(dateBegin + ":00.000");
-                    Timestamp lDateBegin = new java.sql.Timestamp(parsedDate.getTime());
-                    Timestamp lDateEnd = getDateEnd();
+                Log.i("contenu bouton", buttonEnd.getText().toString());
+                Calendar c = Calendar.getInstance();
+                int currentDay = c.get(Calendar.DAY_OF_MONTH);
+                int currentMonth = c.get(Calendar.MONTH);
+                int currentYear = c.get(Calendar.YEAR);
 
-                    if (lDateBegin.after(lDateEnd)) {
-                        Toast.makeText(getsContext(), "La date de début est après la date de fin ", Toast.LENGTH_SHORT).show();
-                    } else {
+                Log.i("Date actu : ", "" + currentDay + "" + currentMonth + "" + currentYear);
+
+                if((currentYear <= dp.getYear()) && (currentMonth <= dp.getMonth()) && (currentDay <= dp.getDayOfMonth())){
+                    //si le bouton date fin n'a pas encore été rempli on peut remplir directement le bouton date début
+                    if (buttonEnd.getText().toString().equals(getString(R.string.lchoiceDate))) {
                         buttonBegin.setText(dp.getYear() + "-" + (dp.getMonth() + 1) + "-" + dp.getDayOfMonth() + " " + tp.getCurrentHour() + ":" + tp.getCurrentMinute());
                         dialog.cancel();
                     }
-                } catch (ParseException e) {
-                    e.printStackTrace();
+                    //sinon on verifie que la date début est bien antérieure
+                    // a la date de fin
+                    else{
+                        try {
+                            String dateBegin = dp.getYear() + "-" + (dp.getMonth() + 1) + "-" + dp.getDayOfMonth() + " " + tp.getCurrentHour() + ":" + tp.getCurrentMinute();
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS",Locale.FRANCE);
+                            Date parsedDate = dateFormat.parse(dateBegin + ":00.000");
+                            Timestamp lDateBegin = new java.sql.Timestamp(parsedDate.getTime());
+                            Timestamp lDateEnd = getDateEnd();
+
+                            if (lDateBegin.after(lDateEnd)) {
+                                Toast.makeText(getsContext(), "La date de début est après la date de fin ", Toast.LENGTH_SHORT).show();
+                            } else {
+                                buttonBegin.setText(dp.getYear() + "-" + (dp.getMonth() + 1) + "-" + dp.getDayOfMonth() + " " + tp.getCurrentHour() + ":" + tp.getCurrentMinute());
+                                dialog.cancel();
+                            }
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                } else {
+                    Toast.makeText(CHubActivity.getsContext(), "Date antérieure à la date du jour", Toast.LENGTH_SHORT).show();
                 }
-            }
             }
         });
 

@@ -35,6 +35,9 @@ public class CSettingAccount extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent lIntent = new Intent(this,CSettingAccount.class);
+            finish();
+            startActivity(lIntent);
             return true;
         }
 
