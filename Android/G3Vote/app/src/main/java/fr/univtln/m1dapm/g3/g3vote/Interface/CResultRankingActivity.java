@@ -22,16 +22,10 @@ import fr.univtln.m1dapm.g3.g3vote.Entite.CRule;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
 import fr.univtln.m1dapm.g3.g3vote.R;
 
-/**
- * Created by sebastien on 03/06/15.
- */
 public class CResultRankingActivity extends AppCompatActivity {
-    private CResultMultipleCandidatAdapter mAdapter;
-    private List<CCandidate> mCandidateList;
-    private List<CResult> mResultList;
     private static List<CChoice> mChoices;
     private List<CResult> mResults;
-    private int sGood=0;
+    private int mGood = 0;
 
     private CVote mVote;
 
@@ -40,51 +34,39 @@ public class CResultRankingActivity extends AppCompatActivity {
         super.onCreate(pSavedInstanceState);
         setContentView(R.layout.activity_cresult_ranking);
 
-        Bundle extras = getIntent().getExtras();
-        if (extras==null){
+        Bundle lExtras = getIntent().getExtras();
+        if (lExtras == null){
             return;
         }
-        mVote = (CVote) extras.get("VOTE");
-        mResults=mVote.getResultVote();
-        if(mResults==null||mResults.isEmpty()){
+        mVote = (CVote) lExtras.get("VOTE");
+        mResults = mVote.getResultVote();
+        if(mResults == null || mResults.isEmpty()){
             calculateResults();
         }
         Log.i("Mon vote : ", mVote.toString());
-        List<CResult> lListResultatFaux = new ArrayList<>();
-        lListResultatFaux.add(new CResult(0, 2, mVote.getIdVote(), 4));
-        lListResultatFaux.add(new CResult(1, 0, mVote.getIdVote(), 3));
-        lListResultatFaux.add(new CResult(2, 1, mVote.getIdVote(), 5));
-        mVote.setResultVote(lListResultatFaux);
-        mResultList =mResults;
-       // Log.i("Avant sort : ", "" + mResultList.get(0).getCandidat());
-/*        Log.i("Avant sort : ", "" + mResultList.get(1).getCandidat());
-        Log.i("Avant sort : ", "" + mResultList.get(2).getCandidat());
-
-        Log.i("Apres sort : ", "" + mResultList.get(0).getCandidat());
-        Log.i("Apres sort : ", "" + mResultList.get(1).getCandidat());
-        Log.i("Apres sort : ", "" + mResultList.get(2).getCandidat());*/
-        if(sGood==0) {
-            Collections.sort(mResultList, new Comparator<CResult>() {
+        List<CResult> lResultList = mResults;
+        if(mGood == 0) {
+            Collections.sort(lResultList, new Comparator<CResult>() {
                 @Override
                 public int compare(CResult lhs, CResult rhs) {
                     return lhs.getOrder() - rhs.getOrder();
                 }
             });
-            mCandidateList = new ArrayList<>(mVote.getCandidates());
+            List<CCandidate> lCandidateList = new ArrayList<>(mVote.getCandidates());
             List<CCandidate> lWinningCandidatesList = new ArrayList<>();
-            for (CResult res : mResultList) {
+            for (CResult res : lResultList) {
                 int lIdCandidat = res.getCandidat();
-                for (int i = 0; i < mCandidateList.size(); ++i) {
-                    if (mCandidateList.get(i).getIdCandidat() == lIdCandidat) {
-                        lWinningCandidatesList.add(mCandidateList.get(i));
+                for (int i = 0; i < lCandidateList.size(); ++i) {
+                    if (lCandidateList.get(i).getIdCandidat() == lIdCandidat) {
+                        lWinningCandidatesList.add(lCandidateList.get(i));
                     }
                 }
             }
 
             ListView lListViewResult = (ListView) findViewById(R.id.listViewRankingResult);
             Log.i("Mon vote : ", lWinningCandidatesList.toString());
-            mAdapter = new CResultMultipleCandidatAdapter(this, lWinningCandidatesList);
-            lListViewResult.setAdapter(mAdapter);
+            CResultMultipleCandidatAdapter lAdapter = new CResultMultipleCandidatAdapter(this, lWinningCandidatesList);
+            lListViewResult.setAdapter(lAdapter);
         }
     }
 
@@ -96,9 +78,9 @@ public class CResultRankingActivity extends AppCompatActivity {
                 if(lRule.getRuleName().equals("NB_GAGNANT"))
                     lRuleNbElus=lRule;
             }
-            CAlgoSTV lAlgoSTV=new CAlgoSTV(mVote,Integer.parseInt(lRuleNbElus.getDescription()));
-            sGood=lAlgoSTV.initVote(mChoices);
-            if(sGood==0) {
+            CAlgoSTV lAlgoSTV=new CAlgoSTV(mVote,Integer.parseInt(lRuleNbElus != null ? lRuleNbElus.getDescription() : null));
+            mGood=lAlgoSTV.initVote(mChoices);
+            if(mGood==0) {
                 List<Integer> lElusId = lAlgoSTV.CalculResultat();
                 for (int lId : lElusId) {
                     mResults.add(new CResult(1, mVote.getIdVote(), lId));
@@ -112,7 +94,7 @@ public class CResultRankingActivity extends AppCompatActivity {
             mResults=lKemenyYoung.CalculResultat();
 
         }
-        if(sGood==0) {
+        if(mGood==0) {
             CTaskParam lParams = new CTaskParam(CRequestTypesEnum.add_results, mResults);
             CCommunication lCom = new CCommunication();
             lCom.execute(lParams);
