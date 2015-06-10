@@ -141,25 +141,29 @@ public class CHubMyVotesFragment extends Fragment implements AdapterView.OnItemC
             Log.i("Vote : ", lVote.getTypes().getNom());
             if (lVote.getTypes().getNom().equals("STV") || lVote.getTypes().getNom().equals("Kemeny-Young")) {
                 sIntent = new Intent(getActivity(), CResultRankingActivity.class);
+                sIntent.putExtra("VOTE", lVote);
                 sIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 CTaskParam lParams = new CTaskParam(CRequestTypesEnum.get_choices, lVote.getIdVote(), "rank");
                 CCommunication lCom = new CCommunication();
                 lCom.execute(lParams);
                 //startActivityIntent();
-            } else if (lVote.getTypes().getNom().equals("Uninominal à 1 tour")) {
+            } else if (lVote.getTypes().getNom().equals("Uninominal à 1 tour")||lVote.getTypes().getNom().equals("Borda")) {
                 sIntent = new Intent(getActivity(), CResultUninominalActivity.class);
+                sIntent.putExtra("VOTE", lVote);
                 sIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 CTaskParam lParams = new CTaskParam(CRequestTypesEnum.get_choices, lVote.getIdVote(), "uninominal");
                 CCommunication lCom = new CCommunication();
                 lCom.execute(lParams);
             } else if (lVote.getTypes().getNom().equals("MAJORITY")) {
                 sIntent = new Intent(getActivity(), CResultJugementMajoritaire.class);
+                sIntent.putExtra("VOTE", lVote);
                 sIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 CTaskParam lParams = new CTaskParam(CRequestTypesEnum.get_choices, lVote.getIdVote(), "note");
                 CCommunication lCom = new CCommunication();
                 lCom.execute(lParams);
             } else {
                 sIntent = new Intent(getActivity(), CNoteVote.class);
+                sIntent.putExtra("VOTE", lVote);
                 sIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
                 startActivityIntent();
@@ -167,7 +171,7 @@ public class CHubMyVotesFragment extends Fragment implements AdapterView.OnItemC
             }
 
 
-            sIntent.putExtra("VOTE", lVote);
+
             //startActivity(lIntent);
         }
     }
