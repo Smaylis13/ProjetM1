@@ -96,7 +96,7 @@ public class CAlgoVoteMaj extends AAlgorithme{
 
         for (int i = 0; i < lMedianeValue.size(); i++)
             if (lMedianeValue.get(i) == lMax)
-                mResult.add(new CResult(0, mVote.getIdVote(), mIdCands.get(i)));
+                mResult.add(new CResult(lMedianeValue.get(i), mVote.getIdVote(), mIdCands.get(i)));
 
         return mResult;
     }
@@ -124,7 +124,7 @@ public class CAlgoVoteMaj extends AAlgorithme{
 
         for (int i = 0; i < lAverageValue.size(); i++) {
             if (lAverageValue.get(i) == lMax) {
-                mResult.add(new CResult(0, mVote.getIdVote(), mIdCands.get(i)));
+                mResult.add(new CResult(lAverageValue.get(i).intValue(), mVote.getIdVote(), mIdCands.get(i)));
             }
         }
 
@@ -153,7 +153,7 @@ public class CAlgoVoteMaj extends AAlgorithme{
 
         for (int i = 0; i < lCandValue.size(); i++)
             if (lCandValue.get(i) == lMax)
-                mResult.add(new CResult(0, mVote.getIdVote(), mIdCands.get(i)));
+                mResult.add(new CResult(lCandValue.get(i), mVote.getIdVote(), mIdCands.get(i)));
 
         return mResult;
     }

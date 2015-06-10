@@ -49,6 +49,7 @@ public class CResultJugementMajoritaire extends AppCompatActivity {
         // mChoices = extras.getParcelableArrayList("CHOICES");
         mResults=mVote.getResultVote();
         mCalculationMethod = mVote.getRegles().get(0).getDescription();
+
         if(mResults==null||mResults.isEmpty()){
             calculateResults();
         }
@@ -111,9 +112,10 @@ public class CResultJugementMajoritaire extends AppCompatActivity {
         }
         Log.i("Value set : ", "" + lValueSet.toString());
         BarDataSet lBarDataSet;
+
         if(mCalculationMethod.equals("0"))
             lBarDataSet = new BarDataSet(lValueSet, "Moyenne obtenue");
-        if(mCalculationMethod.equals("1"))
+        else if(mCalculationMethod.equals("1"))
             lBarDataSet = new BarDataSet(lValueSet, "Médiane obtenue");
         else
             lBarDataSet = new BarDataSet(lValueSet, "Somme des notes");
