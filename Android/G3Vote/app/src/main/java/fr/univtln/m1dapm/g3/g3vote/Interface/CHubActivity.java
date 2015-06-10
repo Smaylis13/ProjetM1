@@ -62,6 +62,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import fr.univtln.m1dapm.g3.g3vote.Communication.CCommunication;
 import fr.univtln.m1dapm.g3.g3vote.Communication.CRequestTypesEnum;
 import fr.univtln.m1dapm.g3.g3vote.Communication.CTaskParam;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CSessionManager;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CUser;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
 import fr.univtln.m1dapm.g3.g3vote.R;
@@ -130,6 +131,13 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chub);
+        CSessionManager lSession = new CSessionManager(this);
+        Bundle extras = getIntent().getExtras();
+
+        if (extras.getBoolean("LOGGER")){
+            sLoggedUser=lSession.getUser();
+        }
+
         sActivity = this;
         sContext = getApplicationContext();
         // Set up the action bar.
@@ -139,7 +147,12 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
         //recupere l'utilisateur connecté et va cherché les votes de l'utilisateur
         if(sLoggedUser==null) {
             sLoggedUser = (CUser) lIntent.getSerializableExtra(CCommunication.LOGGED_USER);
+            CSessionManager lsession = new CSessionManager(sContext);
+            lsession.createLoginSession(sLoggedUser.getUserId(),sLoggedUser.getEmail(),sLoggedUser.getFirstName(),sLoggedUser.getName());
         }
+
+
+
         CTaskParam lParams=new CTaskParam(CRequestTypesEnum.get_votes,sLoggedUser.getUserId());
         CVotesAsync lVotesAsc=new CVotesAsync();
         lVotesAsc.execute(lParams);

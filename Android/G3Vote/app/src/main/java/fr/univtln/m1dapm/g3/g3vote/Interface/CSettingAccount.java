@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import fr.univtln.m1dapm.g3.g3vote.Entite.CSessionManager;
 import fr.univtln.m1dapm.g3.g3vote.R;
 
 public class CSettingAccount extends ActionBarActivity {
@@ -50,6 +51,8 @@ public class CSettingAccount extends ActionBarActivity {
     }
 
     public void deconnexion(View view){
+        CSessionManager lSession = new CSessionManager(this);
+        lSession.logoutUser();
         Intent lIntent = new Intent(this,CLoginActivity.class);
         startActivity(lIntent);
         this.finish();
