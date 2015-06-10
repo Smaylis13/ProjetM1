@@ -2,13 +2,11 @@ package fr.univtln.m1dapm.g3.g3vote.Interface;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -52,7 +50,7 @@ public class CCandidatAffichageNoteAdapter extends ArrayAdapter<CCandidate> {
             LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
             pConvertView = inflater.inflate(mIdLayout, pParent, false);
 
-            mNotePossible = new ArrayList<String>();
+            mNotePossible = new ArrayList<>();
             mNotePossible.add("Excellent");
             mNotePossible.add("Tres bien");
             mNotePossible.add("Bien");

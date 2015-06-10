@@ -3,6 +3,8 @@ package fr.univtln.m1dapm.g3.g3vote.Interface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
@@ -55,6 +57,8 @@ public class CHubContactFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        setHasOptionsMenu(true);
+
         View rootView = inflater.inflate(R.layout.fragment_chub_contact, container, false);
 
         //Récupération du composant ListView
@@ -79,4 +83,12 @@ public class CHubContactFragment extends Fragment {
         super.onStart();
         adapter.notifyDataSetChanged();
     }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_contact, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+
 }

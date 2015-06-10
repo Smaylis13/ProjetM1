@@ -1,5 +1,6 @@
 package fr.univtln.m1dapm.g3.g3vote.Algorithme.VoteMajoritaire;
 
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -12,18 +13,44 @@ import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
 
 
 public class CAlgoVoteMaj extends AAlgorithme{
+
+    /**
+     * Liste des choix faits par les participants
+     */
     private List<CChoice> mChoices;
+
+    /**
+     * Liste des identifiants des candidats
+     */
     private List<Integer> mIdCands;
+
+    /**
+     * Liste des notes attribués aux candidats
+     */
     private List<List<Integer>> mCandVote;
+
+    /**
+     * Liste des resultats
+     */
     List<CResult> mResult;
 
+    /**
+     * Nombre de vote
+     */
     private int mNumbVote;
 
+    /**
+     * Constructeur de l'algo
+     * @param pVote Vote pour lequel on fait le calcul
+     */
     public CAlgoVoteMaj(CVote pVote) {
         super(pVote);
     }
 
-
+    /**
+     * Initialisation du vote
+     * @param pChoices Liste des choix faits par les utilisateurs
+     */
     public void initVote(List<CChoice> pChoices)
     {
         mResult = new ArrayList<>();
@@ -42,6 +69,7 @@ public class CAlgoVoteMaj extends AAlgorithme{
         for (int i = 0; i < lCands.size(); i++) {
             List<Integer> lCandVote = new ArrayList<>();
 
+            //TODO NE PASSE QU'UNE FOIS DANS LA BOUCLE (pour i=1, j==mNumbVote)
             for (int j = (i*mNumbVote); j < mNumbVote; j++) {
                 lCandVote.add(mChoices.get(j).getScore());
             }
@@ -51,8 +79,8 @@ public class CAlgoVoteMaj extends AAlgorithme{
     }
 
     /**
-     *
-     * @return CChoixVM
+     * Calcul du resultat par la mediane des notes
+     * @return Liste des vainqueurs
      */
     public List<CResult> calculateMedian() {
 
@@ -76,8 +104,8 @@ public class CAlgoVoteMaj extends AAlgorithme{
     }
 
     /**
-     *
-     * @return le gagnant en fonction de sa moyenne
+     * Calcul du resultat par la moyenne de leurs notes
+     * @return Liste des gagnants
      */
     public List<CResult> calculateAverage() {
 
@@ -87,24 +115,27 @@ public class CAlgoVoteMaj extends AAlgorithme{
 
         for (List<Integer> candVote : mCandVote) {
             lValue = 0.0;
-            for (Integer value : candVote)
+            for (Integer value : candVote) {
                 lValue += value;
+            }
 
             lAverageValue.add(lValue/candVote.size());
         }
         double lMax = Collections.max(lAverageValue);
         // on cherche s'il ya d'autres vainqueurs qui ont la même moyenne
 
-        for (int i = 0; i < lAverageValue.size(); i++)
-            if (lAverageValue.get(i) == lMax)
+        for (int i = 0; i < lAverageValue.size(); i++) {
+            if (lAverageValue.get(i) == lMax) {
                 mResult.add(new CResult(0, mVote.getIdVote(), mIdCands.get(i)));
+            }
+        }
 
         return mResult;
     }
 
     /**
-     *
-     * @return gagnant par somme des points reçu
+     * Calcul du resultat par la somme
+     * @return Liste des gagnants
      */
     public List<CResult> calculateSum() {
 
@@ -120,6 +151,7 @@ public class CAlgoVoteMaj extends AAlgorithme{
         }
 
         int lMax = Collections.max(lCandValue);
+
 
         for (int i = 0; i < lCandValue.size(); i++)
             if (lCandValue.get(i) == lMax)

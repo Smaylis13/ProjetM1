@@ -92,7 +92,7 @@ public class CUser implements Serializable{
     //initialise une liste de Users
     public static ArrayList<CUser> getAListOfUser(){
 
-        ArrayList<CUser> listUser = new ArrayList<CUser>();
+        ArrayList<CUser> listUser = new ArrayList<>();
 
         listUser.add(new CUser("Neo","theOne","neo.matrix@gmail.com","pass"));
         listUser.add(new CUser("Trinity","theGirl","trinity.matrix@gmail.com","pass"));

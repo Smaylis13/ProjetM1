@@ -1,28 +1,20 @@
 package fr.univtln.m1dapm.g3.g3vote.Interface;
 
-import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Adapter;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.sql.Array;
-import java.sql.Date;
 import java.sql.Timestamp;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import fr.univtln.m1dapm.g3.g3vote.Communication.CCommunication;
 import fr.univtln.m1dapm.g3.g3vote.Communication.CRequestTypesEnum;
@@ -34,7 +26,7 @@ import fr.univtln.m1dapm.g3.g3vote.R;
 
 public class CTestActivity extends AppCompatActivity {
 
-    private static ArrayList<CCandidate> listCandidat = new ArrayList<CCandidate>();
+    private static ArrayList<CCandidate> listCandidat = new ArrayList<>();
     private CCandidatAffichageAdapter adapter;
     private String mVoteName;
     private String mDateDebut;
@@ -89,7 +81,7 @@ public class CTestActivity extends AppCompatActivity {
         Timestamp lDateDeFin=null;
 
         try{
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.FRANCE);
             java.util.Date parsedDate = dateFormat.parse(mDateDebut);
             lDateDeDebut = new java.sql.Timestamp(parsedDate.getTime());
             parsedDate=dateFormat.parse(mDateFin);

@@ -42,7 +42,7 @@ public class CContactAjout extends AppCompatActivity {
     private static Context sContext;
     private SearchView mSearch;
     private ListView mLvSearch;
-    private List<String> mRes = new ArrayList<String>();
+    private List<String> mRes = new ArrayList<>();
 
 
 

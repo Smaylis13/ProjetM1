@@ -14,11 +14,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import fr.univtln.m1dapm.g3.g3vote.Communication.CCommunication;
-import fr.univtln.m1dapm.g3.g3vote.Communication.CRequestTypesEnum;
-import fr.univtln.m1dapm.g3.g3vote.Communication.CTaskParam;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CType;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CUser;
@@ -30,8 +26,8 @@ public class CParticipantActivity extends AppCompatActivity {
     private String mVoteName;
     private String mDateDebut;
     private String mDateFin;
-    private ArrayList<CCandidate> mListCandidat = new ArrayList<CCandidate>();
-    private ArrayList<CUser> mListParticipant = new ArrayList<CUser>();
+    private ArrayList<CCandidate> mListCandidat = new ArrayList<>();
+    private ArrayList<CUser> mListParticipant = new ArrayList<>();
     private CType mTypeVote;
     private CUserChoiceAdapter adapter;
     //Majority

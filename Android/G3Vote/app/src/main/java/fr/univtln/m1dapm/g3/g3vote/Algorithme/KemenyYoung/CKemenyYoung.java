@@ -1,11 +1,14 @@
 package fr.univtln.m1dapm.g3.g3vote.Algorithme.KemenyYoung;
 
+import android.util.Log;
+
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import fr.univtln.m1dapm.g3.g3vote.Algorithme.AAlgorithme;
-import fr.univtln.m1dapm.g3.g3vote.Entite.CCandidate;
-import fr.univtln.m1dapm.g3.g3vote.Entite.CChoixpossible;
+import fr.univtln.m1dapm.g3.g3vote.Entite.CChoice;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CResult;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
 
@@ -30,192 +33,195 @@ import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
  */
 public class CKemenyYoung extends AAlgorithme {
 
+    /**
+     * Liste des choix des participants
+     */
+    private List<List<Integer>> mChoices;
 
     /**
-     * le nombre de candidat
-     *
+     * Liste des identifiants des candidats
      */
-    private int mNombreCandidat;
+    private List<Integer> mIdCands;
+
     /**
-     * la liste des resultat possible est une liste de liste
+     * Liste du nombre de choix fait
      */
-    private List<CChoixpossible> mListResult;
+    private List<Integer> mNumbChoice;
+
     /**
-     * la taille de la liste des tesultat possible est calculer
+     * Liste des duels entre candidats
      */
-    private int mTailleList;
+    private List<List<Integer>> mDualList;
+
 
     /**
      * constructeur du vote CKemenyYoung
-     * <p>le constructeur n'initialise pas les parametre </p>
-     *
-     * @see CKemenyYoung#inittab(int, List)
      */
-    public CKemenyYoung() {
-    initVote();}
-
-    //@Override
-    protected void initVote() {
-
+    public CKemenyYoung(CVote pVote) {
+        super(pVote);
     }
 
-    //@Override
-    protected CResult CalculResultat() {
+    /**
+     * Inititalisation du vote
+     * @param pChoices Liste des choix fait par les participants
+     */
+    public void initVote(List<CChoice> pChoices) {
+        Log.e("SIZECHOICES", pChoices.size()+"");
+        ArrayList<List<Integer>> lChoices = new ArrayList<>();
+        mIdCands = new ArrayList<>();
+        mDualList = new ArrayList<>();
+
+
+        List<Integer> lUserList = new ArrayList<>();
+
+        Integer[] lDefaultValue = new Integer[mVote.getCandidates().size()];
+        Arrays.fill(lDefaultValue, 0);
+
+        /// Liste des identifiants des candidats
+        for (int i = 0; i < mVote.getCandidates().size(); i++) {
+            mIdCands.add(i, mVote.getCandidates().get(i).getIdCandidat());
+            mDualList.add(i, Arrays.asList(lDefaultValue));
+        }
+
+        int lUserId = 0;
+        int lIndex = 0;
+
+        /// Liste des choix par utilisateur
+        for (int i = 0; i < pChoices.size(); i++) {
+            lUserId = pChoices.get(i).getIdUser();
+            if (!lUserList.contains(lUserId))
+            {
+                lUserList.add(lUserId);
+                lChoices.add(Arrays.asList(lDefaultValue));
+            }
+            else
+            {
+                lIndex = lUserList.indexOf(lUserId);
+                lChoices.get(lIndex).set(pChoices.get(i).getScore()-1,pChoices.get(i).getIdCandidate());
+            }
+        }
+
+        mChoices = new ArrayList<>();
+        mNumbChoice = new ArrayList<>();
+
+        /// Liste des choix differents
+        while(lChoices.size()>0)
+        {
+            mChoices.add(lChoices.get(0));
+            mNumbChoice.add(Collections.frequency(lChoices, mChoices.get(mChoices.size() - 1)));
+            lChoices.remove(mChoices.get(mChoices.size() - 1));
+            /*lChoices.removeAll(mChoices.get(mChoices.size() - 1));
+            lChoices.trimToSize();*/
+        }
+        Log.e("LA", "KEMENY");
+        Log.e("LA", mDualList.size()+"");
+        Log.e("LA", mNumbChoice.size()+"");
+        Log.e("LA", mIdCands.size()+"");
+        //TODO SOUCI SUR LA BOUCLE, taille de mNumbChoice < taille de mChoices
+        /// Creation de la table des duels entre candidats
+        for (int i = 0; i < mChoices.size(); i++) {
+            List<Integer> lchoice = mChoices.get(i);
+            for (int j = 0; j < mIdCands.size(); j++) {
+                int lCand1 = mIdCands.indexOf(lchoice.get(j));
+                for (int k = j+1; k < mIdCands.size(); k++) {
+                    int lCand2 = mIdCands.indexOf(lchoice.get(j));
+                    mDualList.get(lCand1).add(lCand2, mDualList.get(lCand1).get(lCand2) + mNumbChoice.get(i));
+                }
+            }
+        }
+        Log.e("LA", "KEMENY");
+    }
+
+    /**
+     * Calcul du resultat par methode naïve ou heuristique
+     * @return La liste des choix ayant le plus haut score
+     */
+    public List<CResult> CalculResultat()
+    {
+        List<Integer> lScore = new ArrayList<>();
+        if (mIdCands.size() > 8 )
+            lScore = KYHeuristique();
+        else
+            lScore = KYNaif();
+
+        List<CResult> lResult = new ArrayList<>();
+        int lindex;
+
+        int lMax = Collections.max(lScore);
+        for (int i = 0; i < Collections.frequency(lScore, lMax); i++) {
+            lindex = lScore.indexOf(lMax);
+            for (int j = 0; j < lScore.get(lindex); j++) {
+                lResult.add(new CResult(j+1, mVote.getIdVote(), mChoices.get(lindex).get(j)));
+            }
+            mChoices.remove(lindex);
+            lScore.remove(lindex);
+        }
+
+        return lResult;
+    }
+
+    /**
+     * Calcul du score pour le choix possible
+     * @param pChoice choix possible de l'algorithme
+     * @return Le score obtenu par le choix
+     */
+    private int CalculScore(List<Integer> pChoice)
+    {
+        int lScore = 0;
+        int lindex1, lindex2;
+
+        for (int i = 0; i < pChoice.size()-1; i++) {
+            lindex1 = mIdCands.indexOf(pChoice.get(i));
+            for (int j = i+1; j < mIdCands.size(); j++) {
+                lindex2 = mIdCands.indexOf(pChoice.get(j));
+                lScore += mDualList.get(lindex1).get(lindex2);
+            }
+        }
+
+        return lScore;
+    }
+
+    /**
+     * Calcul de tout les choix possible par heuristique
+     * @return La liste des scores pour chaque choix possible
+     */
+    private List<Integer> KYHeuristique()
+    {
         return null;
     }
 
-
     /**
-     * initialise vraiment le vote et lance la generation de la liste resultat
-     *
-     * <p>initialise les diferente valeur puis lance la generation de la liste resultat</p>
-     * @param pNombreCandidat
-     *              nombre de candidat qui peuvent etre choisi
-     * @param pListCand
-     *              la liste des candidat
-     *
-     *
-     * @see CKemenyYoung#generate(int, List)
+     * Calcul naïf de tout les choix possibles
+     * @return La liste des scores pour chaque choix
      */
-    public void inittab(int pNombreCandidat, List<CCandidate> pListCand) {
-        this.mNombreCandidat = pNombreCandidat;
+    private List<Integer> KYNaif()
+    {
+        mChoices = new ArrayList<>();
+        ///Initialisation du tableau de choix possible
+        for (Integer idCand : mIdCands)
+            mChoices.add(new ArrayList<Integer>(idCand));
 
-        int i;
-        mTailleList = 1;
-        for (i = 0; i < mNombreCandidat; i++) {
-            mTailleList = mTailleList * (mNombreCandidat - i);
-        }
-        mListResult = new ArrayList<CChoixpossible>();// cree la liste des resultat possible
-        generate(mNombreCandidat, pListCand); //remplie la liste des resultat possible
-
-
-
-
-        /*for (i = 0; i < fact; i++) {
-            System.out.println(mListResult.get(i).toString());
-            System.out.println(mListResult.get(i).getNbVote());
-            //A optimise
-        }*/
-
-
-    }
-
-    /**
-     * affiche la liste resultat dans la sorti sout
-     */
-
-    public void affiche () {
-        for (int i = 0; i < mTailleList; i++) {
-            System.out.println(mListResult.get(i).toString());
-        }
-    }
-
-    /**
-     * generation de la liste des resultat possible
-     * <p>
-     *     place les candidat les un après les autre de manierre recursive pour cree toute les combinason possible
-     * </p>
-     * @param pNombreCandidat
-     *              nombre de candidat restant a placer
-     * @param pListCand
-     *              liste des candidat restant a placer
-     * @return pListCand
-     */
-
-    public List<CCandidate> generate(int pNombreCandidat, List<CCandidate> pListCand) {
-        int i;
-
-        CChoixpossible lChoixpossible = new CChoixpossible(pListCand); //creation de choix
-
-
-        if (pNombreCandidat == 1) {
-
-            mListResult.add(lChoixpossible); // mise en place du choix parmi les resultat possible
-
-        } else {
-            CCandidate pcandidattemporaire;
-            for (i = 0; i < pNombreCandidat; i++) { // fait tout les choix possible
-                pListCand = generate(pNombreCandidat - 1, pListCand);
-                if (pNombreCandidat % 2 == 0) {
-                    pcandidattemporaire = pListCand.get(i);
-                    pListCand.set(i, pListCand.get(pNombreCandidat - 1));
-                    pListCand.set(pNombreCandidat - 1, pcandidattemporaire);
-                } else {
-                    pcandidattemporaire = pListCand.get(0);
-                    pListCand.set(0, pListCand.get(pNombreCandidat - 1));
-                    pListCand.set(pNombreCandidat - 1, pcandidattemporaire);
+        /// Calcul de tout les choix possible
+        for (int i = 0; i < mChoices.size(); i++) {
+            List<Integer> lChoice = mChoices.get(i);
+            for (int j = 0; j < mIdCands.size(); j++) {
+                if(lChoice.contains(mIdCands.get(j))){
+                    mChoices.add(lChoice);
+                    mChoices.get(mChoices.size()-1).add(mIdCands.get(j));
                 }
-
             }
         }
-        return pListCand;
+
+        List<Integer> lChoiceScore = new ArrayList<>();
+        Collections.reverse(mChoices);
+
+        /// Calcul du score pour chaque choix possible
+        for (int i = 0; i < mChoices.size(); i++)
+            if(mChoices.get(i).size() == mIdCands.size())
+                lChoiceScore.add(CalculScore(mChoices.get(i)));
+
+        return lChoiceScore;
     }
 
-    /**
-     * envoie le gagnant
-     * <p>cherche dans la liste des resultat possible celui qui a le plus de point et le renvoi</p>
-     * @param pnbvainqueur
-     *              le nombre de vainqueur que la fonction vous renvera
-     * @return la liste gagnante
-     *
-     * @see CKemenyYoung#mListResult
-     */
-
-    public List<CCandidate> resultat (int pnbvainqueur ) {
-        int maxvote = 0;
-        int maxvoteposition=0;
-        for (int i = 0; i < mListResult.size(); i++) {
-            if (mListResult.get(i).getNbVote() > maxvote) {
-                maxvote = mListResult.get(i).getNbVote();
-                maxvoteposition=i;
-            }
-        }
-        return mListResult.get(maxvoteposition).getChoix();
-    }
-
-
-    /**
-     * recoi le nouveau vote
-     * <p> recupere le vote envoyer par le votant ajoute les point au different resultat possible  </p>
-     * @param choix
-     *              choix effectuer par le votant
-     */
-
-    public void nouveauVote(List<CCandidate> choix) { // ajout des point liee au nouveau vote
-        CCandidate candidat1 = new CCandidate();
-        CCandidate candidat2 = new CCandidate();
-        int y;
-        int z;
-        int poid = 0;
-        for (int i = 0; i < mTailleList; i++) {
-            for (int j = 0; j < mNombreCandidat; j++) {
-                for (int x = j + 1; x < mNombreCandidat; x++) {
-                    candidat1 = choix.get(j);
-                    candidat2 = choix.get(x);
-                    y = 0;
-                    z = 0;
-
-                    for (y=0;y<mNombreCandidat;y++){//trouve la position de candida 1 dans le resultat en cour
-                        if (candidat1.equals( mListResult.get(i).getIndexValue(y))){
-                            break;
-                        }
-                    }
-                    for (z=0;z<mNombreCandidat;z++){//trouve la position de candida 2 dans le resultat en cour
-                        if (candidat2.equals(mListResult.get(i).getIndexValue(z))){
-                            break;
-                        }
-                    }
-
-                    if (y < z) { // verifie que ils sont dans le même ordre
-                       poid++; // si oui on ajoute 1 point au vote
-                    }
-                }
-
-            }
-
-        mListResult.get(i).updateNbVote(poid);
-            poid=0;
-        }
-    }
 }
 

@@ -15,13 +15,26 @@ import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
  */
 public class CAlgoBorda extends AAlgorithme{
 
+    /**
+     * Liste des choix faits par les participants
+     */
     private List<List<Integer>> mChoices;
 
+    /**
+     * Liste des identifiants des candidats
+     */
     private List<Integer> mIdCands;
 
+    /**
+     * Liste des scores pour chaque candidats
+     */
     private List<Integer> mCandsScore;
 
 
+    /**
+     * Constructeur de l'algo
+     * @param pVote Vote pour lequel on veux calculer le resultat
+     */
     public CAlgoBorda(CVote pVote) {
         super(pVote);
     }

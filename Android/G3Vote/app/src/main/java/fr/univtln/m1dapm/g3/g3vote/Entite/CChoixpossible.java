@@ -13,7 +13,7 @@ public class CChoixpossible {
     private List<CCandidate> mOrdre;
 
     public CChoixpossible(List<CCandidate> pChoix) {
-        mOrdre = new ArrayList<CCandidate>(pChoix);
+        mOrdre = new ArrayList<>(pChoix);
         mNbVote=0;
     }
 

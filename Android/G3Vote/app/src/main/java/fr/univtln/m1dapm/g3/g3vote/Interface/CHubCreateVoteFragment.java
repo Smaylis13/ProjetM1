@@ -4,7 +4,7 @@ package fr.univtln.m1dapm.g3.g3vote.Interface;
  * Created by chris on 15/05/15.
  */
 
-import android.content.Intent;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -47,7 +47,7 @@ public class CHubCreateVoteFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_chub_createvote, container, false);
         //create listVote and fill it
         Spinner spin = (Spinner) rootView.findViewById(R.id.voteTypeList);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, VOTE);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, VOTE);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spin.setAdapter(adapter);
 

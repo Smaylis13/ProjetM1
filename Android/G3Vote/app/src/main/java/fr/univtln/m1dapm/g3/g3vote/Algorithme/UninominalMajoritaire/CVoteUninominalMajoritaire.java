@@ -1,9 +1,6 @@
 package fr.univtln.m1dapm.g3.g3vote.Algorithme.UninominalMajoritaire;
 
-import android.util.Log;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -69,7 +66,6 @@ public class CVoteUninominalMajoritaire extends AAlgorithme{
         super(pVote);
         mIdCands=new ArrayList<>();
         mChoices=new ArrayList<>();
-
     }
 
     /**
@@ -94,23 +90,19 @@ public class CVoteUninominalMajoritaire extends AAlgorithme{
             mChoices.add(choice.getIdCandidate());
         }
 
-        Integer[] lDefaultVal = new Integer[pChoices.size()];
-        Arrays.fill(lDefaultVal, 0);
-        mCandNumbVote = new ArrayList<>(/*Arrays.asList(lDefaultVal)*/);
-        for(int i:mCandNumbVote){
-            Log.e("NUMBVOTE",i+"");
-        }
+        mCandNumbVote = new ArrayList<>();
+
         mNbtour=pNbtour;
         mNbCandidatTour2=pNbcandidattour2;
 
     }
 
-
+    /**
+     * Calcul du score pour chaque candidats
+     */
     private void CalcScore() {
-
         for (int i = 0; i < mIdCands.size(); i++)
             mCandNumbVote.add(Collections.frequency(mChoices, mIdCands.get(i)));
-
     }
 
     /**
@@ -136,7 +128,6 @@ public class CVoteUninominalMajoritaire extends AAlgorithme{
 
         mIdCands = lListTour;
         mCandNumbVote = lCandNumbVote;
-
     }
 
     /**
@@ -154,15 +145,6 @@ public class CVoteUninominalMajoritaire extends AAlgorithme{
         CResult lWinner = new CResult(1,mVote.getIdVote(), mIdCands.get(lindex));
 
         List<CResult> lResults=new ArrayList<>();
-        for(int i=0;i<mIdCands.size();i++){
-            Log.e("SIZE",mIdCands.size()+"");
-            Log.e("NumbVote",mCandNumbVote.get(i)+"");
-            Log.e("Vote",mVote.toString());
-            Log.e("IdCand",mIdCands.get(i)+"");
-            CResult lResult=new CResult(mCandNumbVote.get(i),mVote.getIdVote(),mIdCands.get(i));
-            Log.e("RESULT",lResult.toString());
-            lResults.add(lResult);
-        }
 
        return lResults;
     }

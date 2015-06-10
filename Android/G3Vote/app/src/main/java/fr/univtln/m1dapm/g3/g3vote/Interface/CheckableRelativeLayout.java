@@ -78,7 +78,7 @@ public class CheckableRelativeLayout extends RelativeLayout implements
 	 */
 	private void initialise(AttributeSet attrs) {
 		this.isChecked = false;
-		this.checkableViews = new ArrayList<Checkable>(5);
+		this.checkableViews = new ArrayList<>(5);
 	}
 
 	/**

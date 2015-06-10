@@ -14,13 +14,12 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.sql.Date;
 import java.sql.Timestamp;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import fr.univtln.m1dapm.g3.g3vote.Communication.CCommunication;
 import fr.univtln.m1dapm.g3.g3vote.Communication.CRequestTypesEnum;
@@ -38,8 +37,8 @@ public class CRecapVoteActivity extends AppCompatActivity {
     private String mVoteName;
     private String mDateDebut;
     private String mDateFin;
-    private ArrayList<CCandidate> mListCandidat = new ArrayList<CCandidate>();
-    private ArrayList<CUser> mListParticipant = new ArrayList<CUser>();
+    private ArrayList<CCandidate> mListCandidat = new ArrayList<>();
+    private ArrayList<CUser> mListParticipant = new ArrayList<>();
     private List<CRule> mRules=new ArrayList<>();
     private CType mTypeVote;
     private int mCalculationMethod=-1;
@@ -121,10 +120,11 @@ public class CRecapVoteActivity extends AppCompatActivity {
         Date lDateDeb = new java.sql.Date(simpleDateFormat.parse(mDateDebut).getTime());
         Date lDateFin = new java.sql.Date(simpleDateFormat.parse(mDateFin).getTime());*/
 
+
         Timestamp lDateDeDebut = null;
         Timestamp lDateDeFin=null;
         try{
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.FRANCE);
             java.util.Date parsedDate = dateFormat.parse(mDateDebut+":00.000");
             lDateDeDebut = new java.sql.Timestamp(parsedDate.getTime());
             parsedDate=dateFormat.parse(mDateFin+":00.000");

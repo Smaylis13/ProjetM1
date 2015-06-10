@@ -14,7 +14,8 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"/>
+        android:layout_alignParentRight="true"
+        android:inputType="text"/>
 
     <EditText
         android:layout_width="wrap_content"
@@ -23,7 +24,8 @@
         android:layout_below="@+id/editnommodifcompte"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"/>
+        android:layout_alignParentRight="true"
+        android:inputType="text"/>
 
     <EditText
         android:layout_width="wrap_content"
@@ -32,7 +34,8 @@
         android:layout_below="@+id/editprenommodifcompte"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"/>
+        android:layout_alignParentRight="true"
+        android:inputType="textEmailAddress"/>
 
     <EditText
         android:layout_width="wrap_content"
@@ -41,7 +44,8 @@
         android:layout_below="@+id/editmailmodifcompte"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"/>
+        android:layout_alignParentRight="true"
+        android:inputType="textPassword"/>
 
     <Button
         android:layout_width="wrap_content"
