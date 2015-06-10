@@ -82,23 +82,31 @@ public class CAlgoVoteMaj extends AAlgorithme{
      */
     public List<CResult> calculateMedian() {
 
-        List<Integer> lMedianeValue = new ArrayList<>();
-        // Le trie
-        for (List<Integer> VoteCand : mCandVote) {
-            Collections.sort(VoteCand);
-        }
-        // recherche du vaiqueur
-        int lMediane = (mNumbVote + 1) / 2;
-        for (List<Integer> VoteCand : mCandVote)
-            lMedianeValue.add(VoteCand.get(lMediane));
+        if(mChoices.size() != mCandVote.size()) {
+            List<Integer> lMedianeValue = new ArrayList<>();
+            // Le tri
+            for (List<Integer> VoteCand : mCandVote) {
+                Collections.sort(VoteCand);
+            }
+            // recherche du vainqueur
+            int lMediane = (mNumbVote + 1) / 2;
+            for (List<Integer> VoteCand : mCandVote)
+                lMedianeValue.add(VoteCand.get(lMediane));
 
-        int lMax = Collections.max(lMedianeValue);
+            int lMax = Collections.max(lMedianeValue);
 
-        for (int i = 0; i < lMedianeValue.size(); i++)
-            if (lMedianeValue.get(i) == lMax)
+            for (int i = 0; i < lMedianeValue.size(); i++)
+                //if (lMedianeValue.get(i) == lMax)
                 mResult.add(new CResult(lMedianeValue.get(i), mVote.getIdVote(), mIdCands.get(i)));
 
-        return mResult;
+            return mResult;
+        }
+        else {
+            for (int i = 0; i < mCandVote.size(); ++i){
+                mResult.add(new CResult(mChoices.get(i).getScore(), mVote.getIdVote(), mIdCands.get(i)));
+            }
+            return mResult;
+        }
     }
 
     /**
@@ -108,7 +116,7 @@ public class CAlgoVoteMaj extends AAlgorithme{
     public List<CResult> calculateAverage() {
 
         List<Double> lAverageValue = new ArrayList<>();
-        // recherche du vaiqueur
+        // recherche du vainqueur
         double lValue;
 
         for (List<Integer> candVote : mCandVote) {
@@ -120,7 +128,7 @@ public class CAlgoVoteMaj extends AAlgorithme{
             lAverageValue.add(lValue/candVote.size());
         }
         double lMax = Collections.max(lAverageValue);
-        // on cherche s'il ya d'autres vainqueurs qui ont la même moyenne
+        // on cherche s'il y a d'autres vainqueurs qui ont la même moyenne
 
         for (int i = 0; i < lAverageValue.size(); i++) {
             if (lAverageValue.get(i) == lMax) {
@@ -152,7 +160,7 @@ public class CAlgoVoteMaj extends AAlgorithme{
 
 
         for (int i = 0; i < lCandValue.size(); i++)
-            if (lCandValue.get(i) == lMax)
+            //if (lCandValue.get(i) == lMax)
                 mResult.add(new CResult(lCandValue.get(i), mVote.getIdVote(), mIdCands.get(i)));
 
         return mResult;
