@@ -127,6 +127,7 @@
         <activity
             android:name=".Interface.CContactAjout"
             android:label="@string/title_activity_ccontact_ajout"
+            android:parentActivityName=".Interface.CHubActivity"
             android:screenOrientation="portrait" >
         </activity>
         <activity

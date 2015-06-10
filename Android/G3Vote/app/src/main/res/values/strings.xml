@@ -83,7 +83,7 @@
 
     <string name="cancelVote">Annuler tout</string>
     <string name="vote">Voter !</string>
-    <string name="title_activity_ccontact_ajout">CContactAjout</string>
+    <string name="title_activity_ccontact_ajout">Ajouter un contact</string>
 
     <string name="title_activity_ctest_contact_ajout">CTestContactAjout</string>
     <string name="title_activity_csetting_account">CSettingAccount</string>

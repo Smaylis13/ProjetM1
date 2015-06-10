@@ -24,9 +24,6 @@ import fr.univtln.m1dapm.g3.g3vote.Entite.CResult;
 import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
 import fr.univtln.m1dapm.g3.g3vote.R;
 
-/**
- * Created by sebastien on 03/06/15.
- */
 public class CResultUninominalActivity extends AppCompatActivity {
     private CVote mVote;
     private static List<CChoice> mChoices;
@@ -41,21 +38,17 @@ public class CResultUninominalActivity extends AppCompatActivity {
         super.onCreate(pSavedInstanceState);
         setContentView(R.layout.activity_cresult_uninominal);
 
-        Bundle extras = getIntent().getExtras();
-        if (extras==null){
+        Bundle lExtras = getIntent().getExtras();
+        if (lExtras==null){
             return;
         }
-        mVote = (CVote) extras.get("VOTE");
+        mVote = (CVote) lExtras.get("VOTE");
        // mChoices = extras.getParcelableArrayList("CHOICES");
-        mResults=mVote.getResultVote();
-        if(mResults==null||mResults.isEmpty()){
+        mResults = mVote.getResultVote();
+        if(mResults == null || mResults.isEmpty()){
             calculateResults();
         }
-        List<CResult> lListResultatFaux = new ArrayList<>();
-        lListResultatFaux.add(new CResult(0, 30, mVote.getIdVote(), 57));
-        lListResultatFaux.add(new CResult(0, 40, mVote.getIdVote(), 56));
-        mVote.setResultVote(lListResultatFaux);
-        lListResultCandidate = (ArrayList)mResults;
+        lListResultCandidate = (ArrayList<CResult>)mResults;
 
         BarChart lBarChart = (BarChart) findViewById(R.id.barChartResultUninominal);
 
@@ -84,7 +77,7 @@ public class CResultUninominalActivity extends AppCompatActivity {
     }
     public ArrayList<String> getCandidateList(){
         ArrayList<String> lListCandidat = new ArrayList<>();
-        ArrayList<CCandidate> lListCandidatComplet = (ArrayList) mVote.getCandidates();
+        ArrayList<CCandidate> lListCandidatComplet = (ArrayList<CCandidate>) mVote.getCandidates();
         Log.i("ID : ", "" + lListCandidatComplet.get(0).getIdCandidat());
         Log.i("Nom : ", "" + lListCandidatComplet.get(0).getNomCandidat());
 
@@ -104,11 +97,8 @@ public class CResultUninominalActivity extends AppCompatActivity {
     public BarDataSet getResultData(){
 
         ArrayList<BarEntry> lValueSet = new ArrayList<>();
-        ArrayList<BarDataSet> lDataSets = null;
-        lDataSets = new ArrayList<>();
         int i = 0;
         for(CResult iter : lListResultCandidate){
-
             lValueSet.add(new BarEntry(iter.getOrder(), i));
             ++i;
         }
@@ -116,7 +106,6 @@ public class CResultUninominalActivity extends AppCompatActivity {
 
         BarDataSet lBarDataSet = new BarDataSet(lValueSet, "Nombre de votes");
         lBarDataSet.setColor(Color.rgb(0, 155, 0));
-        lDataSets.add(lBarDataSet);
 
         return lBarDataSet;
     }
