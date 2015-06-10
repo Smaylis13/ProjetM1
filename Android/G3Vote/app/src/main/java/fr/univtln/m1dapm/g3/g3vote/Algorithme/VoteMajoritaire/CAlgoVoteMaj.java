@@ -59,23 +59,19 @@ public class CAlgoVoteMaj extends AAlgorithme{
 
         List<CCandidate> lCands = mVote.getCandidates();
 
+        /// Remplis la liste des candidats
         for (int i = 0; i < lCands.size(); i++) {
             mIdCands.add(lCands.get(i).getIdCandidat());
+            mCandVote.add(new ArrayList<Integer>());
         }
 
         mCandVote = new ArrayList<>();
         mNumbVote = mChoices.size()/mIdCands.size();
 
-        for (int i = 0; i < lCands.size(); i++) {
-            List<Integer> lCandVote = new ArrayList<>();
+        /// Remplissage de la liste des scores obtenus pour chaque candidats
+        for (CChoice choice : mChoices)
+            mCandVote.get(mIdCands.indexOf(choice.getIdCandidate())).add(choice.getScore());
 
-            //TODO NE PASSE QU'UNE FOIS DANS LA BOUCLE (pour i=1, j==mNumbVote)
-            for (int j = (i*mNumbVote); j < mNumbVote; j++) {
-                lCandVote.add(mChoices.get(j).getScore());
-            }
-
-            mCandVote.add(lCandVote);
-        }
     }
 
     /**
