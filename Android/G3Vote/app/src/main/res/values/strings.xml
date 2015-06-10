@@ -14,9 +14,9 @@
     <string name="title_activity_cparticipant">Choix des participants</string>
     <string name="title_activity_crecap_vote">Récapitulatif du vote</string>
     <string name="title_activity_cranking_vote">Vote par classement</string>
-    <string name="title_activity_cresult_ranking">Resultat vote par classement</string>
-    <string name="title_activity_cresult_uninominal">Resultat vote uninominal</string>
-    <string name="title_activity_cresult_JM">Resultat vote jugement majoritaire</string>
+    <string name="title_activity_cresult_ranking">Résultat vote par classement</string>
+    <string name="title_activity_cresult_uninominal">Résultat vote uninominal</string>
+    <string name="title_activity_cresult_JM">Résultat vote jugement majoritaire</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
@@ -29,7 +29,7 @@
 
     <!--nom des tab de la barre de tab -->
     <string name="title_section1">Mes Votes</string>
-    <string name="title_section2">Creer Vote</string>
+    <string name="title_section2">Créer Vote</string>
     <string name="title_section3">Contacts</string>
     <string name="hubText">Bienvenue</string>
 
@@ -68,7 +68,7 @@
     <string name="userLastNameInputHint">Nom de famille</string>
     <string name="lTVvoteNameLabel">Nom :</string>
     <string name="lTVHelpMessageLog">Si vous avez déjà un compte, veuillez renseigner votre mail et
-        votre mot de passe et appuyer sur le bouton se connecter. Sinon veuillez appuyer sur le bouton
+        votre mot de passe et appuyer sur le bouton se connecter. Sinon, veuillez appuyer sur le bouton
         s\'inscrire</string>
     <string name="lTVspinnerName">Type de Vote</string>
 
@@ -90,13 +90,13 @@
 
 
     <string name="text_bouton_modifier_compte">Modifier compte</string>
-    <string name="text_bouton_deconnecter_compte">Deconnexion</string>
+    <string name="text_bouton_deconnecter_compte">Déconnexion</string>
     <string name="text_bouton_supprimer_compte">Supprimer compte</string>
     <string name="title_activity_cmodif_compte">Modification du compte</string>
     <string name="title_activity_csuppression_compte">Suppression du compte</string>
 
-    <string name="help_suppression_de_compte">entrez le mail et le mots de passe de votre compte pour le supprimer </string>
-    <string name="supression_boutton">supprimer compte</string>
+    <string name="help_suppression_de_compte">Entrez le mail et le mot de passe de votre compte pour le supprimer </string>
+    <string name="supression_boutton">Supprimer compte</string>
     <string name="title_activity_ccontact_supression">Suppression du contact</string>
 
     <string name="title_activity_cnote_vote">CNoteVote</string>
@@ -111,10 +111,10 @@
     </string-array>
     <string name="lchoiceDate">Choix date</string>
     <string name="help_title">Aide</string>
-    <string name="rankvote_help_message">Pour voter vous devez classer les candidats selon votre ordre de préférence par un appuy long sur le candidat puis en le faisant glisser a la position souhaité.</string>
+    <string name="rankvote_help_message">Pour voter, vous devez classer les candidats selon votre ordre de préférence par un appui long sur le candidat puis en le faisant glisser à la position souhaitée.</string>
     <string name="menu_refresh_title">Actualiser</string>
-    <string name="notevote_help_message">Pour voter vous devez attribuer une note a chaque candidat a l\'aide des menu déroulants.</string>
-    <string name="uninominalvote_help_message">Pour voter vous devez selectionner un candidat en appuyant sur la petite case a coté de son nom et valider.</string>
+    <string name="notevote_help_message">Pour voter, vous devez attribuer une note à chaque candidat à l\'aide des menus déroulants.</string>
+    <string name="uninominalvote_help_message">Pour voter, vous devez selectionner un candidat en appuyant sur la petite case à côté de son nom et valider.</string>
 
 
 </resources>
