@@ -111,6 +111,8 @@ public class CVoteConfCondorcet extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (lId == R.id.action_settings) {
+            Intent lIntent = new Intent(this,CSettingAccount.class);
+            startActivity(lIntent);
             return true;
         }
 
