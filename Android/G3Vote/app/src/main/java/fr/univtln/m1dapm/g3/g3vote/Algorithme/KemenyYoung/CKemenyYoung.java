@@ -3,7 +3,6 @@ package fr.univtln.m1dapm.g3.g3vote.Algorithme.KemenyYoung;
 import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -66,39 +65,33 @@ public class CKemenyYoung extends AAlgorithme {
      * @param pChoices Liste des choix fait par les participants
      */
     public void initVote(List<CChoice> pChoices) {
-        Log.e("SIZECHOICES", pChoices.size()+"");
-        ArrayList<List<Integer>> lChoices = new ArrayList<>();
+        List<List<Integer>> lChoices = new ArrayList<>();
         mIdCands = new ArrayList<>();
         mDualList = new ArrayList<>();
 
-
         List<Integer> lUserList = new ArrayList<>();
-
-        Integer[] lDefaultValue = new Integer[mVote.getCandidates().size()];
-        Arrays.fill(lDefaultValue, 0);
 
         /// Liste des identifiants des candidats
         for (int i = 0; i < mVote.getCandidates().size(); i++) {
             mIdCands.add(i, mVote.getCandidates().get(i).getIdCandidat());
-            mDualList.add(i, Arrays.asList(lDefaultValue));
+            mDualList.add(i, new ArrayList<>(Collections.nCopies(mVote.getCandidates().size(), 0)));
         }
 
-        int lUserId = 0;
-        int lIndex = 0;
+        int lUserId;
+        int lIndex;
+
 
         /// Liste des choix par utilisateur
         for (int i = 0; i < pChoices.size(); i++) {
             lUserId = pChoices.get(i).getIdUser();
             if (!lUserList.contains(lUserId))
             {
-                lUserList.add(lUserId);
-                lChoices.add(Arrays.asList(lDefaultValue));
+                lUserList.add(lUserList.size(), lUserId);
+                lChoices.add(new ArrayList<>(Collections.nCopies(mIdCands.size(), 0)));
             }
-            else
-            {
-                lIndex = lUserList.indexOf(lUserId);
-                lChoices.get(lIndex).set(pChoices.get(i).getScore()-1,pChoices.get(i).getIdCandidate());
-            }
+            lIndex = lUserList.indexOf(lUserId);
+            lChoices.get(lIndex).set((pChoices.get(i).getScore()-1),pChoices.get(i).getIdCandidate());
+
         }
 
         mChoices = new ArrayList<>();
@@ -107,16 +100,11 @@ public class CKemenyYoung extends AAlgorithme {
         /// Liste des choix differents
         while(lChoices.size()>0)
         {
-            mChoices.add(lChoices.get(0));
-            mNumbChoice.add(Collections.frequency(lChoices, mChoices.get(mChoices.size() - 1)));
-            lChoices.remove(mChoices.get(mChoices.size() - 1));
-            /*lChoices.removeAll(mChoices.get(mChoices.size() - 1));
-            lChoices.trimToSize();*/
+            mChoices.add(mChoices.size(), lChoices.get(0));
+            mNumbChoice.add(mChoices.size()-1, Collections.frequency(lChoices, lChoices.get(0)));
+            lChoices.removeAll(Collections.singleton(mChoices.get(mChoices.size() - 1)));
         }
-        Log.e("LA", "KEMENY");
-        Log.e("LA", mDualList.size()+"");
-        Log.e("LA", mNumbChoice.size()+"");
-        Log.e("LA", mIdCands.size()+"");
+
         //TODO SOUCI SUR LA BOUCLE, taille de mNumbChoice < taille de mChoices
         /// Creation de la table des duels entre candidats
         for (int i = 0; i < mChoices.size(); i++) {
@@ -124,12 +112,12 @@ public class CKemenyYoung extends AAlgorithme {
             for (int j = 0; j < mIdCands.size(); j++) {
                 int lCand1 = mIdCands.indexOf(lchoice.get(j));
                 for (int k = j+1; k < mIdCands.size(); k++) {
-                    int lCand2 = mIdCands.indexOf(lchoice.get(j));
-                    mDualList.get(lCand1).add(lCand2, mDualList.get(lCand1).get(lCand2) + mNumbChoice.get(i));
+                    int lCand2 = mIdCands.indexOf(lchoice.get(k));
+                    int lValue = mDualList.get(lCand1).get(lCand2);
+                    mDualList.get(lCand1).set(lCand2, lValue + mNumbChoice.get(i));
                 }
             }
         }
-        Log.e("LA", "KEMENY");
     }
 
     /**
@@ -138,24 +126,26 @@ public class CKemenyYoung extends AAlgorithme {
      */
     public List<CResult> CalculResultat()
     {
-        List<Integer> lScore = new ArrayList<>();
+        List<Integer> lScore;
+        /*
         if (mIdCands.size() > 8 )
             lScore = KYHeuristique();
-        else
-            lScore = KYNaif();
+        else*/
+        lScore = KYNaif();
 
         List<CResult> lResult = new ArrayList<>();
         int lindex;
 
         int lMax = Collections.max(lScore);
-        for (int i = 0; i < Collections.frequency(lScore, lMax); i++) {
+        int lOccur = Collections.frequency(lScore, lMax);
+        //for (int i = 0; i < lOccur; i++) {
             lindex = lScore.indexOf(lMax);
-            for (int j = 0; j < lScore.get(lindex); j++) {
+            for (int j = 0; j < mIdCands.size(); j++) {
                 lResult.add(new CResult(j+1, mVote.getIdVote(), mChoices.get(lindex).get(j)));
             }
             mChoices.remove(lindex);
             lScore.remove(lindex);
-        }
+        //}
 
         return lResult;
     }
@@ -198,15 +188,18 @@ public class CKemenyYoung extends AAlgorithme {
     {
         mChoices = new ArrayList<>();
         ///Initialisation du tableau de choix possible
-        for (Integer idCand : mIdCands)
-            mChoices.add(new ArrayList<Integer>(idCand));
+        for (int i = 0; i < mIdCands.size(); i++) {
+            mChoices.add(i, new ArrayList<Integer>());
+            mChoices.get(i).add(mIdCands.get(i));
+        }
+
 
         /// Calcul de tout les choix possible
         for (int i = 0; i < mChoices.size(); i++) {
             List<Integer> lChoice = mChoices.get(i);
             for (int j = 0; j < mIdCands.size(); j++) {
-                if(lChoice.contains(mIdCands.get(j))){
-                    mChoices.add(lChoice);
+                if(!lChoice.contains(mIdCands.get(j))){
+                    mChoices.add(mChoices.size(), lChoice);
                     mChoices.get(mChoices.size()-1).add(mIdCands.get(j));
                 }
             }

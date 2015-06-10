@@ -6,7 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -39,7 +39,7 @@ import fr.univtln.m1dapm.g3.g3vote.Entite.CUser;
 import fr.univtln.m1dapm.g3.g3vote.R;
 import fr.univtln.m1dapm.g3.g3vote.crypto.CCrypto;
 
-public class CContactAjout extends AppCompatActivity {
+public class CContactAjout extends ActionBarActivity {
 
     private static Context sContext;
     private SearchView mSearch;
@@ -56,6 +56,7 @@ public class CContactAjout extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ccontact_ajout);
+
         sContext=this;
         Bundle extras = getIntent().getExtras();
         if (extras != null){
@@ -169,6 +170,8 @@ public class CContactAjout extends AppCompatActivity {
             case R.id.websiteMenu:
                 lIntent = new Intent(this, CWebSiteActivity.class);
                 startActivity(lIntent);
+            default:
+                this.finish();
                 return true;
         }
         return super.onOptionsItemSelected(item);

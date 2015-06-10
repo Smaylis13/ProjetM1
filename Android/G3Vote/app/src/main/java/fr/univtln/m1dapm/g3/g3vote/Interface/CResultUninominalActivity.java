@@ -13,6 +13,7 @@ import com.github.mikephil.charting.data.BarEntry;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.univtln.m1dapm.g3.g3vote.Algorithme.Borda.CAlgoBorda;
 import fr.univtln.m1dapm.g3.g3vote.Algorithme.UninominalMajoritaire.CVoteUninominalMajoritaire;
 import fr.univtln.m1dapm.g3.g3vote.Communication.CCommunication;
 import fr.univtln.m1dapm.g3.g3vote.Communication.CRequestTypesEnum;
@@ -60,9 +61,16 @@ public class CResultUninominalActivity extends AppCompatActivity {
 
     public void calculateResults(){
 
-        CVoteUninominalMajoritaire lVoteUM=new CVoteUninominalMajoritaire(mVote);
-        lVoteUM.initVote(mChoices,1,1);
-        mResults.addAll(lVoteUM.resultat());
+        if(mVote.getTypes().getNom().equals("Uninominal à 1 tour")) {
+            CVoteUninominalMajoritaire lVoteUM = new CVoteUninominalMajoritaire(mVote);
+            lVoteUM.initVote(mChoices, 1, 1);
+            mResults.addAll(lVoteUM.resultat());
+        }
+        else if(mVote.getTypes().getNom().equals("Borda")) {
+            CAlgoBorda lBorda=new CAlgoBorda(mVote);
+            lBorda.initVote(mChoices);
+            mResults.add(lBorda.CalculResult());
+        }
         CTaskParam lParams=new CTaskParam(CRequestTypesEnum.add_results,mResults);
         CCommunication lCom=new CCommunication();
         lCom.execute(lParams);

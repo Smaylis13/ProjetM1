@@ -177,11 +177,11 @@ public class CUser {
     }
 
     public List<CUser> obtainContacts(){
-        CUserDAO lUserDAO=new CUserDAO();
+       /* CUserDAO lUserDAO=new CUserDAO();
         for(CUser lUser:this.mListContacts) {
             lUserDAO.detach(lUser);
             lUser.setPassword("contact");
-        }
+        }*/
         return this.mListContacts;
     }
 
