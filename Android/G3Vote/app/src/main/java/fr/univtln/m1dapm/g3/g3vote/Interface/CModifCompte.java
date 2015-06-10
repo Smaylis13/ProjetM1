@@ -3,6 +3,7 @@ package fr.univtln.m1dapm.g3.g3vote.Interface;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -62,6 +63,9 @@ public class CModifCompte extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent lIntent = new Intent(this,CSettingAccount.class);
+            finish();
+            startActivity(lIntent);
             return true;
         }
 

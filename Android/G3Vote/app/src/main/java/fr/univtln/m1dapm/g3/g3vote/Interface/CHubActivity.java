@@ -437,6 +437,19 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
         lCom.execute(lParams);
     }
 
+    /**
+     * Ceci permet de supprimer un contact
+     * @param item
+     */
+    public void deleteContactAction(MenuItem item) {
+        ArrayList<CUser> lContacts = CUser.getAListOfUser();
+        lContacts=(ArrayList)CHubContactFragment.getsContacts();
+        Intent lIntent = new Intent(this,CContactSuppression.class);
+
+        lIntent.putExtra("listecontact",lContacts);
+
+        startActivity(lIntent);
+    }
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to

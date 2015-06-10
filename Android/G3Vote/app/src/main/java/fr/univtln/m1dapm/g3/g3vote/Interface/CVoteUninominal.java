@@ -3,6 +3,7 @@ package fr.univtln.m1dapm.g3.g3vote.Interface;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -186,7 +187,7 @@ public class CVoteUninominal extends AppCompatActivity {
         AlertDialog.Builder lUninominalVoteHelpAD = new AlertDialog.Builder(CVoteUninominal.this);
         lUninominalVoteHelpAD.setTitle(getString(R.string.help_title));
         lUninominalVoteHelpAD.setMessage(getString(R.string.uninominalvote_help_message));
-        lUninominalVoteHelpAD.setPositiveButton("Ok",new DialogInterface.OnClickListener(){
+        lUninominalVoteHelpAD.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
@@ -194,5 +195,22 @@ public class CVoteUninominal extends AppCompatActivity {
         });
 
         lUninominalVoteHelpAD.show();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem pItem) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int lId = pItem.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (lId == R.id.action_settings) {
+            Intent lIntent = new Intent(this,CSettingAccount.class);
+            startActivity(lIntent);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(pItem);
     }
 }
