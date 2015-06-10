@@ -3,14 +3,13 @@ package fr.univtln.m1dapm.g3.g3vote.Interface;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -58,7 +57,7 @@ public class CNoteVote extends AppCompatActivity {
         }
         ListView lListViewCandidate = (ListView) this.findViewById(R.id.lLVCandidateListVote);
         mAdapter = new CCandidatAffichageNoteAdapter(this, R.id.lLVCandidateListVote, mNoteCandidat);
-        lListViewCandidate.setAdapter(mAdapter);
+        lListViewCandidate.setAdapter((ListAdapter) mAdapter);
         mAdapter.addAll(lListCandidats);
 
         }
@@ -76,7 +75,7 @@ public class CNoteVote extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
 
                 List<CChoice> lChoiceList;
-                lChoiceList = new ArrayList<CChoice>();
+                lChoiceList = new ArrayList<>();
 
                 for (int i = 0; i < mNoteCandidat.size(); i++) {
                     CChoice lTmpChoice = new CChoice();

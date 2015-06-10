@@ -1,6 +1,5 @@
 package fr.univtln.m1dapm.g3.g3vote.Entite;
 
-import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.io.Serializable;

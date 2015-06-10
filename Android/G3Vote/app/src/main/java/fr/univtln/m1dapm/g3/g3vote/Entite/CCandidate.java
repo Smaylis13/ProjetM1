@@ -47,7 +47,7 @@ public class CCandidate implements Serializable{
 
     public static ArrayList<CCandidate> getAListOfCandidate(){
 
-        ArrayList<CCandidate> listCandidate = new ArrayList<CCandidate>();
+        ArrayList<CCandidate> listCandidate = new ArrayList<>();
 
         listCandidate.add(new CCandidate(0, "Banane", "Fruit 0"));
         listCandidate.add(new CCandidate(1, "Orange", "Fruit 1"));

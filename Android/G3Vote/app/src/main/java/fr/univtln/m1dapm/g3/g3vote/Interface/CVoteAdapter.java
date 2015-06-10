@@ -2,7 +2,6 @@ package fr.univtln.m1dapm.g3.g3vote.Interface;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +13,7 @@ import android.widget.TextView;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
 import fr.univtln.m1dapm.g3.g3vote.R;
@@ -91,10 +91,7 @@ public class CVoteAdapter extends BaseAdapter {
             ltv_voteStatus.setTextColor(Color.parseColor("red"));
         }
 
-
-        //ltv_beginDate.setText(mListVote.get(position).getmDebut().getGregorianChange().toString());
-        //ltv_endDate.setText(mListVote.get(position).getmFin().getGregorianChange().toString());
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");//new DateTime( currentDate ).toString("yyyy-MM-dd HH:mm:ss")
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.FRANCE);
         ltv_beginDate.setText(df.format(mListVote.get(position).getDateDebut()));
         ltv_endDate.setText(df.format(mListVote.get(position).getDateFin()));
 

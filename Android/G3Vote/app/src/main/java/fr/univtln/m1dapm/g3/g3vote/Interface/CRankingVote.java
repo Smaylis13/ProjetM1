@@ -84,7 +84,7 @@ public class CRankingVote extends AppCompatActivity {
         lConfirmationDialog.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                List<CChoice> lChoiceList = new ArrayList<CChoice>();
+                List<CChoice> lChoiceList = new ArrayList<>();
                 for(int i = 0; i < mListView.getCount(); ++i){
                     CCandidate lCandidate = (CCandidate) mListView.getItemAtPosition(i);
                     CChoice lChoice = new CChoice(mVote.getIdVote(), CHubActivity.getsLoggedUser().getUserId(), lCandidate.getIdCandidat(), i+1);

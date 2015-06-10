@@ -18,7 +18,7 @@ public class CCondorcetTest extends TestCase{
     public static void main(String[] args) {
 
         CCondorcet condorcet = new CCondorcet();
-        List<CChoixpossible> Listresult=new ArrayList<CChoixpossible>();
+        List<CChoixpossible> Listresult= new ArrayList<>();
 
         CCandidate a=new CCandidate("Memphis");
         CCandidate b=new CCandidate("Nashville");

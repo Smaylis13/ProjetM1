@@ -1,13 +1,10 @@
 package fr.univtln.m1dapm.g3.g3vote.Interface;
 
 import android.content.Context;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 

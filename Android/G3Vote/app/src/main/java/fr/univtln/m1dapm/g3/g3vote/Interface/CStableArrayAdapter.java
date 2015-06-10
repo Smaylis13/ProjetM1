@@ -20,7 +20,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -42,7 +41,7 @@ public class CStableArrayAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
 
 
-    HashMap<CCandidate, Integer> mIdMap = new HashMap<CCandidate, Integer>();
+    HashMap<CCandidate, Integer> mIdMap = new HashMap<>();
 
     public CStableArrayAdapter(Context pContext, List<CCandidate> pListUser) {
         this.mContext = pContext;

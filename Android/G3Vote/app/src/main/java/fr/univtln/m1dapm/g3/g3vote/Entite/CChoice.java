@@ -2,7 +2,6 @@ package fr.univtln.m1dapm.g3.g3vote.Entite;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

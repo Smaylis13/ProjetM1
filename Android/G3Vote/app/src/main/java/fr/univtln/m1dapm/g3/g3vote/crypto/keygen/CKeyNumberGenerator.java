@@ -1,6 +1,6 @@
 package fr.univtln.m1dapm.g3.g3vote.crypto.keygen;
 
-import android.util.Log;
+
 
 import java.math.BigInteger;
 import java.util.Random;

@@ -1,6 +1,5 @@
 package fr.univtln.m1dapm.g3.g3vote.crypto;
 
-import android.util.Log;
 
 import java.math.BigInteger;
 import java.security.InvalidKeyException;

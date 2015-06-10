@@ -24,7 +24,7 @@ public class CVoteConfMajorityJugement extends AppCompatActivity {
 
 
 
-    private ArrayList<CCandidate> mListCandidat = new ArrayList<CCandidate>();
+    private ArrayList<CCandidate> mListCandidat = new ArrayList<>();
     private String mVoteName;
     private String mDateDebut;
     private String mDateFin;

@@ -381,7 +381,7 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(PREFS_PROPERTY_REG_ID, pRegId);
         editor.putInt(PROPERTY_APP_VERSION, appVersion);
-        editor.commit();
+        editor.apply();
     }
 
     /*---------------------------------------------------------------------------------------------*/
@@ -515,7 +515,7 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
 
                 try {
                     String dateEnd = dp.getYear()+"-"+(dp.getMonth()+1)+"-" +dp.getDayOfMonth()+" "+tp.getCurrentHour()+":"+tp.getCurrentMinute();
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS",Locale.FRANCE);
                     Date parsedDate = dateFormat.parse(dateEnd+":00.000");
                     Timestamp lDateBegin = getDateBegin();
                     Timestamp lDateEnd = new java.sql.Timestamp(parsedDate.getTime());
@@ -566,7 +566,7 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
                 else{
                 try {
                     String dateBegin = dp.getYear() + "-" + (dp.getMonth() + 1) + "-" + dp.getDayOfMonth() + " " + tp.getCurrentHour() + ":" + tp.getCurrentMinute();
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS",Locale.FRANCE);
                     Date parsedDate = dateFormat.parse(dateBegin + ":00.000");
                     Timestamp lDateBegin = new java.sql.Timestamp(parsedDate.getTime());
                     Timestamp lDateEnd = getDateEnd();
@@ -687,7 +687,7 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
     public Timestamp getDateBegin() throws ParseException {
         final Button lB_DateDebut = (Button)findViewById(R.id.bVoteDateBegin);
         final String lDateDebut=lB_DateDebut.getText().toString();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS",Locale.FRANCE);
         Date parsedDate = dateFormat.parse(lDateDebut + ":00.000");
         return new java.sql.Timestamp(parsedDate.getTime());
     }
@@ -696,7 +696,7 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
     public Timestamp getDateEnd() throws ParseException {
         final Button lB_DateEnd = (Button)findViewById(R.id.bVoteDateEnd);
         final String lDateEnd=lB_DateEnd.getText().toString();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS",Locale.FRANCE);
         Date parsedDate = dateFormat.parse(lDateEnd+":00.000");
         return new java.sql.Timestamp(parsedDate.getTime());
     }

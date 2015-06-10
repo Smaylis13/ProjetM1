@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"
         android:layout_marginLeft="10dp"
-        android:layout_alignTop="@+id/spinernote"
+        android:layout_alignTop="@id/spinerNote"
         android:textStyle="bold"
         tools:text="Nom Candidat"
         android:clickable="true"
@@ -37,6 +37,7 @@
         android:layout_alignLeft="@+id/NomCandidat"
         android:layout_below="@+id/NomCandidat"
         tools:text="Description Candidat"
-        />
+        android:layout_toLeftOf="@+id/spinerNote"
+        android:layout_toStartOf="@+id/spinerNote" />
 
 </RelativeLayout>

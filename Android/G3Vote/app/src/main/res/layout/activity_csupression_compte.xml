@@ -27,9 +27,9 @@
         android:inputType="textPassword"
         android:ems="10"
         android:hint="@string/passHint"
-        android:layout_below="@+id/mailInputsupression"
-        android:layout_alignRight="@+id/mailInput"
-        android:layout_alignEnd="@+id/mailInput"
+        android:layout_below="@id/mailInputsupression"
+        android:layout_alignRight="@id/mailInputsupression"
+        android:layout_alignEnd="@id/mailInputsupression"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:singleLine="true"/>
@@ -40,7 +40,7 @@
         android:layout_height="wrap_content"
         android:text="@string/supression_boutton"
         android:onClick="suprimer"
-        android:layout_below="@+id/passInputsupression"
+        android:layout_below="@id/passInputsupression"
         android:layout_centerHorizontal="true" />
 
 

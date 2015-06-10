@@ -1,6 +1,5 @@
 package fr.univtln.m1dapm.g3.g3vote.Algorithme.VoteMajoritaire;
 
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Collections;

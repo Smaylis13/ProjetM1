@@ -1,9 +1,5 @@
 package fr.univtln.m1dapm.g3.g3vote.Entite;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-import android.util.Log;
-
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSetter;
@@ -15,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by ludo on 06/05/15.
@@ -222,11 +219,11 @@ public class CVote implements Serializable {
     }
 
     public static ArrayList<CVote> getAListOfVote() {
-        ArrayList<CVote> listVote = new ArrayList<CVote>();//GregorianCalendar (int year, int month, int day)
+        ArrayList<CVote> listVote = new ArrayList<>();//GregorianCalendar (int year, int month, int day)
 
         // Create an instance of SimpleDateFormat used for formatting
 // the string representation of date (month/day/year)
-        DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss", Locale.FRANCE);
 
 // Get the date today using Calendar object.
         Timestamp d1 = new Timestamp(System.currentTimeMillis());
