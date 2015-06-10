@@ -199,6 +199,8 @@ public class CRecapVoteActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent lIntent = new Intent(this,CSettingAccount.class);
+            startActivity(lIntent);
             return true;
         }
 
