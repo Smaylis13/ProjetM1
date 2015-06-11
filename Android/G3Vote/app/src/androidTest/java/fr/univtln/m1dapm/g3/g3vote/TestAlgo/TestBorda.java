@@ -20,12 +20,18 @@ import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
  */
 public class TestBorda extends TestCase{
 
+    /**
+     * Tableau de nom des participants
+     */
     private final String[] mNomUser = {"Jack", "Paul", "Laurent", "Bernard", "Bob", "Momo", "Georges",
             "Carlos", "Leon", "Theo", "John", "Hector", "Lea", "Sophie", "Bea", "Jeanne", "Toto",
             "Eli", "Will", "Brad", "Chris", "Jacques", "Lou", "Lola", "Phil", "Grant", "Val", "Lee",
             "Bruce", "Clark", "Didier", "Emma", "Joey", "Monique", "Ted"};
 
-
+    /**
+     * Test de calcul du resultat de l'algorithme Borda
+     * @throws Exception
+     */
     public void testCalculResultat() throws Exception {
 
             CCandidate a=new CCandidate(84,"Memphis");

@@ -14,7 +14,7 @@ import fr.univtln.m1dapm.g3.g3vote.Entite.CResult;
 
 
 /**
- * <p> cette classe permet de chercher les vainqueurs par la methode de condorcet</p>
+ * NON IMPLEMENTE !!!!
  */
 public class CCondorcet extends AAlgorithme {
 

@@ -20,7 +20,7 @@ import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
 public class CAlgoSTVTest extends TestCase {
 
     /**
-     * Tableau de nom de candidat
+     * Tableau de nom des candidats
      */
     private final String[] mNomsCands = {"Jack", "Paul", "Laurent", "Bernard", "Bob", "Momo", "Georges",
             "Carlos", "Leon", "Theo", "John", "Hector", "Lea", "Sophie", "Bea", "Jeanne", "Toto",

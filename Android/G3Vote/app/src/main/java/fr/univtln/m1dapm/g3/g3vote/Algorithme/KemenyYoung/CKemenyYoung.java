@@ -1,7 +1,5 @@
 package fr.univtln.m1dapm.g3.g3vote.Algorithme.KemenyYoung;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -134,18 +132,12 @@ public class CKemenyYoung extends AAlgorithme {
         lScore = KYNaif();
 
         List<CResult> lResult = new ArrayList<>();
-        int lindex;
 
         int lMax = Collections.max(lScore);
-        int lOccur = Collections.frequency(lScore, lMax);
-        //for (int i = 0; i < lOccur; i++) {
-            lindex = lScore.indexOf(lMax);
-            for (int j = 0; j < mIdCands.size(); j++) {
-                lResult.add(new CResult(j+1, mVote.getIdVote(), mChoices.get(lindex).get(j)));
-            }
-            mChoices.remove(lindex);
-            lScore.remove(lindex);
-        //}
+
+        int lindex = lScore.indexOf(lMax);
+        for (int j = 0; j < mIdCands.size(); j++)
+            lResult.add(new CResult(j+1, mVote.getIdVote(), mChoices.get(lindex).get(j)));
 
         return lResult;
     }

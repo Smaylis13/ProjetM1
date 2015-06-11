@@ -1,6 +1,8 @@
 package fr.univtln.m1dapm.g3.g3vote.Algorithme.STV;
 
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -102,9 +104,9 @@ public class CAlgoSTV extends AAlgorithme {
         for (CChoice choice : pChoices)
         {
             int lUserId = lUserList.indexOf(choice.getIdUser());
-            List<Integer> lCandList = lChoices.get(lUserId);
+            List<Integer> lCandList = new ArrayList<>(lChoices.get(lUserId));
 
-            lCandList.set(choice.getScore()-1, choice.getIdCandidate());
+            lCandList.set((choice.getScore() - 1), choice.getIdCandidate());
             lChoices.set(lUserId, lCandList);
         }
 
