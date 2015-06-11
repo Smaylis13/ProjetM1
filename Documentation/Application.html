@@ -84,32 +84,42 @@
     </header>
 
     <!-- About Section -->
-    <section id="data" class="container content-section text-center">
+    <section id="InscrCo" class="container content-section text-center">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2">
-                <h2>Echange de données</h2>
-                <p style="text-align:center"><img src="Dif.png" alt="dif" style="width:328px;height:180px;"></p>
-                <p>Toutes les données échangées entre les applications et le serveur sont cryptées via Diffie-Hellman.
-Chaque machine définie un paramètre qu'elles s'échangent pour générer une même clef de cryptage secrète
-avec laquelle elles crypteront et décrypteront tout les messages.</p><p> Ceci permet de prévenir les attaques du
-type "Man in the middle" (l'homme du milieu) en ne laissant pas les données
-transiter en clair.</p>            </div>
+                <h2>Inscription à l'application</h2>
+                <p style="text-align:center"></p>
+                <p>L'inscription est très simple. Il suffit d'ouvrir l'application et d'appuyer sur le bouton <b>s'inscrire</b>. Sur cette vue, il vous est demandé d'entrer <b>votre prénom, votre nom, votre adresse e-mail et un mot de passe</b>. Appuyez sur le bouton <b>valider</b>. Ça y est, vous êtes inscrit.</p>
+                <h2>Connexion à l'application</h2>
+                <p>Si vous avez un compte, vous pouvez vous connecter sur l'application. Ouvrez l'application, la page d'authentification s'ouvre. Entrez votre <b>e-mail</b> et votre <b>mot de passe</b>. Appuyez sur le bouton <b>se connecter</b>. Une nouvelle page s'ouvre, vous voilà connecté.</p>
+                <h2>Modification de compte</h2>
+                <p>Si vous êtes connecté, vous pouvez modifier votre compte en appuyant sur le <b>bouton de menu</b>, et sur le bouton <b>Settings</b> et <b>Modifier Compte</b>. Vos informations s'affichent et vous pouvez les modifier. Validez en cliquant sur le bouton <b>valider</b></p>
+                <h2>Suppression de compte</h2>
+                <p>Si vous êtes connecté, vous pouvez supprimer votre compte en appuyant sur le <b>bouton de menu</b>, et sur le bouton <b>Settings</b> et <b>Supprimer Compte</b>. Votre <b>e-mail</b> et votre <b>mot de passe</b> seront demandés. Inscrivez-les, puis <b>validez</b>. Votre compte est supprimé.</p>
+                <h2>Déconnexion de l'application</h2>
+                <p>Si vous êtes connecté, vous pouvez vous déconnecter en appuyant sur le <b>bouton de menu</b>, et sur le bouton <b>Settings</b> et <b>Déconnexion</b></p>
+            </div>
+        </div>
+    </section>
+    
+        <!-- About Section -->
+    <section id="ajoutContact" class="container content-section text-center">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">
+                <h2>Ajouter un contact</h2>
+                <p style="text-align:center"><img src="mot.jpg" alt="mot" style="width:280px;height:155px;"></p>
+                <p>Une fois authentifié sur l'application, vous pouvez ajouter un contact à votre liste. Pour cela, veuillez appuyer sur le bouton <b>contacts</b>. Appuyez sur le <b>bouton vert</b> en bas à droite. Sur cette nouvelle vue, vous pouvez entrer <b>l'adresse e-mail</b> de la personne que vous voulez ajouter. Un appui sur le <b>bouton check</b> en haut de la vue ajoutera ce contact à votre liste.</p>          </div>
         </div>
     </section>
 
 
     <!-- About Section -->
-    <section id="pass" class="container content-section text-center">
+    <section id="CreaVote" class="container content-section text-center">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2">
-                <h2>Gestion des mots de passe</h2>
+                <h2>Création d'un vote</h2>
                 <p style="text-align:center"><img src="mot.jpg" alt="mot" style="width:280px;height:155px;"></p>
-                <p>Les mots de passe sont "salés" et "hashés" en utilisant la librairie bCrypt qui permet d'augmenter la compléxitée
-de l'algorithme de hashage pour une sécurité acccrue. Ce système permet de prévenir notament des attaques du type
-brute force, rainbow tables et attaques par dictionnaire.</p><p>
-Le résultat est le stockage dans la base d'une empreinte du mot de passe. Quand une tentative de connection sera effectuée,
-le mot de passe entré subira les mêmes operations et sera comparé a l'empreinte correspondant au login se trouvant
-dans la base. Si les empreintes correspondent alors les mots de passe sont les mêmes et l'utilisateur est authentifié.</p>          </div>
+                <p>Une fois authentifié sur l'application, vous pouvez créer un vote. Pour cela, veuillez appuyer sur le bouton créer vote. Sur cette vue, il vous est demandé d'entrer un nom de vote, une date de début, une date de fin et de choisir votre type de vote (STV, Kemeny-Young, Jugement Majoritaire, Uninominal à 1 tour, méthode Borda). Cliquez sur valider. Vous êtes maintenant sur la vue des d'ajouts de candidats. Vous pouvez entrer le nom des candidats, ainsi que leur description. Il est possible d'ajouter et de supprimer un candidat grace aux deux boutons prévus à cet effet, en haut de la page. Pour le vote STV, il faudra aussi indiquer un nombre de gagnants. Pour le vote Jugement Majoritaire vous devrez préciser le type de méthode de calcul choisi (Moyenne, Médiane ou Somme). Appuyez sur valider pour continuer la création de vote. Maintenant, vous devez inviter des personnes à votre vote. Votre liste de contacts s'affiche. Sélectionner les personnes que vous voulez inviter en cliquant sur la checkbox. Cliquez ensuite sur valider. Un récapitulatif s'affiche, vérifiez que tout corresponde à vos choix et valider. Le vote est créé, et les invitations sont envoyées.</p>          </div>
         </div>
     </section>
 
