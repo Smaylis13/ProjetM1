@@ -20,12 +20,18 @@ import fr.univtln.m1dapm.g3.g3vote.Entite.CVote;
  */
 public class CKemenyYoungtest extends TestCase{
 
+    /**
+     * Tableau de nom des participants
+     */
     private final String[] mNomUser = {"Jack", "Paul", "Laurent", "Bernard", "Bob", "Momo", "Georges",
             "Carlos", "Leon", "Theo", "John", "Hector", "Lea", "Sophie", "Bea", "Jeanne", "Toto",
             "Eli", "Will", "Brad", "Chris", "Jacques", "Lou", "Lola", "Phil", "Grant", "Val", "Lee",
             "Bruce", "Clark", "Didier", "Emma", "Joey", "Monique", "Ted"};
 
-
+    /**
+     * Test de calcul du resultat de l'algorithme Kemeny-Young
+     * @throws Exception
+     */
     public void testCalculResultat() throws Exception {
 
         CCandidate a=new CCandidate(84,"Memphis");
@@ -81,17 +87,13 @@ public class CKemenyYoungtest extends TestCase{
 
         lResult = lkemenyYoung.CalculResultat();
 
-        List<List<Integer>> lChoiceRes = new ArrayList<>();
+        List<Integer> lChoiceRes = new ArrayList<>();
 
         for (int i = 0; i < lResult.size(); i++) {
-            if (i%lcand.size() == 0)
-                lChoiceRes.add(new ArrayList<Integer>(Collections.nCopies(lcand.size(),0)));
-
-            lChoiceRes.get(i/lcand.size()).set(lResult.get(i).getOrder()-1, lResult.get(i).getCandidat());
+            lChoiceRes.set(lResult.get(i).getOrder() - 1, lResult.get(i).getCandidat());
         }
 
-        for (List<Integer> choice : lChoiceRes)
-            Log.i("Vote : ", choice.toString());
+        Log.i("Vote : ", lChoiceRes.toString());
     }
 
 }
