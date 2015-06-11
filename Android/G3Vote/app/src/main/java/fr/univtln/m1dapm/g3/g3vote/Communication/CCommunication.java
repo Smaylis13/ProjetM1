@@ -255,7 +255,10 @@ public class CCommunication extends AsyncTask<Object, Void, Integer> {
 
                     if(lCode==200){
                         Intent lIntent = new Intent(CSuppressionCompte.getContext(), CLoginActivity.class);
+                        lIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         lIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        CSessionManager lSession = new CSessionManager(CSuppressionCompte.getContext());
+                        lSession.logoutUser();
                         CSuppressionCompte.getContext().startActivity(lIntent);
                     }
                     else if(lCode==401){
