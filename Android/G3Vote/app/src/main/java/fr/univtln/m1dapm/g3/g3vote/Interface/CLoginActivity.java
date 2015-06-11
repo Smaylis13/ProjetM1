@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,6 +32,7 @@ public class CLoginActivity extends AppCompatActivity {
     public final static String EXTRA_LOGIN = "USER_LOGIN";
     private final static BigInteger PUBLIC_KEY=CCrypto.sendKeyParam();
     private SettingsApi mIpSettingsSpinner;
+    private String mMailRegExp = new String("^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$");
 
     // Session Manager Class
     private CSessionManager mSession;
@@ -131,7 +131,7 @@ public class CLoginActivity extends AppCompatActivity {
         final String lMail = lET_Mail.getText().toString();
         final String lPassword = lET_Password.getText().toString();
 
-        if (!(lET_Mail.getText().toString().isEmpty())){
+        if (!(lMail.isEmpty()) && lMail.matches(mMailRegExp) ){
             CTaskParam lParams=new CTaskParam(CRequestTypesEnum.log_user,new CUser(null,null,lMail,lPassword));
             CCommunication lCom=new CCommunication();
             lCom.execute(lParams);
@@ -140,7 +140,7 @@ public class CLoginActivity extends AppCompatActivity {
             lIntent.putExtra(EXTRA_LOGIN,lET_Mail.getText().toString());
             startActivity(lIntent);*/
         }else{
-            Toast.makeText(getApplicationContext(),"Entrez un mail!",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),getString(R.string.UnvalidMail),Toast.LENGTH_LONG).show();
         }
 
     }

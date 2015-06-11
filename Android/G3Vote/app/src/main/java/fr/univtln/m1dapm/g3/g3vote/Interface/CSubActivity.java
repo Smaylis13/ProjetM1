@@ -22,6 +22,7 @@ import fr.univtln.m1dapm.g3.g3vote.R;
 
 public class CSubActivity extends AppCompatActivity {
     private static Context sContext;
+    private String mMailRegExp = new String("^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$");
 
     public static Context getsContext() {
         return sContext;
@@ -97,8 +98,10 @@ public class CSubActivity extends AppCompatActivity {
         final String lName = lET_Name.getText().toString();
         final String lMail = lET_Mail.getText().toString();
         final String lPassword = lET_Password.getText().toString();
-        if (!lFirstName.isEmpty() && !lName.isEmpty() && !lMail.isEmpty() && !lPassword.isEmpty()) {
 
+        if(!lMail.matches(mMailRegExp))
+            Toast.makeText(this,getString(R.string.UnvalidMail),Toast.LENGTH_SHORT).show();
+        else if (!lFirstName.isEmpty() && !lName.isEmpty() && !lMail.isEmpty() && !lPassword.isEmpty()) {
             //sDialog = ProgressDialog.show(view.getContext(),"eeeeeeeeeee","eeeeeeeeeeeeeeee",true);
             CUser lUser = new CUser(lFirstName, lName, lMail, lPassword);
             CTaskParam lParams=new CTaskParam(CRequestTypesEnum.add_new_user,lUser);

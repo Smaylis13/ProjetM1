@@ -39,6 +39,7 @@
     <string name="voteDateEnd">Date de fin</string>
 
     <string name="validationText">Valider</string>
+    <string name="UnvalidMail">L\'adresse mail n\'est pas valide : "exemple@gmail.com"</string>
 
     <string name="subValidateErrorMessage">Tous les champs ne sont pas remplis</string>
     <!-- description des votes -->
