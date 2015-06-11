@@ -174,7 +174,7 @@ public class CContactAjout extends ActionBarActivity {
                 this.finish();
                 return true;
         }
-        return super.onOptionsItemSelected(item);
+        //return super.onOptionsItemSelected(item);
     }
 
     /**
