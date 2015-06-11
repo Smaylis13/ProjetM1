@@ -43,7 +43,7 @@
     <string name="subValidateErrorMessage">Tous les champs ne sont pas remplis</string>
     <!-- description des votes -->
     <string name="stvDescription">Système de classement par préférence avec redistribution des votes excedents</string>
-    <string name="kemenyYoungDescription">Système de détermination de l'ordre optimal des candidats </string>
+    <string name="kemenyYoungDescription">Système de détermination de l\'ordre optimal des candidats </string>
     <string name="jugementMajorityDescription">Système d\'évaluation de chaque candidat par une mention :\n
         &#8226; Excellent\n
         &#8226; Très bien\n
