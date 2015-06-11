@@ -79,6 +79,14 @@ public class CSubActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent lIntent = new Intent(this,CLoginActivity.class);
+        lIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(lIntent);
+    }
+
     //TODO: handle the inscription on the server
     public void validateSub(View view) {
         final EditText lET_FirstName = (EditText)findViewById(R.id.userFirstNameInput);
