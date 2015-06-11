@@ -25,7 +25,7 @@ public class CHubCreateVoteFragment extends Fragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
 
     private static final String[] VOTE = new String[] {"STV", "Kemeny-Young", "Jugement Majoritaire",
-    "uninominal à 1 tour","uninominal à 2 tour","Condorcet","Borda"};
+    "Uninominal à 1 tour", "Borda"};
     /**
      * Returns a new instance of this fragment for the given section
      * number.
@@ -58,7 +58,6 @@ public class CHubCreateVoteFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1,
                                        int position, long id) {
-                //TODO: add better descriptions to the votes types
                 switch (position)
                 {
                     case 0:
@@ -74,12 +73,6 @@ public class CHubCreateVoteFragment extends Fragment {
                         text.setText(getString(R.string.uninomialOneTurnVoteDescription));
                         break;
                     case 4:
-                        text.setText(getString(R.string.uninominalTwoTurnVoteDescription));
-                        break;
-                    case 5:
-                        text.setText(getString(R.string.CondorcetDescription));
-                        break;
-                    case 6:
                         text.setText(getString(R.string.BordaDescription));
                         break;
 
@@ -96,11 +89,4 @@ public class CHubCreateVoteFragment extends Fragment {
         });
         return rootView;
     }
-
-
-    //TODO: handle the clik on validate to go to the right vote conf interface with the data
-
-
-
-
 }
