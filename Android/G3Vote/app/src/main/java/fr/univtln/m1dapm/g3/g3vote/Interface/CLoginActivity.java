@@ -135,7 +135,7 @@ public class CLoginActivity extends AppCompatActivity {
             CTaskParam lParams=new CTaskParam(CRequestTypesEnum.log_user,new CUser(null,null,lMail,lPassword));
             CCommunication lCom=new CCommunication();
             lCom.execute(lParams);
-           // finish();
+            finish();
             /*Intent lIntent = new Intent(this,CHubActivity.class);
             lIntent.putExtra(EXTRA_LOGIN,lET_Mail.getText().toString());
             startActivity(lIntent);*/
