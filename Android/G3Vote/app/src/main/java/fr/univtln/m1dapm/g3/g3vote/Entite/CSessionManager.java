@@ -93,9 +93,10 @@ public class CSessionManager {
             Intent i = new Intent(mContext, CLoginActivity.class);
             // Closing all the Activities
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             // Add new Flag to start new Activity
-            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            //i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
             // Staring Login Activity
             mContext.startActivity(i);

@@ -904,11 +904,10 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
             public void onClick(DialogInterface dialog, int which) {
                 CSessionManager lSession = new CSessionManager(getApplicationContext());
                 lSession.logoutUser();
-                Intent lIntent = new Intent(getApplicationContext(),CLoginActivity.class);
-                lIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
                 // On termine l'activité
                 finish();
-                startActivity(lIntent);
+
             }
         });
 
