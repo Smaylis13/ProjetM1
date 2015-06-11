@@ -895,9 +895,9 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
         // On cree le dialogue
         AlertDialog.Builder lConfirmationDialog = new AlertDialog.Builder(CHubActivity.this);
         // On modifie le titre
-        lConfirmationDialog.setTitle("Voulez vous vous déconnecter?");
+        lConfirmationDialog.setTitle("Déconnexion");
         // On modifie le message
-        lConfirmationDialog.setMessage("");
+        lConfirmationDialog.setMessage("Voulez-vous vous déconnecter ?");
         // Bouton Oui
         lConfirmationDialog.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
             @Override
