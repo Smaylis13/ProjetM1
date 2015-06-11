@@ -59,6 +59,7 @@ public class CSettingAccount extends ActionBarActivity {
         CSessionManager lSession = new CSessionManager(this);
         lSession.logoutUser();
         Intent lIntent = new Intent(this,CLoginActivity.class);
+        lIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(lIntent);
         this.finish();
         CHubActivity.sActivity.finish();

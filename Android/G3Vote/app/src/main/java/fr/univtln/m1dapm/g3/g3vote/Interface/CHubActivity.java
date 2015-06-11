@@ -640,7 +640,7 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
 
                 Log.i("Date actu : ", "" + currentDay + "" + currentMonth + "" + currentYear);
 
-                if((currentYear <= dp.getYear()) && (currentMonth <= dp.getMonth()) && (currentDay <= dp.getDayOfMonth())){
+                if ((currentYear <= dp.getYear()) && (currentMonth <= dp.getMonth()) && (currentDay <= dp.getDayOfMonth())) {
                     //si le bouton date fin n'a pas encore été rempli on peut remplir directement le bouton date début
                     if (buttonEnd.getText().toString().equals(getString(R.string.lchoiceDate))) {
                         buttonBegin.setText(dp.getYear() + "-" + (dp.getMonth() + 1) + "-" + dp.getDayOfMonth() + " " + tp.getCurrentHour() + ":" + tp.getCurrentMinute());
@@ -648,10 +648,10 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
                     }
                     //sinon on verifie que la date début est bien antérieure
                     // a la date de fin
-                    else{
+                    else {
                         try {
                             String dateBegin = dp.getYear() + "-" + (dp.getMonth() + 1) + "-" + dp.getDayOfMonth() + " " + tp.getCurrentHour() + ":" + tp.getCurrentMinute();
-                            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS",Locale.FRANCE);
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.FRANCE);
                             Date parsedDate = dateFormat.parse(dateBegin + ":00.000");
                             Timestamp lDateBegin = new java.sql.Timestamp(parsedDate.getTime());
                             Timestamp lDateEnd = getDateEnd();
@@ -706,8 +706,7 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
         final String lDateDebut=lB_DateDebut.getText().toString();
         final String lDateFin=lB_DateFin.getText().toString();
 
-        Timestamp lDateDeDebut = getDateBegin();
-        Timestamp lDateDeFin=getDateEnd();
+
 
 
 
@@ -733,41 +732,34 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
             case 2://Jugement Majoritaire
                 lIntent = new Intent(this, CVoteConfMajorityJugement.class);
                 break;
-            case 3://uninominal à 1 tour
+            case 3://Uninominal à 1 tour
                 lIntent = new Intent(this, CVoteConfUninominalOneTurn.class);
                 break;
-            case 4://uninominal à 2 tour
-                lIntent = new Intent(this, CVoteConfUninominalTwoTurn.class);
-                break;
-            case 5://Condorcet
-                lIntent = new Intent(this, CVoteConfCondorcet.class);
-                break;
-            case 6://Borda
+            case 4://Borda
                 lIntent = new Intent(this, CVoteConfBorda.class);
                 break;
             default:
                 break;
         }
-
-        if(lVoteName.isEmpty()){
-            Toast.makeText(this, getString(R.string.validateVoteTypeETempty), Toast.LENGTH_SHORT).show();
+        if((!lDateDebut.equals("Choix date")) && (!lDateFin.equals("Choix date"))){
+            Timestamp lDateDeDebut = getDateBegin();
+            Timestamp lDateDeFin=getDateEnd();
+            if(lVoteName.isEmpty()){
+                Toast.makeText(this, getString(R.string.validateVoteTypeETempty), Toast.LENGTH_SHORT).show();
+            }
+            else if(lDateDeDebut.after(lDateDeFin)) {
+                Toast.makeText(this,getString(R.string.dateBeginAfterDateEnd),Toast.LENGTH_SHORT).show();
+            }
+            else{
+                lIntent.putExtra("VOTE_NAME",lVoteName);
+                lIntent.putExtra("START_DATE",lDateDebut);
+                lIntent.putExtra("END_DATE", lDateFin);
+                startActivity(lIntent);
+            }
         }
-        else if (lDateDebut.equals("Choix date")){
-            Toast.makeText(this,getString(R.string.dateBeginEmpty),Toast.LENGTH_SHORT).show();
+        else {
+            Toast.makeText(this,"Vous n'avez pas choisi de date",Toast.LENGTH_SHORT).show();
         }
-        else if (lDateFin.equals("Choix date")){
-            Toast.makeText(this,getString(R.string.dateEndEmpty),Toast.LENGTH_SHORT).show();
-        }
-        else if(lDateDeDebut.after(lDateDeFin)) {
-            Toast.makeText(this,getString(R.string.dateBeginAfterDateEnd),Toast.LENGTH_SHORT).show();
-        }
-        else{
-            lIntent.putExtra("VOTE_NAME",lVoteName);
-            lIntent.putExtra("START_DATE",lDateDebut);
-            lIntent.putExtra("END_DATE", lDateFin);
-            startActivity(lIntent);
-        }
-
 
     }
 
@@ -903,9 +895,9 @@ public class CHubActivity extends AppCompatActivity implements ActionBar.TabList
         // On cree le dialogue
         AlertDialog.Builder lConfirmationDialog = new AlertDialog.Builder(CHubActivity.this);
         // On modifie le titre
-        lConfirmationDialog.setTitle("Voulez vous vous déconnecter?");
+        lConfirmationDialog.setTitle("Déconnexion");
         // On modifie le message
-        lConfirmationDialog.setMessage("");
+        lConfirmationDialog.setMessage("Voulez-vous vous déconnecter ?");
         // Bouton Oui
         lConfirmationDialog.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
             @Override

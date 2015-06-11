@@ -97,6 +97,7 @@ public class CSubActivity extends AppCompatActivity {
 
             CCommunication lCom=new CCommunication();
             lCom.execute(lParams);
+            finish();
         }
         else{
             Toast.makeText(this,getString(R.string.subValidateErrorMessage),Toast.LENGTH_SHORT).show();

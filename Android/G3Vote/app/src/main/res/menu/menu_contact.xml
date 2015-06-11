@@ -10,7 +10,4 @@
         app:showAsAction="ifRoom"
         android:icon="@drawable/del"
         android:onClick="deleteContactAction"/>
-    <item
-        android:id="@+id/websiteMenu"
-        android:title="@string/website_menu" />
 </menu>
