@@ -141,12 +141,19 @@ public class CVoteUninominalMajoritaire extends AAlgorithme{
         CalcScore();
         if(mNbtour == 2)
             tourSuivant();
-        int lindex = mCandNumbVote.indexOf(Collections.max(mCandNumbVote));
-        CResult lWinner = new CResult(1,mVote.getIdVote(), mIdCands.get(lindex));
+       // int lindex = mCandNumbVote.indexOf(Collections.max(mCandNumbVote));
+        //CResult lWinner = new CResult(1,mVote.getIdVote(), mIdCands.get(lindex));
 
         List<CResult> lResults=new ArrayList<>();
 
-       return lResults;
+        for(int i=0;i<mIdCands.size();i++){
+            CResult lResult=new CResult(mCandNumbVote.get(i),mVote.getIdVote(),mIdCands.get(i));
+
+            lResults.add(lResult);
+
+        }
+
+        return lResults;
     }
 
 }
